@@ -48,15 +48,14 @@ const syncFeed = async ({
   const parsed = await parser.parseURL(url);
   const page = await browser.newPage();
   const items = parsed.items
-    .slice(0, 1)
+    .slice(0, 5)
     .filter((item): item is { link: string } => !!item.link);
-  console.time("sync");
 
-  await Promise.all(
-    items.map((item) => syncArticle({ url: item.link, page, api }))
-  );
+  for (const item of items) {
+    await syncArticle({ url: item.link, page, api });
+  }
 
-  console.timeEnd("sync");
+  return items;
 };
 
 const syncUserFeeds = async ({
@@ -84,7 +83,7 @@ const syncUserFeeds = async ({
     subtle: webcrypto.subtle,
   });
 
-  await Promise.all(
+  const syncedFeeds = await Promise.all(
     user.feeds.map((feed) =>
       syncFeed({ url: feed.url, user, api, parser, browser })
     )
@@ -93,6 +92,8 @@ const syncUserFeeds = async ({
   if (!passedBrowser) {
     await browser.close();
   }
+
+  return syncedFeeds;
 };
 
 const syncAll = async () => {
@@ -100,11 +101,17 @@ const syncAll = async () => {
   const browser = await puppeteer.launch();
   const users = await prisma.user.findMany();
 
-  await Promise.all(
+  const syncedFeeds = await Promise.all(
     users.map(({ username }) => syncUserFeeds({ username, parser, browser }))
   );
 
-  return browser.close();
+  await browser.close();
+
+  return {
+    users: users.length,
+    feeds: syncedFeeds.flat().length,
+    articles: syncedFeeds.flat(2).length,
+  };
 };
 
 export default async function handler(
@@ -112,9 +119,12 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    await syncAll();
+    const { users, feeds, articles } = await syncAll();
 
-    return res.status(200).json({ status: "Success", message: "Success" });
+    return res.status(200).json({
+      status: "Success",
+      message: `Successfully synced ${feeds} feed(s) - ${articles} article(s) for ${users} user(s)`,
+    });
   } catch (e: any) {
     console.log(e);
 
