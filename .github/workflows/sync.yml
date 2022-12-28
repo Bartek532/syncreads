@@ -1,11 +1,11 @@
 name: Fetch feeds on 6:00 AM every day
 on:
   schedule:
-    - cron: "0 6 * * *"
+    - cron: "*/3 * * * *"
 jobs:
-  fetch:
+  sync:
     name: Fetch feed articles and save to reMarkable cloud.
     runs-on: ubuntu-latest
     steps:
       - name: cURL request
-        run: "curl https://remarkable-rss.vercel.app/api/fetch"
+        run: "curl https://remarkable-rss.vercel.app/api/sync -H 'api-key: ${{ secrets.API_KEY }}'"

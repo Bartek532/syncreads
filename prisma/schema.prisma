@@ -11,12 +11,13 @@ datasource db {
 }
 
 model User {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  username    String   @unique
-  password    String
-  deviceToken String
-  feedIDs     String[] @db.ObjectId
-  feeds       Feed[]   @relation(fields: [feedIDs], references: [id])
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  username     String    @unique
+  password     String
+  deviceToken  String
+  lastSyncDate DateTime?
+  feedIDs      String[]  @db.ObjectId
+  feeds        Feed[]    @relation(fields: [feedIDs], references: [id])
 }
 
 model Feed {

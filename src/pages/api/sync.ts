@@ -6,6 +6,13 @@ import { prisma } from "../../server/db/client";
 import type { User } from "@prisma/client";
 import { PDF_OPTIONS } from "../../utils/consts";
 import type { NextApiRequest, NextApiResponse } from "next";
+import dayjs from "dayjs";
+import { env } from "../../env/server.mjs";
+
+type FeedItem = {
+  link: string;
+  pubDate: string;
+};
 
 const syncArticle = async ({
   url,
@@ -48,8 +55,12 @@ const syncFeed = async ({
   const parsed = await parser.parseURL(url);
   const page = await browser.newPage();
   const items = parsed.items
-    .slice(0, 5)
-    .filter((item): item is { link: string } => !!item.link);
+    .filter((item): item is FeedItem => !!item.link && !!item.pubDate)
+    .filter((item, index) =>
+      user.lastSyncDate
+        ? dayjs(item.pubDate).isAfter(user.lastSyncDate)
+        : index < 2
+    );
 
   for (const item of items) {
     await syncArticle({ url: item.link, page, api });
@@ -89,6 +100,20 @@ const syncUserFeeds = async ({
     )
   );
 
+  const sortedFeedsDates = syncedFeeds
+    .flat()
+    .map((article) => article.pubDate)
+    .sort((a, b) => (dayjs(a).isAfter(dayjs(b)) ? -1 : 1));
+
+  await prisma.user.update({
+    where: { username: user.username },
+    data: {
+      lastSyncDate: sortedFeedsDates[0]
+        ? new Date(sortedFeedsDates[0])
+        : new Date(),
+    },
+  });
+
   if (!passedBrowser) {
     await browser.close();
   }
@@ -108,9 +133,11 @@ const syncAll = async () => {
   await browser.close();
 
   return {
-    users: users.length,
-    feeds: syncedFeeds.flat().length,
-    articles: syncedFeeds.flat(2).length,
+    stats: {
+      users: users.length,
+      feeds: syncedFeeds.flat().length,
+      articles: syncedFeeds.flat(2).length,
+    },
   };
 };
 
@@ -119,7 +146,13 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const { users, feeds, articles } = await syncAll();
+    if (!(req.headers["api-key"] === env.API_KEY)) {
+      throw new Error("Missing api key!");
+    }
+
+    const {
+      stats: { users, feeds, articles },
+    } = await syncAll();
 
     return res.status(200).json({
       status: "Success",
@@ -130,6 +163,6 @@ export default async function handler(
 
     return res
       .status(e?.status || 400)
-      .json({ status: "error", message: e || "Bad request" });
+      .json({ status: "error", message: e?.message || "Bad request" });
   }
 }
