@@ -1,7 +1,7 @@
 import { remarkable, type RemarkableApi } from "rmapi-js";
 import { webcrypto } from "crypto";
-import puppeteer, { type Browser, type Page } from "puppeteer";
 import Parser from "rss-parser";
+import { chromium, type Browser, type Page } from "playwright";
 import { prisma } from "../../server/db/client";
 import type { User } from "@prisma/client";
 import { PDF_OPTIONS } from "../../utils/consts";
@@ -24,9 +24,9 @@ const syncArticle = async ({
   api: RemarkableApi;
 }) => {
   await page.goto(url, {
-    waitUntil: "networkidle0",
+    waitUntil: "networkidle",
   });
-  await page.emulateMediaType("screen");
+  //await page.emulateMediaType("screen");
   const title = await page.title();
 
   const pdf = await page.pdf(PDF_OPTIONS);
@@ -79,7 +79,7 @@ const syncUserFeeds = async ({
   parser?: Parser;
 }) => {
   const parser = passedParser || new Parser();
-  const browser = passedBrowser || (await puppeteer.launch());
+  const browser = passedBrowser || (await chromium.launch());
 
   const user = await prisma.user.findUnique({
     where: { username },
@@ -123,7 +123,7 @@ const syncUserFeeds = async ({
 
 const syncAll = async () => {
   const parser = new Parser();
-  const browser = await puppeteer.launch();
+  const browser = await chromium.launch();
   const users = await prisma.user.findMany();
 
   const syncedFeeds = await Promise.all(
