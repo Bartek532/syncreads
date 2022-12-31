@@ -7,7 +7,12 @@ import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
   const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
+  /*
+  const mutation = trpc.feed.createFeed.useMutation();
 
+  mutation.mutate({ url: "https://css-tricks.com/feed/" });
+  console.log(mutation.isLoading);
+  */
   return (
     <>
       <Head>
@@ -63,7 +68,7 @@ const AuthShowcase: React.FC = () => {
 
   const { data: secretMessage } = trpc.auth.getSecretMessage.useQuery(
     undefined, // no input
-    { enabled: sessionData?.user !== undefined },
+    { enabled: sessionData?.user !== undefined }
   );
 
   return (

@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { newUserSchema } from "../../utils/validation";
 import { prisma } from "../../server/db/client";
+import { HTTP_METHOD } from "../../utils/consts";
 
 const addUser = async ({
   email,
@@ -19,7 +20,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    if (req.method === "POST") {
+    if (req.method === HTTP_METHOD.POST) {
       newUserSchema.parse(req.body);
       const user = await addUser(req.body);
 

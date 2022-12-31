@@ -78,18 +78,22 @@ const syncUserFeeds = async ({
 
   const user = await prisma.user.findUnique({
     where: { email },
-    include: { feeds: true },
+    include: { feeds: true, tokens: true },
   });
 
   if (!user) {
     throw new Error(`User with email ${email} not found!`);
   }
 
+  if (!user.tokens.length) {
+    throw new Error(`Device token not found, register your device first!`);
+  }
+
   const api = webcrypto
-    ? await remarkable(user.deviceToken, {
+    ? await remarkable(user.tokens[0]!.token, {
         subtle: webcrypto.subtle,
       })
-    : await remarkable(user.deviceToken);
+    : await remarkable(user.tokens[0]!.token);
 
   const syncedFeeds = await Promise.all(
     user.feeds.map((feed) =>
