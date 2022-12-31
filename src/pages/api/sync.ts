@@ -3,12 +3,11 @@ import { webcrypto } from "crypto";
 import Parser from "rss-parser";
 import { prisma } from "../../server/db/client";
 import type { User } from "@prisma/client";
-import { PDF_OPTIONS } from "../../utils/consts";
+import { BROWSER_OPTIONS, PDF_OPTIONS } from "../../utils/consts";
 import type { NextApiRequest, NextApiResponse } from "next";
 import dayjs from "dayjs";
 import { env } from "../../env/server.mjs";
-import pdf from "html-pdf";
-import { parseHtml } from "../../utils/functions";
+import puppeteer, { type Page, type Browser } from "puppeteer-core";
 
 type FeedItem = {
   link: string;
@@ -18,25 +17,22 @@ type FeedItem = {
 const syncArticle = async ({
   url,
   api,
+  page,
 }: {
   url: string;
   api: RemarkableApi;
+  page: Page;
 }) => {
-  const response = await fetch(url);
-  const html = await response.text();
-  const htmlToParse = parseHtml(html);
+  await page.goto(url, { waitUntil: "networkidle0", timeout: 0 });
+  const pdf = await page.pdf(PDF_OPTIONS);
 
-  pdf.create(htmlToParse, PDF_OPTIONS).toBuffer(async (err, buffer) => {
-    if (err) throw err;
-
-    const entry = await api.putPdf(url, buffer);
-    const [root, gen] = await api.getRootHash();
-    const rootEntries = await api.getEntries(root);
-    rootEntries.push(entry);
-    const { hash } = await api.putEntries("", rootEntries);
-    const nextGen = await api.putRootHash(hash, gen);
-    await api.syncComplete(nextGen);
-  });
+  const entry = await api.putPdf(url, pdf);
+  const [root, gen] = await api.getRootHash();
+  const rootEntries = await api.getEntries(root);
+  rootEntries.push(entry);
+  const { hash } = await api.putEntries("", rootEntries);
+  const nextGen = await api.putRootHash(hash, gen);
+  await api.syncComplete(nextGen);
 };
 
 const syncFeed = async ({
@@ -44,11 +40,13 @@ const syncFeed = async ({
   user,
   api,
   parser,
+  browser,
 }: {
   url: string;
   user: User;
   api: RemarkableApi;
   parser: Parser;
+  browser: Browser;
 }) => {
   const parsed = await parser.parseURL(url);
   const items = parsed.items
@@ -58,30 +56,33 @@ const syncFeed = async ({
         ? dayjs(item.pubDate).isAfter(user.lastSyncDate)
         : index < 1
     );
-
+  const page = await browser.newPage();
   for (const item of items) {
-    await syncArticle({ url: item.link, api });
+    await syncArticle({ url: item.link, api, page });
   }
 
   return items;
 };
 
 const syncUserFeeds = async ({
-  username,
+  email,
   parser: passedParser,
+  browser: passedBrowser,
 }: {
-  username: string;
+  email: string;
   parser?: Parser;
+  browser?: Browser;
 }) => {
   const parser = passedParser || new Parser();
+  const browser = passedBrowser || (await puppeteer.launch(BROWSER_OPTIONS));
 
   const user = await prisma.user.findUnique({
-    where: { username },
+    where: { email },
     include: { feeds: true },
   });
 
   if (!user) {
-    throw new Error(`User ${username} not found!`);
+    throw new Error(`User with email ${email} not found!`);
   }
 
   const api = webcrypto
@@ -91,7 +92,9 @@ const syncUserFeeds = async ({
     : await remarkable(user.deviceToken);
 
   const syncedFeeds = await Promise.all(
-    user.feeds.map((feed) => syncFeed({ url: feed.url, user, api, parser }))
+    user.feeds.map((feed) =>
+      syncFeed({ url: feed.url, user, api, parser, browser })
+    )
   );
 
   const sortedFeedsDates = syncedFeeds
@@ -100,7 +103,7 @@ const syncUserFeeds = async ({
     .sort((a, b) => (dayjs(a).isAfter(dayjs(b)) ? -1 : 1));
 
   await prisma.user.update({
-    where: { username: user.username },
+    where: { email: user.email },
     data: {
       lastSyncDate: sortedFeedsDates[0]
         ? new Date(sortedFeedsDates[0])
@@ -113,11 +116,12 @@ const syncUserFeeds = async ({
 
 const syncAll = async () => {
   const parser = new Parser();
+  const browser = await puppeteer.launch(BROWSER_OPTIONS);
 
   const users = await prisma.user.findMany();
 
   const syncedFeeds = await Promise.all(
-    users.map(({ username }) => syncUserFeeds({ username, parser }))
+    users.map(({ email }) => syncUserFeeds({ email, parser, browser }))
   );
 
   return {
@@ -151,6 +155,6 @@ export default async function handler(
 
     return res
       .status(e?.status || 400)
-      .json({ status: "error", message: e?.message || "Bad request" });
+      .json({ status: "Error", message: e?.message || "Bad request" });
   }
 }

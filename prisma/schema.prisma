@@ -6,23 +6,28 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id           String    @id @default(auto()) @map("_id") @db.ObjectId
-  username     String    @unique
+  id           Int         @id @default(autoincrement())
+  email        String      @unique
   password     String
-  deviceToken  String
   lastSyncDate DateTime?
-  feedIDs      String[]  @db.ObjectId
-  feeds        Feed[]    @relation(fields: [feedIDs], references: [id])
+  feeds        Feed[]
+  tokens       UserToken[]
+}
+
+model UserToken {
+  id     Int    @id @default(autoincrement())
+  token  String @unique
+  userId Int
+  user   User   @relation(fields: [userId], references: [id])
 }
 
 model Feed {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  url     String
-  userIDs String[] @db.ObjectId
-  users   User[]   @relation(fields: [userIDs], references: [id])
+  id    Int    @id @default(autoincrement())
+  url   String @unique
+  users User[]
 }
