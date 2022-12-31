@@ -8,4 +8,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: cURL request
-        run: "curl https://remarkable-rss.vercel.app/api/sync -H 'api-key: ${{ secrets.API_KEY }}'"
+        run: "curl https://rssmarkable.fly.dev/api/sync -H 'api-key: ${{ secrets.API_KEY }}'"
