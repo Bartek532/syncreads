@@ -6,13 +6,6 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
-  const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
-  /*
-  const mutation = trpc.feed.createFeed.useMutation();
-
-  mutation.mutate({ url: "https://css-tricks.com/feed/" });
-  console.log(mutation.isLoading);
-  */
   return (
     <>
       <Head>
@@ -50,9 +43,6 @@ const Home: NextPage = () => {
             </Link>
           </div>
           <div className="flex flex-col items-center gap-2">
-            <p className="text-2xl text-white">
-              {hello.data ? hello.data.greeting : "Loading tRPC query..."}
-            </p>
             <AuthShowcase />
           </div>
         </div>
@@ -70,8 +60,6 @@ const AuthShowcase: React.FC = () => {
     undefined, // no input
     { enabled: sessionData?.user !== undefined }
   );
-
-  console.log(sessionData);
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">

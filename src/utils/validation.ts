@@ -10,8 +10,13 @@ export const registerUserSchema = z.object({
 });
 
 export const loginUserSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8).regex(PASSWORD_REGEX),
+  email: z.string().email("Email must be a valid email."),
+  password: z
+    .string()
+    .regex(
+      PASSWORD_REGEX,
+      "Password must contain an uppercase letter, a special character, a number and must be at least 8 characters long."
+    ),
 });
 
 export const createFeedSchema = z.object({
