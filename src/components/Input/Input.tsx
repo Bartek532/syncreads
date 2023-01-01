@@ -6,8 +6,8 @@ import {
 
 export const Input = forwardRef<
   HTMLInputElement,
-  JSX.IntrinsicElements["input"] & { isError?: boolean }
->(({ isError, children, ...props }, ref) => {
+  JSX.IntrinsicElements["input"] & { isError?: boolean; isValidated?: boolean }
+>(({ isError, isValidated, children, ...props }, ref) => {
   return (
     <div>
       <label className="block text-sm font-medium text-gray-700">
@@ -27,12 +27,12 @@ export const Input = forwardRef<
               className="h-5 w-5 text-red-500"
               aria-hidden="true"
             />
-          ) : (
+          ) : isValidated ? (
             <CheckCircleIcon
               className="h-5 w-5 text-green-500"
               aria-hidden="true"
             />
-          )}
+          ) : null}
         </div>
       </div>
     </div>

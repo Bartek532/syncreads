@@ -1,34 +1,44 @@
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginUserSchema } from "src/utils/validation";
-import type { Login } from "src/utils/types";
+import { registerUserSchema } from "src/utils/validation";
+import type { Register } from "src/utils/types";
 import { Input } from "src/components/Input/Input";
 import GithubIcon from "public/svg/social/github.svg";
 import TwitterIcon from "public/svg/social/twitter.svg";
 import FacebookIcon from "public/svg/social/fb.svg";
+import { trpc } from "src/utils/trpc";
+import { useRouter } from "next/router";
 
-export const LoginView = () => {
+export const RegisterView = () => {
   const [isFormValidated, setIsFormValidated] = useState(false);
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors, isValidating },
-  } = useForm<Login>({
-    resolver: zodResolver(loginUserSchema),
+  } = useForm<Register>({
+    resolver: zodResolver(registerUserSchema),
   });
+
+  const { mutateAsync } = trpc.auth.register.useMutation();
+
+  const onSubmit = useCallback(
+    async (data: Register) => {
+      const result = await mutateAsync(data);
+      if (+result.status === 201) {
+        router.push("/");
+      }
+    },
+    [mutateAsync, router]
+  );
 
   useEffect(() => {
     if (isValidating) {
       setIsFormValidated(true);
     }
   }, [isValidating]);
-
-  const onSubmit = useCallback(async (data: Login) => {
-    await signIn("credentials", { ...data, callbackUrl: "/dashboard" });
-  }, []);
 
   return (
     <div className="flex min-h-screen">
@@ -41,10 +51,10 @@ export const LoginView = () => {
               alt="Your Company"
             />
             <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">
-              Log in to your account
+              Register to RSSmarkable
             </h2>
             <p className="mt-2 text-sm text-gray-600">
-              to begin your journey 🚀
+              and always be up to date!
             </p>
           </div>
 
@@ -52,7 +62,7 @@ export const LoginView = () => {
             <div>
               <div>
                 <p className="text-sm font-medium text-gray-700">
-                  Sign in with
+                  Sign up with
                 </p>
 
                 <div className="mt-1 grid grid-cols-3 gap-3">
@@ -61,7 +71,7 @@ export const LoginView = () => {
                       href="#"
                       className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
                     >
-                      <span className="sr-only">Sign in with Facebook</span>
+                      <span className="sr-only">Sign up with Facebook</span>
                       <FacebookIcon className="h-5 w-5" />
                     </a>
                   </div>
@@ -71,7 +81,7 @@ export const LoginView = () => {
                       href="#"
                       className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
                     >
-                      <span className="sr-only">Sign in with Twitter</span>
+                      <span className="sr-only">Sign up with Twitter</span>
                       <TwitterIcon className="h-5 w-5" />
                     </a>
                   </div>
@@ -81,7 +91,7 @@ export const LoginView = () => {
                       href="#"
                       className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
                     >
-                      <span className="sr-only">Sign in with GitHub</span>
+                      <span className="sr-only">Sign up with GitHub</span>
                       <GithubIcon className="h-5 w-5" />
                     </a>
                   </div>
@@ -105,6 +115,21 @@ export const LoginView = () => {
 
             <div className="mt-6">
               <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+                <div>
+                  <Input
+                    {...register("name")}
+                    isError={!!errors.name?.message}
+                    isValidated={isFormValidated}
+                  >
+                    Name
+                  </Input>
+                  {errors.name?.message && (
+                    <p className="mt-1 text-xs text-red-500">
+                      {errors.name?.message}
+                    </p>
+                  )}
+                </div>
+
                 <div>
                   <Input
                     type="email"
@@ -139,12 +164,12 @@ export const LoginView = () => {
 
                 <div className="flex items-center justify-end">
                   <div className="text-sm">
-                    Don&apos;t have an account yet?
+                    Already have an account?
                     <Link
-                      href="/register"
+                      href="/login"
                       className="pl-2 font-medium text-indigo-600 hover:text-indigo-500"
                     >
-                      Sign up!
+                      Sign in!
                     </Link>
                   </div>
                 </div>
@@ -154,7 +179,7 @@ export const LoginView = () => {
                     type="submit"
                     className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                   >
-                    Sign in
+                    Sign up
                   </button>
                 </div>
               </form>
