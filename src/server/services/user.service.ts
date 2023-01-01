@@ -13,3 +13,10 @@ export const createUser = ({
 export const getUserByEmail = ({ email }: { email: string }) => {
   return prisma.user.findUnique({ where: { email } });
 };
+
+export const getUserFeeds = ({ email }: { email: string }) => {
+  return prisma.feed.findMany({
+    include: { users: true },
+    where: { users: { some: { email } } },
+  });
+};

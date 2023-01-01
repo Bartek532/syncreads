@@ -3,16 +3,16 @@ import {
   deleteFeedHandler,
   getAllFeedsHandler,
 } from "src/server/controllers/feed.controller";
-import { createFeedSchema, params } from "src/utils/validation";
+import { createAndConnectFeedSchema, params } from "src/utils/validation";
 
-import { router, publicProcedure } from "../trpc";
+import { router, protectedProcedure } from "../trpc";
 
 export const feedRouter = router({
-  createFeed: publicProcedure
-    .input(createFeedSchema)
+  createFeed: protectedProcedure
+    .input(createAndConnectFeedSchema)
     .mutation(({ input }) => createFeedHandler({ input })),
-  deleteFeed: publicProcedure
+  deleteFeed: protectedProcedure
     .input(params)
     .query(({ input }) => deleteFeedHandler({ params: input })),
-  getAllFeeds: publicProcedure.query(() => getAllFeedsHandler()),
+  getAllFeeds: protectedProcedure.query(() => getAllFeedsHandler()),
 });

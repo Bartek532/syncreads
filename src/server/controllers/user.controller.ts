@@ -1,7 +1,11 @@
 import { TRPCError } from "@trpc/server";
-import { hash } from "argon2";
+import { hash } from "bcrypt";
 import type { RegisterUserInput } from "src/utils/validation";
-import { createUser, getUserByEmail } from "../services/user.service";
+import {
+  createUser,
+  getUserByEmail,
+  getUserFeeds,
+} from "../services/user.service";
 
 export const registerUserHandler = async ({
   input,
@@ -20,14 +24,27 @@ export const registerUserHandler = async ({
       });
     }
 
-    const hashedPassword = await hash(password);
-    const user = await createUser({ email, password: hashedPassword });
+    //const hashedPassword = await hash(password, 10);
+    const user = await createUser({ email, password });
 
     return {
       status: "Success",
       message: `Successfully created user account!`,
       user,
     };
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const getUserFeedsHandler = async ({
+  input,
+}: {
+  input: { email: string };
+}) => {
+  try {
+    return getUserFeeds({ email: input.email });
   } catch (err) {
     console.error(err);
     throw err;
