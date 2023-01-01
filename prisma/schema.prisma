@@ -49,6 +49,7 @@ model User {
   name          String?
   email         String?     @unique
   emailVerified DateTime?
+  password      String?
   lastSyncDate  DateTime?
   image         String?
   accounts      Account[]

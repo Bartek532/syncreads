@@ -8,24 +8,17 @@ import { env } from "../../../env/server.mjs";
 import { prisma } from "../../../server/db/client";
 import { loginUserSchema } from "src/utils/validation";
 import { getUserByEmail } from "src/server/services/user.service";
-import { verify } from "argon2";
+import { compare } from "bcrypt";
 
 export const authOptions: NextAuthOptions = {
-  jwt: {
-    secret: env.NEXTAUTH_SECRET,
-    maxAge: 15 * 24 * 30 * 60, // 15 days
-  },
-  /*
   pages: {
     signIn: "/login",
     newUser: "/register",
   },
-  */
-  // Include user.id on session
   callbacks: {
-    session({ session, user }) {
+    session: async ({ session, token }) => {
       if (session.user) {
-        session.user.id = user.id;
+        session.user.id = token.id as string;
       }
       return session;
     },
@@ -38,8 +31,11 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
   },
-  // Configure one or more authentication providers
+  session: {
+    strategy: "jwt",
+  },
   adapter: PrismaAdapter(prisma),
+  secret: "secret",
   providers: [
     /*
     DiscordProvider({
@@ -63,11 +59,11 @@ export const authOptions: NextAuthOptions = {
         );
 
         const user = await getUserByEmail({ email });
-        if (!user) {
+        if (!user || !user.password) {
           return null;
         }
 
-        const isValidPassword = await verify(user.password, password);
+        const isValidPassword = password === user.password; //await compare(password, user.password);
         if (!isValidPassword) {
           return null;
         }
