@@ -1,7 +1,7 @@
-name: Fetch feeds on 6:00 AM every day
+name: Fetch feeds every 6 hours
 on:
   schedule:
-    - cron: "*/3 * * * *"
+    - cron: "* */6 * * *"
 jobs:
   sync:
     name: Fetch feed articles and save to reMarkable cloud.
