@@ -3,6 +3,7 @@ import NextAuth, { type NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
 import { getUserByEmail } from "src/server/services/user.service";
+import { ApiError, HTTP_STATUS_CODE } from "src/utils/exceptions";
 import { loginUserSchema } from "src/utils/validation";
 
 import { prisma } from "../../../server/db/client";
@@ -57,12 +58,19 @@ export const authOptions: NextAuthOptions = {
 
         const user = await getUserByEmail({ email });
         if (!user?.password) {
-          return null;
+          throw new ApiError(
+            HTTP_STATUS_CODE.NOT_FOUND,
+            "Something went wrong, check your credentials and try again!",
+          );
         }
 
-        const isValidPassword = password === user.password; //await compare(password, user.password);
+        const isValidPassword = password === user.password;
+        //await compare(password, user.password);
         if (!isValidPassword) {
-          return null;
+          throw new ApiError(
+            HTTP_STATUS_CODE.NOT_FOUND,
+            "Something went wrong, check your credentials and try again!",
+          );
         }
 
         return { ...user, id: user.id.toString() };

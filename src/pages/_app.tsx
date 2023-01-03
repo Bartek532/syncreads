@@ -1,9 +1,7 @@
 import { SessionProvider } from "next-auth/react";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Toaster } from "react-hot-toast";
 
 import "../styles/globals.css";
-import "../styles/toastify.css";
 import { trpc } from "../utils/trpc";
 
 import type { Session } from "next-auth";
@@ -16,17 +14,23 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <SessionProvider session={session}>
       <Component {...pageProps} />
-      <ToastContainer
+      <Toaster
         position="bottom-right"
-        autoClose={false}
-        hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
+        containerStyle={{ padding: "20px" }}
+        gutter={13}
+        toastOptions={{
+          style: {
+            padding: "14px 25px",
+            minWidth: "250px",
+            gap: "10px",
+          },
+          error: {
+            style: {
+              backgroundColor: "#fef2f2",
+              color: "#991b1b",
+            },
+          },
+        }}
       />
     </SessionProvider>
   );

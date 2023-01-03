@@ -1,8 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 
 import FacebookIcon from "public/svg/social/fb.svg";
 import GithubIcon from "public/svg/social/github.svg";
@@ -12,11 +12,11 @@ import { onPromise } from "src/utils/functions";
 import { trpc } from "src/utils/trpc";
 import { registerUserSchema } from "src/utils/validation";
 
+import type { TRPCError } from "@trpc/server";
 import type { Register } from "src/utils/types";
 
 export const RegisterView = () => {
   const [isFormValidated, setIsFormValidated] = useState(false);
-  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -29,12 +29,13 @@ export const RegisterView = () => {
 
   const onSubmit = useCallback(
     async (data: Register) => {
-      const result = await mutateAsync(data);
-      if (+result.status === 201) {
-        await router.push("/");
-      }
+      await toast.promise(mutateAsync(data), {
+        loading: "Registering...",
+        success: "Successfully registered!",
+        error: (err: TRPCError) => err.message,
+      });
     },
-    [mutateAsync, router],
+    [mutateAsync],
   );
 
   useEffect(() => {
@@ -45,7 +46,7 @@ export const RegisterView = () => {
 
   return (
     <div className="flex min-h-screen">
-      <div className="flex flex-1 flex-col justify-start  py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
+      <div className="flex flex-1 flex-col justify-start  py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-28">
         <div className="mx-auto w-full max-w-sm lg:w-96">
           <div>
             <img
@@ -57,7 +58,7 @@ export const RegisterView = () => {
               Register to RSSmarkable
             </h2>
             <p className="mt-2 text-sm text-gray-600">
-              and always be up to date!
+              and always be up to date! 🔄
             </p>
           </div>
 

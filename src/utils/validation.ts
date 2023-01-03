@@ -6,9 +6,14 @@ const PASSWORD_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,}$/;
 
 export const registerUserSchema = z.object({
-  name: z.string(),
-  email: z.string().email(),
-  password: z.string().min(8).regex(PASSWORD_REGEX),
+  name: z.string().min(1, "Name is required."),
+  email: z.string().email("Email must be a valid email."),
+  password: z
+    .string()
+    .regex(
+      PASSWORD_REGEX,
+      "Password must contain an uppercase letter, a special character, a number and must be at least 8 characters long.",
+    ),
 });
 
 export const loginUserSchema = z.object({

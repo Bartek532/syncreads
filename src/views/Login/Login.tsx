@@ -1,9 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 import FacebookIcon from "public/svg/social/fb.svg";
 import GithubIcon from "public/svg/social/github.svg";
@@ -15,6 +16,7 @@ import { loginUserSchema } from "src/utils/validation";
 import type { Login } from "src/utils/types";
 
 export const LoginView = () => {
+  const router = useRouter();
   const [isFormValidated, setIsFormValidated] = useState(false);
   const {
     register,
@@ -31,18 +33,23 @@ export const LoginView = () => {
   }, [isValidating]);
 
   const onSubmit = async (data: Login) => {
+    const loadingToast = toast.loading("Signing in...");
     const result = await signIn("credentials", {
       ...data,
       redirect: false,
     });
+
     if (result?.error) {
-      toast.error(result.error);
+      return toast.error(result.error, { id: loadingToast });
     }
+
+    toast.dismiss(loadingToast);
+    return router.push("/dashboard");
   };
 
   return (
     <div className="flex min-h-screen">
-      <div className="flex flex-1 flex-col justify-start  py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
+      <div className="flex flex-1 flex-col justify-start  py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-28">
         <div className="mx-auto w-full max-w-sm lg:w-96">
           <div>
             <img
