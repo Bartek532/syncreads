@@ -1,18 +1,22 @@
-import { remarkable, type RemarkableApi } from "rmapi-js";
 import { webcrypto } from "crypto";
-import Parser from "rss-parser";
-import { prisma } from "../../server/db/client";
-import type { User } from "@prisma/client";
-import { BROWSER_OPTIONS, PDF_OPTIONS } from "../../utils/consts";
-import type { NextApiRequest, NextApiResponse } from "next";
 import dayjs from "dayjs";
-import { env } from "../../env/server.mjs";
 import puppeteer, { type Page, type Browser } from "puppeteer-core";
+import { remarkable, type RemarkableApi } from "rmapi-js";
+import Parser from "rss-parser";
 
-type FeedItem = {
+import { ApiError, HTTP_STATUS_CODE } from "src/utils/exceptions.js";
+
+import { env } from "../../env/server.mjs";
+import { prisma } from "../../server/db/client";
+import { BROWSER_OPTIONS, PDF_OPTIONS } from "../../utils/consts";
+
+import type { User } from "@prisma/client";
+import type { NextApiRequest, NextApiResponse } from "next";
+
+interface FeedItem {
   link: string;
   pubDate: string;
-};
+}
 
 const syncArticle = async ({
   url,
@@ -54,7 +58,7 @@ const syncFeed = async ({
     .filter((item, index) =>
       user.lastSyncDate
         ? dayjs(item.pubDate).isAfter(user.lastSyncDate)
-        : index < 1
+        : index < 1,
     );
   const page = await browser.newPage();
   for (const item of items) {
@@ -73,15 +77,15 @@ const syncUserFeeds = async ({
   parser?: Parser;
   browser?: Browser;
 }) => {
-  const parser = passedParser || new Parser();
-  const browser = passedBrowser || (await puppeteer.launch(BROWSER_OPTIONS));
+  const parser = passedParser ?? new Parser();
+  const browser = passedBrowser ?? (await puppeteer.launch(BROWSER_OPTIONS));
 
   const user = await prisma.user.findUnique({
     where: { email },
     include: { feeds: true, tokens: true },
   });
 
-  if (!user) {
+  if (!user?.email) {
     throw new Error(`User with email ${email} not found!`);
   }
 
@@ -97,8 +101,8 @@ const syncUserFeeds = async ({
 
   const syncedFeeds = await Promise.all(
     user.feeds.map((feed) =>
-      syncFeed({ url: feed.url, user, api, parser, browser })
-    )
+      syncFeed({ url: feed.url, user, api, parser, browser }),
+    ),
   );
 
   const sortedFeedsDates = syncedFeeds
@@ -125,7 +129,9 @@ const syncAll = async () => {
   const users = await prisma.user.findMany();
 
   const syncedFeeds = await Promise.all(
-    users.map(({ email }) => syncUserFeeds({ email, parser, browser }))
+    users.map(({ email }) =>
+      syncUserFeeds({ email: email ?? "", parser, browser }),
+    ),
   );
 
   return {
@@ -139,11 +145,11 @@ const syncAll = async () => {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   try {
     if (!(req.headers["api-key"] === env.API_KEY)) {
-      throw new Error("Missing api key!");
+      throw new ApiError(HTTP_STATUS_CODE.UNAUTHORIZED, "Missing api key!");
     }
 
     const {
@@ -154,11 +160,18 @@ export default async function handler(
       status: "Success",
       message: `Successfully synced ${feeds} feed(s) - ${articles} article(s) for ${users} user(s)`,
     });
-  } catch (e: any) {
+  } catch (e: unknown) {
     console.log(e);
+    if (e instanceof ApiError) {
+      return res.status(e.status).json({ status: "Error", message: e.message });
+    }
+
+    if (e instanceof Error) {
+      return res.status(500).json({ status: "Error", message: e.message });
+    }
 
     return res
-      .status(e?.status || 400)
-      .json({ status: "Error", message: e?.message || "Bad request" });
+      .status(500)
+      .json({ status: "Error", message: "Internal Server Error" });
   }
 }

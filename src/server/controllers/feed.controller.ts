@@ -1,9 +1,11 @@
 import { TRPCError } from "@trpc/server";
+
+import { createFeed, deleteFeed, getAllFeeds } from "../services/feed.service";
+
 import type {
   CreateAndConnectFeedInput,
   ParamsInput,
 } from "src/utils/validation";
-import { createFeed, deleteFeed, getAllFeeds } from "../services/feed.service";
 
 export const createFeedHandler = async ({
   input,

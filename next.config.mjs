@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 // @ts-check
 /**
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.

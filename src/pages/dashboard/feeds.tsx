@@ -1,10 +1,13 @@
-import type { NextPage } from "next";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { CreateFeedInput } from "src/utils/validation";
-import { createFeedSchema } from "src/utils/validation";
-import { trpc } from "src/utils/trpc";
 import { useSession } from "next-auth/react";
+import { useForm } from "react-hook-form";
+
+import { onPromise } from "src/utils/functions";
+import { trpc } from "src/utils/trpc";
+import { createFeedSchema } from "src/utils/validation";
+
+import type { NextPage } from "next";
+import type { CreateFeedInput } from "src/utils/validation";
 
 const Feeds: NextPage = () => {
   const { data } = useSession();
@@ -12,18 +15,21 @@ const Feeds: NextPage = () => {
     resolver: zodResolver(createFeedSchema),
   });
 
+  if (!data?.user?.email) {
+    return null;
+  }
+
   const feeds = trpc.user.getUserFeeds.useQuery({
-    email: data?.user?.email as string,
+    email: data.user.email,
   });
 
   const addFeedMutation = trpc.feed.createFeed.useMutation();
 
-  const onSubmit = async ({ url }: CreateFeedInput) => {
-    await addFeedMutation.mutateAsync({
+  const onSubmit = ({ url }: CreateFeedInput) =>
+    addFeedMutation.mutateAsync({
       url,
-      email: data?.user?.email as string,
+      email: data.user!.email!,
     });
-  };
 
   return (
     <div>
@@ -31,7 +37,7 @@ const Feeds: NextPage = () => {
         <code>{JSON.stringify(feeds.data)}</code>
         <form
           className="flex h-screen w-full items-center justify-center"
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={onPromise(handleSubmit(onSubmit))}
         >
           <h2 className="card-title">Add feed!</h2>
           <input

@@ -1,5 +1,7 @@
 import { prisma } from "src/server/db/client";
 
+import type { Feed } from "@prisma/client";
+
 export const createFeed = async ({
   url,
   email,
@@ -29,6 +31,10 @@ export const getAllFeeds = async () => {
   return prisma.feed.findMany();
 };
 
-export const deleteFeed = async ({ id }: { id: number }) => {
+export const deleteFeed = async ({
+  id,
+}: {
+  id: number;
+}): Promise<Feed | null> => {
   return prisma.feed.delete({ where: { id } });
 };

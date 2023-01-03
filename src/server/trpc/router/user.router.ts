@@ -1,5 +1,6 @@
-import { getUserFeeds } from "src/server/services/user.service";
 import { z } from "zod";
+
+import { getUserFeeds } from "src/server/services/user.service";
 
 import { router, protectedProcedure } from "../trpc";
 

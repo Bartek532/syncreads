@@ -1,6 +1,9 @@
-import type { NextPage } from "next";
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
+
+import { onPromise } from "src/utils/functions";
+
+import type { NextPage } from "next";
 
 const Dashboard: NextPage = () => {
   const { data } = useSession();
@@ -25,7 +28,7 @@ const Dashboard: NextPage = () => {
           <div className="text-center">
             <button
               className="btn btn-secondary"
-              onClick={() => signOut({ callbackUrl: "/" })}
+              onClick={onPromise(() => signOut({ callbackUrl: "/" }))}
             >
               Logout
             </button>

@@ -1,5 +1,6 @@
-import type { TypeOf } from "zod";
 import { z } from "zod";
+
+import type { TypeOf } from "zod";
 
 const PASSWORD_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,}$/;
@@ -16,7 +17,7 @@ export const loginUserSchema = z.object({
     .string()
     .regex(
       PASSWORD_REGEX,
-      "Password must contain an uppercase letter, a special character, a number and must be at least 8 characters long."
+      "Password must contain an uppercase letter, a special character, a number and must be at least 8 characters long.",
     ),
 });
 

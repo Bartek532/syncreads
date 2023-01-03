@@ -1,15 +1,18 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { registerUserSchema } from "src/utils/validation";
-import type { Register } from "src/utils/types";
-import { Input } from "src/components/Input/Input";
+
+import FacebookIcon from "public/svg/social/fb.svg";
 import GithubIcon from "public/svg/social/github.svg";
 import TwitterIcon from "public/svg/social/twitter.svg";
-import FacebookIcon from "public/svg/social/fb.svg";
+import { Input } from "src/components/Input/Input";
+import { onPromise } from "src/utils/functions";
 import { trpc } from "src/utils/trpc";
-import { useRouter } from "next/router";
+import { registerUserSchema } from "src/utils/validation";
+
+import type { Register } from "src/utils/types";
 
 export const RegisterView = () => {
   const [isFormValidated, setIsFormValidated] = useState(false);
@@ -28,10 +31,10 @@ export const RegisterView = () => {
     async (data: Register) => {
       const result = await mutateAsync(data);
       if (+result.status === 201) {
-        router.push("/");
+        await router.push("/");
       }
     },
-    [mutateAsync, router]
+    [mutateAsync, router],
   );
 
   useEffect(() => {
@@ -114,7 +117,10 @@ export const RegisterView = () => {
             </div>
 
             <div className="mt-6">
-              <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+              <form
+                className="space-y-6"
+                onSubmit={onPromise(handleSubmit(onSubmit))}
+              >
                 <div>
                   <Input
                     {...register("name")}
@@ -125,7 +131,7 @@ export const RegisterView = () => {
                   </Input>
                   {errors.name?.message && (
                     <p className="mt-1 text-xs text-red-500">
-                      {errors.name?.message}
+                      {errors.name.message}
                     </p>
                   )}
                 </div>
@@ -141,7 +147,7 @@ export const RegisterView = () => {
                   </Input>
                   {errors.email?.message && (
                     <p className="mt-1 text-xs text-red-500">
-                      {errors.email?.message}
+                      {errors.email.message}
                     </p>
                   )}
                 </div>
@@ -157,7 +163,7 @@ export const RegisterView = () => {
                   </Input>
                   {errors.password?.message && (
                     <p className="mt-1 text-xs text-red-500">
-                      {errors.password?.message}
+                      {errors.password.message}
                     </p>
                   )}
                 </div>

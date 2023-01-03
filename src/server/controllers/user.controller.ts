@@ -1,11 +1,13 @@
 import { TRPCError } from "@trpc/server";
 import { hash } from "bcrypt";
-import type { RegisterUserInput } from "src/utils/validation";
+
 import {
   createUser,
   getUserByEmail,
   getUserFeeds,
 } from "../services/user.service";
+
+import type { RegisterUserInput } from "src/utils/validation";
 
 export const registerUserHandler = async ({
   input,

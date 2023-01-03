@@ -10,13 +10,13 @@ export enum HTTP_METHOD {
   TRACE = "TRACE",
 }
 
-export type Login = {
+export interface Login {
   readonly email: string;
   readonly password: string;
-};
+}
 
-export type Register = {
+export interface Register {
   readonly name: string;
   readonly email: string;
   readonly password: string;
-};
+}

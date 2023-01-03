@@ -1,14 +1,18 @@
-import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
-import { signIn } from "next-auth/react";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginUserSchema } from "src/utils/validation";
-import type { Login } from "src/utils/types";
-import { Input } from "src/components/Input/Input";
+import { signIn } from "next-auth/react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+
+import FacebookIcon from "public/svg/social/fb.svg";
 import GithubIcon from "public/svg/social/github.svg";
 import TwitterIcon from "public/svg/social/twitter.svg";
-import FacebookIcon from "public/svg/social/fb.svg";
+import { Input } from "src/components/Input/Input";
+import { onPromise } from "src/utils/functions";
+import { loginUserSchema } from "src/utils/validation";
+
+import type { Login } from "src/utils/types";
 
 export const LoginView = () => {
   const [isFormValidated, setIsFormValidated] = useState(false);
@@ -26,9 +30,15 @@ export const LoginView = () => {
     }
   }, [isValidating]);
 
-  const onSubmit = useCallback(async (data: Login) => {
-    await signIn("credentials", { ...data, callbackUrl: "/dashboard" });
-  }, []);
+  const onSubmit = async (data: Login) => {
+    const result = await signIn("credentials", {
+      ...data,
+      redirect: false,
+    });
+    if (result?.error) {
+      toast.error(result.error);
+    }
+  };
 
   return (
     <div className="flex min-h-screen">
@@ -104,7 +114,10 @@ export const LoginView = () => {
             </div>
 
             <div className="mt-6">
-              <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+              <form
+                className="space-y-6"
+                onSubmit={onPromise(handleSubmit(onSubmit))}
+              >
                 <div>
                   <Input
                     type="email"
@@ -116,7 +129,7 @@ export const LoginView = () => {
                   </Input>
                   {errors.email?.message && (
                     <p className="mt-1 text-xs text-red-500">
-                      {errors.email?.message}
+                      {errors.email.message}
                     </p>
                   )}
                 </div>
@@ -132,7 +145,7 @@ export const LoginView = () => {
                   </Input>
                   {errors.password?.message && (
                     <p className="mt-1 text-xs text-red-500">
-                      {errors.password?.message}
+                      {errors.password.message}
                     </p>
                   )}
                 </div>
