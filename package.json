@@ -4,14 +4,17 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "next dev",
+    "dev": "npm run docker:start:dev && next dev",
     "postinstall": "prisma generate",
     "prebuild": "rm -rf .next && prisma generate",
     "lint": "next lint",
     "lint:interactive": "eslint-interactive \"{src,apps,libs,test}/**/*.{ts,tsx}\"",
     "start": "next start",
-    "db:migrate:dev": "dotenv -e .env.development.local -- prisma migrate dev",
-    "docker:dev": "docker-compose up -d"
+    "db:migrate:dev": "prisma migrate dev",
+    "docker:start:dev": "docker-compose -f provision/dev/docker-compose.yml up -d",
+    "docker:stop:dev": "docker-compose -f provision/dev/docker-compose.yml down",
+    "docker:build:dev": "docker-compose -f provision/dev/docker-compose.yml build",
+    "docker:logs": "docker logs --follow rssmarkable"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.13",
