@@ -30,6 +30,12 @@ const MyApp: AppType<{ session: Session | null }> = ({
               color: "#991b1b",
             },
           },
+          success: {
+            style: {
+              backgroundColor: "#f0fdf4",
+              color: "#15803d",
+            },
+          },
         }}
       />
     </SessionProvider>

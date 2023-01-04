@@ -15,7 +15,7 @@ export const registerUserHandler = async ({
   input: RegisterUserInput;
 }) => {
   try {
-    const { email, password } = input;
+    const { email, password, name } = input;
 
     const isUserExists = await getUserByEmail({ email });
 
@@ -27,7 +27,7 @@ export const registerUserHandler = async ({
     }
 
     //const hashedPassword = await hash(password, 10);
-    const user = await createUser({ email, password });
+    const user = await createUser({ email, password, name });
 
     return {
       status: "Success",

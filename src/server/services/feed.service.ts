@@ -23,18 +23,14 @@ export const createFeed = async ({
   });
 };
 
-export const getFeedByUrl = async ({ url }: { url: string }) => {
-  return prisma.feed.findUnique({ where: { url } });
+export const getFeedByUrl = ({ url }: { url: string }) => {
+  return prisma.feed.findUnique({ where: { url }, include: { users: true } });
 };
 
-export const getAllFeeds = async () => {
+export const getAllFeeds = () => {
   return prisma.feed.findMany();
 };
 
-export const deleteFeed = async ({
-  id,
-}: {
-  id: number;
-}): Promise<Feed | null> => {
-  return prisma.feed.delete({ where: { id } });
+export const deleteFeed = ({ url }: { url: string }) => {
+  return prisma.feed.delete({ where: { url } });
 };

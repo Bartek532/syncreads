@@ -35,8 +35,9 @@ export const createAndConnectFeedSchema = z.object({
   email: z.string().email(),
 });
 
-export const params = z.object({
-  id: z.number(),
+export const deleteFeedParams = z.object({
+  url: z.string().url(),
+  email: z.string().email(),
 });
 
 export type RegisterUserInput = TypeOf<typeof registerUserSchema>;
@@ -45,4 +46,4 @@ export type CreateFeedInput = TypeOf<typeof createFeedSchema>;
 export type CreateAndConnectFeedInput = TypeOf<
   typeof createAndConnectFeedSchema
 >;
-export type ParamsInput = TypeOf<typeof params>;
+export type DeleteFeedInput = TypeOf<typeof deleteFeedParams>;

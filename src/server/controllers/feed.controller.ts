@@ -1,10 +1,17 @@
 import { TRPCError } from "@trpc/server";
 
-import { createFeed, deleteFeed, getAllFeeds } from "../services/feed.service";
+import {
+  createFeed,
+  deleteFeed,
+  getAllFeeds,
+  getFeedById,
+  getFeedByUrl,
+} from "../services/feed.service";
+import { deleteFeedFromUser, getUserFeedByUrl } from "../services/user.service";
 
 import type {
   CreateAndConnectFeedInput,
-  ParamsInput,
+  DeleteFeedInput,
 } from "src/utils/validation";
 
 export const createFeedHandler = async ({
@@ -13,6 +20,13 @@ export const createFeedHandler = async ({
   input: CreateAndConnectFeedInput;
 }) => {
   try {
+    const isFeedExists = await getUserFeedByUrl(input);
+    if (isFeedExists) {
+      throw new TRPCError({
+        code: "CONFLICT",
+        message: "You've already added this feed!",
+      });
+    }
     const feed = await createFeed(input);
 
     return {
@@ -29,11 +43,10 @@ export const createFeedHandler = async ({
 export const deleteFeedHandler = async ({
   params,
 }: {
-  params: ParamsInput;
+  params: DeleteFeedInput;
 }) => {
   try {
-    const feed = await deleteFeed({ id: params.id });
-
+    const feed = await getFeedByUrl({ url: params.url });
     if (!feed) {
       throw new TRPCError({
         code: "NOT_FOUND",
@@ -41,9 +54,15 @@ export const deleteFeedHandler = async ({
       });
     }
 
+    if (feed.users.length > 1) {
+      await deleteFeedFromUser(params);
+    } else {
+      await deleteFeed({ url: params.url });
+    }
+
     return {
       status: "Success",
-      message: `Successfully delete feed with id ${params.id}!`,
+      message: `Successfully delete feed with url ${params.url}!`,
       data: null,
     };
   } catch (err) {
