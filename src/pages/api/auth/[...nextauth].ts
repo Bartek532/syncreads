@@ -16,7 +16,8 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     session: ({ session, token }) => {
       if (session.user) {
-        session.user.id = token.id as string;
+        session.user.id = token.id as number;
+        session.user.device = token.device;
       }
       return session;
     },
@@ -24,6 +25,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.id = user.id;
         token.email = user.email ?? null;
+        token.device = null;
       }
 
       return token;
@@ -57,6 +59,7 @@ export const authOptions: NextAuthOptions = {
         );
 
         const user = await getUserByEmail({ email });
+
         if (!user?.password) {
           throw new ApiError(
             HTTP_STATUS_CODE.NOT_FOUND,
@@ -73,6 +76,7 @@ export const authOptions: NextAuthOptions = {
           );
         }
 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         return { ...user, id: user.id.toString() };
       },
     }),

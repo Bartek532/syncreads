@@ -1,13 +1,21 @@
 import { TRPCError } from "@trpc/server";
 import { hash } from "bcrypt";
+import { register } from "rmapi-js";
 
 import {
   createUser,
   getUserByEmail,
+  getUserDevice,
   getUserFeeds,
+  registerUserDevice,
+  unregisterUserDevice,
 } from "../services/user.service";
 
-import type { RegisterUserInput } from "src/utils/validation";
+import type {
+  RegisterAndConnectDeviceInput,
+  RegisterUserInput,
+  UnregisterAndDisconnectDeviceInput,
+} from "src/utils/validation";
 
 export const registerUserHandler = async ({
   input,
@@ -40,6 +48,42 @@ export const registerUserHandler = async ({
   }
 };
 
+export const registerDeviceHandler = async ({
+  email,
+  code,
+}: RegisterAndConnectDeviceInput) => {
+  try {
+    const token = await register(code);
+    const device = await registerUserDevice({ token, email });
+
+    return {
+      status: "Success",
+      message: `Successfully registered your device!`,
+      device,
+    };
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const unregisterDeviceHandler = async ({
+  email,
+}: UnregisterAndDisconnectDeviceInput) => {
+  try {
+    const device = await unregisterUserDevice({ email });
+
+    return {
+      status: "Success",
+      message: `Successfully unregistered your device!`,
+      device,
+    };
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
 export const getUserFeedsHandler = async ({
   input,
 }: {
@@ -47,6 +91,15 @@ export const getUserFeedsHandler = async ({
 }) => {
   try {
     return getUserFeeds({ email: input.email });
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const getUserDeviceHandler = async ({ email }: { email: string }) => {
+  try {
+    return getUserDevice({ email });
   } catch (err) {
     console.error(err);
     throw err;

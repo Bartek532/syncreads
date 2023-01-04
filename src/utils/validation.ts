@@ -30,20 +30,49 @@ export const createFeedSchema = z.object({
   url: z.string().url(),
 });
 
-export const createAndConnectFeedSchema = z.object({
+export const createAndConnectSchema = z.object({
   url: z.string().url(),
   email: z.string().email(),
 });
 
-export const deleteFeedParams = z.object({
+export const deleteFeedSchema = z.object({
   url: z.string().url(),
+});
+
+export const deleteAndDisconnectSchema = z.object({
+  url: z.string().url(),
+  email: z.string().email(),
+});
+
+export const registerDeviceSchema = z.object({
+  code: z
+    .string()
+    .min(8, "Enter valid one-time code.")
+    .max(8, "Enter valid one-time code."),
+});
+
+export const registerAndConnectDeviceSchema = z.object({
+  code: z
+    .string()
+    .min(8, "Enter valid one-time code.")
+    .max(8, "Enter valid one-time code."),
+  email: z.string().email(),
+});
+
+export const unregisterAndDisconnectDeviceSchema = z.object({
   email: z.string().email(),
 });
 
 export type RegisterUserInput = TypeOf<typeof registerUserSchema>;
 export type LoginUserInput = TypeOf<typeof loginUserSchema>;
 export type CreateFeedInput = TypeOf<typeof createFeedSchema>;
-export type CreateAndConnectFeedInput = TypeOf<
-  typeof createAndConnectFeedSchema
+export type CreateAndConnectFeedInput = TypeOf<typeof createAndConnectSchema>;
+export type DeleteFeedInput = TypeOf<typeof deleteFeedSchema>;
+export type DeleteAndDisconnectInput = TypeOf<typeof deleteAndDisconnectSchema>;
+export type RegisterDeviceInput = TypeOf<typeof registerDeviceSchema>;
+export type RegisterAndConnectDeviceInput = TypeOf<
+  typeof registerAndConnectDeviceSchema
 >;
-export type DeleteFeedInput = TypeOf<typeof deleteFeedParams>;
+export type UnregisterAndDisconnectDeviceInput = TypeOf<
+  typeof unregisterAndDisconnectDeviceSchema
+>;
