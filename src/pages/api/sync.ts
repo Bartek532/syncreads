@@ -4,7 +4,7 @@ import puppeteer, { type Page, type Browser } from "puppeteer-core";
 import { remarkable, type RemarkableApi } from "rmapi-js";
 import Parser from "rss-parser";
 
-import { ApiError, HTTP_STATUS_CODE } from "src/utils/exceptions.js";
+import { ApiError, HTTP_STATUS_CODE } from "src/utils/exceptions";
 
 import { env } from "../../env/server.mjs";
 import { prisma } from "../../server/db/client";
@@ -58,7 +58,7 @@ const syncFeed = async ({
     .filter((item, index) =>
       user.lastSyncDate
         ? dayjs(item.pubDate).isAfter(user.lastSyncDate)
-        : index < 1,
+        : index < 2,
     );
   const page = await browser.newPage();
   for (const item of items) {
@@ -82,22 +82,22 @@ const syncUserFeeds = async ({
 
   const user = await prisma.user.findUnique({
     where: { email },
-    include: { feeds: true, tokens: true },
+    include: { feeds: true, device: true },
   });
 
   if (!user?.email) {
     throw new Error(`User with email ${email} not found!`);
   }
 
-  if (!user.tokens.length) {
-    throw new Error(`Device token not found, register your device first!`);
+  if (!user.device) {
+    throw new Error(`Device not found, register your device first!`);
   }
 
   const api = webcrypto
-    ? await remarkable(user.tokens[0]!.token, {
+    ? await remarkable(user.device.token, {
         subtle: webcrypto.subtle,
       })
-    : await remarkable(user.tokens[0]!.token);
+    : await remarkable(user.device.token);
 
   const syncedFeeds = await Promise.all(
     user.feeds.map((feed) =>
