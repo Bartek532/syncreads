@@ -4,34 +4,32 @@ import {
   createFeed,
   deleteFeed,
   getAllFeeds,
-  getFeedById,
   getFeedByUrl,
 } from "../services/feed.service";
 import { deleteFeedFromUser, getUserFeedByUrl } from "../services/user.service";
 
 import type {
   CreateAndConnectFeedInput,
-  DeleteFeedInput,
+  DeleteAndDisconnectInput,
 } from "src/utils/validation";
 
 export const createFeedHandler = async ({
-  input,
-}: {
-  input: CreateAndConnectFeedInput;
-}) => {
+  url,
+  email,
+}: CreateAndConnectFeedInput) => {
   try {
-    const isFeedExists = await getUserFeedByUrl(input);
+    const isFeedExists = await getUserFeedByUrl({ url, email });
     if (isFeedExists) {
       throw new TRPCError({
         code: "CONFLICT",
         message: "You've already added this feed!",
       });
     }
-    const feed = await createFeed(input);
+    const feed = await createFeed({ url, email });
 
     return {
       status: "Success",
-      message: `Successfully created feed!`,
+      message: `Successfully added feed!`,
       feed,
     };
   } catch (err) {
@@ -41,12 +39,11 @@ export const createFeedHandler = async ({
 };
 
 export const deleteFeedHandler = async ({
-  params,
-}: {
-  params: DeleteFeedInput;
-}) => {
+  url,
+  email,
+}: DeleteAndDisconnectInput) => {
   try {
-    const feed = await getFeedByUrl({ url: params.url });
+    const feed = await getFeedByUrl({ url });
     if (!feed) {
       throw new TRPCError({
         code: "NOT_FOUND",
@@ -55,15 +52,15 @@ export const deleteFeedHandler = async ({
     }
 
     if (feed.users.length > 1) {
-      await deleteFeedFromUser(params);
+      await deleteFeedFromUser({ email, url });
     } else {
-      await deleteFeed({ url: params.url });
+      await deleteFeed({ url });
     }
 
     return {
       status: "Success",
-      message: `Successfully delete feed with url ${params.url}!`,
-      data: null,
+      message: `Successfully deleted feed!`,
+      feed,
     };
   } catch (err) {
     console.error(err);

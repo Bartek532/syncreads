@@ -29,41 +29,38 @@ const Feeds: NextPage = () => {
   });
 
   const addFeedMutation = trpc.feed.createFeed.useMutation({
-    onSuccess: () =>
-      utils.user.getUserFeeds.invalidate({ email: data.user!.email! }),
+    onSuccess: () => utils.user.getUserFeeds.invalidate(),
   });
 
   const deleteFeedMutation = trpc.feed.deleteFeed.useMutation({
-    onSuccess: () =>
-      utils.user.getUserFeeds.invalidate({ email: data.user!.email! }),
+    onSuccess: () => utils.user.getUserFeeds.invalidate(),
   });
 
   const onSubmit = async ({ url }: CreateFeedInput) => {
     await toast.promise(
       addFeedMutation.mutateAsync({
         url,
-        email: data.user!.email!,
       }),
       {
         loading: "Adding feed...",
-        success: "Feed has been added!",
+        success: ({ message }) => message,
         error: (err: TRPCError | Error) => err.message,
       },
     );
   };
 
-  const handleDeleteFeed = ({ url }: { url: string }) =>
-    toast.promise(
+  const handleDeleteFeed = async ({ url }: { url: string }) => {
+    await toast.promise(
       deleteFeedMutation.mutateAsync({
         url,
-        email: data.user!.email!,
       }),
       {
         loading: "Deleting feed...",
-        success: "Feed has been deleted!",
+        success: ({ message }) => message,
         error: (err: TRPCError | Error) => err.message,
       },
     );
+  };
 
   return (
     <div>
