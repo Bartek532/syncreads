@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import FacebookIcon from "public/svg/social/fb.svg";
 import GithubIcon from "public/svg/social/github.svg";
 import TwitterIcon from "public/svg/social/twitter.svg";
-import { Input } from "src/components/input/Input";
+import { Input } from "src/components/common/input/Input";
 import { onPromise } from "src/utils/functions";
 import { loginUserSchema } from "src/utils/validation";
 

@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
-import { Input } from "src/components/input/Input";
+import { Input } from "src/components/common/input/Input";
 import { FeedTile } from "src/components/tile/feedTile/FeedTile";
 import { onPromise } from "src/utils/functions";
 import { trpc } from "src/utils/trpc";

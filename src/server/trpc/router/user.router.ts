@@ -11,9 +11,9 @@ import { registerDeviceSchema } from "src/utils/validation";
 import { router, protectedProcedure } from "../trpc";
 
 export const userRouter = router({
-  getUserFeeds: protectedProcedure
-    .input(z.object({ email: z.string().email() }))
-    .query(({ input }) => getUserFeeds(input)),
+  getUserFeeds: protectedProcedure.query(({ ctx }) =>
+    getUserFeeds({ email: ctx.session.user.email }),
+  ),
   registerDevice: protectedProcedure
     .input(registerDeviceSchema)
     .mutation(({ input, ctx }) =>

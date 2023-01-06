@@ -20,3 +20,5 @@ export interface Register {
   readonly email: string;
   readonly password: string;
 }
+
+export type HeroIcon = (props: React.ComponentProps<"svg">) => JSX.Element;
