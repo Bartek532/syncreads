@@ -1,0 +1,43 @@
+import { CheckCircleIcon } from "@heroicons/react/20/solid";
+import { memo } from "react";
+
+import { Avatar } from "src/components/common/avatar/Avatar";
+import { useWindowSize } from "src/utils/hooks/useWindowSize";
+
+import type { Session } from "next-auth";
+
+interface ProfileProps {
+  readonly user: Session["user"];
+}
+
+export const Profile = memo<ProfileProps>(({ user }) => {
+  const { width } = useWindowSize();
+  return (
+    <div className="min-w-0 flex-1">
+      <div className="flex items-center">
+        {width! > 640 && <Avatar image={user?.image} name={user?.name} />}
+
+        <div>
+          <div className="flex items-center">
+            {width! <= 640 && <Avatar image={user?.image} name={user?.name} />}
+            <h1 className="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:leading-9">
+              Welcome back, {user?.name ?? user?.email}!
+            </h1>
+          </div>
+          <dl className="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">
+            <dt className="sr-only">Account status</dt>
+            <dd className="mt-3 flex items-center text-sm font-medium capitalize text-gray-500 sm:mr-6 sm:mt-0">
+              <CheckCircleIcon
+                className="mr-1.5 h-5 w-5 flex-shrink-0 text-green-400"
+                aria-hidden="true"
+              />
+              Verified account
+            </dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  );
+});
+
+Profile.displayName = "Profile";
