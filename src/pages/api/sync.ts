@@ -70,7 +70,7 @@ const syncFeed = async ({
     .filter((item, index) =>
       user.lastSyncDate
         ? dayjs(item.pubDate).isAfter(user.lastSyncDate)
-        : index < 2,
+        : index < 1,
     );
   const page = await browser.newPage();
   for (const item of items) {
@@ -98,11 +98,13 @@ const syncUserFeeds = async ({
   });
 
   if (!user?.email) {
-    throw new Error(`User with email ${email} not found!`);
+    console.error(`User with email ${email} not found!`);
+    return;
   }
 
   if (!user.device) {
-    throw new Error(`Device not found, register your device first!`);
+    console.error(`Device not found, register your device first!`);
+    return;
   }
 
   const api = webcrypto
@@ -149,8 +151,8 @@ const syncAll = async () => {
   return {
     stats: {
       users: users.length,
-      feeds: syncedFeeds.flat().length,
-      articles: syncedFeeds.flat(2).length,
+      feeds: syncedFeeds.filter(Boolean).flat().length,
+      articles: syncedFeeds.filter(Boolean).flat(2).length,
     },
   };
 };

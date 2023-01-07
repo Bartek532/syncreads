@@ -2,6 +2,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
+import { env } from "src/env/server.mjs";
 import { getUserByEmail } from "src/server/services/user.service";
 import { ApiError, HTTP_STATUS_CODE } from "src/utils/exceptions";
 import { loginUserSchema } from "src/utils/validation";
@@ -17,7 +18,6 @@ export const authOptions: NextAuthOptions = {
     session: ({ session, token }) => {
       if (session.user) {
         session.user.id = token.id as number;
-        session.user.device = token.device;
       }
       return session;
     },
@@ -25,7 +25,6 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.id = user.id;
         token.email = user.email ?? null;
-        token.device = null;
       }
 
       return token;
@@ -35,7 +34,7 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   adapter: PrismaAdapter(prisma),
-  secret: "secret",
+  secret: env.NEXTAUTH_SECRET!,
   providers: [
     /*
     DiscordProvider({
@@ -76,7 +75,6 @@ export const authOptions: NextAuthOptions = {
           );
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         return { ...user, id: user.id.toString() };
       },
     }),

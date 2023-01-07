@@ -16,7 +16,7 @@ export const FeedsView = () => {
   const utils = trpc.useContext();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-  const feeds = trpc.user.getUserFeeds.useQuery();
+  const { data: feeds } = trpc.user.getUserFeeds.useQuery();
 
   const addFeedMutation = trpc.feed.createFeed.useMutation({
     onSuccess: () => utils.user.getUserFeeds.invalidate(),
@@ -71,9 +71,9 @@ export const FeedsView = () => {
             <PlusIcon className="h-6 w-6" /> Add feed
           </Button>
         </div>
-        {feeds.data?.length ? (
+        {feeds?.length ? (
           <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-2">
-            {feeds.data.map((feed) => (
+            {feeds.map((feed) => (
               // eslint-disable-next-line @typescript-eslint/no-misused-promises
               <FeedTile
                 url={feed.url}
@@ -85,7 +85,7 @@ export const FeedsView = () => {
         ) : (
           <Empty onCreateNew={() => setIsAddModalOpen(true)}>
             <EmptyIcon className="mx-auto h-16 w-16 text-gray-400" />
-            <span className="mt-4 block text-base font-medium text-gray-900">
+            <span className="mt-6 block text-lg font-medium text-gray-900">
               Add your first feed!
             </span>
           </Empty>

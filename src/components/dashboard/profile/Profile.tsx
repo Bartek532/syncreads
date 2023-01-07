@@ -1,4 +1,4 @@
-import { CheckCircleIcon } from "@heroicons/react/20/solid";
+import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/20/solid";
 import { memo } from "react";
 
 import { Avatar } from "src/components/common/avatar/Avatar";
@@ -8,9 +8,10 @@ import type { Session } from "next-auth";
 
 interface ProfileProps {
   readonly user: Session["user"];
+  readonly isRegistered: boolean;
 }
 
-export const Profile = memo<ProfileProps>(({ user }) => {
+export const Profile = memo<ProfileProps>(({ user, isRegistered }) => {
   const { width } = useWindowSize();
   return (
     <div className="min-w-0 flex-1">
@@ -26,12 +27,24 @@ export const Profile = memo<ProfileProps>(({ user }) => {
           </div>
           <dl className="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">
             <dt className="sr-only">Account status</dt>
-            <dd className="mt-3 flex items-center text-sm font-medium capitalize text-gray-500 sm:mr-6 sm:mt-0">
-              <CheckCircleIcon
-                className="mr-1.5 h-5 w-5 flex-shrink-0 text-green-400"
-                aria-hidden="true"
-              />
-              Verified account
+            <dd className="mt-3 flex items-center text-sm font-medium text-gray-500 sm:mr-6 sm:mt-0">
+              {isRegistered ? (
+                <>
+                  <CheckCircleIcon
+                    className="mr-1.5 h-5 w-5 flex-shrink-0 text-green-400"
+                    aria-hidden="true"
+                  />
+                  Device registered - sync active
+                </>
+              ) : (
+                <>
+                  <XCircleIcon
+                    className="mr-1.5 h-5 w-5 flex-shrink-0 text-red-400"
+                    aria-hidden="true"
+                  />
+                  Device not registered - sync inactive
+                </>
+              )}
             </dd>
           </dl>
         </div>

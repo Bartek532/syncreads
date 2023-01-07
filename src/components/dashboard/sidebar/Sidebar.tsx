@@ -60,7 +60,12 @@ export const Sidebar = memo<SidebarProps>(
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-indigo-100 hover:bg-indigo-600 hover:text-white"
+                  className={clsx(
+                    pathname === item.href
+                      ? "bg-indigo-800 text-white"
+                      : "text-indigo-100 hover:bg-indigo-600 hover:text-white",
+                    "group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6",
+                  )}
                 >
                   <item.icon
                     className="mr-4 h-6 w-6 text-indigo-200"

@@ -32,9 +32,10 @@ export const createFeedHandler = async ({
     }
 
     const response = await fetch(url);
+
     if (
       response.status !== HTTP_STATUS_CODE.OK ||
-      !response.headers.get("content-type")?.includes("application/rss+xml")
+      !response.headers.get("content-type")?.includes("xml")
     ) {
       throw new ApiError(
         HTTP_STATUS_CODE.BAD_REQUEST,

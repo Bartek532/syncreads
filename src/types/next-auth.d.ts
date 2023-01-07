@@ -20,7 +20,7 @@ declare module "next-auth/jwt" {
     device: Device | null;
   }
 
-  interface User {
+  interface DefaultUser {
     /** User reMarkable device */
     device: Device | null;
     id: number;
