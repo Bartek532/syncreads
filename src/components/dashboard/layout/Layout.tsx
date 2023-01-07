@@ -98,7 +98,7 @@ export const DashboardLayout = memo<DashboardLayoutProps>(({ children }) => {
           user={data?.user}
           onSidebarOpen={() => setIsSidebarOpen(true)}
         />
-        <main className="flex-1  pb-8">{children}</main>
+        <main className="flex-1 pb-8 ">{children}</main>
       </div>
     </div>
   );
