@@ -1,16 +1,13 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
+import EmptyIcon from "public/svg/empty.svg";
 import { Button } from "src/components/common/button/Button";
-import { Input } from "src/components/common/input/Input";
+import { Empty } from "src/components/common/empty/Empty";
 import { AddFeedModal } from "src/components/modal/feed/AddFeedModal";
 import { FeedTile } from "src/components/tile/feedTile/FeedTile";
-import { onPromise } from "src/utils/functions";
 import { trpc } from "src/utils/trpc";
-import { createFeedSchema } from "src/utils/validation";
 
 import type { TRPCError } from "@trpc/server";
 import type { CreateFeedInput } from "src/utils/validation";
@@ -74,16 +71,25 @@ export const FeedsView = () => {
             <PlusIcon className="h-6 w-6" /> Add feed
           </Button>
         </div>
-        <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-2">
-          {feeds.data?.map((feed) => (
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
-            <FeedTile
-              url={feed.url}
-              key={feed.id}
-              onDelete={handleDeleteFeed}
-            />
-          ))}
-        </div>
+        {feeds.data?.length ? (
+          <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-2">
+            {feeds.data.map((feed) => (
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
+              <FeedTile
+                url={feed.url}
+                key={feed.id}
+                onDelete={handleDeleteFeed}
+              />
+            ))}
+          </div>
+        ) : (
+          <Empty onCreateNew={() => setIsAddModalOpen(true)}>
+            <EmptyIcon className="mx-auto h-16 w-16 text-gray-400" />
+            <span className="mt-4 block text-base font-medium text-gray-900">
+              Add your first feed!
+            </span>
+          </Empty>
+        )}
       </section>
     </>
   );
