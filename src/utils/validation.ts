@@ -27,7 +27,7 @@ export const loginUserSchema = z.object({
 });
 
 export const createFeedSchema = z.object({
-  url: z.string().url(),
+  url: z.string().min(1, "Url is required.").url("Url must be a valid url."),
 });
 
 export const createAndConnectSchema = z.object({
@@ -39,9 +39,13 @@ export const deleteFeedSchema = z.object({
   url: z.string().url(),
 });
 
-export const deleteAndDisconnectSchema = z.object({
+export const deleteAndDisconnectFeedSchema = z.object({
   url: z.string().url(),
   email: z.string().email(),
+});
+
+export const getWebsiteDetailsSchema = z.object({
+  url: z.string().url(),
 });
 
 export const registerDeviceSchema = z.object({
@@ -68,7 +72,10 @@ export type LoginUserInput = TypeOf<typeof loginUserSchema>;
 export type CreateFeedInput = TypeOf<typeof createFeedSchema>;
 export type CreateAndConnectFeedInput = TypeOf<typeof createAndConnectSchema>;
 export type DeleteFeedInput = TypeOf<typeof deleteFeedSchema>;
-export type DeleteAndDisconnectInput = TypeOf<typeof deleteAndDisconnectSchema>;
+export type DeleteAndDisconnectFeedInput = TypeOf<
+  typeof deleteAndDisconnectFeedSchema
+>;
+export type GetWebsiteDetailsInput = TypeOf<typeof getWebsiteDetailsSchema>;
 export type RegisterDeviceInput = TypeOf<typeof registerDeviceSchema>;
 export type RegisterAndConnectDeviceInput = TypeOf<
   typeof registerAndConnectDeviceSchema

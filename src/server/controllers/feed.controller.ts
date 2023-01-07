@@ -1,4 +1,7 @@
 import { TRPCError } from "@trpc/server";
+import { getLinkPreview } from "link-preview-js";
+
+import { ApiError, HTTP_STATUS_CODE } from "src/utils/exceptions";
 
 import {
   createFeed,
@@ -8,9 +11,11 @@ import {
 } from "../services/feed.service";
 import { deleteFeedFromUser, getUserFeedByUrl } from "../services/user.service";
 
+import type { WebsiteDetails } from "src/utils/types";
 import type {
   CreateAndConnectFeedInput,
-  DeleteAndDisconnectInput,
+  DeleteAndDisconnectFeedInput,
+  GetWebsiteDetailsInput,
 } from "src/utils/validation";
 
 export const createFeedHandler = async ({
@@ -25,6 +30,18 @@ export const createFeedHandler = async ({
         message: "You've already added this feed!",
       });
     }
+
+    const response = await fetch(url);
+    if (
+      response.status !== HTTP_STATUS_CODE.OK ||
+      !response.headers.get("content-type")?.includes("application/rss+xml")
+    ) {
+      throw new ApiError(
+        HTTP_STATUS_CODE.BAD_REQUEST,
+        "Error occured! Please check your provided url and try again!",
+      );
+    }
+
     const feed = await createFeed({ url, email });
 
     return {
@@ -41,7 +58,7 @@ export const createFeedHandler = async ({
 export const deleteFeedHandler = async ({
   url,
   email,
-}: DeleteAndDisconnectInput) => {
+}: DeleteAndDisconnectFeedInput) => {
   try {
     const feed = await getFeedByUrl({ url });
     if (!feed) {
@@ -61,6 +78,22 @@ export const deleteFeedHandler = async ({
       status: "Success",
       message: `Successfully deleted feed!`,
       feed,
+    };
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const getWebsiteDetailsHandler = async ({
+  url,
+}: GetWebsiteDetailsInput) => {
+  try {
+    const details = (await getLinkPreview(url)) as unknown as WebsiteDetails;
+
+    return {
+      status: "Success",
+      details,
     };
   } catch (err) {
     console.error(err);
