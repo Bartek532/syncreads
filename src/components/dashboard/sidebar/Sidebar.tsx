@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { useRouter } from "next/router";
 import { memo } from "react";
 
 import type { HeroIcon } from "src/utils/types";
@@ -17,6 +18,9 @@ interface SidebarProps {
 
 export const Sidebar = memo<SidebarProps>(
   ({ navigation, secondaryNavigation }) => {
+    const router = useRouter();
+
+    console.log(router);
     return (
       <>
         <div className="flex flex-shrink-0 items-center px-4">

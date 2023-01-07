@@ -1,14 +1,14 @@
 import { DashboardLayout } from "src/components/dashboard/layout/Layout";
-import { SettingsView } from "src/views/dashboard/settings/Settings";
+import { DeviceView } from "src/views/dashboard/device/Device";
 
 import type { NextPage } from "next";
 
-const Settings: NextPage = () => {
+const Device: NextPage = () => {
   return (
     <DashboardLayout>
-      <SettingsView />
+      <DeviceView />
     </DashboardLayout>
   );
 };
 
-export default Settings;
+export default Device;

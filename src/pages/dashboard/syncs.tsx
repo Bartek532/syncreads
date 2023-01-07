@@ -1,14 +1,14 @@
 import { DashboardLayout } from "src/components/dashboard/layout/Layout";
-import { SettingsView } from "src/views/dashboard/settings/Settings";
+import { SyncsView } from "src/views/dashboard/syncs/Syncs";
 
 import type { NextPage } from "next";
 
-const Settings: NextPage = () => {
+const Syncs: NextPage = () => {
   return (
     <DashboardLayout>
-      <SettingsView />
+      <SyncsView />
     </DashboardLayout>
   );
 };
 
-export default Settings;
+export default Syncs;
