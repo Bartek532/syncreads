@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { memo } from "react";
 
 import type { HeroIcon } from "src/utils/types";
@@ -41,12 +42,12 @@ export const Tile = memo<TileProps>(({ card }) => {
       </div>
       <div className="bg-gray-50 px-5 py-3">
         <div className="text-sm">
-          <a
+          <Link
             href={card.href}
             className="font-medium text-indigo-700 hover:text-indigo-900"
           >
             {card.link}
-          </a>
+          </Link>
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { memo } from "react";
 
@@ -8,7 +9,6 @@ interface NavigationItem {
   readonly name: string;
   readonly href: string;
   readonly icon: HeroIcon;
-  readonly current: boolean;
 }
 
 interface SidebarProps {
@@ -18,9 +18,8 @@ interface SidebarProps {
 
 export const Sidebar = memo<SidebarProps>(
   ({ navigation, secondaryNavigation }) => {
-    const router = useRouter();
+    const { pathname } = useRouter();
 
-    console.log(router);
     return (
       <>
         <div className="flex flex-shrink-0 items-center px-4">
@@ -36,29 +35,29 @@ export const Sidebar = memo<SidebarProps>(
         >
           <div className="space-y-1 px-2">
             {navigation.map((item) => (
-              <a
+              <Link
                 key={item.name}
                 href={item.href}
                 className={clsx(
-                  item.current
+                  pathname === item.href
                     ? "bg-indigo-800 text-white"
                     : "text-indigo-100 hover:bg-indigo-600 hover:text-white",
                   "group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6",
                 )}
-                aria-current={item.current ? "page" : undefined}
+                aria-current={pathname === item.href ? "page" : undefined}
               >
                 <item.icon
                   className="mr-4 h-6 w-6 flex-shrink-0 text-indigo-200"
                   aria-hidden="true"
                 />
                 {item.name}
-              </a>
+              </Link>
             ))}
           </div>
           <div className="mt-6 pt-6">
             <div className="space-y-1 px-2">
               {secondaryNavigation.map((item) => (
-                <a
+                <Link
                   key={item.name}
                   href={item.href}
                   className="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-indigo-100 hover:bg-indigo-600 hover:text-white"
@@ -68,7 +67,7 @@ export const Sidebar = memo<SidebarProps>(
                     aria-hidden="true"
                   />
                   {item.name}
-                </a>
+                </Link>
               ))}
             </div>
           </div>

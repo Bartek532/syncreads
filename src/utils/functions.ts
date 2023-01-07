@@ -1,6 +1,3 @@
-import { TAILWIND_COLORS, TAILWIND_SATURATIONS } from "./consts";
-
-import type { TailwindColor } from "./consts";
 import type { SyntheticEvent } from "react";
 
 export function onPromise<T>(promise: (event: SyntheticEvent) => Promise<T>) {
@@ -11,36 +8,6 @@ export function onPromise<T>(promise: (event: SyntheticEvent) => Promise<T>) {
   };
 }
 
-interface TailwindColorOptions {
-  readonly prefix?: string;
-  readonly range?: [number, number];
-  readonly colors?: TailwindColor[];
-}
-
-export const generateTailwindColor = ({
-  prefix = "bg",
-  range = [0.5, 9],
-  colors,
-}: TailwindColorOptions) => {
-  const randomColor = (colors ?? TAILWIND_COLORS)[
-    Math.floor(Math.random() * (colors ?? TAILWIND_COLORS).length)
-  ];
-
-  const availableSaturations = TAILWIND_SATURATIONS.slice(
-    TAILWIND_SATURATIONS.findIndex((sat) => sat === range[0] * 100),
-    TAILWIND_SATURATIONS.findIndex((sat) => sat === range[1] * 100),
-  );
-
-  const randomSaturation =
-    availableSaturations[
-      Math.floor(Math.random() * availableSaturations.length)
-    ];
-
-  if (!randomColor || !randomSaturation) {
-    throw new Error("Error occured when generating color1");
-  }
-
-  console.log(`${prefix}-${randomColor}-${randomSaturation}`);
-
-  return `${prefix}-${randomColor}-${randomSaturation}`;
+export const generateRandomColor = (palette: string[]) => {
+  return palette[Math.floor(Math.random() * palette.length)];
 };

@@ -6,6 +6,7 @@ import {
 import { BellIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { signOut } from "next-auth/react";
+import Link from "next/link";
 import { Fragment, memo } from "react";
 
 import { Avatar } from "src/components/common/avatar/Avatar";
@@ -42,7 +43,7 @@ export const Header = memo<HeaderProps>(({ user, onSidebarOpen }) => {
           <Menu as="div" className="relative ml-3">
             <div>
               <Menu.Button className="flex max-w-xs items-center gap-2 rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 lg:rounded-md lg:p-2 lg:hover:bg-gray-50">
-                <Avatar image={user?.image} name={user?.name} size={8} />
+                <Avatar image={user?.image} name={user?.name} isSmall />
                 <span className="ml-3 hidden text-sm font-medium text-gray-700 lg:block">
                   <span className="sr-only">Open user menu for </span>
                   {user?.name ?? user?.email}
@@ -65,7 +66,7 @@ export const Header = memo<HeaderProps>(({ user, onSidebarOpen }) => {
               <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <Menu.Item>
                   {({ active }) => (
-                    <a
+                    <Link
                       href="#"
                       className={clsx(
                         active ? "bg-gray-100" : "",
@@ -73,20 +74,20 @@ export const Header = memo<HeaderProps>(({ user, onSidebarOpen }) => {
                       )}
                     >
                       Your Profile
-                    </a>
+                    </Link>
                   )}
                 </Menu.Item>
                 <Menu.Item>
                   {({ active }) => (
-                    <a
-                      href="#"
+                    <Link
+                      href="/dashboard/settings"
                       className={clsx(
                         active ? "bg-gray-100" : "",
                         "block px-4 py-2 text-sm text-gray-700",
                       )}
                     >
                       Settings
-                    </a>
+                    </Link>
                   )}
                 </Menu.Item>
                 <Menu.Item>

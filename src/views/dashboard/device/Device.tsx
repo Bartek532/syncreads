@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
@@ -13,7 +12,6 @@ import type { TRPCError } from "@trpc/server";
 import type { RegisterDeviceInput } from "src/utils/validation";
 
 export const DeviceView = () => {
-  const { data } = useSession();
   const utils = trpc.useContext();
   const {
     register,
@@ -22,10 +20,6 @@ export const DeviceView = () => {
   } = useForm<RegisterDeviceInput>({
     resolver: zodResolver(registerDeviceSchema),
   });
-
-  if (!data?.user?.email) {
-    return null;
-  }
 
   const { data: device } = trpc.user.getUserDevice.useQuery();
 

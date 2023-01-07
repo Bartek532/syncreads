@@ -8,10 +8,22 @@ import { ApiError, HTTP_STATUS_CODE } from "src/utils/exceptions";
 
 import { env } from "../../env/server.mjs";
 import { prisma } from "../../server/db/client";
-import { BROWSER_OPTIONS, PDF_OPTIONS } from "../../utils/consts";
+import { PDF_OPTIONS } from "../../utils/consts";
 
 import type { User } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
+
+const BROWSER_OPTIONS = {
+  executablePath: env.CHROME_BIN,
+  args: [
+    // Required for Docker version of Puppeteer
+    "--no-sandbox",
+    "--disable-setuid-sandbox",
+    // This will write shared memory files into /tmp instead of /dev/shm,
+    // because Docker’s default for /dev/shm is 64MB
+    "--disable-dev-shm-usage",
+  ],
+};
 
 interface FeedItem {
   link: string;

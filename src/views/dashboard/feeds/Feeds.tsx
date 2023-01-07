@@ -1,9 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSession } from "next-auth/react";
-import { Input } from "postcss";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
+import { Input } from "src/components/common/input/Input";
 import { FeedTile } from "src/components/tile/feedTile/FeedTile";
 import { onPromise } from "src/utils/functions";
 import { trpc } from "src/utils/trpc";
@@ -13,15 +12,10 @@ import type { TRPCError } from "@trpc/server";
 import type { CreateFeedInput } from "src/utils/validation";
 
 export const FeedsView = () => {
-  const { data } = useSession();
   const utils = trpc.useContext();
   const { register, handleSubmit } = useForm<CreateFeedInput>({
     resolver: zodResolver(createFeedSchema),
   });
-
-  if (!data?.user?.email) {
-    return null;
-  }
 
   const feeds = trpc.user.getUserFeeds.useQuery();
 

@@ -1,15 +1,16 @@
 import { memo } from "react";
 
 import AvatarIcon from "public/svg/avatar.svg";
-import { generateTailwindColor } from "src/utils/functions";
 
 interface AvatarProps {
   readonly image?: string | null | undefined;
   readonly name?: string | null | undefined;
-  readonly size?: number;
+  readonly isSmall?: boolean;
 }
 
-export const Avatar = memo<AvatarProps>(({ image, name, size = 16 }) => {
+export const Avatar = memo<AvatarProps>(({ image, name, isSmall = false }) => {
+  const size = isSmall ? 8 : 16;
+
   if (image) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
@@ -26,9 +27,8 @@ export const Avatar = memo<AvatarProps>(({ image, name, size = 16 }) => {
       <span
         className={`inline-flex text-[${
           size * 10
-        }%] h-${size} w-${size} items-center justify-center rounded-full ${generateTailwindColor(
-          {},
-        )}`}
+        }%] h-${size} w-${size} items-center justify-center rounded-full`}
+        style={{ backgroundColor: "#fcce54" }}
       >
         <span className="font-medium leading-none text-white">{name[0]}</span>
       </span>
