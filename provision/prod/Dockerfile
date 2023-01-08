@@ -30,4 +30,6 @@ COPY --from=builder /app ./
 
 USER root
 
+RUN npm run db:migrate:prod
+
 CMD ["npm", "run", "start"]
