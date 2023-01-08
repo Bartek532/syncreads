@@ -28,6 +28,6 @@ RUN adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app ./
 
-USER nextjs
+USER root
 
 CMD ["npm", "run", "start"]
