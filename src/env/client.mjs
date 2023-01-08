@@ -12,6 +12,8 @@ export const formatErrors = (
       if ("_errors" in value) {
         return `${name}: ${value._errors.join(", ")}\n`;
       }
+
+      return;
     })
     .filter(Boolean);
 

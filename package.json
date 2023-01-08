@@ -10,6 +10,7 @@
     "lint": "next lint",
     "lint:interactive": "eslint-interactive \"{src,apps,libs,test}/**/*.{ts,tsx}\"",
     "start": "next start",
+    "test": "echo 'Testing...'",
     "db:migrate:dev": "dotenv -e .env.development.local -- prisma migrate dev",
     "docker:start:dev": "docker-compose -f provision/dev/docker-compose.yml up -d",
     "docker:stop:dev": "docker-compose -f provision/dev/docker-compose.yml down",

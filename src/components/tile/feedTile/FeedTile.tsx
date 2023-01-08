@@ -27,7 +27,7 @@ export const FeedTile = memo<FeedTileProps>(({ url, onDelete }) => {
     >
       <div
         className="w-1/3 shrink-0 rounded-l-2xl bg-cover bg-center"
-        style={{ backgroundImage: `url(${data.details.images[0]})` }}
+        style={{ backgroundImage: `url(${data.details.images[0] ?? ""})` }}
       ></div>
       <div className="p-6 pr-16">
         <h3 className="text-base font-medium sm:text-lg">

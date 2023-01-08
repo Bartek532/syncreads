@@ -1,7 +1,5 @@
 import { prisma } from "src/server/db/client";
 
-import type { Feed } from "@prisma/client";
-
 export const createFeed = async ({
   url,
   email,

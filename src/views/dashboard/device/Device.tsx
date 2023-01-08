@@ -18,9 +18,11 @@ export const DeviceView = () => {
     onSuccess: () => utils.user.getUserDevice.invalidate(),
   });
 
+  /*
   const unregisterDeviceMutation = trpc.user.unregisterDevice.useMutation({
     onSuccess: () => utils.user.getUserDevice.invalidate(),
   });
+  */
 
   const onAdd = async ({ code }: RegisterDeviceInput) => {
     await toast.promise(
@@ -38,6 +40,7 @@ export const DeviceView = () => {
     );
   };
 
+  /*
   const handleDeleteDevice = async () => {
     await toast.promise(unregisterDeviceMutation.mutateAsync(), {
       loading: "Deleting device...",
@@ -45,6 +48,7 @@ export const DeviceView = () => {
       error: (err: TRPCError | Error) => err.message,
     });
   };
+  */
 
   return (
     <>
