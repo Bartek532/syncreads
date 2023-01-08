@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { memo } from "react";
 
-import type { HeroIcon } from "src/utils/types";
+import type { HeroIcon } from "../../../utils/types";
 
 interface Card {
   readonly title: string;

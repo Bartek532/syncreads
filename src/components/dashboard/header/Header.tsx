@@ -9,8 +9,8 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { Fragment, memo } from "react";
 
-import { Avatar } from "src/components/common/avatar/Avatar";
-import { onPromise } from "src/utils/functions";
+import { onPromise } from "../../../utils/functions";
+import { Avatar } from "../../common/avatar/Avatar";
 
 import type { Session } from "next-auth";
 

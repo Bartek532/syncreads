@@ -6,8 +6,7 @@ import { Fragment, memo, useState } from "react";
 import {
   DASHBOARD_NAVIGATION,
   DASHBOARD_SECONDARY_NAVIGATION,
-} from "src/utils/consts";
-
+} from "../../../utils/consts";
 import { Header } from "../header/Header";
 import { Sidebar } from "../sidebar/Sidebar";
 

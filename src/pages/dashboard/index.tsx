@@ -1,5 +1,5 @@
-import { DashboardLayout } from "src/components/dashboard/layout/Layout";
-import { HomeView } from "src/views/dashboard/Home";
+import { DashboardLayout } from "../../components/dashboard/layout/Layout";
+import { HomeView } from "../../views/dashboard/Home";
 
 import type { NextPage } from "next";
 

@@ -2,10 +2,9 @@ import {
   getUserDeviceHandler,
   registerDeviceHandler,
   unregisterDeviceHandler,
-} from "src/server/controllers/user.controller";
-import { getUserFeeds } from "src/server/services/user.service";
-import { registerDeviceSchema } from "src/utils/validation";
-
+} from "../../../server/controllers/user.controller";
+import { getUserFeeds } from "../../../server/services/user.service";
+import { registerDeviceSchema } from "../../../utils/validation";
 import { router, protectedProcedure } from "../trpc";
 
 export const userRouter = router({

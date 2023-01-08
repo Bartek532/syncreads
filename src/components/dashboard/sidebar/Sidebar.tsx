@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { memo } from "react";
 
-import type { HeroIcon } from "src/utils/types";
+import type { HeroIcon } from "../../../utils/types";
 
 interface NavigationItem {
   readonly name: string;

@@ -7,13 +7,14 @@ import { toast } from "react-hot-toast";
 import FacebookIcon from "public/svg/social/fb.svg";
 import GithubIcon from "public/svg/social/github.svg";
 import TwitterIcon from "public/svg/social/twitter.svg";
-import { Input } from "src/components/common/input/Input";
-import { onPromise } from "src/utils/functions";
-import { trpc } from "src/utils/trpc";
-import { registerUserSchema } from "src/utils/validation";
 
+import { Input } from "../../components/common/input/Input";
+import { onPromise } from "../../utils/functions";
+import { trpc } from "../../utils/trpc";
+import { registerUserSchema } from "../../utils/validation";
+
+import type { Register } from "../../utils/types";
 import type { TRPCError } from "@trpc/server";
-import type { Register } from "src/utils/types";
 
 export const RegisterView = () => {
   const [isFormValidated, setIsFormValidated] = useState(false);

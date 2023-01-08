@@ -1,8 +1,8 @@
 import { ArrowUpRightIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { memo } from "react";
 
-import { onPromise } from "src/utils/functions";
-import { trpc } from "src/utils/trpc";
+import { onPromise } from "../../../utils/functions";
+import { trpc } from "../../../utils/trpc";
 
 interface FeedTileProps {
   readonly url: string;

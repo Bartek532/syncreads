@@ -3,13 +3,12 @@ import {
   deleteFeedHandler,
   getAllFeedsHandler,
   getWebsiteDetailsHandler,
-} from "src/server/controllers/feed.controller";
+} from "../../../server/controllers/feed.controller";
 import {
   createFeedSchema,
   deleteFeedSchema,
   getWebsiteDetailsSchema,
-} from "src/utils/validation";
-
+} from "../../../utils/validation";
 import { router, protectedProcedure } from "../trpc";
 
 export const feedRouter = router({

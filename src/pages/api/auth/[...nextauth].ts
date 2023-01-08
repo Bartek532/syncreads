@@ -2,12 +2,11 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-import { env } from "src/env/server.mjs";
-import { getUserByEmail } from "src/server/services/user.service";
-import { ApiError, HTTP_STATUS_CODE } from "src/utils/exceptions";
-import { loginUserSchema } from "src/utils/validation";
-
+import { env } from "../../../env/server.mjs";
 import { prisma } from "../../../server/db/client";
+import { getUserByEmail } from "../../../server/services/user.service";
+import { ApiError, HTTP_STATUS_CODE } from "../../../utils/exceptions";
+import { loginUserSchema } from "../../../utils/validation";
 
 export const authOptions: NextAuthOptions = {
   pages: {

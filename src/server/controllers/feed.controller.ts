@@ -1,8 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { getLinkPreview } from "link-preview-js";
 
-import { ApiError, HTTP_STATUS_CODE } from "src/utils/exceptions";
-
+import { ApiError, HTTP_STATUS_CODE } from "../../utils/exceptions";
 import {
   createFeed,
   deleteFeed,
@@ -11,12 +10,12 @@ import {
 } from "../services/feed.service";
 import { deleteFeedFromUser, getUserFeedByUrl } from "../services/user.service";
 
-import type { WebsiteDetails } from "src/utils/types";
+import type { WebsiteDetails } from "../../utils/types";
 import type {
   CreateAndConnectFeedInput,
   DeleteAndDisconnectFeedInput,
   GetWebsiteDetailsInput,
-} from "src/utils/validation";
+} from "../../utils/validation";
 
 export const createFeedHandler = async ({
   url,

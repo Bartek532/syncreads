@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { onPromise } from "src/utils/functions";
+import { onPromise } from "../../../utils/functions";
 
 import type { Device } from "@prisma/client";
 

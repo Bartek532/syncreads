@@ -1,4 +1,4 @@
-import { LoginView } from "src/views/login/Login";
+import { LoginView } from "../views/login/Login";
 
 import type { NextPage } from "next";
 

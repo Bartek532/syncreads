@@ -1,4 +1,4 @@
-import { RegisterView } from "src/views/register/Register";
+import { RegisterView } from "../views/register/Register";
 
 import type { NextPage } from "next";
 

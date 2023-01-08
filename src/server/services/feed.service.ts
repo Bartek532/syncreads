@@ -1,4 +1,4 @@
-import { prisma } from "src/server/db/client";
+import { prisma } from "../../server/db/client";
 
 export const createFeed = async ({
   url,

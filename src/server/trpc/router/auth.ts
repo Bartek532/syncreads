@@ -1,6 +1,5 @@
-import { registerUserHandler } from "src/server/controllers/user.controller";
-import { registerUserSchema } from "src/utils/validation";
-
+import { registerUserHandler } from "../../../server/controllers/user.controller";
+import { registerUserSchema } from "../../../utils/validation";
 import { router, publicProcedure } from "../trpc";
 
 export const authRouter = router({

@@ -2,15 +2,15 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 
-import { Button } from "src/components/common/button/Button";
-import { Profile } from "src/components/dashboard/profile/Profile";
-import { Tile } from "src/components/dashboard/tile/Tile";
-import { AddFeedModal } from "src/components/modal/feed/AddFeedModal";
-import { DASHBOARD_CARDS } from "src/utils/consts";
-import { trpc } from "src/utils/trpc";
+import { Button } from "../../components/common/button/Button";
+import { Profile } from "../../components/dashboard/profile/Profile";
+import { Tile } from "../../components/dashboard/tile/Tile";
+import { AddFeedModal } from "../../components/modal/feed/AddFeedModal";
+import { DASHBOARD_CARDS } from "../../utils/consts";
+import { trpc } from "../../utils/trpc";
 
+import type { CreateFeedInput } from "../../utils/validation";
 import type { TRPCError } from "@trpc/server";
-import type { CreateFeedInput } from "src/utils/validation";
 
 export const HomeView = () => {
   const utils = trpc.useContext();

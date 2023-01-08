@@ -4,13 +4,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Fragment, memo, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import { Button } from "src/components/common/button/Button";
-import { Input } from "src/components/common/input/Input";
-import { onPromise } from "src/utils/functions";
-import { registerDeviceSchema } from "src/utils/validation";
+import { onPromise } from "../../../utils/functions";
+import { registerDeviceSchema } from "../../../utils/validation";
+import { Button } from "../../common/button/Button";
+import { Input } from "../../common/input/Input";
 
+import type { RegisterDeviceInput } from "../../../utils/validation";
 import type { Dispatch, SetStateAction } from "react";
-import type { RegisterDeviceInput } from "src/utils/validation";
 
 interface AddDeviceModalProps {
   readonly isOpen: boolean;

@@ -2,12 +2,13 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 
 import EmptyRemarkableIcon from "public/svg/empty-remarkable.svg";
-import { Empty } from "src/components/common/empty/Empty";
-import { AddDeviceModal } from "src/components/modal/device/AddDeviceModal";
-import { trpc } from "src/utils/trpc";
 
+import { Empty } from "../../../components/common/empty/Empty";
+import { AddDeviceModal } from "../../../components/modal/device/AddDeviceModal";
+import { trpc } from "../../../utils/trpc";
+
+import type { RegisterDeviceInput } from "../../../utils/validation";
 import type { TRPCError } from "@trpc/server";
-import type { RegisterDeviceInput } from "src/utils/validation";
 
 export const DeviceView = () => {
   const utils = trpc.useContext();

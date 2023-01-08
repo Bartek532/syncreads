@@ -3,14 +3,15 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 
 import EmptyIcon from "public/svg/empty.svg";
-import { Button } from "src/components/common/button/Button";
-import { Empty } from "src/components/common/empty/Empty";
-import { AddFeedModal } from "src/components/modal/feed/AddFeedModal";
-import { FeedTile } from "src/components/tile/feedTile/FeedTile";
-import { trpc } from "src/utils/trpc";
 
+import { Button } from "../../../components/common/button/Button";
+import { Empty } from "../../../components/common/empty/Empty";
+import { AddFeedModal } from "../../../components/modal/feed/AddFeedModal";
+import { FeedTile } from "../../../components/tile/feedTile/FeedTile";
+import { trpc } from "../../../utils/trpc";
+
+import type { CreateFeedInput } from "../../../utils/validation";
 import type { TRPCError } from "@trpc/server";
-import type { CreateFeedInput } from "src/utils/validation";
 
 export const FeedsView = () => {
   const utils = trpc.useContext();

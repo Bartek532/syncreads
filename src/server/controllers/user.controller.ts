@@ -14,7 +14,7 @@ import type {
   RegisterAndConnectDeviceInput,
   RegisterUserInput,
   UnregisterAndDisconnectDeviceInput,
-} from "src/utils/validation";
+} from "../../utils/validation";
 
 export const registerUserHandler = async ({
   input,
