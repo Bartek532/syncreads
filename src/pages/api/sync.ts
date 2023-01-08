@@ -136,6 +136,7 @@ const syncUserFeeds = async ({
 };
 
 const syncAll = async () => {
+  console.time("sync");
   const parser = new Parser();
   const browser = await puppeteer.launch(BROWSER_OPTIONS);
 
@@ -146,6 +147,8 @@ const syncAll = async () => {
       syncUserFeeds({ email: email ?? "", parser, browser }),
     ),
   );
+
+  console.timeEnd("sync");
 
   return {
     stats: {
