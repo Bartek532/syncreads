@@ -2,7 +2,7 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 
-import EmptyIcon from "public/svg/empty.svg";
+import EmptyFeedsIcon from "public/svg/empty-feeds.svg";
 
 import { Button } from "../../../components/common/button/Button";
 import { Empty } from "../../../components/common/empty/Empty";
@@ -63,7 +63,7 @@ export const FeedsView = () => {
         setIsOpen={setIsAddModalOpen}
         onAdd={onAdd}
       />
-      <section className="mx-auto mt-12 max-w-6xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto mt-8 max-w-6xl px-4 sm:px-6 lg:mt-12 lg:px-8">
         <div className="flex w-full items-center justify-between">
           <h2 className="text-lg font-medium leading-6 text-gray-900">
             All feeds
@@ -85,9 +85,9 @@ export const FeedsView = () => {
           </div>
         ) : (
           <Empty onCreateNew={() => setIsAddModalOpen(true)}>
-            <EmptyIcon className="mx-auto h-16 w-16 text-gray-400" />
+            <EmptyFeedsIcon className="h-50 mx-auto w-40 text-gray-400" />
             <span className="mt-6 block text-lg font-medium text-gray-900">
-              Add your first feed!
+              You haven&apos;t added any feed yet!
             </span>
           </Empty>
         )}

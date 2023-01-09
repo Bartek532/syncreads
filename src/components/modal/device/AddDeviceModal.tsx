@@ -112,7 +112,7 @@ export const AddDeviceModal = memo<AddDeviceModalProps>(
                     <Button
                       type="button"
                       onClick={() => setIsOpen(false)}
-                      isSecondary
+                      variant="secondary"
                     >
                       Cancel
                     </Button>

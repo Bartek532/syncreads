@@ -100,7 +100,7 @@ export const AddFeedModal = memo<AddFeedModalProps>(
                     <Button
                       type="button"
                       onClick={() => setIsOpen(false)}
-                      isSecondary
+                      variant="secondary"
                     >
                       Cancel
                     </Button>

@@ -40,7 +40,11 @@ export const HomeView = () => {
   const { data: feeds } = trpc.user.getUserFeeds.useQuery();
   const { data: device } = trpc.user.getUserDevice.useQuery();
 
-  const values = [feeds?.length ?? 0, "RM210", "Coming soon..."];
+  const values = [
+    feeds?.length ?? 0,
+    device ? "reMarkable 2" : "Not registered",
+    "Coming soon...",
+  ];
 
   return (
     <>
@@ -54,7 +58,10 @@ export const HomeView = () => {
           <div className="py-6 md:flex md:items-center md:justify-between">
             <Profile user={data?.user} isRegistered={!!device} />
             <div className="mt-6 flex space-x-3 md:mt-0 md:ml-4">
-              <Button isSecondary onClick={() => setIsAddModalOpen(true)}>
+              <Button
+                variant="secondary"
+                onClick={() => setIsAddModalOpen(true)}
+              >
                 Add feed
               </Button>
               <Button>Sync feeds</Button>

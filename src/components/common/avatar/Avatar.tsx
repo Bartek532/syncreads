@@ -9,7 +9,8 @@ interface AvatarProps {
 }
 
 export const Avatar = memo<AvatarProps>(({ image, name, isSmall = false }) => {
-  const size = isSmall ? 8 : 16;
+  const size = isSmall ? 10 : 16;
+  const text = isSmall ? "lg" : "2xl";
 
   if (image) {
     return (
@@ -25,9 +26,7 @@ export const Avatar = memo<AvatarProps>(({ image, name, isSmall = false }) => {
   if (name) {
     return (
       <span
-        className={`inline-flex text-[${
-          size * 10
-        }%] h-${size} w-${size} items-center justify-center rounded-full`}
+        className={`inline-flex text-${text} h-${size} w-${size} items-center justify-center rounded-full`}
         style={{ backgroundColor: "#fcce54" }}
       >
         <span className="font-medium leading-none text-white">{name[0]}</span>

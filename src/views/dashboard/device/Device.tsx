@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 
-import EmptyRemarkableIcon from "public/svg/empty-remarkable.svg";
+import EmptyDeviceIcon from "public/svg/empty-device.svg";
 
 import { Empty } from "../../../components/common/empty/Empty";
 import { AddDeviceModal } from "../../../components/modal/device/AddDeviceModal";
+import { DeviceTile } from "../../../components/tile/deviceTile/DeviceTile";
 import { trpc } from "../../../utils/trpc";
 
 import type { RegisterDeviceInput } from "../../../utils/validation";
@@ -19,11 +20,9 @@ export const DeviceView = () => {
     onSuccess: () => utils.user.getUserDevice.invalidate(),
   });
 
-  /*
   const unregisterDeviceMutation = trpc.user.unregisterDevice.useMutation({
     onSuccess: () => utils.user.getUserDevice.invalidate(),
   });
-  */
 
   const onAdd = async ({ code }: RegisterDeviceInput) => {
     await toast.promise(
@@ -41,7 +40,6 @@ export const DeviceView = () => {
     );
   };
 
-  /*
   const handleDeleteDevice = async () => {
     await toast.promise(unregisterDeviceMutation.mutateAsync(), {
       loading: "Deleting device...",
@@ -49,7 +47,6 @@ export const DeviceView = () => {
       error: (err: TRPCError | Error) => err.message,
     });
   };
-  */
 
   return (
     <>
@@ -58,18 +55,18 @@ export const DeviceView = () => {
         setIsOpen={setIsAddModalOpen}
         onAdd={onAdd}
       />
-      <section className="mx-auto mt-12 max-w-6xl px-4 sm:px-6 lg:px-8">
+      <section className="mx-auto mt-8 max-w-6xl px-4 sm:px-6 lg:mt-12 lg:px-8">
         <h2 className="text-lg font-medium leading-6 text-gray-900">
           Your device
         </h2>
 
         {device ? (
-          <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-2">
-            {device.token}
+          <div className="mt-8">
+            <DeviceTile device={device} onDelete={handleDeleteDevice} />
           </div>
         ) : (
           <Empty onCreateNew={() => setIsAddModalOpen(true)}>
-            <EmptyRemarkableIcon className="h-50 mx-auto w-40 text-gray-400" />
+            <EmptyDeviceIcon className="h-50 mx-auto w-40 text-gray-400" />
             <span className="mt-6 block text-lg font-medium text-gray-900">
               You haven&apos;t registered your device yet, do it to unlock sync!
               🔄
