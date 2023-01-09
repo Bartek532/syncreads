@@ -1,28 +1,50 @@
-# Create T3 App
+<h2 align="center">RSSmarkable - open source app for syncing feeds</h2>
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## Project Overview 🎨
 
-## What's next? How do I make an app with this?
+This is project is fully open source app which can be used to sync the newest articles from favourites feeds into [reMarkable](https://remarkable.com) tablet. Feel free to open an [issue](https://github.com/Bartek532/zagrodzki.me/issues) or directly make a [pull request](https://github.com/Bartek532/zagrodzki.me/pulls). Enjoy!
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Contributing
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+Please read [CONTRIBUTING.md](https://github.com/Bartek532/rssmarkable.me/blob/main/CONTRIBUTING.md)
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## Tech/framework used 🧰
 
-## Learn More
+| Tech                                           | Description                                                         |
+| ---------------------------------------------- | ------------------------------------------------------------------- |
+| [TypeScript](https://www.typescriptlang.org/)  | Static type-checking programming language                           |
+| [Next.js](https://nextjs.org/)                 | The React Framework for Production                                  |
+| [React](https://reactjs.org/)                  | Library for building user interfaces                                |
+| [tRPC](https://trpc.io/)                       | Lib for building fully typesafe APIs                                |
+| [Docker](https://www.docker.com/)              | An open platform for developing, shipping, and running applications |
+| [PostgreSQL](https://www.postgresql.org)       | Relational database                                                 |
+| [Prisma](https://www.prisma.io)                | ORM for TypeScript and Node.js                                      |
+| [Tailwind](https://tailwindcss.com/)           | Utility-first CSS framework                                         |
+| [React Hook Form](https://react-hook-form.com) | Forms with easy-to-use validation                                   |
+| [Husky](https://github.com/typicode/husky)     | Git hooks                                                           |
+| [ESLint](https://eslint.org/)                  | TypeScript linting                                                  |
+| [Prettier](https://prettier.io/)               | Code formatter                                                      |
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Local development 💿
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+### Prerequisite
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+Node.js v16.\*
+Docker + docker compose
 
-## How do I deploy this?
+```bash
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+git clone https://github.com/Bartek532/rssmarkable.git
+
+npm run install
+
+cp .env.example .env
+# set up environment variables
+
+yarn start
+
+```
+
+## Live 🎆
+
+https://rssmarkable.onrender.com
