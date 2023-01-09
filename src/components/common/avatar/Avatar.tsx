@@ -9,7 +9,7 @@ interface AvatarProps {
 }
 
 export const Avatar = memo<AvatarProps>(({ image, name, isSmall = false }) => {
-  const size = isSmall ? 10 : 16;
+  const size = isSmall ? 10 : 12;
   const text = isSmall ? "lg" : "2xl";
 
   if (image) {

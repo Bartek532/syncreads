@@ -1,4 +1,5 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { compareSync } from "bcrypt";
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
@@ -65,8 +66,8 @@ export const authOptions: NextAuthOptions = {
           );
         }
 
-        const isValidPassword = password === user.password;
-        //await compare(password, user.password);
+        const isValidPassword = compareSync(password, user.password);
+
         if (!isValidPassword) {
           throw new ApiError(
             HTTP_STATUS_CODE.NOT_FOUND,

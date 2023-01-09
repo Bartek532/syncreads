@@ -1,4 +1,5 @@
 import { TRPCError } from "@trpc/server";
+import { hashSync } from "bcrypt";
 import { register } from "rmapi-js";
 
 import {
@@ -33,8 +34,8 @@ export const registerUserHandler = async ({
       });
     }
 
-    //const hashedPassword = await hash(password, 10);
-    const user = await createUser({ email, password, name });
+    const hashedPassword = hashSync(password, 10);
+    const user = await createUser({ email, password: hashedPassword, name });
 
     return {
       status: "Success",
