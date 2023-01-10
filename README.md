@@ -2,11 +2,11 @@
 
 ## Project Overview 🎨
 
-This is project is fully open source app which can be used to sync the newest articles from favourites feeds into [reMarkable](https://remarkable.com) tablet. Feel free to open an [issue](https://github.com/Bartek532/zagrodzki.me/issues) or directly make a [pull request](https://github.com/Bartek532/zagrodzki.me/pulls). Enjoy!
+This is project is fully open source app which can be used to sync the newest articles from favourites feeds into [reMarkable](https://remarkable.com) tablet. Feel free to open an [issue](https://github.com/Bartek532/rssmarkable/issues) or directly make a [pull request](https://github.com/Bartek532/rssmarkable/pulls). Enjoy!
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://github.com/Bartek532/rssmarkable.me/blob/main/CONTRIBUTING.md)
+Please read [CONTRIBUTING.md](https://github.com/Bartek532/rssmarkable/blob/main/CONTRIBUTING.md)
 
 ## Tech/framework used 🧰
 
@@ -29,8 +29,8 @@ Please read [CONTRIBUTING.md](https://github.com/Bartek532/rssmarkable.me/blob/m
 
 ### Prerequisite
 
-Node.js v16.\*
-Docker + docker compose
+- Node.js v16.\*
+- Docker + docker compose
 
 ```bash
 
@@ -38,10 +38,12 @@ git clone https://github.com/Bartek532/rssmarkable.git
 
 npm run install
 
-cp .env.example .env
+cp .env.example .env.development.local
 # set up environment variables
 
-yarn start
+npm run db:migrate:dev
+
+npm run dev
 
 ```
 
