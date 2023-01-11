@@ -22,8 +22,6 @@ export const HomeView = () => {
     onSuccess: () => utils.user.getUserFeeds.invalidate(),
   });
 
-  useGenericLoader(addFeedMutation.isLoading);
-
   const onAdd = async ({ url }: CreateFeedInput) => {
     await toast.promise(
       addFeedMutation.mutateAsync({

@@ -26,11 +26,7 @@ export const DeviceView = () => {
     onSuccess: () => utils.user.getUserDevice.invalidate(),
   });
 
-  useGenericLoader([
-    isDeviceLoading,
-    registerDeviceMutation.isLoading,
-    unregisterDeviceMutation.isLoading,
-  ]);
+  useGenericLoader(isDeviceLoading);
 
   const onAdd = async ({ code }: RegisterDeviceInput) => {
     await toast.promise(

@@ -18,7 +18,8 @@ export const FeedsView = () => {
   const utils = trpc.useContext();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-  const { data: feeds, isLoading: areFeedsLoading } = trpc.user.getUserFeeds.useQuery();
+  const { data: feeds, isLoading: areFeedsLoading } =
+    trpc.user.getUserFeeds.useQuery();
 
   const addFeedMutation = trpc.feed.createFeed.useMutation({
     onSuccess: () => utils.user.getUserFeeds.invalidate(),
@@ -28,7 +29,7 @@ export const FeedsView = () => {
     onSuccess: () => utils.user.getUserFeeds.invalidate(),
   });
 
-  useGenericLoader([areFeedsLoading, addFeedMutation.isLoading, deleteFeedMutation.isLoading]);
+  useGenericLoader(areFeedsLoading);
 
   const onAdd = async ({ url }: CreateFeedInput) => {
     await toast.promise(
