@@ -10,6 +10,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum SyncStatus {
+  SUCCESS
+  FAILED
+  PENDING
+  UNKNOWN
+}
+
 model Account {
   id                Int     @id @default(autoincrement())
   userId            Int
@@ -57,6 +64,7 @@ model User {
   accounts Account[]
   sessions Session[]
   feeds    Feed[]
+  syncs    Sync[]
 }
 
 model Device {
@@ -72,4 +80,15 @@ model Feed {
   id    Int    @id @default(autoincrement())
   url   String @unique
   users User[]
+}
+
+model Sync {
+  id                  String     @id @default(uuid())
+  startedAt           DateTime   @default(now())
+  finishedAt          DateTime?
+  status              SyncStatus
+  syncedArticlesCount Int        @default(0)
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
