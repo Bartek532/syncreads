@@ -2,7 +2,7 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 
-import { Button } from "../../components/common/button/Button";
+import { Button } from "../../components/common/Button";
 import { Profile } from "../../components/dashboard/profile/Profile";
 import { Tile } from "../../components/dashboard/tile/Tile";
 import { AddFeedModal } from "../../components/modal/feed/AddFeedModal";

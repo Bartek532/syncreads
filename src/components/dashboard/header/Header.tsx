@@ -10,7 +10,7 @@ import Link from "next/link";
 import { Fragment, memo } from "react";
 
 import { onPromise } from "../../../utils/functions";
-import { Avatar } from "../../common/avatar/Avatar";
+import { Avatar } from "../../common/Avatar";
 
 import type { Session } from "next-auth";
 

@@ -3,7 +3,7 @@ import { toast } from "react-hot-toast";
 
 import EmptyDeviceIcon from "public/svg/empty-device.svg";
 
-import { Empty } from "../../../components/common/empty/Empty";
+import { Empty } from "../../../components/common/Empty";
 import { AddDeviceModal } from "../../../components/modal/device/AddDeviceModal";
 import { DeviceTile } from "../../../components/tile/deviceTile/DeviceTile";
 import { trpc } from "../../../utils/trpc";

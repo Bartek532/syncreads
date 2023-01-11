@@ -10,7 +10,7 @@ import FacebookIcon from "public/svg/social/fb.svg";
 import GithubIcon from "public/svg/social/github.svg";
 import TwitterIcon from "public/svg/social/twitter.svg";
 
-import { Input } from "../../components/common/input/Input";
+import { Input } from "../../components/common/Input";
 import { onPromise } from "../../utils/functions";
 import { loginUserSchema } from "../../utils/validation";
 

@@ -4,8 +4,8 @@ import { toast } from "react-hot-toast";
 
 import EmptyFeedsIcon from "public/svg/empty-feeds.svg";
 
-import { Button } from "../../../components/common/button/Button";
-import { Empty } from "../../../components/common/empty/Empty";
+import { Button } from "../../../components/common/Button";
+import { Empty } from "../../../components/common/Empty";
 import { AddFeedModal } from "../../../components/modal/feed/AddFeedModal";
 import { FeedTile } from "../../../components/tile/feedTile/FeedTile";
 import { trpc } from "../../../utils/trpc";
