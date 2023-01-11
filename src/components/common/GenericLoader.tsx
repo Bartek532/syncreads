@@ -14,7 +14,7 @@ export const GenericLoader = () => {
   return (
     <div
       role="presentation"
-      className="fixed top-0 left-0 z-50 flex h-full w-full items-center justify-center bg-black/50"
+      className="fixed top-0 left-0 z-50 flex h-full w-full items-center justify-center bg-black/70"
     >
       <LoadingSpinner className="h-14 w-14" />
     </div>
