@@ -7,6 +7,7 @@ import { Profile } from "../../components/dashboard/profile/Profile";
 import { Tile } from "../../components/dashboard/tile/Tile";
 import { AddFeedModal } from "../../components/modal/feed/AddFeedModal";
 import { DASHBOARD_CARDS } from "../../utils/consts";
+import { useGenericLoader } from "../../utils/hooks/useGenericLoader";
 import { trpc } from "../../utils/trpc";
 
 import type { CreateFeedInput } from "../../utils/validation";
@@ -20,6 +21,8 @@ export const HomeView = () => {
   const addFeedMutation = trpc.feed.createFeed.useMutation({
     onSuccess: () => utils.user.getUserFeeds.invalidate(),
   });
+
+  useGenericLoader(addFeedMutation.isLoading);
 
   const onAdd = async ({ url }: CreateFeedInput) => {
     await toast.promise(
@@ -37,8 +40,12 @@ export const HomeView = () => {
     );
   };
 
-  const { data: feeds } = trpc.user.getUserFeeds.useQuery();
-  const { data: device } = trpc.user.getUserDevice.useQuery();
+  const { data: feeds, isLoading: areFeedsLoading } =
+    trpc.user.getUserFeeds.useQuery();
+  const { data: device, isLoading: isDeviceLoading } =
+    trpc.user.getUserDevice.useQuery();
+
+  useGenericLoader([areFeedsLoading, isDeviceLoading]);
 
   const values = [
     feeds?.length ?? 0,

@@ -2,6 +2,7 @@ import { ArrowUpRightIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { memo } from "react";
 
 import { onPromise } from "../../../utils/functions";
+import { useGenericLoader } from "../../../utils/hooks/useGenericLoader";
 import { trpc } from "../../../utils/trpc";
 
 interface FeedTileProps {
@@ -12,9 +13,11 @@ interface FeedTileProps {
 export const FeedTile = memo<FeedTileProps>(({ url, onDelete }) => {
   const { origin } = new URL(url);
 
-  const { data } = trpc.feed.getWebsiteDetails.useQuery({
+  const { data, isLoading } = trpc.feed.getWebsiteDetails.useQuery({
     url: origin,
   });
+
+  useGenericLoader(isLoading);
 
   if (!data) {
     return null;

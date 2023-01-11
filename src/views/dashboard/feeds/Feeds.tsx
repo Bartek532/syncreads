@@ -8,6 +8,7 @@ import { Button } from "../../../components/common/Button";
 import { Empty } from "../../../components/common/Empty";
 import { AddFeedModal } from "../../../components/modal/feed/AddFeedModal";
 import { FeedTile } from "../../../components/tile/feedTile/FeedTile";
+import { useGenericLoader } from "../../../utils/hooks/useGenericLoader";
 import { trpc } from "../../../utils/trpc";
 
 import type { CreateFeedInput } from "../../../utils/validation";
@@ -17,7 +18,7 @@ export const FeedsView = () => {
   const utils = trpc.useContext();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-  const { data: feeds } = trpc.user.getUserFeeds.useQuery();
+  const { data: feeds, isLoading: areFeedsLoading } = trpc.user.getUserFeeds.useQuery();
 
   const addFeedMutation = trpc.feed.createFeed.useMutation({
     onSuccess: () => utils.user.getUserFeeds.invalidate(),
@@ -26,6 +27,8 @@ export const FeedsView = () => {
   const deleteFeedMutation = trpc.feed.deleteFeed.useMutation({
     onSuccess: () => utils.user.getUserFeeds.invalidate(),
   });
+
+  useGenericLoader([areFeedsLoading, addFeedMutation.isLoading, deleteFeedMutation.isLoading]);
 
   const onAdd = async ({ url }: CreateFeedInput) => {
     await toast.promise(

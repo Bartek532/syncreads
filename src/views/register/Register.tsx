@@ -10,6 +10,7 @@ import TwitterIcon from "public/svg/social/twitter.svg";
 
 import { Input } from "../../components/common/Input";
 import { onPromise } from "../../utils/functions";
+import { useGenericLoader } from "../../utils/hooks/useGenericLoader";
 import { trpc } from "../../utils/trpc";
 import { registerUserSchema } from "../../utils/validation";
 
@@ -26,7 +27,9 @@ export const RegisterView = () => {
     resolver: zodResolver(registerUserSchema),
   });
 
-  const { mutateAsync } = trpc.auth.register.useMutation();
+  const { mutateAsync, isLoading } = trpc.auth.register.useMutation();
+
+  useGenericLoader(isLoading);
 
   const onSubmit = useCallback(
     async (data: Register) => {
