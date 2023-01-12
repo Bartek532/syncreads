@@ -36,7 +36,7 @@ Please read [CONTRIBUTING.md](https://github.com/Bartek532/rssmarkable/blob/main
 
 git clone https://github.com/Bartek532/rssmarkable.git
 
-npm run install
+npm install
 
 cp .env.example .env.development.local
 # set up environment variables
