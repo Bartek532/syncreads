@@ -62,3 +62,6 @@ export const DASHBOARD_CARDS = [
     link: "View syncs",
   },
 ];
+
+export const SYNCS_PAGINATION_DEFAULT_PAGE = 1;
+export const SYNCS_PAGINATION_DEFAULT_PER_PAGE = 10;
