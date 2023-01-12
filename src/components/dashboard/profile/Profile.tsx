@@ -1,7 +1,7 @@
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/20/solid";
 import { memo } from "react";
 
-import { useWindowSize } from "../../../utils/hooks/useWindowSize";
+import { useWindowSize } from "../../../hooks/useWindowSize";
 import { Avatar } from "../../common/Avatar";
 
 import type { Session } from "next-auth";

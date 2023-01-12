@@ -1,9 +1,9 @@
 import { useUIContext } from "../../providers/UIProvider";
 
-import { GenericLoader } from "./GenericLoader";
+import { GlobalLoader } from "./GlobalLoader";
 
 export const GlobalUI = () => {
   const { isGenericLoaderEnabled } = useUIContext();
 
-  return <>{isGenericLoaderEnabled && <GenericLoader />}</>;
+  return <>{isGenericLoaderEnabled && <GlobalLoader />}</>;
 };

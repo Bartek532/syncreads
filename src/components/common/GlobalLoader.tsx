@@ -4,7 +4,7 @@ import { lockScroll, unlockScroll } from "../../utils/pageScroll";
 
 import { LoadingSpinner } from "./LoadingSpinner";
 
-export const GenericLoader = () => {
+export const GlobalLoader = () => {
   useEffect(() => {
     lockScroll();
 

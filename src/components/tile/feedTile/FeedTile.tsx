@@ -1,8 +1,8 @@
 import { ArrowUpRightIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { memo } from "react";
 
+import { useGenericLoader } from "../../../hooks/useGenericLoader";
 import { onPromise } from "../../../utils/functions";
-import { useGenericLoader } from "../../../utils/hooks/useGenericLoader";
 import { trpc } from "../../../utils/trpc";
 
 interface FeedTileProps {

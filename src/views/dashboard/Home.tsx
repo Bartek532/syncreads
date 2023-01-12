@@ -6,8 +6,8 @@ import { Button } from "../../components/common/Button";
 import { Profile } from "../../components/dashboard/profile/Profile";
 import { Tile } from "../../components/dashboard/tile/Tile";
 import { AddFeedModal } from "../../components/modal/feed/AddFeedModal";
+import { useGenericLoader } from "../../hooks/useGenericLoader";
 import { DASHBOARD_CARDS } from "../../utils/consts";
-import { useGenericLoader } from "../../utils/hooks/useGenericLoader";
 import { trpc } from "../../utils/trpc";
 
 import type { CreateFeedInput } from "../../utils/validation";

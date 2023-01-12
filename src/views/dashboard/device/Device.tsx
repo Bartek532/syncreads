@@ -6,7 +6,7 @@ import EmptyDeviceIcon from "public/svg/empty-device.svg";
 import { Empty } from "../../../components/common/Empty";
 import { AddDeviceModal } from "../../../components/modal/device/AddDeviceModal";
 import { DeviceTile } from "../../../components/tile/deviceTile/DeviceTile";
-import { useGenericLoader } from "../../../utils/hooks/useGenericLoader";
+import { useGenericLoader } from "../../../hooks/useGenericLoader";
 import { trpc } from "../../../utils/trpc";
 
 import type { RegisterDeviceInput } from "../../../utils/validation";

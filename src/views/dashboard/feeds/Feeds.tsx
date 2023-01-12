@@ -8,7 +8,7 @@ import { Button } from "../../../components/common/Button";
 import { Empty } from "../../../components/common/Empty";
 import { AddFeedModal } from "../../../components/modal/feed/AddFeedModal";
 import { FeedTile } from "../../../components/tile/feedTile/FeedTile";
-import { useGenericLoader } from "../../../utils/hooks/useGenericLoader";
+import { useGenericLoader } from "../../../hooks/useGenericLoader";
 import { trpc } from "../../../utils/trpc";
 
 import type { CreateFeedInput } from "../../../utils/validation";
