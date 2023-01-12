@@ -6,8 +6,8 @@ import { useForm } from "react-hook-form";
 
 import { onPromise } from "../../../utils/functions";
 import { createFeedSchema } from "../../../utils/validation";
-import { Button } from "../../common/button/Button";
-import { Input } from "../../common/input/Input";
+import { Button } from "../../common/Button";
+import { Input } from "../../common/Input";
 
 import type { CreateFeedInput } from "../../../utils/validation";
 import type { Dispatch, SetStateAction } from "react";

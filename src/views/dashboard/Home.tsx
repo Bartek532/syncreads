@@ -4,12 +4,13 @@ import { toast } from "react-hot-toast";
 
 import EmptySyncsIcon from "public/svg/empty-syncs.svg";
 
-import { Button } from "../../components/common/button/Button";
-import { Empty } from "../../components/common/empty/Empty";
+import { Button } from "../../components/common/Button";
+import { Empty } from "../../components/common/Empty";
 import { Profile } from "../../components/dashboard/profile/Profile";
 import { SyncsList } from "../../components/dashboard/sync/SyncsList";
 import { Tile } from "../../components/dashboard/tile/Tile";
 import { AddFeedModal } from "../../components/modal/feed/AddFeedModal";
+import { useGenericLoader } from "../../hooks/useGenericLoader";
 import { DASHBOARD_CARDS } from "../../utils/consts";
 import { trpc } from "../../utils/trpc";
 
@@ -49,8 +50,10 @@ export const HomeView = () => {
     );
   };
 
-  const { data: feeds } = trpc.user.getUserFeeds.useQuery();
-  const { data: device } = trpc.user.getUserDevice.useQuery();
+  const { data: feeds, isLoading: areFeedsLoading } =
+    trpc.user.getUserFeeds.useQuery();
+  const { data: device, isLoading: isDeviceLoading } =
+    trpc.user.getUserDevice.useQuery();
   trpc.user.getUserSyncs.useQuery(
     {
       page: syncs.page,
@@ -66,6 +69,8 @@ export const HomeView = () => {
       keepPreviousData: true,
     },
   );
+
+  useGenericLoader([areFeedsLoading, isDeviceLoading]);
 
   const values = [
     feeds?.length ?? 0,

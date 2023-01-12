@@ -1,6 +1,7 @@
-import { SessionProvider } from "next-auth/react";
 import { Toaster } from "react-hot-toast";
 
+import { GlobalUI } from "../components/common/GlobalUI";
+import { AppProviders } from "../providers/AppProviders";
 import "../styles/globals.css";
 import { trpc } from "../utils/trpc";
 
@@ -12,8 +13,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
   pageProps: { session, ...pageProps },
 }) => {
   return (
-    <SessionProvider session={session}>
+    <AppProviders session={session}>
       <Component {...pageProps} />
+      <GlobalUI />
       <Toaster
         position="bottom-right"
         containerStyle={{ padding: "20px" }}
@@ -38,7 +40,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           },
         }}
       />
-    </SessionProvider>
+    </AppProviders>
   );
 };
 
