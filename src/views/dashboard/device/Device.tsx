@@ -3,9 +3,10 @@ import { toast } from "react-hot-toast";
 
 import EmptyDeviceIcon from "public/svg/empty-device.svg";
 
-import { Empty } from "../../../components/common/empty/Empty";
+import { Empty } from "../../../components/common/Empty";
 import { AddDeviceModal } from "../../../components/modal/device/AddDeviceModal";
 import { DeviceTile } from "../../../components/tile/deviceTile/DeviceTile";
+import { useGenericLoader } from "../../../hooks/useGenericLoader";
 import { trpc } from "../../../utils/trpc";
 
 import type { RegisterDeviceInput } from "../../../utils/validation";
@@ -14,7 +15,8 @@ import type { TRPCError } from "@trpc/server";
 export const DeviceView = () => {
   const utils = trpc.useContext();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const { data: device } = trpc.user.getUserDevice.useQuery();
+  const { data: device, isLoading: isDeviceLoading } =
+    trpc.user.getUserDevice.useQuery();
 
   const registerDeviceMutation = trpc.user.registerDevice.useMutation({
     onSuccess: () => utils.user.getUserDevice.invalidate(),
@@ -23,6 +25,8 @@ export const DeviceView = () => {
   const unregisterDeviceMutation = trpc.user.unregisterDevice.useMutation({
     onSuccess: () => utils.user.getUserDevice.invalidate(),
   });
+
+  useGenericLoader(isDeviceLoading);
 
   const onAdd = async ({ code }: RegisterDeviceInput) => {
     await toast.promise(

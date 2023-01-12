@@ -2,10 +2,11 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 
-import { Button } from "../../components/common/button/Button";
+import { Button } from "../../components/common/Button";
 import { Profile } from "../../components/dashboard/profile/Profile";
 import { Tile } from "../../components/dashboard/tile/Tile";
 import { AddFeedModal } from "../../components/modal/feed/AddFeedModal";
+import { useGenericLoader } from "../../hooks/useGenericLoader";
 import { DASHBOARD_CARDS } from "../../utils/consts";
 import { trpc } from "../../utils/trpc";
 
@@ -37,8 +38,12 @@ export const HomeView = () => {
     );
   };
 
-  const { data: feeds } = trpc.user.getUserFeeds.useQuery();
-  const { data: device } = trpc.user.getUserDevice.useQuery();
+  const { data: feeds, isLoading: areFeedsLoading } =
+    trpc.user.getUserFeeds.useQuery();
+  const { data: device, isLoading: isDeviceLoading } =
+    trpc.user.getUserDevice.useQuery();
+
+  useGenericLoader([areFeedsLoading, isDeviceLoading]);
 
   const values = [
     feeds?.length ?? 0,
