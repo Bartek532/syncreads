@@ -1,3 +1,4 @@
+import { Poppins } from "@next/font/google";
 import { Toaster } from "react-hot-toast";
 
 import { GlobalUI } from "../components/common/GlobalUI";
@@ -8,39 +9,50 @@ import { trpc } from "../utils/trpc";
 import type { Session } from "next-auth";
 import type { AppType } from "next/app";
 
+const poppins = Poppins({
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+});
+
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
   return (
-    <AppProviders session={session}>
-      <Component {...pageProps} />
-      <GlobalUI />
-      <Toaster
-        position="bottom-right"
-        containerStyle={{ padding: "20px" }}
-        gutter={13}
-        toastOptions={{
-          style: {
-            padding: "14px 25px",
-            minWidth: "250px",
-            gap: "10px",
-          },
-          error: {
+    <>
+      <style jsx global>{`
+        :root {
+          --font-poppins: ${poppins.style.fontFamily};
+        }
+      `}</style>
+      <AppProviders session={session}>
+        <Component {...pageProps} />
+        <GlobalUI />
+        <Toaster
+          position="bottom-right"
+          containerStyle={{ padding: "20px" }}
+          gutter={13}
+          toastOptions={{
             style: {
-              backgroundColor: "#fef2f2",
-              color: "#991b1b",
+              padding: "14px 25px",
+              minWidth: "250px",
+              gap: "10px",
             },
-          },
-          success: {
-            style: {
-              backgroundColor: "#f0fdf4",
-              color: "#15803d",
+            error: {
+              style: {
+                backgroundColor: "#fef2f2",
+                color: "#991b1b",
+              },
             },
-          },
-        }}
-      />
-    </AppProviders>
+            success: {
+              style: {
+                backgroundColor: "#f0fdf4",
+                color: "#15803d",
+              },
+            },
+          }}
+        />
+      </AppProviders>
+    </>
   );
 };
 
