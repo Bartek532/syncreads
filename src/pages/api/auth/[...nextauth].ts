@@ -34,7 +34,7 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   adapter: PrismaAdapter(prisma),
-  secret: env.NEXTAUTH_SECRET!,
+  secret: env.NEXTAUTH_SECRET,
   providers: [
     /*
     DiscordProvider({
