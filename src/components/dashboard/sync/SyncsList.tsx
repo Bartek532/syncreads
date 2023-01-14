@@ -1,13 +1,6 @@
-import {
-  ArrowPathIcon,
-  BanknotesIcon,
-  ChevronRightIcon,
-} from "@heroicons/react/24/outline";
-import clsx from "clsx";
-import dayjs from "dayjs";
 import { memo } from "react";
 
-import { Button } from "../../common/button/Button";
+import { Button } from "../../common/Button";
 
 import { SyncItem } from "./SyncItem";
 
@@ -29,7 +22,7 @@ export const SyncsList = memo<SyncsListProps>(
 
     return (
       <>
-        <div className="shadow sm:hidden">
+        <div className=" shadow sm:hidden">
           <ul
             role="list"
             className="mt-2 divide-y divide-gray-200 overflow-hidden shadow sm:hidden"
@@ -60,7 +53,7 @@ export const SyncsList = memo<SyncsListProps>(
           </nav>
         </div>
         <div className="hidden sm:block">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-6xl">
             <div className="mt-2 flex flex-col">
               <div className="min-w-full overflow-hidden overflow-x-auto align-middle shadow sm:rounded-lg">
                 <table className="min-w-full divide-y divide-gray-200">

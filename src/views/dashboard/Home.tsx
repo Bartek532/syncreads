@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
 
 import EmptySyncsIcon from "public/svg/empty-syncs.svg";
@@ -19,22 +19,46 @@ import type { Sync } from "@prisma/client";
 import type { TRPCError } from "@trpc/server";
 
 export const HomeView = () => {
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [{ page, perPage, syncs, total, articles }, setSyncsData] = useState(
+    () => ({
+      page: 1,
+      perPage: 10,
+      syncs: [] as Sync[],
+      total: 0,
+      articles: 0,
+    }),
+  );
   const utils = trpc.useContext();
   const { data } = useSession();
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [syncs, setSyncs] = useState({
-    page: 1,
-    perPage: 10,
-    syncs: [] as Sync[],
-    total: 0,
-    articles: 0,
-  });
 
   const addFeedMutation = trpc.feed.createFeed.useMutation({
     onSuccess: () => utils.user.getUserFeeds.invalidate(),
   });
 
-  const onAdd = async ({ url }: CreateFeedInput) => {
+  const { data: feeds, isLoading: areFeedsLoading } =
+    trpc.user.getUserFeeds.useQuery();
+  const { data: device, isLoading: isDeviceLoading } =
+    trpc.user.getUserDevice.useQuery();
+  trpc.user.getUserSyncs.useQuery(
+    {
+      page: page,
+      perPage: perPage,
+    },
+    {
+      onSuccess: ({ total, syncs, articles }) =>
+        setSyncsData((previousData) => ({
+          ...previousData,
+          syncs,
+          total,
+          articles,
+        })),
+      queryKey: ["user.getUserSyncs", { page: page, perPage: perPage }],
+      keepPreviousData: true,
+    },
+  );
+
+  const feedAddHandler = async ({ url }: CreateFeedInput) => {
     await toast.promise(
       addFeedMutation.mutateAsync({
         url,
@@ -50,40 +74,26 @@ export const HomeView = () => {
     );
   };
 
-  const { data: feeds, isLoading: areFeedsLoading } =
-    trpc.user.getUserFeeds.useQuery();
-  const { data: device, isLoading: isDeviceLoading } =
-    trpc.user.getUserDevice.useQuery();
-  trpc.user.getUserSyncs.useQuery(
-    {
-      page: syncs.page,
-      perPage: syncs.perPage,
-    },
-    {
-      onSuccess: ({ total, syncs, articles }) =>
-        setSyncs((prev) => ({ ...prev, syncs, total, articles })),
-      queryKey: [
-        "user.getUserSyncs",
-        { page: syncs.page, perPage: syncs.perPage },
-      ],
-      keepPreviousData: true,
-    },
+  const pageChangeHandler = useCallback(
+    (page: number) =>
+      setSyncsData((previousData) => ({ ...previousData, page })),
+    [],
   );
 
-  useGenericLoader([areFeedsLoading, isDeviceLoading]);
-
-  const values = [
+  const cardsValues = [
     feeds?.length ?? 0,
     device ? "reMarkable 2" : "Not registered",
-    syncs.syncs.length ? syncs.articles : "Unavailable",
+    syncs.length ? articles : "Unavailable",
   ];
+
+  useGenericLoader([areFeedsLoading, isDeviceLoading]);
 
   return (
     <>
       <AddFeedModal
         isOpen={isAddModalOpen}
         setIsOpen={setIsAddModalOpen}
-        onAdd={onAdd}
+        onAdd={feedAddHandler}
       />
       <div className="bg-white shadow">
         <div className="px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
@@ -110,29 +120,30 @@ export const HomeView = () => {
           <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {DASHBOARD_CARDS.map((card, index) => (
               <Tile
-                card={{ ...card, value: values[index]! }}
+                card={{ ...card, value: cardsValues[index]! }}
                 key={card.title}
               />
             ))}
           </div>
         </div>
 
-        <section className="mx-auto mt-10 max-w-6xl px-4 sm:px-6 lg:mt-12 lg:px-8">
-          <h2 className="text-lg font-medium leading-6 text-gray-900">
+        <section className="mx-auto mt-10 max-w-6xl sm:px-6 lg:mt-12 lg:px-8">
+          <h2 className="px-4 text-lg font-medium leading-6 text-gray-900 sm:px-0">
             Recent syncs
           </h2>
-          {syncs.syncs.length ? (
+          {syncs.length ? (
             <div className="mt-4">
               <SyncsList
-                syncs={syncs.syncs}
-                total={syncs.total}
-                page={syncs.page}
-                perPage={syncs.perPage}
-                onPageChange={(page) => setSyncs((prev) => ({ ...prev, page }))}
+                syncs={syncs}
+                total={total}
+                page={page}
+                perPage={perPage}
+                onPageChange={pageChangeHandler}
               />
             </div>
           ) : (
-            <Empty onCreateNew={() => console.log("SYNC")}>
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            <Empty onCreateNew={() => {}}>
               <EmptySyncsIcon className="h-50 mx-auto w-40 text-gray-400" />
               <span className="mt-6 block text-lg font-medium text-gray-900">
                 You haven&apos;t synced any feeds yet!

@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import Link from "next/link";
 import { memo } from "react";
 
-import { useWindowSize } from "../../../utils/hooks/useWindowSize";
+import { useWindowSize } from "../../../hooks/useWindowSize";
 
 import type { Sync } from "@prisma/client";
 
