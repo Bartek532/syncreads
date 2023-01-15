@@ -26,7 +26,7 @@ export const FeedTile = memo<FeedTileProps>(({ url, onDelete }) => {
   return (
     <article
       key={url}
-      className="group relative flex rounded-2xl bg-white focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2"
+      className="group relative flex rounded-2xl bg-white shadow focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2"
     >
       <div
         className="w-1/3 shrink-0 rounded-l-2xl bg-cover bg-center"
