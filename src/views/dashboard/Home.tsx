@@ -10,8 +10,8 @@ import { Profile } from "../../components/dashboard/profile/Profile";
 import { SyncsList } from "../../components/dashboard/sync/SyncsList";
 import { Tile } from "../../components/dashboard/tile/Tile";
 import { AddFeedModal } from "../../components/modal/feed/AddFeedModal";
+import { DASHBOARD_CARDS } from "../../config/dashboard";
 import { useGenericLoader } from "../../hooks/useGenericLoader";
-import { DASHBOARD_CARDS } from "../../utils/consts";
 import { trpc } from "../../utils/trpc";
 
 import type { CreateFeedInput } from "../../utils/validation";

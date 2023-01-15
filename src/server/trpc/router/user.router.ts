@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import {
   getUserDeviceHandler,
-  getUserSyncsDeviceHandler,
+  getUserSyncsHandler,
   registerDeviceHandler,
   unregisterDeviceHandler,
 } from "../../../server/controllers/user.controller";
@@ -33,6 +33,6 @@ export const userRouter = router({
       }),
     )
     .query(({ ctx, input }) =>
-      getUserSyncsDeviceHandler({ email: ctx.session.user.email, ...input }),
+      getUserSyncsHandler({ email: ctx.session.user.email, ...input }),
     ),
 });
