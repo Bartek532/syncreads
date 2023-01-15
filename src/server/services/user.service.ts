@@ -1,5 +1,9 @@
 import { prisma } from "../../server/db/client";
 
+export const getAllUsers = () => {
+  return prisma.user.findMany();
+};
+
 export const createUser = ({
   email,
   password,
@@ -15,7 +19,7 @@ export const createUser = ({
 export const getUserByEmail = ({ email }: { email: string }) => {
   return prisma.user.findUnique({
     where: { email },
-    include: { device: true },
+    include: { device: true, feeds: true },
   });
 };
 

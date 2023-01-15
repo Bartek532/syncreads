@@ -1,9 +1,13 @@
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
 
+import EmptySyncsIcon from "public/svg/empty-syncs.svg";
+
 import { Button } from "../../components/common/Button";
+import { Empty } from "../../components/common/Empty";
 import { Profile } from "../../components/dashboard/profile/Profile";
+import { SyncsList } from "../../components/dashboard/sync/SyncsList";
 import { Tile } from "../../components/dashboard/tile/Tile";
 import { AddFeedModal } from "../../components/modal/feed/AddFeedModal";
 import { useGenericLoader } from "../../hooks/useGenericLoader";
@@ -11,18 +15,50 @@ import { DASHBOARD_CARDS } from "../../utils/consts";
 import { trpc } from "../../utils/trpc";
 
 import type { CreateFeedInput } from "../../utils/validation";
+import type { Sync } from "@prisma/client";
 import type { TRPCError } from "@trpc/server";
 
 export const HomeView = () => {
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [{ page, perPage, syncs, total, articles }, setSyncsData] = useState(
+    () => ({
+      page: 1,
+      perPage: 10,
+      syncs: [] as Sync[],
+      total: 0,
+      articles: 0,
+    }),
+  );
   const utils = trpc.useContext();
   const { data } = useSession();
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const addFeedMutation = trpc.feed.createFeed.useMutation({
     onSuccess: () => utils.user.getUserFeeds.invalidate(),
   });
 
-  const onAdd = async ({ url }: CreateFeedInput) => {
+  const { data: feeds, isLoading: areFeedsLoading } =
+    trpc.user.getUserFeeds.useQuery();
+  const { data: device, isLoading: isDeviceLoading } =
+    trpc.user.getUserDevice.useQuery();
+  trpc.user.getUserSyncs.useQuery(
+    {
+      page: page,
+      perPage: perPage,
+    },
+    {
+      onSuccess: ({ total, syncs, articles }) =>
+        setSyncsData((previousData) => ({
+          ...previousData,
+          syncs,
+          total,
+          articles,
+        })),
+      queryKey: ["user.getUserSyncs", { page: page, perPage: perPage }],
+      keepPreviousData: true,
+    },
+  );
+
+  const feedAddHandler = async ({ url }: CreateFeedInput) => {
     await toast.promise(
       addFeedMutation.mutateAsync({
         url,
@@ -38,25 +74,26 @@ export const HomeView = () => {
     );
   };
 
-  const { data: feeds, isLoading: areFeedsLoading } =
-    trpc.user.getUserFeeds.useQuery();
-  const { data: device, isLoading: isDeviceLoading } =
-    trpc.user.getUserDevice.useQuery();
+  const pageChangeHandler = useCallback(
+    (page: number) =>
+      setSyncsData((previousData) => ({ ...previousData, page })),
+    [],
+  );
 
-  useGenericLoader([areFeedsLoading, isDeviceLoading]);
-
-  const values = [
+  const cardsValues = [
     feeds?.length ?? 0,
     device ? "reMarkable 2" : "Not registered",
-    "Coming soon...",
+    syncs.length ? articles : "Unavailable",
   ];
+
+  useGenericLoader([areFeedsLoading, isDeviceLoading]);
 
   return (
     <>
       <AddFeedModal
         isOpen={isAddModalOpen}
         setIsOpen={setIsAddModalOpen}
-        onAdd={onAdd}
+        onAdd={feedAddHandler}
       />
       <div className="bg-white shadow">
         <div className="px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
@@ -80,22 +117,40 @@ export const HomeView = () => {
           <h2 className="text-lg font-medium leading-6 text-gray-900">
             Overview
           </h2>
-          <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {DASHBOARD_CARDS.map((card, index) => (
               <Tile
-                card={{ ...card, value: values[index]! }}
+                card={{ ...card, value: cardsValues[index]! }}
                 key={card.title}
               />
             ))}
           </div>
         </div>
 
-        <h2 className="mx-auto mt-8 max-w-6xl px-4 text-lg font-medium leading-6 text-gray-900 sm:px-6 lg:px-8">
-          Recent syncs
-        </h2>
-        <h3 className="mx-auto mt-2 max-w-6xl px-4 text-lg font-medium leading-6 text-gray-400 sm:px-6 lg:px-8">
-          Coming soon
-        </h3>
+        <section className="mx-auto mt-10 max-w-6xl sm:px-6 lg:mt-12 lg:px-8">
+          <h2 className="px-4 text-lg font-medium leading-6 text-gray-900 sm:px-0">
+            Recent syncs
+          </h2>
+          {syncs.length ? (
+            <div className="mt-4">
+              <SyncsList
+                syncs={syncs}
+                total={total}
+                page={page}
+                perPage={perPage}
+                onPageChange={pageChangeHandler}
+              />
+            </div>
+          ) : (
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            <Empty onCreateNew={() => {}}>
+              <EmptySyncsIcon className="h-50 mx-auto w-40 text-gray-400" />
+              <span className="mt-6 block text-lg font-medium text-gray-900">
+                You haven&apos;t synced any feeds yet!
+              </span>
+            </Empty>
+          )}
+        </section>
       </div>
     </>
   );

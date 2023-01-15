@@ -1,5 +1,8 @@
+import { z } from "zod";
+
 import {
   getUserDeviceHandler,
+  getUserSyncsDeviceHandler,
   registerDeviceHandler,
   unregisterDeviceHandler,
 } from "../../../server/controllers/user.controller";
@@ -22,4 +25,14 @@ export const userRouter = router({
   getUserDevice: protectedProcedure.query(({ ctx }) =>
     getUserDeviceHandler({ email: ctx.session.user.email }),
   ),
+  getUserSyncs: protectedProcedure
+    .input(
+      z.object({
+        perPage: z.number().min(1).max(100).nullish(),
+        page: z.number().nullish(),
+      }),
+    )
+    .query(({ ctx, input }) =>
+      getUserSyncsDeviceHandler({ email: ctx.session.user.email, ...input }),
+    ),
 });
