@@ -5,7 +5,7 @@ import puppeteer, { type Page, type Browser } from "puppeteer-core";
 import { remarkable, type RemarkableApi } from "rmapi-js";
 import Parser from "rss-parser";
 
-import { PDF_OPTIONS, SYNC_DEFAULT_FOLDER_NAME } from "../../config/sync";
+import { PDF_OPTIONS } from "../../config/sync";
 import { env } from "../../env/server.mjs";
 import { prisma } from "../../server/db/client";
 import { getFolder, syncEntry } from "../../server/services/remarkable.service";
@@ -76,12 +76,12 @@ const syncFeed = async ({
     .filter((item, index) =>
       user.lastSyncDate
         ? dayjs(item.pubDate).isAfter(user.lastSyncDate)
-        : index < 1,
+        : index < user.startArticlesCount,
     );
 
   const { documentId: folderId } = await getFolder({
     api,
-    name: SYNC_DEFAULT_FOLDER_NAME,
+    name: user.folder,
   });
 
   for (const article of articles) {

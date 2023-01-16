@@ -52,13 +52,15 @@ model VerificationToken {
 }
 
 model User {
-  id            Int       @id @default(autoincrement())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  password      String?
-  lastSyncDate  DateTime?
-  image         String?
+  id                 Int       @id @default(autoincrement())
+  name               String?
+  email              String?   @unique
+  emailVerified      DateTime?
+  password           String?
+  image              String?
+  lastSyncDate       DateTime?
+  folder             String    @default("RSS")
+  startArticlesCount Int       @default(1)
 
   device   Device?
   accounts Account[]
