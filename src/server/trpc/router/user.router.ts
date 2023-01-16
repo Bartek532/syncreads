@@ -2,8 +2,9 @@ import { z } from "zod";
 
 import {
   getUserDeviceHandler,
-  getUserSyncsDeviceHandler,
+  getUserSyncsHandler,
   registerDeviceHandler,
+  syncUserFeedsHandler,
   unregisterDeviceHandler,
 } from "../../../server/controllers/user.controller";
 import { getUserFeeds } from "../../../server/services/user.service";
@@ -33,6 +34,9 @@ export const userRouter = router({
       }),
     )
     .query(({ ctx, input }) =>
-      getUserSyncsDeviceHandler({ email: ctx.session.user.email, ...input }),
+      getUserSyncsHandler({ email: ctx.session.user.email, ...input }),
     ),
+  syncUserFeeds: protectedProcedure.mutation(({ ctx }) =>
+    syncUserFeedsHandler({ email: ctx.session.user.email }),
+  ),
 });

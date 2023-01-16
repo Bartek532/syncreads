@@ -5,7 +5,8 @@ import { register } from "rmapi-js";
 import {
   SYNCS_PAGINATION_DEFAULT_PAGE,
   SYNCS_PAGINATION_DEFAULT_PER_PAGE,
-} from "../../utils/consts";
+} from "../../config/sync";
+import { syncUserFeeds } from "../../pages/api/sync";
 import { getUserSyncs } from "../services/sync.service";
 import {
   createUser,
@@ -111,7 +112,16 @@ export const getUserDeviceHandler = async ({ email }: { email: string }) => {
   }
 };
 
-export const getUserSyncsDeviceHandler = async ({
+export const syncUserFeedsHandler = async ({ email }: { email: string }) => {
+  try {
+    return syncUserFeeds({ email });
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const getUserSyncsHandler = async ({
   email,
   page,
   perPage,

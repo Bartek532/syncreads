@@ -19,7 +19,7 @@ export const updateSync = ({
   id,
   data,
 }: {
-  id: number;
+  id: string;
   data: Partial<Sync>;
 }) => {
   return prisma.sync.update({
