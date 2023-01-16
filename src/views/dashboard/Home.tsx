@@ -12,6 +12,7 @@ import { Tile } from "../../components/dashboard/tile/Tile";
 import { AddFeedModal } from "../../components/modal/feed/AddFeedModal";
 import { DASHBOARD_CARDS } from "../../config/dashboard";
 import { useGenericLoader } from "../../hooks/useGenericLoader";
+import { onPromise } from "../../utils/functions";
 import { trpc } from "../../utils/trpc";
 
 import type { CreateFeedInput } from "../../utils/validation";
@@ -34,6 +35,10 @@ export const HomeView = () => {
 
   const addFeedMutation = trpc.feed.createFeed.useMutation({
     onSuccess: () => utils.user.getUserFeeds.invalidate(),
+  });
+
+  const syncFeedsMutation = trpc.user.syncUserFeeds.useMutation({
+    onSuccess: () => utils.user.getUserSyncs.invalidate(),
   });
 
   const { data: feeds, isLoading: areFeedsLoading } =
@@ -74,6 +79,14 @@ export const HomeView = () => {
     );
   };
 
+  const feedsSyncHandler = async () => {
+    await toast.promise(syncFeedsMutation.mutateAsync(), {
+      loading: "Syncing...",
+      success: () => "Sync completed successfully!",
+      error: (err: TRPCError | Error) => err.message,
+    });
+  };
+
   const pageChangeHandler = useCallback(
     (page: number) =>
       setSyncsData((previousData) => ({ ...previousData, page })),
@@ -106,7 +119,7 @@ export const HomeView = () => {
               >
                 Add feed
               </Button>
-              <Button>Sync feeds</Button>
+              <Button onClick={onPromise(feedsSyncHandler)}>Sync feeds</Button>
             </div>
           </div>
         </div>
@@ -142,8 +155,7 @@ export const HomeView = () => {
               />
             </div>
           ) : (
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-            <Empty onCreateNew={() => {}}>
+            <Empty onCreateNew={onPromise(feedsSyncHandler)}>
               <EmptySyncsIcon className="h-50 mx-auto w-40 text-gray-400" />
               <span className="mt-6 block text-lg font-medium text-gray-900">
                 You haven&apos;t synced any feeds yet!

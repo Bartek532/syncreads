@@ -91,7 +91,7 @@ const syncFeed = async ({
   return { url, articles };
 };
 
-const syncUserFeeds = async ({
+export const syncUserFeeds = async ({
   email,
   parser: passedParser,
   browser: passedBrowser,

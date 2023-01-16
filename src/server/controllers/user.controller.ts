@@ -6,6 +6,7 @@ import {
   SYNCS_PAGINATION_DEFAULT_PAGE,
   SYNCS_PAGINATION_DEFAULT_PER_PAGE,
 } from "../../config/sync";
+import { syncUserFeeds } from "../../pages/api/sync";
 import { getUserSyncs } from "../services/sync.service";
 import {
   createUser,
@@ -105,6 +106,15 @@ export const getUserFeedsHandler = async ({
 export const getUserDeviceHandler = async ({ email }: { email: string }) => {
   try {
     return getUserDevice({ email });
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const syncUserFeedsHandler = async ({ email }: { email: string }) => {
+  try {
+    return syncUserFeeds({ email });
   } catch (err) {
     console.error(err);
     throw err;

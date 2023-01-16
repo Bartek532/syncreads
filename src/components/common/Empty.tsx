@@ -1,8 +1,10 @@
 import { memo } from "react";
 
+import type { SyntheticEvent } from "react";
+
 interface EmptyProps {
   readonly children: React.ReactNode;
-  readonly onCreateNew: () => void;
+  readonly onCreateNew: (event: SyntheticEvent) => void;
 }
 
 export const Empty = memo<EmptyProps>(({ children, onCreateNew }) => {
