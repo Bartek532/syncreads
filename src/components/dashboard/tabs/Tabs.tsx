@@ -14,7 +14,7 @@ export const Tabs = ({ labels, index, onChange }: TabsProps) => {
   const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const value = Number(event.target.value);
 
-    if (!Number.isNaN(Number(value))) {
+    if (!Number.isNaN(value)) {
       onChange(value);
     }
   };
