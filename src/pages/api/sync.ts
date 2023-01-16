@@ -5,14 +5,15 @@ import puppeteer, { type Page, type Browser } from "puppeteer-core";
 import { remarkable, type RemarkableApi } from "rmapi-js";
 import Parser from "rss-parser";
 
+import { PDF_OPTIONS, SYNC_DEFAULT_FOLDER_NAME } from "../../config/sync";
 import { env } from "../../env/server.mjs";
 import { prisma } from "../../server/db/client";
+import { getFolder, syncEntry } from "../../server/services/remarkable.service";
 import { createSync, updateSync } from "../../server/services/sync.service";
 import {
   getAllUsers,
   getUserByEmail,
 } from "../../server/services/user.service";
-import { PDF_OPTIONS } from "../../utils/consts";
 import { ApiError, HTTP_STATUS_CODE } from "../../utils/exceptions";
 import { nonNullable } from "../../utils/functions";
 
@@ -34,27 +35,26 @@ const BROWSER_OPTIONS = {
 interface FeedItem {
   link: string;
   pubDate: string;
+  title?: string;
 }
 
 const syncArticle = async ({
-  url,
+  article,
   api,
   page,
+  folderId = "",
 }: {
-  url: string;
+  article: FeedItem;
   api: RemarkableApi;
   page: Page;
+  folderId?: string;
 }) => {
-  await page.goto(url, { waitUntil: "networkidle0", timeout: 0 });
+  await page.goto(article.link, { waitUntil: "networkidle0", timeout: 0 });
   const pdf = await page.pdf(PDF_OPTIONS);
+  const title = article.title ?? (await page.title());
 
-  const entry = await api.putPdf(url, pdf);
-  const [root, gen] = await api.getRootHash();
-  const rootEntries = await api.getEntries(root);
-  rootEntries.push(entry);
-  const { hash } = await api.putEntries("", rootEntries);
-  const nextGen = await api.putRootHash(hash, gen);
-  await api.syncComplete(nextGen);
+  const pdfEntry = await api.putPdf(title, pdf, { parent: folderId });
+  await syncEntry({ api, entry: pdfEntry });
 };
 
 const syncFeed = async ({
@@ -78,14 +78,20 @@ const syncFeed = async ({
         ? dayjs(item.pubDate).isAfter(user.lastSyncDate)
         : index < 1,
     );
+
+  const { documentId: folderId } = await getFolder({
+    api,
+    name: SYNC_DEFAULT_FOLDER_NAME,
+  });
+
   for (const article of articles) {
-    await syncArticle({ url: article.link, api, page });
+    await syncArticle({ article, api, page, folderId });
   }
 
   return { url, articles };
 };
 
-const syncUserFeeds = async ({
+export const syncUserFeeds = async ({
   email,
   parser: passedParser,
   browser: passedBrowser,

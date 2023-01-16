@@ -16,10 +16,6 @@ interface SyncsListProps {
 
 export const SyncsList = memo<SyncsListProps>(
   ({ syncs, total, page, perPage, onPageChange }) => {
-    if (!syncs.length) {
-      return <div>Empty...</div>;
-    }
-
     return (
       <>
         <div className=" shadow sm:hidden">
