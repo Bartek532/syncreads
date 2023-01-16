@@ -13,7 +13,7 @@ export const Input = forwardRef<
       <label className="block text-sm font-medium text-gray-700">
         {children}
       </label>
-      <div className="relative mt-1 rounded-md shadow-sm">
+      <div className="relative rounded-md shadow-sm">
         <input
           ref={ref}
           {...props}
