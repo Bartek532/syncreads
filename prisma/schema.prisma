@@ -10,6 +10,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum SyncStatus {
+  SUCCESS
+  FAILED
+  PENDING
+  UNKNOWN
+}
+
 model Account {
   id                Int     @id @default(autoincrement())
   userId            Int
@@ -45,18 +52,21 @@ model VerificationToken {
 }
 
 model User {
-  id            Int       @id @default(autoincrement())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  password      String?
-  lastSyncDate  DateTime?
-  image         String?
+  id                 Int       @id @default(autoincrement())
+  name               String?
+  email              String?   @unique
+  emailVerified      DateTime?
+  password           String?
+  image              String?
+  lastSyncDate       DateTime?
+  folder             String    @default("RSS")
+  startArticlesCount Int       @default(1)
 
   device   Device?
   accounts Account[]
   sessions Session[]
   feeds    Feed[]
+  syncs    Sync[]
 }
 
 model Device {
@@ -72,4 +82,15 @@ model Feed {
   id    Int    @id @default(autoincrement())
   url   String @unique
   users User[]
+}
+
+model Sync {
+  id                  String     @id @default(uuid())
+  startedAt           DateTime   @default(now())
+  finishedAt          DateTime?
+  status              SyncStatus
+  syncedArticlesCount Int        @default(0)
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

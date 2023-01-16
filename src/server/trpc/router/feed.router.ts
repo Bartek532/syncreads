@@ -2,7 +2,7 @@ import {
   createFeedHandler,
   deleteFeedHandler,
   getAllFeedsHandler,
-  getWebsiteDetailsHandler,
+  getFeedDetailsHandler,
 } from "../../../server/controllers/feed.controller";
 import {
   createFeedSchema,
@@ -22,8 +22,8 @@ export const feedRouter = router({
     .mutation(({ input, ctx }) =>
       deleteFeedHandler({ ...input, email: ctx.session.user.email }),
     ),
-  getWebsiteDetails: protectedProcedure
+  getFeedDetails: protectedProcedure
     .input(getWebsiteDetailsSchema)
-    .query(({ input }) => getWebsiteDetailsHandler(input)),
+    .query(({ input }) => getFeedDetailsHandler(input)),
   getAllFeeds: protectedProcedure.query(() => getAllFeedsHandler()),
 });
