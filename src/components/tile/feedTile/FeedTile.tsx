@@ -2,7 +2,7 @@ import { ArrowUpRightIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { memo } from "react";
 
 import { useGenericLoader } from "../../../hooks/useGenericLoader";
-import { onPromise } from "../../../utils/functions";
+import { onPromise, truncateTextByWordsCount } from "../../../utils/functions";
 import { trpc } from "../../../utils/trpc";
 
 interface FeedTileProps {
@@ -11,10 +11,8 @@ interface FeedTileProps {
 }
 
 export const FeedTile = memo<FeedTileProps>(({ url, onDelete }) => {
-  const { origin } = new URL(url);
-
-  const { data, isLoading } = trpc.feed.getWebsiteDetails.useQuery({
-    url: origin,
+  const { data, isLoading } = trpc.feed.getFeedDetails.useQuery({
+    url,
   });
 
   useGenericLoader(isLoading);
@@ -30,22 +28,22 @@ export const FeedTile = memo<FeedTileProps>(({ url, onDelete }) => {
     >
       <div
         className="w-1/3 shrink-0 rounded-l-2xl bg-cover bg-center"
-        style={{ backgroundImage: `url(${data.details.images[0] ?? ""})` }}
+        style={{ backgroundImage: `url(${data.feed.image ?? ""})` }}
       ></div>
       <div className="p-6 pr-16">
         <h3 className="text-base font-medium sm:text-lg">
           <a
-            href={data.details.url}
+            href={data.feed.url}
             className="focus:outline-none"
             target="_blank"
             rel="noreferrer"
           >
             <span className="absolute inset-0" aria-hidden="true" />
-            {data.details.title}
+            {data.feed.title}
           </a>
         </h3>
         <p className="mt-2 text-xs text-gray-500 sm:text-sm">
-          {data.details.description}
+          {truncateTextByWordsCount(data.feed.description, 15)}
         </p>
       </div>
       <span

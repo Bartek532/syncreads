@@ -22,15 +22,23 @@ export interface Register {
 }
 
 export type HeroIcon = (props: React.ComponentProps<"svg">) => JSX.Element;
-export interface WebsiteDetails {
+
+export interface LinkPreview {
   readonly title: string;
   readonly description: string;
   readonly image: string;
   readonly url: string;
-  readonly sitName: string;
+  readonly siteName: string;
   readonly mediaType: string;
   readonly contentType: string;
   readonly images: string[];
   readonly videos: string[];
   readonly favicons: string[];
+}
+
+export interface WebsiteDetails {
+  readonly title: string;
+  readonly description: string;
+  readonly image: string;
+  readonly url: string;
 }
