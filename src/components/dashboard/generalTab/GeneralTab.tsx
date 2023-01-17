@@ -1,5 +1,7 @@
 import { useSession } from "next-auth/react";
 
+import { Heading } from "../heading/Heading";
+
 import { UserSettingsRow } from "./UserSettingsRow";
 
 export const GeneralTab = () => {
@@ -8,7 +10,7 @@ export const GeneralTab = () => {
   return (
     <section className="mt-8">
       <hgroup>
-        <h3 className="text-lg font-medium leading-6 text-gray-900">Profile</h3>
+        <Heading level={3}>Profile</Heading>
         <p className="max-w-2xl text-sm text-gray-500">
           This information will be displayed publicly so be careful what you
           share.

@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { GeneralTab } from "../../../components/dashboard/generalTab/GeneralTab";
+import { Heading } from "../../../components/dashboard/heading/Heading";
 import { Tabs } from "../../../components/dashboard/tabs/Tabs";
 
 const tabs = [{ label: "General", panel: <GeneralTab /> }];
@@ -13,9 +14,9 @@ export const SettingsView = () => {
 
   return (
     <section className="mx-auto mt-8 max-w-6xl px-4 sm:px-6 lg:mt-12 lg:px-8">
-      <h2 className="mb-8 text-lg font-medium leading-6 text-gray-900">
+      <Heading level={2} className="mb-8">
         Settings
-      </h2>
+      </Heading>
 
       <Tabs labels={labels} index={activeTab} onChange={setActiveTab} />
 

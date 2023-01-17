@@ -6,6 +6,7 @@ import EmptySyncsIcon from "public/svg/empty-syncs.svg";
 
 import { Button } from "../../components/common/Button";
 import { Empty } from "../../components/common/Empty";
+import { Heading } from "../../components/dashboard/heading/Heading";
 import { Profile } from "../../components/dashboard/profile/Profile";
 import { SyncsList } from "../../components/dashboard/sync/SyncsList";
 import { Tile } from "../../components/dashboard/tile/Tile";
@@ -127,9 +128,7 @@ export const HomeView = () => {
 
       <div className="mt-8">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-lg font-medium leading-6 text-gray-900">
-            Overview
-          </h2>
+          <Heading level={3}>Overview</Heading>
           <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {DASHBOARD_CARDS.map((card, index) => (
               <Tile
@@ -141,9 +140,9 @@ export const HomeView = () => {
         </div>
 
         <section className="mx-auto mt-10 max-w-6xl sm:px-6 lg:mt-12 lg:px-8">
-          <h2 className="px-4 text-lg font-medium leading-6 text-gray-900 sm:px-0">
+          <Heading level={3} className="px-4 sm:px-0">
             Recent syncs
-          </h2>
+          </Heading>
           {syncs.length ? (
             <div className="mt-4">
               <SyncsList
