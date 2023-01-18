@@ -1,26 +1,27 @@
-import { clsx } from "clsx";
 import Image from "next/image";
 import { memo } from "react";
+import { twMerge } from "tailwind-merge";
+
+interface CardImageConfig {
+  readonly src: string;
+  readonly alt: string;
+  width: number;
+  height: number;
+  isPriority?: boolean;
+}
 
 interface CardProps {
   readonly title: string;
   readonly description: string;
-  readonly imageSrc?: string;
   readonly className?: string;
-  readonly isPriority?: boolean;
+  readonly imageConfig?: CardImageConfig;
 }
 
 export const Card = memo(
-  ({
-    title,
-    description,
-    imageSrc,
-    className,
-    isPriority = false,
-  }: CardProps) => {
+  ({ title, description, className, imageConfig }: CardProps) => {
     return (
       <div
-        className={clsx(
+        className={twMerge(
           "w-full overflow-hidden rounded-2xl border border-gray-100/20 p-8 transition hover:bg-indigo-100 dark:hover:bg-gray-900/80",
           "flex flex-col items-center justify-start",
           className,
@@ -33,14 +34,14 @@ export const Card = memo(
           {description}
         </p>
 
-        {imageSrc ? (
+        {imageConfig ? (
           <Image
             className="translate-y-1/3 scale-125"
-            src={imageSrc}
-            alt="Picture of the author"
-            width={500}
-            height={500}
-            priority={isPriority}
+            alt={imageConfig.alt}
+            src={imageConfig.src}
+            width={imageConfig.width}
+            height={imageConfig.height}
+            priority={imageConfig.isPriority}
           />
         ) : null}
       </div>
