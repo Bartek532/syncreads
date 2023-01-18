@@ -1,6 +1,5 @@
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { toast } from "react-hot-toast";
 
 import { Button } from "../../components/common/Button";
 import { Profile } from "../../components/dashboard/profile/Profile";
@@ -10,33 +9,9 @@ import { useGenericLoader } from "../../hooks/useGenericLoader";
 import { DASHBOARD_CARDS } from "../../utils/consts";
 import { trpc } from "../../utils/trpc";
 
-import type { CreateFeedInput } from "../../utils/validation";
-import type { TRPCError } from "@trpc/server";
-
 export const HomeView = () => {
-  const utils = trpc.useContext();
   const { data } = useSession();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-
-  const addFeedMutation = trpc.feed.createFeed.useMutation({
-    onSuccess: () => utils.user.getUserFeeds.invalidate(),
-  });
-
-  const onAdd = async ({ url }: CreateFeedInput) => {
-    await toast.promise(
-      addFeedMutation.mutateAsync({
-        url,
-      }),
-      {
-        loading: "Adding feed...",
-        success: ({ message }) => {
-          setIsAddModalOpen(false);
-          return message;
-        },
-        error: (err: TRPCError | Error) => err.message,
-      },
-    );
-  };
 
   const { data: feeds, isLoading: areFeedsLoading } =
     trpc.user.getUserFeeds.useQuery();
@@ -55,8 +30,7 @@ export const HomeView = () => {
     <>
       <AddFeedModal
         isOpen={isAddModalOpen}
-        setIsOpen={setIsAddModalOpen}
-        onAdd={onAdd}
+        onClose={() => setIsAddModalOpen(false)}
       />
       <div className="bg-white shadow">
         <div className="px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">

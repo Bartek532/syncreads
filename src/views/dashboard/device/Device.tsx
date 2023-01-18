@@ -56,8 +56,7 @@ export const DeviceView = () => {
     <>
       <AddDeviceModal
         isOpen={isAddModalOpen}
-        setIsOpen={setIsAddModalOpen}
-        onAdd={onAdd}
+        onClose={() => setIsAddModalOpen(false)}
       />
       <section className="mx-auto mt-8 max-w-6xl px-4 sm:px-6 lg:mt-12 lg:px-8">
         <h2 className="text-lg font-medium leading-6 text-gray-900">
