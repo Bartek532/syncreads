@@ -14,7 +14,10 @@ const config = {
   swcMinify: true,
   experimental: {
     fontLoaders: [
-      { loader: "@next/font/google", options: { subsets: ["latin"] } },
+      {
+        loader: "@next/font/google",
+        options: { subsets: ["latin", "latin-ext"] },
+      },
     ],
   },
   i18n: {
