@@ -13,7 +13,7 @@ export const Hero = memo(() => {
       </h1>
 
       <p className="z-10 mx-auto mb-4  max-w-md text-center text-lg text-slate-600 dark:text-slate-400">
-        Sync all of your favorite RSS feeds directly to your Remarkable tablet
+        Sync all of your favorite RSS feeds directly to your reMarkable tablet
         with just a few clicks
       </p>
 
@@ -28,7 +28,7 @@ export const Hero = memo(() => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/100 to-black/0" />
         <Image
           src="/hero3.png"
-          alt="Remarkable tablet surrounded by RSS feeds icons"
+          alt="reMarkable tablet surrounded by RSS feeds icons"
           priority={true}
           width={1200}
           height={400}

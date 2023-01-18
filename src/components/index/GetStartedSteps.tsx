@@ -5,7 +5,7 @@ import { SectionLayout } from "./SectionLayout";
 
 const GET_STARTED_STEPS = [
   "Create an account. It's free!",
-  "Connect your Remarkable account",
+  "Connect your reMarkable account",
   "Add your RSS feeds",
 ];
 
