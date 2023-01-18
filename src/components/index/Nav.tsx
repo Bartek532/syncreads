@@ -1,8 +1,9 @@
 import Link from "next/link";
+import { memo } from "react";
 
 import { HOME_NAVIGATION } from "../../utils/consts";
 
-export const Nav = () => {
+export const Nav = memo(() => {
   return (
     <div className="backdrop-filter-50 sticky top-6 z-[1000] flex w-full flex-wrap items-center justify-between rounded-full border-[1px] px-8 py-2 backdrop-blur-md dark:border-slate-200/10 dark:bg-slate-900/30">
       <div className="flex items-center gap-3">
@@ -28,4 +29,6 @@ export const Nav = () => {
       </nav>
     </div>
   );
-};
+});
+
+Nav.displayName = "Nav";

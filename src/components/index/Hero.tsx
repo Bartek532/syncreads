@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import { memo } from "react";
 
-export const Hero = () => {
+export const Hero = memo(() => {
   return (
     <section className="relative flex flex-col items-center justify-center gap-4 pt-28">
       <div className="-z-1 pointer-events-none absolute h-64 w-80 -translate-y-60 scale-[2.5] rounded-full bg-gradient-to-br from-indigo-800/60 to-indigo-800/20 blur-3xl" />
@@ -35,4 +36,6 @@ export const Hero = () => {
       </div>
     </section>
   );
-};
+});
+
+Hero.displayName = "Hero";

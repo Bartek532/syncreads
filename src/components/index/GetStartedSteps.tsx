@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import { SectionHeading } from "./SectionHeading";
 import { SectionLayout } from "./SectionLayout";
 
@@ -7,7 +9,7 @@ const GET_STARTED_STEPS = [
   "Add your RSS feeds",
 ];
 
-export const GetStartedSteps = () => {
+export const GetStartedSteps = memo(() => {
   return (
     <SectionLayout>
       <SectionHeading
@@ -30,4 +32,6 @@ export const GetStartedSteps = () => {
       </ul>
     </SectionLayout>
   );
-};
+});
+
+GetStartedSteps.displayName = "GetStartedSteps";

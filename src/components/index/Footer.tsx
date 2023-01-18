@@ -1,8 +1,9 @@
 import Link from "next/link";
+import { memo } from "react";
 
 import { HOME_FOOTER_NAVIGATION } from "../../utils/consts";
 
-export const Footer = () => {
+export const Footer = memo(() => {
   return (
     <footer className="mt-32 flex flex-col justify-between border-t-[1px] border-slate-700/50 py-32 md:flex-row">
       <p className="mb-4 text-2xl text-white md:text-center">RSSMarkable</p>
@@ -21,4 +22,6 @@ export const Footer = () => {
       </ul>
     </footer>
   );
-};
+});
+
+Footer.displayName = "Footer";

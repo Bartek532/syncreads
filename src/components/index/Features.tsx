@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import { Card } from "./Card";
 import { SectionHeading } from "./SectionHeading";
 import { SectionLayout } from "./SectionLayout";
@@ -19,7 +21,7 @@ const FEATURES_CARDS = [
   },
 ];
 
-export const Features = () => {
+export const Features = memo(() => {
   return (
     <SectionLayout>
       <SectionHeading
@@ -39,4 +41,6 @@ export const Features = () => {
       </div>
     </SectionLayout>
   );
-};
+});
+
+Features.displayName = "Features";
