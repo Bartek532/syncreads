@@ -20,4 +20,4 @@ export const SectionHeading = memo(
   },
 );
 
-SectionHeading.displayName = "SectionHeading";
+SectionHeading.displayName = "c";

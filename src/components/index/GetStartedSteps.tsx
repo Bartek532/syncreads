@@ -1,7 +1,7 @@
 import { memo } from "react";
 
-import { SectionHeading } from "./SectionHeading";
-import { SectionLayout } from "./SectionLayout";
+import { SectionHeading } from "./section/SectionHeading";
+import { SectionLayout } from "./section/SectionLayout";
 
 const GET_STARTED_STEPS = [
   "Create an account. It's free!",
