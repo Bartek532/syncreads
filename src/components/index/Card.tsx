@@ -5,9 +5,9 @@ import { twMerge } from "tailwind-merge";
 interface CardImageConfig {
   readonly src: string;
   readonly alt: string;
-  width: number;
-  height: number;
-  isPriority?: boolean;
+  readonly width: number;
+  readonly height: number;
+  readonly isPriority?: boolean;
 }
 
 interface CardProps {
