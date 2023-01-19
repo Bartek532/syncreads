@@ -2,11 +2,12 @@ import { Button } from "../common/Button";
 
 import { BaseModal } from "./BaseModal";
 
-import type { ComponentProps, FormEventHandler, ReactElement } from "react";
+import type { HeroIcon } from "../../utils/types";
+import type { ComponentProps, FormEventHandler } from "react";
 
 type FormModalProps = Readonly<{
   title: string;
-  icon: ReactElement;
+  icon: HeroIcon;
   submitText: string;
   onSubmit: FormEventHandler<HTMLFormElement>;
 }> &
@@ -14,7 +15,7 @@ type FormModalProps = Readonly<{
 
 export const FormModal = ({
   title,
-  icon,
+  icon: Icon,
   onClose,
   submitText,
   onSubmit,
@@ -29,7 +30,7 @@ export const FormModal = ({
     <form onSubmit={onSubmit} className="flex flex-col">
       <div className="flex flex-col p-6 pb-8 sm:flex-row">
         <div className="mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">
-          {icon}
+          <Icon className="h-6 w-6 text-indigo-600" aria-hidden="true" />
         </div>
         <div className="mt-4 w-full sm:mt-0 sm:ml-4">
           <h3 className="mb-3 text-center text-lg font-medium text-gray-900 sm:text-left">

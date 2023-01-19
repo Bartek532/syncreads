@@ -71,12 +71,7 @@ export const AddDeviceModal = memo<AddDeviceModalProps>(
         isOpen={isOpen}
         onClose={onClose}
         title="Register device to enable sync!"
-        icon={
-          <PuzzlePieceIcon
-            className="h-6 w-6 text-indigo-600"
-            aria-hidden="true"
-          />
-        }
+        icon={PuzzlePieceIcon}
         submitText="Register device"
         onSubmit={onPromise(onSubmit)}
         {...props}
