@@ -64,7 +64,7 @@ export const AddFeedModal = memo<AddFeedModalProps>(({ onClose, ...props }) => {
       onClose={onClose}
       title="Add feed and be up to date!"
       icon={<PlusIcon className="h-6 w-6 text-indigo-600" aria-hidden="true" />}
-      submitContent="Add feed"
+      submitText="Add feed"
       onSubmit={onPromise(onSubmit)}
       {...props}
     >

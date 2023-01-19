@@ -77,7 +77,7 @@ export const AddDeviceModal = memo<AddDeviceModalProps>(
             aria-hidden="true"
           />
         }
-        submitContent="Register device"
+        submitText="Register device"
         onSubmit={onPromise(onSubmit)}
         {...props}
       >

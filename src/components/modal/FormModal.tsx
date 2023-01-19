@@ -7,7 +7,7 @@ import type { ComponentProps, FormEventHandler, ReactElement } from "react";
 type FormModalProps = Readonly<{
   title: string;
   icon: ReactElement;
-  submitContent: string;
+  submitText: string;
   onSubmit: FormEventHandler<HTMLFormElement>;
 }> &
   ComponentProps<typeof BaseModal>;
@@ -16,7 +16,7 @@ export const FormModal = ({
   title,
   icon,
   onClose,
-  submitContent,
+  submitText,
   onSubmit,
   children,
   ...props
@@ -42,7 +42,7 @@ export const FormModal = ({
         <Button type="button" variant="secondary" onClick={onClose}>
           Cancel
         </Button>
-        <Button type="submit">{submitContent}</Button>
+        <Button type="submit">{submitText}</Button>
       </div>
     </form>
   </BaseModal>
