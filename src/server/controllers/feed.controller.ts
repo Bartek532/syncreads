@@ -1,5 +1,4 @@
 import { TRPCError } from "@trpc/server";
-import { getLinkPreview } from "link-preview-js";
 import { parse } from "rss-to-json";
 
 import { ApiError, HTTP_STATUS_CODE } from "../../utils/exceptions";
@@ -11,7 +10,7 @@ import {
 } from "../services/feed.service";
 import { deleteFeedFromUser, getUserFeedByUrl } from "../services/user.service";
 
-import type { FeedApi, LinkPreview } from "../../utils/types";
+import type { FeedApi } from "../../utils/types";
 import type {
   CreateAndConnectFeedInput,
   DeleteAndDisconnectFeedInput,
@@ -90,17 +89,17 @@ export const getFeedDetailsHandler = async ({
   url,
 }: GetWebsiteDetailsInput) => {
   try {
-    const { origin } = new URL(url);
-    const website = (await getLinkPreview(origin)) as LinkPreview;
+    //const { origin } = new URL(url);
+    //const website = (await getLinkPreview(origin)) as LinkPreview;
     const feed = (await parse(url)) as FeedApi;
 
     return {
       status: "Success",
       feed: {
-        title: feed.title ?? website.title,
-        description: feed.description ?? website.description,
-        image: website.images[0] ?? feed.image,
-        url: feed.link ?? website.url,
+        title: feed.title,
+        description: feed.description,
+        image: feed.image,
+        url: feed.link,
       },
     };
   } catch (err) {
