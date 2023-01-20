@@ -36,6 +36,21 @@ export interface LinkPreview {
   readonly favicons: string[];
 }
 
+export interface FeedItemApi {
+  readonly title?: string;
+  readonly description?: string;
+  readonly link: string;
+  readonly published: number;
+}
+
+export interface FeedApi {
+  readonly title: string;
+  readonly description?: string;
+  readonly link?: string;
+  readonly image?: string;
+  readonly items: FeedItemApi[];
+}
+
 export interface WebsiteDetails {
   readonly title: string;
   readonly description: string;

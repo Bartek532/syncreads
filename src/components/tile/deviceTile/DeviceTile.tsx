@@ -14,7 +14,6 @@ interface DeviceTileProps {
 }
 
 export const DeviceTile = memo<DeviceTileProps>(({ device, onDelete }) => {
-  console.log(device);
   return (
     <div className="relative flex gap-10 rounded-2xl bg-white py-6 px-8 shadow lg:p-8 xl:p-12">
       <RemarkableIcon className="w-1/3 sm:w-1/4 lg:w-1/5" />

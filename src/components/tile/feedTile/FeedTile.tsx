@@ -43,7 +43,7 @@ export const FeedTile = memo<FeedTileProps>(({ url, onDelete }) => {
           </a>
         </h3>
         <p className="mt-2 text-xs text-gray-500 sm:text-sm">
-          {truncateTextByWordsCount(data.feed.description, 15)}
+          {truncateTextByWordsCount(data.feed.description ?? "", 15)}
         </p>
       </div>
       <span

@@ -63,12 +63,14 @@ const syncFeed = async ({
   api,
   parser,
   page,
+  folderId,
 }: {
   url: string;
   user: User;
   api: RemarkableApi;
   parser: Parser;
   page: Page;
+  folderId: string;
 }) => {
   const parsed = await parser.parseURL(url);
   const articles = parsed.items
@@ -78,11 +80,6 @@ const syncFeed = async ({
         ? dayjs(item.pubDate).isAfter(user.lastSyncDate)
         : index < user.startArticlesCount,
     );
-
-  const { documentId: folderId } = await getFolder({
-    api,
-    name: user.folder,
-  });
 
   for (const article of articles) {
     await syncArticle({ article, api, page, folderId });
@@ -125,11 +122,27 @@ export const syncUserFeeds = async ({
         })
       : await remarkable(user.device.token);
 
-    const syncedFeeds = await Promise.all(
-      user.feeds.map((feed) =>
-        syncFeed({ url: feed.url, user, api, parser, page }),
-      ),
-    );
+    const syncedFeeds: {
+      url: string;
+      articles: FeedItem[];
+    }[] = [];
+
+    for (const feed of user.feeds) {
+      const { documentId: folderId } = await getFolder({
+        api,
+        name: user.folder,
+      });
+
+      const syncedFeed = await syncFeed({
+        url: feed.url,
+        user,
+        api,
+        page,
+        parser,
+        folderId,
+      });
+      syncedFeeds.push(syncedFeed);
+    }
 
     const sortedFeedsDates = syncedFeeds
       .map(({ articles }) => articles)
@@ -164,7 +177,7 @@ export const syncUserFeeds = async ({
       id: sync.id,
       data: {
         finishedAt: new Date(),
-        status: SyncStatus.SUCCESS,
+        status: SyncStatus.FAILED,
       },
     });
 
