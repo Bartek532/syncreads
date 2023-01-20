@@ -26,7 +26,20 @@ export const getUserByEmail = ({ email }: { email: string }) => {
 export const getUserFeeds = ({ email }: { email: string }) => {
   return prisma.feed.findMany({
     include: { users: true },
-    where: { users: { some: { email } } },
+    where: { users: { some: { user: { email } } } },
+  });
+};
+
+export const getUserFeed = ({ email, url }: { email: string; url: string }) => {
+  return prisma.userFeed.findFirst({
+    where: {
+      AND: [
+        {
+          user: { email },
+        },
+        { feed: { url } },
+      ],
+    },
   });
 };
 
@@ -48,7 +61,7 @@ export const getUserFeedByUrl = ({
   url: string;
 }) => {
   return prisma.feed.findFirst({
-    where: { AND: [{ url }, { users: { some: { email } } }] },
+    where: { AND: [{ url }, { users: { some: { user: { email } } } }] },
     include: { users: true },
   });
 };
@@ -60,13 +73,8 @@ export const deleteFeedFromUser = ({
   email: string;
   url: string;
 }) => {
-  return prisma.user.update({
-    where: { email },
-    data: {
-      feeds: {
-        disconnect: [{ url }],
-      },
-    },
+  return prisma.userFeed.deleteMany({
+    where: { user: { email }, feed: { url } },
   });
 };
 

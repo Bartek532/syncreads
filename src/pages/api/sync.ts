@@ -13,11 +13,12 @@ import { createSync, updateSync } from "../../server/services/sync.service";
 import {
   getAllUsers,
   getUserByEmail,
+  getUserFeed,
+  getUserFeeds,
 } from "../../server/services/user.service";
 import { ApiError, HTTP_STATUS_CODE } from "../../utils/exceptions";
 import { nonNullable } from "../../utils/functions";
 
-import type { User } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const BROWSER_OPTIONS = {
@@ -59,31 +60,45 @@ const syncArticle = async ({
 
 const syncFeed = async ({
   url,
-  user,
+  email,
   api,
   parser,
   page,
   folderId,
 }: {
   url: string;
-  user: User;
+  email: string;
   api: RemarkableApi;
   parser: Parser;
   page: Page;
   folderId: string;
 }) => {
   const parsed = await parser.parseURL(url);
+  const feed = await getUserFeed({ email, url });
+
   const articles = parsed.items
     .filter((item): item is FeedItem => !!item.link && !!item.pubDate)
     .filter((item, index) =>
-      user.lastSyncDate
-        ? dayjs(item.pubDate).isAfter(user.lastSyncDate)
-        : index < user.startArticlesCount,
+      feed?.lastSyncDate
+        ? dayjs(item.pubDate).isAfter(feed.lastSyncDate)
+        : index < (feed?.startArticlesCount ?? 1),
     );
 
   for (const article of articles) {
     await syncArticle({ article, api, page, folderId });
   }
+
+  await prisma.userFeed.update({
+    where: {
+      userId_feedId: {
+        userId: feed!.userId,
+        feedId: feed!.feedId,
+      },
+    },
+    data: {
+      lastSyncDate: articles[0] ? new Date(articles[0].pubDate) : new Date(),
+    },
+  });
 
   return { url, articles };
 };
@@ -113,6 +128,7 @@ export const syncUserFeeds = async ({
     return;
   }
 
+  const feeds = await getUserFeeds({ email: user.email });
   const sync = await createSync({ email: user.email });
 
   try {
@@ -127,7 +143,7 @@ export const syncUserFeeds = async ({
       articles: FeedItem[];
     }[] = [];
 
-    for (const feed of user.feeds) {
+    for (const feed of feeds) {
       const { documentId: folderId } = await getFolder({
         api,
         name: user.folder,
@@ -135,7 +151,7 @@ export const syncUserFeeds = async ({
 
       const syncedFeed = await syncFeed({
         url: feed.url,
-        user,
+        email: user.email,
         api,
         page,
         parser,
@@ -143,21 +159,6 @@ export const syncUserFeeds = async ({
       });
       syncedFeeds.push(syncedFeed);
     }
-
-    const sortedFeedsDates = syncedFeeds
-      .map(({ articles }) => articles)
-      .flat()
-      .map(({ pubDate }) => pubDate)
-      .sort((a, b) => (dayjs(a).isAfter(dayjs(b)) ? -1 : 1));
-
-    await prisma.user.update({
-      where: { email: user.email },
-      data: {
-        lastSyncDate: sortedFeedsDates[0]
-          ? new Date(sortedFeedsDates[0])
-          : new Date(),
-      },
-    });
 
     await updateSync({
       id: sync.id,

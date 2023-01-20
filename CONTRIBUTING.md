@@ -66,7 +66,7 @@ Coding conventions are enforced by [ESLint](.eslintrc.js) and [Prettier](.pretti
 ```tsx
 import { memo } from "react";
 
-type ComponentProps = {
+interface ComponentProps = {
   readonly title: string;
 };
 
