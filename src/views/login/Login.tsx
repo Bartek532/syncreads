@@ -126,38 +126,22 @@ export const LoginView = () => {
                 className="space-y-6"
                 onSubmit={onPromise(handleSubmit(onSubmit))}
               >
-                <div>
-                  <Input
-                    type="email"
-                    {...register("email")}
-                    isError={!!errors.email?.message}
-                    isValidated={isFormValidated}
-                  >
-                    Email
-                  </Input>
-                  {errors.email?.message && (
-                    <p className="mt-1 text-xs text-red-500">
-                      {errors.email.message}
-                    </p>
-                  )}
-                </div>
-
-                <div>
-                  <Input
-                    type="password"
-                    {...register("password")}
-                    isError={!!errors.password?.message}
-                    isValidated={isFormValidated}
-                  >
-                    Password
-                  </Input>
-                  {errors.password?.message && (
-                    <p className="mt-1 text-xs text-red-500">
-                      {errors.password.message}
-                    </p>
-                  )}
-                </div>
-
+                <Input
+                  type="email"
+                  {...register("email")}
+                  error={errors.email}
+                  isValidated={isFormValidated}
+                >
+                  Email
+                </Input>
+                <Input
+                  type="password"
+                  {...register("password")}
+                  error={errors.password}
+                  isValidated={isFormValidated}
+                >
+                  Password
+                </Input>
                 <div className="flex items-center justify-end">
                   <div className="text-sm">
                     Don&apos;t have an account yet?

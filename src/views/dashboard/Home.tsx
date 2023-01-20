@@ -15,7 +15,6 @@ import { useGenericLoader } from "../../hooks/useGenericLoader";
 import { onPromise } from "../../utils/functions";
 import { trpc } from "../../utils/trpc";
 
-import type { CreateFeedInput } from "../../utils/validation";
 import type { Sync } from "@prisma/client";
 import type { TRPCError } from "@trpc/server";
 
@@ -32,10 +31,6 @@ export const HomeView = () => {
   );
   const utils = trpc.useContext();
   const { data } = useSession();
-
-  const addFeedMutation = trpc.feed.createFeed.useMutation({
-    onSuccess: () => utils.user.getUserFeeds.invalidate(),
-  });
 
   const syncFeedsMutation = trpc.user.syncUserFeeds.useMutation({
     onSuccess: () => utils.user.getUserSyncs.invalidate(),
@@ -63,22 +58,6 @@ export const HomeView = () => {
     },
   );
 
-  const feedAddHandler = async ({ url }: CreateFeedInput) => {
-    await toast.promise(
-      addFeedMutation.mutateAsync({
-        url,
-      }),
-      {
-        loading: "Adding feed...",
-        success: ({ message }) => {
-          setIsAddModalOpen(false);
-          return message;
-        },
-        error: (err: TRPCError | Error) => err.message,
-      },
-    );
-  };
-
   const feedsSyncHandler = async () => {
     await toast.promise(syncFeedsMutation.mutateAsync(), {
       loading: "Syncing...",
@@ -105,8 +84,7 @@ export const HomeView = () => {
     <>
       <AddFeedModal
         isOpen={isAddModalOpen}
-        setIsOpen={setIsAddModalOpen}
-        onAdd={feedAddHandler}
+        onClose={() => setIsAddModalOpen(false)}
       />
       <div className="bg-white shadow">
         <div className="px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
