@@ -1,10 +1,9 @@
 import { PuzzlePieceIcon } from "@heroicons/react/24/outline";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { memo, useCallback, useEffect } from "react";
+import { memo, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-import { useOnOpenModal } from "../../../hooks/useOnOpenModal";
 import { onPromise } from "../../../utils/functions";
 import { trpc } from "../../../utils/trpc";
 import { registerDeviceSchema } from "../../../utils/validation";
@@ -29,7 +28,6 @@ export const AddDeviceModal = memo<AddDeviceModalProps>(
       handleSubmit,
       formState: { errors, isSubmitSuccessful },
       reset,
-      setFocus,
     } = useForm<RegisterDeviceInput>({
       resolver: zodResolver(registerDeviceSchema),
     });
@@ -40,14 +38,6 @@ export const AddDeviceModal = memo<AddDeviceModalProps>(
     useEffect(() => {
       reset();
     }, [isSubmitSuccessful, reset]);
-
-    useOnOpenModal(
-      isOpen,
-      useCallback(() => {
-        reset();
-        setFocus("code");
-      }, [reset, setFocus]),
-    );
 
     const onSubmit = handleSubmit(async ({ code }) => {
       await toast.promise(

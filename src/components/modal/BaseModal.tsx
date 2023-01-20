@@ -1,9 +1,11 @@
 import { Transition } from "@headlessui/react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { useOnKeydown } from "../../hooks/useOnKeydown";
 import { lockScroll, unlockScroll } from "../../utils/pageScroll";
+
+import { FocusFirst } from "./FocusFirst";
 
 import type { ReactNode } from "react";
 
@@ -20,7 +22,10 @@ export const BaseModal = ({
   className,
   children,
 }: BaseModalProps) => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
   useOnKeydown("Escape", onClose);
+
   useEffect(() => {
     if (isOpen) {
       lockScroll();
@@ -39,6 +44,7 @@ export const BaseModal = ({
       leaveTo="opacity-0"
     >
       <div
+        ref={containerRef}
         className={twMerge(
           "m-auto flex w-full flex-col overflow-hidden rounded-lg bg-white",
           className,
@@ -48,7 +54,7 @@ export const BaseModal = ({
           event.stopPropagation();
         }}
       >
-        {children}
+        <FocusFirst containerRef={containerRef}>{children}</FocusFirst>
       </div>
     </Transition>
   );

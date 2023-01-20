@@ -24,7 +24,6 @@ export const AddFeedModal = memo<AddFeedModalProps>(({ onClose, ...props }) => {
   const {
     register,
     handleSubmit,
-    setFocus,
     formState: { errors, isSubmitSuccessful },
     reset,
   } = useForm<CreateFeedInput>({
@@ -34,10 +33,6 @@ export const AddFeedModal = memo<AddFeedModalProps>(({ onClose, ...props }) => {
   const addFeedMutation = trpc.feed.createFeed.useMutation({
     onSuccess: () => utils.user.getUserFeeds.invalidate(),
   });
-
-  useEffect(() => {
-    setFocus("url");
-  }, [setFocus]);
 
   useEffect(() => {
     reset();
