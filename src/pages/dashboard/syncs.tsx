@@ -1,3 +1,4 @@
+import { Seo } from "../../components/common/Seo";
 import { DashboardLayout } from "../../components/dashboard/layout/Layout";
 import { SyncsView } from "../../views/dashboard/syncs/Syncs";
 
@@ -5,9 +6,12 @@ import type { NextPage } from "next";
 
 const Syncs: NextPage = () => {
   return (
-    <DashboardLayout>
-      <SyncsView />
-    </DashboardLayout>
+    <>
+      <Seo title="Dashboard - Syncs" />
+      <DashboardLayout>
+        <SyncsView />
+      </DashboardLayout>
+    </>
   );
 };
 
