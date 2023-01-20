@@ -52,20 +52,18 @@ model VerificationToken {
 }
 
 model User {
-  id                 Int       @id @default(autoincrement())
-  name               String?
-  email              String?   @unique
-  emailVerified      DateTime?
-  password           String?
-  image              String?
-  lastSyncDate       DateTime?
-  folder             String    @default("RSS")
-  startArticlesCount Int       @default(1)
+  id            Int       @id @default(autoincrement())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  password      String?
+  image         String?
+  folder        String    @default("RSS")
 
   device   Device?
   accounts Account[]
   sessions Session[]
-  feeds    Feed[]
+  feeds    UserFeed[]
   syncs    Sync[]
 }
 
@@ -79,9 +77,21 @@ model Device {
 }
 
 model Feed {
-  id    Int    @id @default(autoincrement())
-  url   String @unique
-  users User[]
+  id    Int        @id @default(autoincrement())
+  url   String     @unique
+  users UserFeed[]
+}
+
+model UserFeed {
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  feedId             Int
+  feed               Feed      @relation(fields: [feedId], references: [id], onDelete: Cascade)
+  lastSyncDate       DateTime?
+  startArticlesCount Int       @default(1)
+
+  @@unique([userId, feedId])
 }
 
 model Sync {
