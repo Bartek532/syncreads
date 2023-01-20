@@ -1,11 +1,14 @@
 import { useSession } from "next-auth/react";
 
 import { Heading } from "../heading/Heading";
-
-import { UserSettingsRow } from "./UserSettingsRow";
+import { SettingsRow } from "../settingsRow/SettingsRow";
 
 export const GeneralTab = () => {
   const { data } = useSession();
+
+  const handleRowChange = (content: string) => {
+    console.log("saving...", content);
+  };
 
   return (
     <section className="mt-8">
@@ -19,17 +22,22 @@ export const GeneralTab = () => {
 
       {data?.user && (
         <ul className="mt-6 divide-y divide-gray-300 border-y border-gray-300">
-          <UserSettingsRow
-            name="Name"
-            type="text"
-            initValue={data.user.name ?? ""}
+          <SettingsRow
+            label="Name"
+            content={data.user.name ?? ""}
+            onChange={handleRowChange}
           />
-          <UserSettingsRow
-            name="E-mail"
-            type="email"
-            initValue={data.user.email}
+          <SettingsRow
+            label="E-mail"
+            contentType="email"
+            content={data.user.email}
+            onChange={handleRowChange}
           />
-          <UserSettingsRow name="Passowrd" type="password" />
+          <SettingsRow
+            label="Passowrd"
+            contentType="password"
+            onChange={handleRowChange}
+          />
         </ul>
       )}
     </section>

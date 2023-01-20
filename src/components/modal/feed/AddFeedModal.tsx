@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 
 import { onPromise } from "../../../utils/functions";
 import { createFeedSchema } from "../../../utils/validation";
-import { Button } from "../../common/Button";
+import { Button, BUTTON_VARIANT } from "../../common/Button";
 import { Input } from "../../common/Input";
 
 import type { CreateFeedInput } from "../../../utils/validation";
@@ -100,7 +100,7 @@ export const AddFeedModal = memo<AddFeedModalProps>(
                     <Button
                       type="button"
                       onClick={() => setIsOpen(false)}
-                      variant="secondary"
+                      variant={BUTTON_VARIANT.SECONDARY}
                     >
                       Cancel
                     </Button>

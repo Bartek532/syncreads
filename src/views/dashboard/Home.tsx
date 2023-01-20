@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 
 import EmptySyncsIcon from "public/svg/empty-syncs.svg";
 
-import { Button } from "../../components/common/Button";
+import { Button, BUTTON_VARIANT } from "../../components/common/Button";
 import { Empty } from "../../components/common/Empty";
 import { Heading } from "../../components/dashboard/heading/Heading";
 import { Profile } from "../../components/dashboard/profile/Profile";
@@ -115,7 +115,7 @@ export const HomeView = () => {
             <Profile user={data?.user} isRegistered={!!device} />
             <div className="mt-6 flex space-x-3 md:mt-0 md:ml-4">
               <Button
-                variant="secondary"
+                variant={BUTTON_VARIANT.SECONDARY}
                 onClick={() => setIsAddModalOpen(true)}
               >
                 Add feed

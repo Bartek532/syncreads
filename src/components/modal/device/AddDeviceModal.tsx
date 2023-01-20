@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 
 import { onPromise } from "../../../utils/functions";
 import { registerDeviceSchema } from "../../../utils/validation";
-import { Button } from "../../common/Button";
+import { Button, BUTTON_VARIANT } from "../../common/Button";
 import { Input } from "../../common/Input";
 
 import type { RegisterDeviceInput } from "../../../utils/validation";
@@ -112,7 +112,7 @@ export const AddDeviceModal = memo<AddDeviceModalProps>(
                     <Button
                       type="button"
                       onClick={() => setIsOpen(false)}
-                      variant="secondary"
+                      variant={BUTTON_VARIANT.SECONDARY}
                     >
                       Cancel
                     </Button>
