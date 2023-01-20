@@ -38,7 +38,7 @@ export const getUserSyncs = ({
   perPage: number;
 }) => {
   return prisma.$transaction([
-    prisma.sync.count(),
+    prisma.sync.count({ where: { user: { email } } }),
     prisma.sync.findMany({
       take: perPage,
       skip: (page - 1) * perPage,
@@ -49,6 +49,9 @@ export const getUserSyncs = ({
         startedAt: "desc",
       },
     }),
-    prisma.sync.aggregate({ _sum: { syncedArticlesCount: true } }),
+    prisma.sync.aggregate({
+      _sum: { syncedArticlesCount: true },
+      where: { user: { email } },
+    }),
   ]);
 };
