@@ -57,3 +57,14 @@ export interface WebsiteDetails {
   readonly image: string;
   readonly url: string;
 }
+
+export interface FeedArticle {
+  link: string;
+  pubDate: string;
+  title?: string;
+}
+
+export interface FeedWithArticles {
+  url: string;
+  articles: FeedArticle[];
+}
