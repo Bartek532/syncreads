@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-import entryPageBackground from "public/images/entry-page-background.jpg";
 import Logo from "public/svg/logo.svg";
 import FacebookIcon from "public/svg/social/fb.svg";
 import GithubIcon from "public/svg/social/github.svg";
@@ -168,7 +167,8 @@ export const LoginView = () => {
       </div>
       <div className="relative hidden flex-1 lg:block">
         <Image
-          src={entryPageBackground}
+          src="/images/entry-page-background.jpg"
+          fill
           alt="Background"
           className="absolute inset-0 h-full w-full object-cover"
         />

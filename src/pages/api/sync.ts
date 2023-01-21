@@ -137,11 +137,9 @@ export const syncUserFeeds = async ({
   const sync = await createSync({ email: user.email });
 
   try {
-    const api = webcrypto
-      ? await remarkable(user.device.token, {
-          subtle: webcrypto.subtle,
-        })
-      : await remarkable(user.device.token);
+    const api = await remarkable(user.device.token, {
+      subtle: webcrypto.subtle,
+    });
 
     const syncedFeeds: {
       url: string;
