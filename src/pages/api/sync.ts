@@ -76,12 +76,17 @@ const syncFeed = async ({
   const parsed = await parser.parseURL(url);
   const feed = await getUserFeed({ email, url });
 
+  if (!feed) {
+    console.error(`User with email ${email} feed not found!`);
+    return;
+  }
+
   const articles = parsed.items
     .filter((item): item is FeedItem => !!item.link && !!item.pubDate)
     .filter((item, index) =>
-      feed?.lastSyncDate
+      feed.lastSyncDate
         ? dayjs(item.pubDate).isAfter(feed.lastSyncDate)
-        : index < (feed?.startArticlesCount ?? 1),
+        : index < (feed.startArticlesCount || 1),
     );
 
   for (const article of articles) {
@@ -91,8 +96,8 @@ const syncFeed = async ({
   await prisma.userFeed.update({
     where: {
       userId_feedId: {
-        userId: feed!.userId,
-        feedId: feed!.feedId,
+        userId: feed.userId,
+        feedId: feed.feedId,
       },
     },
     data: {
@@ -132,11 +137,9 @@ export const syncUserFeeds = async ({
   const sync = await createSync({ email: user.email });
 
   try {
-    const api = webcrypto
-      ? await remarkable(user.device.token, {
-          subtle: webcrypto.subtle,
-        })
-      : await remarkable(user.device.token);
+    const api = await remarkable(user.device.token, {
+      subtle: webcrypto.subtle,
+    });
 
     const syncedFeeds: {
       url: string;
@@ -157,7 +160,10 @@ export const syncUserFeeds = async ({
         parser,
         folderId,
       });
-      syncedFeeds.push(syncedFeed);
+
+      if (syncedFeed) {
+        syncedFeeds.push(syncedFeed);
+      }
     }
 
     await updateSync({

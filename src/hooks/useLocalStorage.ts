@@ -13,7 +13,7 @@ export function useLocalStorage<T extends string>(
     } catch {
       setValue(defaultValue);
     }
-  }, []);
+  }, [defaultValue, key]);
 
   const setStoredValue = useCallback(
     (val: T) => {

@@ -1,5 +1,4 @@
 import { type DefaultSession } from "next-auth";
-import { JWT } from "next-auth/jwt";
 
 import type { Device } from "@prisma/client";
 

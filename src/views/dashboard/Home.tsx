@@ -109,12 +109,13 @@ export const HomeView = () => {
             Overview
           </h2>
           <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {DASHBOARD_CARDS.map((card, index) => (
-              <Tile
-                card={{ ...card, value: cardsValues[index]! }}
-                key={card.title}
-              />
-            ))}
+            {DASHBOARD_CARDS.map((card, index) => {
+              const value = cardsValues[index];
+
+              return value ? (
+                <Tile card={{ ...card, value }} key={card.title} />
+              ) : null;
+            })}
           </div>
         </div>
 
