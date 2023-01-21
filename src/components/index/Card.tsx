@@ -27,10 +27,10 @@ export const Card = memo(
           className,
         )}
       >
-        <h3 className="mb-4 w-full bg-clip-text text-2xl font-bold dark:text-white sm:text-3xl md:text-4xl">
+        <h3 className="text-md mb-4 w-full bg-clip-text text-xl font-medium dark:text-white sm:text-3xl md:text-3xl">
           {title}
         </h3>
-        <p className="mx-auto mt-4 text-lg text-slate-600 dark:text-slate-400">
+        <p className="mx-auto text-lg text-slate-600 dark:text-slate-400 sm:mt-4">
           {description}
         </p>
 
