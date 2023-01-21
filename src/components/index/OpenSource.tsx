@@ -9,7 +9,7 @@ export const OpenSource = memo(() => {
   return (
     <SectionLayout>
       <div className="w-full rounded-3xl bg-gradient-to-r from-indigo-500 via-red-500 to-blue-500 p-1 shadow-xl shadow-indigo-500/30">
-        <div className="flex h-full w-full flex-col items-start justify-between gap-4 rounded-3xl bg-black py-12 px-8 xl:flex-row">
+        <div className="flex h-full w-full flex-col items-start justify-between gap-4 rounded-3xl bg-white py-12 px-8 dark:bg-black xl:flex-row">
           <div>
             <h4 className="text-3xl font-bold text-slate-900 dark:text-white">
               {INDEX_OPEN_SOURCE_HEADING.title}
@@ -19,7 +19,7 @@ export const OpenSource = memo(() => {
             </p>
           </div>
           <Link
-            className="z-10 mt-4 rounded-full bg-white/10 px-10 py-3 font-medium text-white no-underline transition hover:bg-white/20"
+            className="z-10 mt-4 rounded-full bg-black/10 px-10 py-3 font-medium text-black no-underline transition hover:bg-black/10 hover:text-black dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
             href={INDEX_OPEN_SOURCE_HEADING.cta.href}
           >
             {INDEX_OPEN_SOURCE_HEADING.cta.text}

@@ -51,16 +51,16 @@ export const Nav = memo(() => {
           onClick={handleMobileNavOpen}
         >
           {isMobileNavOpen ? (
-            <XMarkIcon className="h-6 w-6 text-white " />
+            <XMarkIcon className="h-6 w-6 dark:text-white" />
           ) : (
-            <Bars2Icon className="h-6 w-6 text-white " />
+            <Bars2Icon className="h-6 w-6 dark:text-white" />
           )}
         </button>
       </div>
 
       {isMobileNavOpen && (
         <div className="fixed inset-0 z-[200] h-screen w-screen p-4">
-          <div className="absolute inset-0 bg-black/80 bg-gradient-to-t from-indigo-500/5 to-indigo-500/5 backdrop-blur-md" />
+          <div className="absolute inset-0 bg-gradient-to-t from-indigo-500/5 to-indigo-500/5 backdrop-blur-md dark:bg-black/80" />
           <div className="absolute inset-0 flex flex-col items-center justify-start gap-4 p-4 pt-28">
             <ul className="flex w-full flex-row flex-wrap items-center justify-center gap-4 py-2 px-4">
               {INDEX_NAVIGATION.map(({ name, href }) => (

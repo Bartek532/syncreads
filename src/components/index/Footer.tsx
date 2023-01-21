@@ -5,8 +5,10 @@ import { INDEX_FOOTER_NAVIGATION, SITE_NAME } from "../../config";
 
 export const Footer = memo(() => {
   return (
-    <footer className="mt-32 flex flex-col justify-between border-t-[1px] border-slate-700/50 py-32 md:flex-row">
-      <p className="mb-4 text-2xl text-white md:text-center">{SITE_NAME}</p>
+    <footer className="mt-32 flex flex-col justify-between border-t-[1px] border-slate-300/50 py-32 dark:border-slate-700/50 md:flex-row">
+      <p className="mb-4 text-2xl dark:text-white md:text-center">
+        {SITE_NAME}
+      </p>
 
       <ul className="flex flex-col gap-2">
         {INDEX_FOOTER_NAVIGATION.map(({ name, href }) => (
