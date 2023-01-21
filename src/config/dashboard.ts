@@ -10,17 +10,6 @@ import {
   CpuChipIcon,
 } from "@heroicons/react/24/outline";
 
-export const HOME_NAVIGATION = [
-  { name: "Sign in", href: "/login" },
-  { name: "Github", href: "https://github.com/Bartek532/rssmarkable" },
-];
-
-export const HOME_FOOTER_NAVIGATION = [
-  { name: "Github", href: "https://github.com/Bartek532/rssmarkable" },
-  { name: "Login/Signup", href: "/login" },
-  { name: "Dashboard", href: "/dashboard" },
-];
-
 export const PDF_OPTIONS = {
   format: "A4",
   margin: { top: 30, bottom: 30, left: 30, right: 30 },

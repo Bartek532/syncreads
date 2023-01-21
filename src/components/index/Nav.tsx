@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { memo } from "react";
 
-import { HOME_NAVIGATION } from "../../utils/consts";
+import { HOME_NAVIGATION } from "../../config";
 
 export const Nav = memo(() => {
   return (

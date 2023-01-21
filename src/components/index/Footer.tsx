@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { memo } from "react";
 
-import { HOME_FOOTER_NAVIGATION } from "../../utils/consts";
+import { HOME_FOOTER_NAVIGATION } from "../../config";
 
 export const Footer = memo(() => {
   return (
