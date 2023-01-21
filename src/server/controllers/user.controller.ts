@@ -3,6 +3,12 @@ import { hashSync } from "bcrypt";
 import { register } from "rmapi-js";
 
 import {
+  SYNCS_PAGINATION_DEFAULT_PAGE,
+  SYNCS_PAGINATION_DEFAULT_PER_PAGE,
+} from "../../config/sync";
+import { syncUserFeeds } from "../../pages/api/sync";
+import { getUserSyncs } from "../services/sync.service";
+import {
   createUser,
   getUserByEmail,
   getUserDevice,
@@ -100,6 +106,38 @@ export const getUserFeedsHandler = async ({
 export const getUserDeviceHandler = async ({ email }: { email: string }) => {
   try {
     return getUserDevice({ email });
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const syncUserFeedsHandler = async ({ email }: { email: string }) => {
+  try {
+    return syncUserFeeds({ email });
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const getUserSyncsHandler = async ({
+  email,
+  page,
+  perPage,
+}: {
+  email: string;
+  page?: number | null | undefined;
+  perPage?: number | null | undefined;
+}) => {
+  try {
+    const [total, syncs, articles] = await getUserSyncs({
+      email,
+      page: page ?? SYNCS_PAGINATION_DEFAULT_PAGE,
+      perPage: perPage ?? SYNCS_PAGINATION_DEFAULT_PER_PAGE,
+    });
+
+    return { total, syncs, articles: articles._sum.syncedArticlesCount ?? 0 };
   } catch (err) {
     console.error(err);
     throw err;
