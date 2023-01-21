@@ -6,6 +6,7 @@ import { GetStartedSteps } from "../../components/index/GetStartedSteps";
 import { Hero } from "../../components/index/Hero";
 import { Layout } from "../../components/index/Layout";
 import { Nav } from "../../components/index/Nav";
+import { OpenSource } from "../../components/index/OpenSource";
 
 export const IndexView = memo(() => {
   return (
@@ -14,6 +15,7 @@ export const IndexView = memo(() => {
       <Hero />
       <Features />
       <GetStartedSteps />
+      <OpenSource />
       <Footer />
     </Layout>
   );

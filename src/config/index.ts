@@ -1,14 +1,15 @@
 export const SITE_NAME = "RSSmarkable";
+export const GITHUB_URL = "https://github.com/Bartek532/rssmarkable";
 
 export const INDEX_NAVIGATION = [
   { name: "Sign in", href: "/login" },
-  { name: "Github", href: "https://github.com/Bartek532/rssmarkable" },
+  { name: "Dashboard", href: "/dashboard" },
 ];
 
 export const INDEX_FOOTER_NAVIGATION = [
-  { name: "Github", href: "https://github.com/Bartek532/rssmarkable" },
-  { name: "Sign in", href: "/login" },
   { name: "Dashboard", href: "/dashboard" },
+  { name: "Sign in", href: "/login" },
+  { name: "Github", href: GITHUB_URL },
 ];
 
 export const INDEX_HERO_SUBTITLE =
@@ -46,3 +47,13 @@ export const INDEX_GET_STARTED_STEPS = [
   { index: 2, title: "Connect your reMarkable account" },
   { index: 3, title: "Add your RSS feeds" },
 ];
+
+export const INDEX_OPEN_SOURCE_HEADING = {
+  title: "Open Source",
+  description:
+    "This project is open source and available on GitHub. Feel free to contribute!",
+  cta: {
+    text: "See on GitHub",
+    href: GITHUB_URL,
+  },
+};
