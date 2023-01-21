@@ -2,20 +2,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { memo } from "react";
 
+import { HERO_SUBTITLE, SITE_NAME } from "../../config";
+
 export const Hero = memo(() => {
   return (
     <section className="relative flex flex-col items-center justify-center gap-4 pt-28">
       <div className="-z-1 pointer-events-none absolute h-64 w-80 -translate-y-60 scale-[2.5] rounded-full bg-gradient-to-br from-indigo-800/60 to-indigo-800/20 blur-3xl" />
       <div className="-z-1 pointer-events-none absolute h-12 w-80 translate-y-60 scale-[2] rounded-full bg-gradient-to-br from-yellow-800/70 to-indigo-800/30 blur-3xl" />
 
-      <h1 className="lg:6xl z-20 bg-gradient-to-tl from-indigo-500 to-pink-500 bg-clip-text text-5xl font-extrabold text-transparent md:text-6xl">
-        RSSmarkable
+      <h1 className="lg:6xl z-20 bg-gradient-to-tl from-indigo-500 to-pink-500 bg-clip-text text-5xl font-medium leading-none tracking-wide text-transparent md:text-6xl">
+        {SITE_NAME}
       </h1>
 
-      <p className="z-10 mx-auto mb-4  max-w-md text-center text-lg text-slate-600 dark:text-slate-400">
-        Sync all of your favorite RSS feeds directly to your reMarkable tablet
-        with just a few clicks
-      </p>
+      <h2 className="z-10 mx-auto mb-4  max-w-md text-center text-lg text-slate-600 dark:text-slate-400">
+        {HERO_SUBTITLE}
+      </h2>
 
       <Link
         href="/login"
