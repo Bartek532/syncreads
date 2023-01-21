@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { FEATURES_CARDS, FEATURES_HEADING } from "../../config";
+import { INDEX_FEATURES_CARDS, INDEX_FEATURES_HEADING } from "../../config";
 
 import { Card } from "./Card";
 import { SectionHeading } from "./section/SectionHeading";
@@ -10,12 +10,12 @@ export const Features = memo(() => {
   return (
     <SectionLayout>
       <SectionHeading
-        title={FEATURES_HEADING.title}
-        description={FEATURES_HEADING.description}
+        title={INDEX_FEATURES_HEADING.title}
+        description={INDEX_FEATURES_HEADING.description}
       />
 
       <div className="flex flex-col items-stretch justify-center gap-4 md:flex-row">
-        {FEATURES_CARDS.map((card) => (
+        {INDEX_FEATURES_CARDS.map((card) => (
           <Card
             key={card.title}
             title={card.title}

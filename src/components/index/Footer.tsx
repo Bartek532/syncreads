@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { memo } from "react";
 
-import { HOME_FOOTER_NAVIGATION, SITE_NAME } from "../../config";
+import { INDEX_FOOTER_NAVIGATION, SITE_NAME } from "../../config";
 
 export const Footer = memo(() => {
   return (
@@ -9,7 +9,7 @@ export const Footer = memo(() => {
       <p className="mb-4 text-2xl text-white md:text-center">{SITE_NAME}</p>
 
       <ul className="flex flex-col gap-2">
-        {HOME_FOOTER_NAVIGATION.map(({ name, href }) => (
+        {INDEX_FOOTER_NAVIGATION.map(({ name, href }) => (
           <li key={href}>
             <Link
               className="text-md mx-auto mt-4 max-w-md text-slate-600 hover:underline dark:text-slate-400"

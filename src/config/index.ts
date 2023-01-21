@@ -1,25 +1,25 @@
-export const HOME_NAVIGATION = [
+export const SITE_NAME = "RSSmarkable";
+
+export const INDEX_NAVIGATION = [
   { name: "Sign in", href: "/login" },
   { name: "Github", href: "https://github.com/Bartek532/rssmarkable" },
 ];
 
-export const HOME_FOOTER_NAVIGATION = [
+export const INDEX_FOOTER_NAVIGATION = [
   { name: "Github", href: "https://github.com/Bartek532/rssmarkable" },
   { name: "Sign in", href: "/login" },
   { name: "Dashboard", href: "/dashboard" },
 ];
 
-export const SITE_NAME = "RSSmarkable";
-
-export const HERO_SUBTITLE =
+export const INDEX_HERO_SUBTITLE =
   "Sync all of your favorite RSS feeds directly to your reMarkable tablet with just a few clicks";
 
-export const FEATURES_HEADING = {
+export const INDEX_FEATURES_HEADING = {
   title: "Features",
   description: `${SITE_NAME} is a free service that allows you to sync your reMarkable feeds`,
 };
 
-export const FEATURES_CARDS = [
+export const INDEX_FEATURES_CARDS = [
   {
     title: "Seamless Syncing",
     description:
@@ -36,12 +36,12 @@ export const FEATURES_CARDS = [
   },
 ];
 
-export const GET_STARTED_HEADING = {
+export const INDEX_GET_STARTED_HEADING = {
   title: "Get started",
   description: `It's easy to get started with ${SITE_NAME}`,
 };
 
-export const GET_STARTED_STEPS = [
+export const INDEX_GET_STARTED_STEPS = [
   { index: 1, title: "Create an account. It's free!" },
   { index: 2, title: "Connect your reMarkable account" },
   { index: 3, title: "Add your RSS feeds" },

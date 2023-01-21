@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { memo } from "react";
 
-import { HERO_SUBTITLE, SITE_NAME } from "../../config";
+import { INDEX_HERO_SUBTITLE, SITE_NAME } from "../../config";
 
 export const Hero = memo(() => {
   return (
@@ -15,7 +15,7 @@ export const Hero = memo(() => {
       </h1>
 
       <h2 className="z-10 mx-auto mb-4  max-w-md text-center text-lg text-slate-600 dark:text-slate-400">
-        {HERO_SUBTITLE}
+        {INDEX_HERO_SUBTITLE}
       </h2>
 
       <Link

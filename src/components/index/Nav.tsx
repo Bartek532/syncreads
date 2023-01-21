@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { memo } from "react";
 
-import { HOME_NAVIGATION, SITE_NAME } from "../../config";
+import { INDEX_NAVIGATION, SITE_NAME } from "../../config";
 
 export const Nav = memo(() => {
   return (
@@ -15,7 +15,7 @@ export const Nav = memo(() => {
       {/* TODO Mobile navigation */}
       <nav>
         <ul className="hidden items-center space-x-4 md:flex">
-          {HOME_NAVIGATION.map(({ name, href }) => (
+          {INDEX_NAVIGATION.map(({ name, href }) => (
             <li key={href}>
               <Link
                 className="rounded-full px-2 py-4 text-sm tracking-tight hover:underline dark:text-white"
