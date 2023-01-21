@@ -1,15 +1,24 @@
+import { SyncStatus } from "@prisma/client";
 import { webcrypto } from "crypto";
 import dayjs from "dayjs";
 import puppeteer, { type Page, type Browser } from "puppeteer-core";
 import { remarkable, type RemarkableApi } from "rmapi-js";
 import Parser from "rss-parser";
 
+import { PDF_OPTIONS } from "../../config/sync";
 import { env } from "../../env/server.mjs";
 import { prisma } from "../../server/db/client";
-import { PDF_OPTIONS } from "../../utils/consts";
+import { getFolder, syncEntry } from "../../server/services/remarkable.service";
+import { createSync, updateSync } from "../../server/services/sync.service";
+import {
+  getAllUsers,
+  getUserByEmail,
+  getUserFeed,
+  getUserFeeds,
+} from "../../server/services/user.service";
 import { ApiError, HTTP_STATUS_CODE } from "../../utils/exceptions";
+import { nonNullable } from "../../utils/functions";
 
-import type { User } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const BROWSER_OPTIONS = {
@@ -27,59 +36,74 @@ const BROWSER_OPTIONS = {
 interface FeedItem {
   link: string;
   pubDate: string;
+  title?: string;
 }
 
 const syncArticle = async ({
-  url,
+  article,
   api,
   page,
+  folderId = "",
 }: {
-  url: string;
+  article: FeedItem;
   api: RemarkableApi;
   page: Page;
+  folderId?: string;
 }) => {
-  await page.goto(url, { waitUntil: "networkidle0", timeout: 0 });
+  await page.goto(article.link, { waitUntil: "networkidle0", timeout: 0 });
   const pdf = await page.pdf(PDF_OPTIONS);
+  const title = article.title ?? (await page.title());
 
-  const entry = await api.putPdf(url, pdf);
-  const [root, gen] = await api.getRootHash();
-  const rootEntries = await api.getEntries(root);
-  rootEntries.push(entry);
-  const { hash } = await api.putEntries("", rootEntries);
-  const nextGen = await api.putRootHash(hash, gen);
-  await api.syncComplete(nextGen);
+  const pdfEntry = await api.putPdf(title, pdf, { parent: folderId });
+  await syncEntry({ api, entry: pdfEntry });
 };
 
 const syncFeed = async ({
   url,
-  user,
+  email,
   api,
   parser,
-  browser,
+  page,
+  folderId,
 }: {
   url: string;
-  user: User;
+  email: string;
   api: RemarkableApi;
   parser: Parser;
-  browser: Browser;
+  page: Page;
+  folderId: string;
 }) => {
   const parsed = await parser.parseURL(url);
-  const items = parsed.items
+  const feed = await getUserFeed({ email, url });
+
+  const articles = parsed.items
     .filter((item): item is FeedItem => !!item.link && !!item.pubDate)
     .filter((item, index) =>
-      user.lastSyncDate
-        ? dayjs(item.pubDate).isAfter(user.lastSyncDate)
-        : index < 1,
+      feed?.lastSyncDate
+        ? dayjs(item.pubDate).isAfter(feed.lastSyncDate)
+        : index < (feed?.startArticlesCount ?? 1),
     );
-  const page = await browser.newPage();
-  for (const item of items) {
-    await syncArticle({ url: item.link, api, page });
+
+  for (const article of articles) {
+    await syncArticle({ article, api, page, folderId });
   }
 
-  return items;
+  await prisma.userFeed.update({
+    where: {
+      userId_feedId: {
+        userId: feed!.userId,
+        feedId: feed!.feedId,
+      },
+    },
+    data: {
+      lastSyncDate: articles[0] ? new Date(articles[0].pubDate) : new Date(),
+    },
+  });
+
+  return { url, articles };
 };
 
-const syncUserFeeds = async ({
+export const syncUserFeeds = async ({
   email,
   parser: passedParser,
   browser: passedBrowser,
@@ -90,11 +114,9 @@ const syncUserFeeds = async ({
 }) => {
   const parser = passedParser ?? new Parser();
   const browser = passedBrowser ?? (await puppeteer.launch(BROWSER_OPTIONS));
+  const page = await browser.newPage();
 
-  const user = await prisma.user.findUnique({
-    where: { email },
-    include: { feeds: true, device: true },
-  });
+  const user = await getUserByEmail({ email });
 
   if (!user?.email) {
     console.error(`User with email ${email} not found!`);
@@ -106,33 +128,62 @@ const syncUserFeeds = async ({
     return;
   }
 
-  const api = webcrypto
-    ? await remarkable(user.device.token, {
-        subtle: webcrypto.subtle,
-      })
-    : await remarkable(user.device.token);
+  const feeds = await getUserFeeds({ email: user.email });
+  const sync = await createSync({ email: user.email });
 
-  const syncedFeeds = await Promise.all(
-    user.feeds.map((feed) =>
-      syncFeed({ url: feed.url, user, api, parser, browser }),
-    ),
-  );
+  try {
+    const api = webcrypto
+      ? await remarkable(user.device.token, {
+          subtle: webcrypto.subtle,
+        })
+      : await remarkable(user.device.token);
 
-  const sortedFeedsDates = syncedFeeds
-    .flat()
-    .map((article) => article.pubDate)
-    .sort((a, b) => (dayjs(a).isAfter(dayjs(b)) ? -1 : 1));
+    const syncedFeeds: {
+      url: string;
+      articles: FeedItem[];
+    }[] = [];
 
-  await prisma.user.update({
-    where: { email: user.email },
-    data: {
-      lastSyncDate: sortedFeedsDates[0]
-        ? new Date(sortedFeedsDates[0])
-        : new Date(),
-    },
-  });
+    for (const feed of feeds) {
+      const { documentId: folderId } = await getFolder({
+        api,
+        name: user.folder,
+      });
 
-  return syncedFeeds;
+      const syncedFeed = await syncFeed({
+        url: feed.url,
+        email: user.email,
+        api,
+        page,
+        parser,
+        folderId,
+      });
+      syncedFeeds.push(syncedFeed);
+    }
+
+    await updateSync({
+      id: sync.id,
+      data: {
+        finishedAt: new Date(),
+        syncedArticlesCount: syncedFeeds.map(({ articles }) => articles).flat()
+          .length,
+        status: SyncStatus.SUCCESS,
+      },
+    });
+
+    return { email, feeds: syncedFeeds };
+  } catch (e: unknown) {
+    console.error(user, e);
+
+    await updateSync({
+      id: sync.id,
+      data: {
+        finishedAt: new Date(),
+        status: SyncStatus.FAILED,
+      },
+    });
+
+    return;
+  }
 };
 
 const syncAll = async () => {
@@ -140,9 +191,9 @@ const syncAll = async () => {
   const parser = new Parser();
   const browser = await puppeteer.launch(BROWSER_OPTIONS);
 
-  const users = await prisma.user.findMany();
+  const users = await getAllUsers();
 
-  const syncedFeeds = await Promise.all(
+  const data = await Promise.all(
     users.map(({ email }) =>
       syncUserFeeds({ email: email ?? "", parser, browser }),
     ),
@@ -151,11 +202,7 @@ const syncAll = async () => {
   console.timeEnd("sync");
 
   return {
-    stats: {
-      users: users.length,
-      feeds: syncedFeeds.filter(Boolean).flat().length,
-      articles: syncedFeeds.filter(Boolean).flat(2).length,
-    },
+    data,
   };
 };
 
@@ -168,13 +215,17 @@ export default async function handler(
       throw new ApiError(HTTP_STATUS_CODE.UNAUTHORIZED, "Missing api key!");
     }
 
-    const {
-      stats: { users, feeds, articles },
-    } = await syncAll();
+    const { data } = await syncAll();
+
+    const syncedFeeds = data
+      .filter(nonNullable)
+      .map(({ feeds }) => feeds)
+      .flat();
+    const syncedArticles = syncedFeeds.map(({ articles }) => articles).flat();
 
     return res.status(200).json({
       status: "Success",
-      message: `Successfully synced ${feeds} feed(s) - ${articles} article(s) for ${users} user(s)`,
+      message: `Successfully synced ${syncedFeeds.length} feed(s) - ${syncedArticles.length} article(s) for ${data.length} user(s)`,
     });
   } catch (e: unknown) {
     console.log(e);

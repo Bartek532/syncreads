@@ -123,53 +123,29 @@ export const RegisterView = () => {
                 className="space-y-6"
                 onSubmit={onPromise(handleSubmit(onSubmit))}
               >
-                <div>
-                  <Input
-                    {...register("name")}
-                    isError={!!errors.name?.message}
-                    isValidated={isFormValidated}
-                  >
-                    Name
-                  </Input>
-                  {errors.name?.message && (
-                    <p className="mt-1 text-xs text-red-500">
-                      {errors.name.message}
-                    </p>
-                  )}
-                </div>
-
-                <div>
-                  <Input
-                    type="email"
-                    {...register("email")}
-                    isError={!!errors.email?.message}
-                    isValidated={isFormValidated}
-                  >
-                    Email
-                  </Input>
-                  {errors.email?.message && (
-                    <p className="mt-1 text-xs text-red-500">
-                      {errors.email.message}
-                    </p>
-                  )}
-                </div>
-
-                <div>
-                  <Input
-                    type="password"
-                    {...register("password")}
-                    isError={!!errors.password?.message}
-                    isValidated={isFormValidated}
-                  >
-                    Password
-                  </Input>
-                  {errors.password?.message && (
-                    <p className="mt-1 text-xs text-red-500">
-                      {errors.password.message}
-                    </p>
-                  )}
-                </div>
-
+                <Input
+                  error={errors.name}
+                  isValidated={isFormValidated}
+                  {...register("name")}
+                >
+                  Name
+                </Input>
+                <Input
+                  type="email"
+                  error={errors.email}
+                  isValidated={isFormValidated}
+                  {...register("email")}
+                >
+                  Email
+                </Input>
+                <Input
+                  type="password"
+                  error={errors.password}
+                  isValidated={isFormValidated}
+                  {...register("password")}
+                >
+                  Password
+                </Input>
                 <div className="flex items-center justify-end">
                   <div className="text-sm">
                     Already have an account?
@@ -181,7 +157,6 @@ export const RegisterView = () => {
                     </Link>
                   </div>
                 </div>
-
                 <div>
                   <button
                     type="submit"
