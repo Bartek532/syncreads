@@ -4,9 +4,9 @@ import { twMerge } from "tailwind-merge";
 
 interface CardImageConfig {
   readonly src: string;
-  readonly alt: string;
   readonly width: number;
   readonly height: number;
+  readonly alt?: string;
   readonly isPriority?: boolean;
 }
 
@@ -14,11 +14,11 @@ interface CardProps {
   readonly title: string;
   readonly description: string;
   readonly className?: string;
-  readonly imageConfig?: CardImageConfig;
+  readonly image?: CardImageConfig;
 }
 
 export const Card = memo(
-  ({ title, description, className, imageConfig }: CardProps) => {
+  ({ title, description, className, image }: CardProps) => {
     return (
       <div
         className={twMerge(
@@ -34,14 +34,14 @@ export const Card = memo(
           {description}
         </p>
 
-        {imageConfig ? (
+        {image ? (
           <Image
             className="translate-y-1/3 scale-125"
-            alt={imageConfig.alt}
-            src={imageConfig.src}
-            width={imageConfig.width}
-            height={imageConfig.height}
-            priority={imageConfig.isPriority}
+            alt={image.alt ?? ""}
+            src={image.src}
+            width={image.width}
+            height={image.height}
+            priority={image.isPriority}
           />
         ) : null}
       </div>
