@@ -8,3 +8,5 @@ export const HOME_FOOTER_NAVIGATION = [
   { name: "Login/Signup", href: "/login" },
   { name: "Dashboard", href: "/dashboard" },
 ];
+
+export const SITE_NAME = "RSSmarkable";

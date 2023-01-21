@@ -1,5 +1,7 @@
 import { memo } from "react";
 
+import { SITE_NAME } from "../../config";
+
 import { Card } from "./Card";
 import { SectionHeading } from "./section/SectionHeading";
 import { SectionLayout } from "./section/SectionLayout";
@@ -26,7 +28,7 @@ export const Features = memo(() => {
     <SectionLayout>
       <SectionHeading
         title="Features"
-        description="RSSMarkable is a free service that allows you to sync your reMarkable feeds"
+        description={`${SITE_NAME} is a free service that allows you to sync your reMarkable feeds`}
       />
 
       <div className="flex flex-col items-stretch justify-center gap-4 md:flex-row">
