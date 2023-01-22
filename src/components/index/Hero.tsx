@@ -20,9 +20,9 @@ export const Hero = memo(() => {
 
       <Link
         href="/login"
-        className="z-10 mt-4 rounded-full bg-black/10 px-10 py-3 font-medium text-black no-underline transition hover:bg-black/10 hover:text-black dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
+        className="rounded-full border-2 border-indigo-500 px-10 py-3 font-medium text-indigo-500 no-underline transition hover:bg-indigo-500 hover:text-white dark:z-10 dark:border-white dark:text-white dark:hover:border-indigo-900 dark:hover:bg-indigo-700 dark:hover:text-white"
       >
-        Sign in
+        Get started
       </Link>
 
       <div className="relative translate-y-12 sm:translate-y-16 md:translate-y-20">

@@ -19,7 +19,7 @@ export const OpenSource = memo(() => {
             </p>
           </div>
           <Link
-            className="z-10 mt-4 rounded-full bg-black/10 px-10 py-3 font-medium text-black no-underline transition hover:bg-black/10 hover:text-black dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
+            className="z-10 mt-4 rounded-full bg-black/10 px-10 py-3 font-medium text-black no-underline transition hover:bg-black/5 hover:text-black dark:bg-white/10 dark:text-white dark:hover:bg-white/20 dark:hover:text-white"
             href={INDEX_OPEN_SOURCE_HEADING.cta.href}
           >
             {INDEX_OPEN_SOURCE_HEADING.cta.text}
