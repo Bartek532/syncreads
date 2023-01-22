@@ -1,5 +1,10 @@
 import { useSession } from "next-auth/react";
 
+import {
+  updateUserEmailSchema,
+  updateUserNameSchema,
+  updateUserPasswordSchema,
+} from "../../../utils/validation";
 import { Heading } from "../heading/Heading";
 import { SettingsRow } from "../settingsRow/SettingsRow";
 
@@ -24,18 +29,22 @@ export const GeneralTab = () => {
         <ul className="mt-6 divide-y divide-gray-300 border-y border-gray-300">
           <SettingsRow
             label="Name"
+            contentType="text"
             content={data.user.name ?? ""}
+            schema={updateUserNameSchema}
             onChange={handleRowChange}
           />
           <SettingsRow
             label="E-mail"
             contentType="email"
             content={data.user.email}
+            schema={updateUserEmailSchema}
             onChange={handleRowChange}
           />
           <SettingsRow
             label="Passowrd"
             contentType="password"
+            schema={updateUserPasswordSchema}
             onChange={handleRowChange}
           />
         </ul>
