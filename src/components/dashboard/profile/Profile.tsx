@@ -13,16 +13,21 @@ interface ProfileProps {
 
 export const Profile = memo<ProfileProps>(({ user, isRegistered }) => {
   const { width } = useWindowSize();
+
+  if (!user) {
+    return null;
+  }
+
   return (
     <div className="min-w-0 flex-1">
       <div className="flex items-center">
-        {width! > 640 && <Avatar image={user?.image} name={user?.name} />}
+        {width > 640 && <Avatar image={user.image} name={user.name} />}
 
         <div>
           <div className="flex items-center">
-            {width! <= 640 && <Avatar image={user?.image} name={user?.name} />}
+            {width <= 640 && <Avatar image={user.image} name={user.name} />}
             <h1 className="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:leading-9">
-              Welcome back, {user?.name ?? user?.email}!
+              Welcome back, {user.name ?? user.email}!
             </h1>
           </div>
           <dl className="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">

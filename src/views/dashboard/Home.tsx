@@ -16,7 +16,6 @@ import { useGenericLoader } from "../../hooks/useGenericLoader";
 import { onPromise } from "../../utils/functions";
 import { trpc } from "../../utils/trpc";
 
-import type { CreateFeedInput } from "../../utils/validation";
 import type { Sync } from "@prisma/client";
 import type { TRPCError } from "@trpc/server";
 
@@ -33,10 +32,6 @@ export const HomeView = () => {
   );
   const utils = trpc.useContext();
   const { data } = useSession();
-
-  const addFeedMutation = trpc.feed.createFeed.useMutation({
-    onSuccess: () => utils.user.getUserFeeds.invalidate(),
-  });
 
   const syncFeedsMutation = trpc.user.syncUserFeeds.useMutation({
     onSuccess: () => utils.user.getUserSyncs.invalidate(),
@@ -64,22 +59,6 @@ export const HomeView = () => {
     },
   );
 
-  const feedAddHandler = async ({ url }: CreateFeedInput) => {
-    await toast.promise(
-      addFeedMutation.mutateAsync({
-        url,
-      }),
-      {
-        loading: "Adding feed...",
-        success: ({ message }) => {
-          setIsAddModalOpen(false);
-          return message;
-        },
-        error: (err: TRPCError | Error) => err.message,
-      },
-    );
-  };
-
   const feedsSyncHandler = async () => {
     await toast.promise(syncFeedsMutation.mutateAsync(), {
       loading: "Syncing...",
@@ -106,8 +85,7 @@ export const HomeView = () => {
     <>
       <AddFeedModal
         isOpen={isAddModalOpen}
-        setIsOpen={setIsAddModalOpen}
-        onAdd={feedAddHandler}
+        onClose={() => setIsAddModalOpen(false)}
       />
       <div className="bg-white shadow">
         <div className="px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
@@ -130,12 +108,13 @@ export const HomeView = () => {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <Heading level={2}>Overview</Heading>
           <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {DASHBOARD_CARDS.map((card, index) => (
-              <Tile
-                card={{ ...card, value: cardsValues[index]! }}
-                key={card.title}
-              />
-            ))}
+            {DASHBOARD_CARDS.map((card, index) => {
+              const value = cardsValues[index];
+
+              return value ? (
+                <Tile card={{ ...card, value }} key={card.title} />
+              ) : null;
+            })}
           </div>
         </div>
 

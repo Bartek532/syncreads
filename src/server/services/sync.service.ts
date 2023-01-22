@@ -4,12 +4,12 @@ import { prisma } from "../../server/db/client";
 
 import type { Sync } from "@prisma/client";
 
-export const createSync = ({ email }: { email: string }) => {
+export const createSync = ({ id }: { id: number }) => {
   return prisma.sync.create({
     data: {
       status: SyncStatus.PENDING,
       user: {
-        connect: { email },
+        connect: { id },
       },
     },
   });
@@ -29,26 +29,29 @@ export const updateSync = ({
 };
 
 export const getUserSyncs = ({
-  email,
+  id,
   page,
   perPage,
 }: {
-  email: string;
+  id: number;
   page: number;
   perPage: number;
 }) => {
   return prisma.$transaction([
-    prisma.sync.count(),
+    prisma.sync.count({ where: { userId: id } }),
     prisma.sync.findMany({
       take: perPage,
       skip: (page - 1) * perPage,
       where: {
-        user: { email },
+        userId: id,
       },
       orderBy: {
         startedAt: "desc",
       },
     }),
-    prisma.sync.aggregate({ _sum: { syncedArticlesCount: true } }),
+    prisma.sync.aggregate({
+      _sum: { syncedArticlesCount: true },
+      where: { userId: id },
+    }),
   ]);
 };

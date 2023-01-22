@@ -12,7 +12,6 @@ import { FeedTile } from "../../../components/tile/feedTile/FeedTile";
 import { useGenericLoader } from "../../../hooks/useGenericLoader";
 import { trpc } from "../../../utils/trpc";
 
-import type { CreateFeedInput } from "../../../utils/validation";
 import type { TRPCError } from "@trpc/server";
 
 export const FeedsView = () => {
@@ -22,31 +21,11 @@ export const FeedsView = () => {
   const { data: feeds, isLoading: areFeedsLoading } =
     trpc.user.getUserFeeds.useQuery();
 
-  const addFeedMutation = trpc.feed.createFeed.useMutation({
-    onSuccess: () => utils.user.getUserFeeds.invalidate(),
-  });
-
   const deleteFeedMutation = trpc.feed.deleteFeed.useMutation({
     onSuccess: () => utils.user.getUserFeeds.invalidate(),
   });
 
   useGenericLoader(areFeedsLoading);
-
-  const onAdd = async ({ url }: CreateFeedInput) => {
-    await toast.promise(
-      addFeedMutation.mutateAsync({
-        url,
-      }),
-      {
-        loading: "Adding feed...",
-        success: ({ message }) => {
-          setIsAddModalOpen(false);
-          return message;
-        },
-        error: (err: TRPCError | Error) => err.message,
-      },
-    );
-  };
 
   const handleDeleteFeed = async ({ url }: { url: string }) => {
     await toast.promise(
@@ -65,8 +44,7 @@ export const FeedsView = () => {
     <>
       <AddFeedModal
         isOpen={isAddModalOpen}
-        setIsOpen={setIsAddModalOpen}
-        onAdd={onAdd}
+        onClose={() => setIsAddModalOpen(false)}
       />
       <section className="mx-auto mt-8 max-w-6xl px-4 sm:px-6 lg:mt-12 lg:px-8">
         <div className="flex w-full items-center justify-between">

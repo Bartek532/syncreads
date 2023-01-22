@@ -15,12 +15,12 @@ export const feedRouter = router({
   createFeed: protectedProcedure
     .input(createFeedSchema)
     .mutation(({ input, ctx }) =>
-      createFeedHandler({ ...input, email: ctx.session.user.email }),
+      createFeedHandler({ ...input, id: ctx.session.user.id }),
     ),
   deleteFeed: protectedProcedure
     .input(deleteFeedSchema)
     .mutation(({ input, ctx }) =>
-      deleteFeedHandler({ ...input, email: ctx.session.user.email }),
+      deleteFeedHandler({ ...input, id: ctx.session.user.id }),
     ),
   getFeedDetails: protectedProcedure
     .input(getWebsiteDetailsSchema)

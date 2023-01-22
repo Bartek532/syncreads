@@ -23,69 +23,104 @@ export const getUserByEmail = ({ email }: { email: string }) => {
   });
 };
 
-export const getUserFeeds = ({ email }: { email: string }) => {
-  return prisma.feed.findMany({
-    include: { users: true },
-    where: { users: { some: { email } } },
+export const getUserById = ({ id }: { id: number }) => {
+  return prisma.user.findUnique({
+    where: { id },
+    include: { device: true, feeds: true },
   });
 };
 
-export const getUserDevice = ({ email }: { email: string }) => {
-  return prisma.device.findFirst({
+export const getUserFeeds = ({ id }: { id: number }) => {
+  return prisma.feed.findMany({
+    include: { users: true },
+    where: { users: { some: { user: { id } } } },
+  });
+};
+
+export const getUserFeed = ({
+  userId,
+  url,
+}: {
+  userId: number;
+  url: string;
+}) => {
+  return prisma.userFeed.findFirst({
     where: {
-      user: {
-        email,
-      },
+      AND: [
+        {
+          user: { id: userId },
+        },
+        { feed: { url } },
+      ],
     },
   });
 };
 
-export const getUserFeedByUrl = ({
-  email,
-  url,
+export const updateFeedSyncDate = ({
+  userId,
+  feedId,
+  date,
 }: {
-  email: string;
-  url: string;
+  userId: number;
+  feedId: number;
+  date?: Date;
 }) => {
+  return prisma.userFeed.update({
+    where: {
+      userId_feedId: {
+        userId,
+        feedId,
+      },
+    },
+    data: {
+      lastSyncDate: date ?? new Date(),
+    },
+  });
+};
+
+export const getUserDevice = ({ id }: { id: number }) => {
+  return prisma.device.findUnique({
+    where: {
+      userId: id,
+    },
+  });
+};
+
+export const getUserFeedByUrl = ({ id, url }: { id: number; url: string }) => {
   return prisma.feed.findFirst({
-    where: { AND: [{ url }, { users: { some: { email } } }] },
+    where: { AND: [{ url }, { users: { some: { user: { id } } } }] },
     include: { users: true },
   });
 };
 
 export const deleteFeedFromUser = ({
-  email,
+  id,
   url,
 }: {
-  email: string;
+  id: number;
   url: string;
 }) => {
-  return prisma.user.update({
-    where: { email },
-    data: {
-      feeds: {
-        disconnect: [{ url }],
-      },
-    },
+  return prisma.userFeed.deleteMany({
+    where: { user: { id }, feed: { url } },
   });
 };
 
 export const registerUserDevice = ({
-  email,
+  id,
   token,
 }: {
-  email: string;
+  id: number;
   token: string;
 }) => {
   return prisma.device.create({
-    data: { token, user: { connect: { email } } },
+    data: { token, user: { connect: { id } } },
   });
 };
 
-export const unregisterUserDevice = ({ email }: { email: string }) => {
-  return prisma.device.deleteMany({
+export const unregisterUserDevice = ({ id }: { id: number }) => {
+  return prisma.device.delete({
     where: {
-      user: { email },
+      userId: id,
     },
   });
 };

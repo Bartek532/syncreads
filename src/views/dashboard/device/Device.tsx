@@ -10,7 +10,6 @@ import { DeviceTile } from "../../../components/tile/deviceTile/DeviceTile";
 import { useGenericLoader } from "../../../hooks/useGenericLoader";
 import { trpc } from "../../../utils/trpc";
 
-import type { RegisterDeviceInput } from "../../../utils/validation";
 import type { TRPCError } from "@trpc/server";
 
 export const DeviceView = () => {
@@ -19,31 +18,11 @@ export const DeviceView = () => {
   const { data: device, isLoading: isDeviceLoading } =
     trpc.user.getUserDevice.useQuery();
 
-  const registerDeviceMutation = trpc.user.registerDevice.useMutation({
-    onSuccess: () => utils.user.getUserDevice.invalidate(),
-  });
-
   const unregisterDeviceMutation = trpc.user.unregisterDevice.useMutation({
     onSuccess: () => utils.user.getUserDevice.invalidate(),
   });
 
   useGenericLoader(isDeviceLoading);
-
-  const onAdd = async ({ code }: RegisterDeviceInput) => {
-    await toast.promise(
-      registerDeviceMutation.mutateAsync({
-        code,
-      }),
-      {
-        loading: "Registering your device...",
-        success: ({ message }) => {
-          setIsAddModalOpen(false);
-          return message;
-        },
-        error: (err: TRPCError | Error) => err.message,
-      },
-    );
-  };
 
   const handleDeleteDevice = async () => {
     await toast.promise(unregisterDeviceMutation.mutateAsync(), {
@@ -57,8 +36,7 @@ export const DeviceView = () => {
     <>
       <AddDeviceModal
         isOpen={isAddModalOpen}
-        setIsOpen={setIsAddModalOpen}
-        onAdd={onAdd}
+        onClose={() => setIsAddModalOpen(false)}
       />
       <section className="mx-auto mt-8 max-w-6xl px-4 sm:px-6 lg:mt-12 lg:px-8">
         <Heading level={2}>Your device</Heading>

@@ -32,7 +32,7 @@ export const createFeedSchema = z.object({
 
 export const createAndConnectSchema = z.object({
   url: z.string().url(),
-  email: z.string().email(),
+  id: z.number(),
 });
 
 export const deleteFeedSchema = z.object({
@@ -41,7 +41,7 @@ export const deleteFeedSchema = z.object({
 
 export const deleteAndDisconnectFeedSchema = z.object({
   url: z.string().url(),
-  email: z.string().email(),
+  id: z.number(),
 });
 
 export const getWebsiteDetailsSchema = z.object({
@@ -60,11 +60,11 @@ export const registerAndConnectDeviceSchema = z.object({
     .string()
     .min(8, "Enter valid one-time code.")
     .max(8, "Enter valid one-time code."),
-  email: z.string().email(),
+  id: z.number(),
 });
 
 export const unregisterAndDisconnectDeviceSchema = z.object({
-  email: z.string().email(),
+  id: z.number(),
 });
 
 export const updateUserNameSchema = z.object({
