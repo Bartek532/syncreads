@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge";
 
-import { useYupForm } from "../../../hooks/useYupForm";
+import { useZodForm } from "../../../hooks/useZodForm";
 import { onPromise } from "../../../utils/functions";
 import { Button } from "../../common/Button";
 import { Input } from "../../common/Input";
@@ -33,7 +33,7 @@ export const RowForm = ({
     handleFormSubmit,
     register,
     formState: { errors },
-  } = useYupForm(
+  } = useZodForm(
     schema,
     {
       onSubmit: ({ content }) => {

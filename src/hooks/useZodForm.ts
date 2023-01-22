@@ -13,7 +13,7 @@ interface Options<T extends ZodType> {
   onInvalid?: SubmitErrorHandler<TypeOf<T>>;
 }
 
-export const useYupForm = <T extends ZodType>(
+export const useZodForm = <T extends ZodType>(
   schema: T,
   { onSubmit, onInvalid }: Options<T>,
   props?: Omit<UseFormProps<TypeOf<T>>, "resolver">,
