@@ -9,14 +9,14 @@ const variants = {
   4: "text-base",
   5: "text-sm",
   6: "text-xs",
-};
+} as const;
 
 type HeadingProps = Readonly<{
-  level?: keyof typeof variants;
+  level: keyof typeof variants;
 }> &
   HTMLAttributes<HTMLHeadingElement>;
 
-export const Heading = ({ level = 1, className, ...props }: HeadingProps) => {
+export const Heading = ({ level, className, ...props }: HeadingProps) => {
   const Tag = `h${level}` as const;
 
   return (

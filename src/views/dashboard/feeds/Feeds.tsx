@@ -70,7 +70,7 @@ export const FeedsView = () => {
       />
       <section className="mx-auto mt-8 max-w-6xl px-4 sm:px-6 lg:mt-12 lg:px-8">
         <div className="flex w-full items-center justify-between">
-          <Heading level={3}>All feeds</Heading>
+          <Heading level={2}>All feeds</Heading>
           <Button onClick={() => setIsAddModalOpen(true)}>
             <PlusIcon className="h-6 w-6" /> Add feed
           </Button>

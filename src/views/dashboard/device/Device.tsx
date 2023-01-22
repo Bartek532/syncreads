@@ -61,7 +61,7 @@ export const DeviceView = () => {
         onAdd={onAdd}
       />
       <section className="mx-auto mt-8 max-w-6xl px-4 sm:px-6 lg:mt-12 lg:px-8">
-        <Heading level={3}>Your device</Heading>
+        <Heading level={2}>Your device</Heading>
 
         {device ? (
           <div className="mt-8">

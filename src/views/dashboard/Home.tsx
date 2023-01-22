@@ -128,7 +128,7 @@ export const HomeView = () => {
 
       <div className="mt-8">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <Heading level={3}>Overview</Heading>
+          <Heading level={2}>Overview</Heading>
           <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {DASHBOARD_CARDS.map((card, index) => (
               <Tile
@@ -140,7 +140,7 @@ export const HomeView = () => {
         </div>
 
         <section className="mx-auto mt-10 max-w-6xl sm:px-6 lg:mt-12 lg:px-8">
-          <Heading level={3} className="px-4 sm:px-0">
+          <Heading level={2} className="px-4 sm:px-0">
             Recent syncs
           </Heading>
           {syncs.length ? (
