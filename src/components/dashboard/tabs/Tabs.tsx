@@ -2,8 +2,6 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 
-import { Panel } from "./Panel";
-
 import type { ChangeEvent } from "react";
 
 interface Tab {
@@ -60,5 +58,3 @@ export const Tabs = ({ tabs }: TabsProps) => {
     </>
   );
 };
-
-Tabs.Panel = Panel;
