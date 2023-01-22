@@ -17,13 +17,13 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     session: ({ session, token }) => {
       if (session.user) {
-        session.user.id = token.id as number;
+        session.user.id = Number(token.id);
       }
       return session;
     },
     jwt: ({ token, user }) => {
       if (user) {
-        token.id = user.id;
+        token.id = +user.id;
         token.email = user.email ?? null;
       }
 

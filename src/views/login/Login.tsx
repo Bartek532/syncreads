@@ -1,11 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
+import Logo from "public/svg/logo.svg";
 import FacebookIcon from "public/svg/social/fb.svg";
 import GithubIcon from "public/svg/social/github.svg";
 import TwitterIcon from "public/svg/social/twitter.svg";
@@ -53,11 +55,7 @@ export const LoginView = () => {
       <div className="flex flex-1 flex-col justify-start  py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-28">
         <div className="mx-auto w-full max-w-sm lg:w-96">
           <div>
-            <img
-              className="h-12 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt="Your Company"
-            />
+            <Logo />
             <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">
               Log in to your account
             </h2>
@@ -126,38 +124,22 @@ export const LoginView = () => {
                 className="space-y-6"
                 onSubmit={onPromise(handleSubmit(onSubmit))}
               >
-                <div>
-                  <Input
-                    type="email"
-                    {...register("email")}
-                    isError={!!errors.email?.message}
-                    isValidated={isFormValidated}
-                  >
-                    Email
-                  </Input>
-                  {errors.email?.message && (
-                    <p className="mt-1 text-xs text-red-500">
-                      {errors.email.message}
-                    </p>
-                  )}
-                </div>
-
-                <div>
-                  <Input
-                    type="password"
-                    {...register("password")}
-                    isError={!!errors.password?.message}
-                    isValidated={isFormValidated}
-                  >
-                    Password
-                  </Input>
-                  {errors.password?.message && (
-                    <p className="mt-1 text-xs text-red-500">
-                      {errors.password.message}
-                    </p>
-                  )}
-                </div>
-
+                <Input
+                  type="email"
+                  {...register("email")}
+                  error={errors.email}
+                  isValidated={isFormValidated}
+                >
+                  Email
+                </Input>
+                <Input
+                  type="password"
+                  {...register("password")}
+                  error={errors.password}
+                  isValidated={isFormValidated}
+                >
+                  Password
+                </Input>
                 <div className="flex items-center justify-end">
                   <div className="text-sm">
                     Don&apos;t have an account yet?
@@ -183,11 +165,12 @@ export const LoginView = () => {
           </div>
         </div>
       </div>
-      <div className="relative hidden w-0 flex-1 lg:block">
-        <img
+      <div className="relative hidden flex-1 lg:block">
+        <Image
+          src="/images/entry-page-background.jpg"
+          fill
+          alt="Background"
           className="absolute inset-0 h-full w-full object-cover"
-          src="https://images.unsplash.com/photo-1505904267569-f02eaeb45a4c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80"
-          alt=""
         />
       </div>
     </div>

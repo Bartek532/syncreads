@@ -19,10 +19,10 @@ import type {
 
 export const createFeedHandler = async ({
   url,
-  email,
+  id,
 }: CreateAndConnectFeedInput) => {
   try {
-    const isFeedExists = await getUserFeedByUrl({ url, email });
+    const isFeedExists = await getUserFeedByUrl({ url, id });
     if (isFeedExists) {
       throw new TRPCError({
         code: "CONFLICT",
@@ -42,7 +42,7 @@ export const createFeedHandler = async ({
       );
     }
 
-    const feed = await createFeed({ url, email });
+    const feed = await createFeed({ url, id });
 
     return {
       status: "Success",
@@ -57,7 +57,7 @@ export const createFeedHandler = async ({
 
 export const deleteFeedHandler = async ({
   url,
-  email,
+  id,
 }: DeleteAndDisconnectFeedInput) => {
   try {
     const feed = await getFeedByUrl({ url });
@@ -69,7 +69,7 @@ export const deleteFeedHandler = async ({
     }
 
     if (feed.users.length > 1) {
-      await deleteFeedFromUser({ email, url });
+      await deleteFeedFromUser({ id, url });
     } else {
       await deleteFeed({ url });
     }

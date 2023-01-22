@@ -7,17 +7,19 @@ import Parser from "rss-parser";
 
 import { PDF_OPTIONS } from "../../config/sync";
 import { env } from "../../env/server.mjs";
-import { prisma } from "../../server/db/client";
 import { getFolder, syncEntry } from "../../server/services/remarkable.service";
 import { createSync, updateSync } from "../../server/services/sync.service";
 import {
   getAllUsers,
-  getUserByEmail,
+  getUserById,
+  getUserFeed,
+  getUserFeeds,
+  updateFeedSyncDate,
 } from "../../server/services/user.service";
 import { ApiError, HTTP_STATUS_CODE } from "../../utils/exceptions";
 import { nonNullable } from "../../utils/functions";
 
-import type { User } from "@prisma/client";
+import type { FeedArticle, FeedWithArticles } from "../../utils/types";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const BROWSER_OPTIONS = {
@@ -32,19 +34,13 @@ const BROWSER_OPTIONS = {
   ],
 };
 
-interface FeedItem {
-  link: string;
-  pubDate: string;
-  title?: string;
-}
-
 const syncArticle = async ({
   article,
   api,
   page,
   folderId = "",
 }: {
-  article: FeedItem;
+  article: FeedArticle;
   api: RemarkableApi;
   page: Page;
   folderId?: string;
@@ -59,41 +55,56 @@ const syncArticle = async ({
 
 const syncFeed = async ({
   url,
-  user,
+  userId,
   api,
   parser,
   page,
   folderId,
 }: {
   url: string;
-  user: User;
+  userId: number;
   api: RemarkableApi;
   parser: Parser;
   page: Page;
   folderId: string;
 }) => {
   const parsed = await parser.parseURL(url);
+  const feed = await getUserFeed({ userId, url });
+
+  if (!feed) {
+    throw new ApiError(
+      HTTP_STATUS_CODE.NOT_FOUND,
+      `Feed ${url} not found for user with id ${userId}!`,
+    );
+  }
+
   const articles = parsed.items
-    .filter((item): item is FeedItem => !!item.link && !!item.pubDate)
+    .filter((item): item is FeedArticle => !!item.link && !!item.pubDate)
     .filter((item, index) =>
-      user.lastSyncDate
-        ? dayjs(item.pubDate).isAfter(user.lastSyncDate)
-        : index < user.startArticlesCount,
+      feed.lastSyncDate
+        ? dayjs(item.pubDate).isAfter(feed.lastSyncDate)
+        : index < feed.startArticlesCount,
     );
 
   for (const article of articles) {
     await syncArticle({ article, api, page, folderId });
   }
 
+  await updateFeedSyncDate({
+    userId,
+    feedId: feed.feedId,
+    date: articles[0] ? new Date(articles[0].pubDate) : new Date(),
+  });
+
   return { url, articles };
 };
 
 export const syncUserFeeds = async ({
-  email,
+  id,
   parser: passedParser,
   browser: passedBrowser,
 }: {
-  email: string;
+  id: number;
   parser?: Parser;
   browser?: Browser;
 }) => {
@@ -101,33 +112,30 @@ export const syncUserFeeds = async ({
   const browser = passedBrowser ?? (await puppeteer.launch(BROWSER_OPTIONS));
   const page = await browser.newPage();
 
-  const user = await getUserByEmail({ email });
+  const user = await getUserById({ id });
 
-  if (!user?.email) {
-    console.error(`User with email ${email} not found!`);
-    return;
+  if (!user) {
+    throw new ApiError(HTTP_STATUS_CODE.NOT_FOUND, "User not found!");
   }
 
   if (!user.device) {
-    console.error(`Device not found, register your device first!`);
-    return;
+    throw new ApiError(
+      HTTP_STATUS_CODE.NOT_FOUND,
+      `Device not found for user ${user.email}!`,
+    );
   }
 
-  const sync = await createSync({ email: user.email });
+  const feeds = await getUserFeeds({ id: user.id });
+  const sync = await createSync({ id: user.id });
 
   try {
-    const api = webcrypto
-      ? await remarkable(user.device.token, {
-          subtle: webcrypto.subtle,
-        })
-      : await remarkable(user.device.token);
+    const api = await remarkable(user.device.token, {
+      subtle: webcrypto.subtle,
+    });
 
-    const syncedFeeds: {
-      url: string;
-      articles: FeedItem[];
-    }[] = [];
+    const syncedFeeds: FeedWithArticles[] = [];
 
-    for (const feed of user.feeds) {
+    for (const feed of feeds) {
       const { documentId: folderId } = await getFolder({
         api,
         name: user.folder,
@@ -135,29 +143,15 @@ export const syncUserFeeds = async ({
 
       const syncedFeed = await syncFeed({
         url: feed.url,
-        user,
+        userId: user.id,
         api,
         page,
         parser,
         folderId,
       });
+
       syncedFeeds.push(syncedFeed);
     }
-
-    const sortedFeedsDates = syncedFeeds
-      .map(({ articles }) => articles)
-      .flat()
-      .map(({ pubDate }) => pubDate)
-      .sort((a, b) => (dayjs(a).isAfter(dayjs(b)) ? -1 : 1));
-
-    await prisma.user.update({
-      where: { email: user.email },
-      data: {
-        lastSyncDate: sortedFeedsDates[0]
-          ? new Date(sortedFeedsDates[0])
-          : new Date(),
-      },
-    });
 
     await updateSync({
       id: sync.id,
@@ -169,7 +163,7 @@ export const syncUserFeeds = async ({
       },
     });
 
-    return { email, feeds: syncedFeeds };
+    return { id, feeds: syncedFeeds };
   } catch (e: unknown) {
     console.error(user, e);
 
@@ -193,9 +187,14 @@ const syncAll = async () => {
   const users = await getAllUsers();
 
   const data = await Promise.all(
-    users.map(({ email }) =>
-      syncUserFeeds({ email: email ?? "", parser, browser }),
-    ),
+    users.map(({ id }) => {
+      try {
+        return syncUserFeeds({ id, parser, browser });
+      } catch (e: unknown) {
+        console.error(e);
+        return;
+      }
+    }),
   );
 
   console.timeEnd("sync");
