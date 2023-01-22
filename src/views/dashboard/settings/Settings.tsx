@@ -1,30 +1,54 @@
-import { useState } from "react";
+import { useSession } from "next-auth/react";
 
-import { GeneralTab } from "../../../components/dashboard/generalTab/GeneralTab";
 import { Heading } from "../../../components/dashboard/heading/Heading";
-import { Tabs } from "../../../components/dashboard/tabs/Tabs";
-
-const tabs = [{ label: "General", panel: <GeneralTab /> }];
-
-const labels = tabs.map(({ label }) => label);
-const panels = tabs.map(({ panel }) => panel);
+import { SettingsRow } from "../../../components/dashboard/settingsRow/SettingsRow";
+import {
+  updateUserEmailSchema,
+  updateUserNameSchema,
+  updateUserPasswordSchema,
+} from "../../../utils/validation";
 
 export const SettingsView = () => {
-  const [activeTab, setActiveTab] = useState(0);
+  const { data } = useSession();
+
+  const handleRowChange = (content: string) => {
+    console.log("saving...", content);
+  };
 
   return (
-    <section className="mx-auto mt-8 max-w-6xl px-4 sm:px-6 lg:mt-12 lg:px-8">
-      <Heading level={2} className="mb-8">
-        Settings
-      </Heading>
+    <section className="mt-8">
+      <hgroup>
+        <Heading level={3}>Profile</Heading>
+        <p className="max-w-2xl text-sm text-gray-500">
+          This information will be displayed publicly so be careful what you
+          share.
+        </p>
+      </hgroup>
 
-      <Tabs labels={labels} index={activeTab} onChange={setActiveTab} />
-
-      {panels.map((panel, index) => (
-        <Tabs.Panel key={index} index={index} value={activeTab}>
-          {panel}
-        </Tabs.Panel>
-      ))}
+      {data?.user && (
+        <ul className="mt-6 divide-y divide-gray-300 border-y border-gray-300">
+          <SettingsRow
+            label="Name"
+            contentType="text"
+            content={data.user.name ?? ""}
+            schema={updateUserNameSchema}
+            onChange={handleRowChange}
+          />
+          <SettingsRow
+            label="E-mail"
+            contentType="email"
+            content={data.user.email}
+            schema={updateUserEmailSchema}
+            onChange={handleRowChange}
+          />
+          <SettingsRow
+            label="Passowrd"
+            contentType="password"
+            schema={updateUserPasswordSchema}
+            onChange={handleRowChange}
+          />
+        </ul>
+      )}
     </section>
   );
 };
