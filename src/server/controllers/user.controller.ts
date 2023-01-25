@@ -55,12 +55,12 @@ export const registerUserHandler = async ({
 };
 
 export const registerDeviceHandler = async ({
-  email,
+  id,
   code,
 }: RegisterAndConnectDeviceInput) => {
   try {
     const token = await register(code);
-    const device = await registerUserDevice({ token, email });
+    const device = await registerUserDevice({ token, id });
 
     return {
       status: "Success",
@@ -74,10 +74,10 @@ export const registerDeviceHandler = async ({
 };
 
 export const unregisterDeviceHandler = async ({
-  email,
+  id,
 }: UnregisterAndDisconnectDeviceInput) => {
   try {
-    const device = await unregisterUserDevice({ email });
+    const device = await unregisterUserDevice({ id });
 
     return {
       status: "Success",
@@ -93,28 +93,28 @@ export const unregisterDeviceHandler = async ({
 export const getUserFeedsHandler = async ({
   input,
 }: {
-  input: { email: string };
+  input: { id: number };
 }) => {
   try {
-    return getUserFeeds({ email: input.email });
+    return getUserFeeds({ id: input.id });
   } catch (err) {
     console.error(err);
     throw err;
   }
 };
 
-export const getUserDeviceHandler = async ({ email }: { email: string }) => {
+export const getUserDeviceHandler = async ({ id }: { id: number }) => {
   try {
-    return getUserDevice({ email });
+    return getUserDevice({ id });
   } catch (err) {
     console.error(err);
     throw err;
   }
 };
 
-export const syncUserFeedsHandler = async ({ email }: { email: string }) => {
+export const syncUserFeedsHandler = async ({ id }: { id: number }) => {
   try {
-    return syncUserFeeds({ email });
+    return syncUserFeeds({ id });
   } catch (err) {
     console.error(err);
     throw err;
@@ -122,17 +122,17 @@ export const syncUserFeedsHandler = async ({ email }: { email: string }) => {
 };
 
 export const getUserSyncsHandler = async ({
-  email,
+  id,
   page,
   perPage,
 }: {
-  email: string;
+  id: number;
   page?: number | null | undefined;
   perPage?: number | null | undefined;
 }) => {
   try {
     const [total, syncs, articles] = await getUserSyncs({
-      email,
+      id,
       page: page ?? SYNCS_PAGINATION_DEFAULT_PAGE,
       perPage: perPage ?? SYNCS_PAGINATION_DEFAULT_PER_PAGE,
     });

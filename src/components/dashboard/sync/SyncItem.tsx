@@ -22,7 +22,7 @@ const statusStyles = {
 export const SyncItem = memo<SyncItemProps>(({ sync }) => {
   const { width } = useWindowSize();
 
-  if (width! < 640) {
+  if (width < 640) {
     return (
       <li key={sync.id} className="sm:hidden">
         <Link
@@ -79,7 +79,7 @@ export const SyncItem = memo<SyncItemProps>(({ sync }) => {
         </div>
       </td>
       <td className="whitespace-nowrap px-6 py-4 text-right text-sm text-gray-500">
-        {sync.syncedArticlesCount ?? 0}
+        {sync.syncedArticlesCount}
       </td>
       <td className="hidden whitespace-nowrap px-6 py-4 text-sm text-gray-500 md:block">
         <span

@@ -13,18 +13,18 @@ import { router, protectedProcedure } from "../trpc";
 
 export const userRouter = router({
   getUserFeeds: protectedProcedure.query(({ ctx }) =>
-    getUserFeeds({ email: ctx.session.user.email }),
+    getUserFeeds({ id: ctx.session.user.id }),
   ),
   registerDevice: protectedProcedure
     .input(registerDeviceSchema)
     .mutation(({ input, ctx }) =>
-      registerDeviceHandler({ ...input, email: ctx.session.user.email }),
+      registerDeviceHandler({ ...input, id: ctx.session.user.id }),
     ),
   unregisterDevice: protectedProcedure.mutation(({ ctx }) =>
-    unregisterDeviceHandler({ email: ctx.session.user.email }),
+    unregisterDeviceHandler({ id: ctx.session.user.id }),
   ),
   getUserDevice: protectedProcedure.query(({ ctx }) =>
-    getUserDeviceHandler({ email: ctx.session.user.email }),
+    getUserDeviceHandler({ id: ctx.session.user.id }),
   ),
   getUserSyncs: protectedProcedure
     .input(
@@ -34,9 +34,9 @@ export const userRouter = router({
       }),
     )
     .query(({ ctx, input }) =>
-      getUserSyncsHandler({ email: ctx.session.user.email, ...input }),
+      getUserSyncsHandler({ id: ctx.session.user.id, ...input }),
     ),
   syncUserFeeds: protectedProcedure.mutation(({ ctx }) =>
-    syncUserFeedsHandler({ email: ctx.session.user.email }),
+    syncUserFeedsHandler({ id: ctx.session.user.id }),
   ),
 });

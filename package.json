@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "npm run docker:start:dev && next dev",
+    "dev": "concurrently --kill-others-on-fail \"npm run docker:start:dev\" \"wait-on tcp:5432 && next dev\"",
     "postinstall": "prisma generate",
     "prebuild": "rm -rf .next && prisma generate",
     "lint": "next lint",
@@ -15,7 +15,7 @@
     "test:cov": "jest --coverage",
     "db:migrate:dev": "dotenv -e .env.development.local -- prisma migrate dev",
     "db:migrate:prod": "prisma migrate deploy",
-    "docker:start:dev": "docker compose -f provision/dev/docker-compose.yml up -d",
+    "docker:start:dev": "docker compose -f provision/dev/docker-compose.yml up",
     "docker:stop:dev": "docker compose -f provision/dev/docker-compose.yml down",
     "docker:build:dev": "docker compose -f provision/dev/docker-compose.yml build",
     "docker:logs": "docker logs --follow rssmarkable",
@@ -47,6 +47,7 @@
     "rmapi-js": "^2.0.0",
     "rss-parser": "^3.12.0",
     "rss-to-json": "^2.1.0",
+    "sharp": "^0.31.3",
     "superjson": "1.9.1",
     "tailwind-merge": "^1.8.1",
     "uuid4": "^2.0.3",
@@ -68,6 +69,7 @@
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
     "autoprefixer": "^10.4.7",
+    "concurrently": "^7.6.0",
     "dotenv-cli": "^6.0.0",
     "eslint": "^8.26.0",
     "eslint-config-next": "13.1.1",
@@ -81,7 +83,8 @@
     "prisma": "^4.5.0",
     "tailwindcss": "^3.2.0",
     "ts-jest": "^29.0.3",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "wait-on": "^7.0.1"
   },
   "ct3aMetadata": {
     "initVersion": "6.11.5"
