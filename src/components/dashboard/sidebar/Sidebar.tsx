@@ -3,6 +3,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { memo } from "react";
 
+import Logo from "public/svg/logo.svg";
+
 import type { HeroIcon } from "../../../utils/types";
 
 interface NavigationItem {
@@ -23,11 +25,7 @@ export const Sidebar = memo<SidebarProps>(
     return (
       <>
         <div className="flex flex-shrink-0 items-center px-4">
-          <img
-            className="h-8 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=cyan&shade=300"
-            alt="Easywire logo"
-          />
+          <Logo />
         </div>
         <nav
           className="mt-5 flex flex-1 flex-col divide-y divide-indigo-800 overflow-y-auto"

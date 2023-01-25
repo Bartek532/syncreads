@@ -1,21 +1,15 @@
 import { prisma } from "../../server/db/client";
 
-import { getUserByEmail } from "./user.service";
+import { getUserById } from "./user.service";
 
-export const createFeed = async ({
-  url,
-  email,
-}: {
-  url: string;
-  email: string;
-}) => {
+export const createFeed = async ({ url, id }: { url: string; id: number }) => {
   const feed = await prisma.feed.upsert({
     where: { url },
     create: { url },
     update: { url },
   });
 
-  const user = await getUserByEmail({ email });
+  const user = await getUserById({ id });
 
   if (!user) {
     return;
