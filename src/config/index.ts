@@ -17,14 +17,13 @@ export const INDEX_HERO_SUBTITLE =
 
 export const INDEX_FEATURES_HEADING = {
   title: "Features",
-  description: `${SITE_NAME} is a free service that allows you to sync your reMarkable feeds`,
+  description: `${SITE_NAME} is a free service that allows you to sync content to your reMarkable tablet.`,
 };
 
 export const INDEX_FEATURES_CARDS = [
   {
     title: "Seamless Syncing",
-    description:
-      "Automatically sync your favorite RSS feeds to your reMarkable tablet",
+    description: `Automatically sync your favorite RSS feeds to your reMarkable tablet. Add your favorite feeds and let ${SITE_NAME} do the rest.`,
     className:
       "bg-gradient bg-gradient-to-bl from-indigo-400/10 to-indigo-500/30",
   },
@@ -33,7 +32,14 @@ export const INDEX_FEATURES_CARDS = [
     description:
       "Any RSS feed can be synced to your reMarkable tablet. No restrictions",
     className:
-      "bg-gradient bg-gradient-to-bl from-indigo-400/5 to-indigo-500/20",
+      "bg-gradient bg-gradient-to-br from-indigo-400/5 to-indigo-500/20",
+  },
+  {
+    title: "Add articles",
+    description:
+      "You can sync any article to your reMarkable tablet with just a few clicks.",
+    className:
+      "bg-gradient bg-gradient-to-tr from-indigo-400/5 to-indigo-500/20",
   },
 ];
 
