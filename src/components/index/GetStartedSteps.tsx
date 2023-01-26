@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 import {
   INDEX_GET_STARTED_HEADING,
   INDEX_GET_STARTED_STEPS,
@@ -8,7 +6,7 @@ import {
 import { SectionHeading } from "./section/SectionHeading";
 import { SectionLayout } from "./section/SectionLayout";
 
-export const GetStartedSteps = memo(() => {
+export const GetStartedSteps = () => {
   return (
     <SectionLayout>
       <SectionHeading
@@ -33,6 +31,6 @@ export const GetStartedSteps = memo(() => {
       </ul>
     </SectionLayout>
   );
-});
+};
 
 GetStartedSteps.displayName = "GetStartedSteps";

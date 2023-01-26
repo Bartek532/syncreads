@@ -1,11 +1,10 @@
 import Link from "next/link";
-import { memo } from "react";
 
 import { INDEX_OPEN_SOURCE_HEADING } from "../../config";
 
 import { SectionLayout } from "./section/SectionLayout";
 
-export const OpenSource = memo(() => {
+export const OpenSource = () => {
   return (
     <SectionLayout>
       <div className="w-full rounded-3xl bg-gradient-to-r from-indigo-500 via-red-500 to-blue-500 p-1 shadow-xl shadow-indigo-500/30">
@@ -28,6 +27,6 @@ export const OpenSource = memo(() => {
       </div>
     </SectionLayout>
   );
-});
+};
 
 OpenSource.displayName = "OpenSource";

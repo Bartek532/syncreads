@@ -1,11 +1,11 @@
 import { Bars2Icon, XMarkIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
-import { memo, useState } from "react";
+import { useState } from "react";
 
 import { INDEX_NAVIGATION, SITE_NAME } from "../../config";
 import { lockScroll, unlockScroll } from "../../utils/pageScroll";
 
-export const Nav = memo(() => {
+export const Nav = () => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   const handleMobileNavOpen = () => {
@@ -79,6 +79,6 @@ export const Nav = memo(() => {
       )}
     </>
   );
-});
+};
 
 Nav.displayName = "Nav";

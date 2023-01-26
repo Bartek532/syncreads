@@ -1,12 +1,10 @@
-import { memo } from "react";
-
 import { INDEX_FEATURES_CARDS, INDEX_FEATURES_HEADING } from "../../config";
 
 import { Card } from "./Card";
 import { SectionHeading } from "./section/SectionHeading";
 import { SectionLayout } from "./section/SectionLayout";
 
-export const Features = memo(() => {
+export const Features = () => {
   return (
     <SectionLayout>
       <SectionHeading
@@ -26,6 +24,6 @@ export const Features = memo(() => {
       </div>
     </SectionLayout>
   );
-});
+};
 
 Features.displayName = "Features";

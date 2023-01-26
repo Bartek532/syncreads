@@ -1,10 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { memo } from "react";
 
 import { INDEX_HERO_SUBTITLE, SITE_NAME } from "../../config";
 
-export const Hero = memo(() => {
+export const Hero = () => {
   return (
     <section className="relative flex flex-col items-center justify-center gap-4 pt-28">
       <div className="-z-1 pointer-events-none absolute h-64 w-80 -translate-y-60 scale-[2.5] rounded-full from-indigo-800/60 to-indigo-800/20 blur-3xl dark:bg-gradient-to-br" />
@@ -37,6 +36,6 @@ export const Hero = memo(() => {
       </div>
     </section>
   );
-});
+};
 
 Hero.displayName = "Hero";
