@@ -1,24 +1,29 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 import Logo from "public/svg/logo.svg";
-import FacebookIcon from "public/svg/social/fb.svg";
-import GithubIcon from "public/svg/social/github.svg";
-import TwitterIcon from "public/svg/social/twitter.svg";
 
+import { AUTH_PROVIDER } from "../../../types/auth.types";
+import { Button } from "../../components/common/Button";
 import { Input } from "../../components/common/Input";
 import { onPromise } from "../../utils/functions";
 import { loginUserSchema } from "../../utils/validation";
 
-import type { Login } from "../../utils/types";
+import type { Login } from "../../../types/auth.types";
+import type { ClientSafeProvider } from "next-auth/react";
 
-export const LoginView = () => {
+interface LoginProps {
+  readonly providers: Record<AUTH_PROVIDER, ClientSafeProvider>;
+}
+
+export const LoginView = memo<LoginProps>(({ providers }) => {
   const router = useRouter();
   const [isFormValidated, setIsFormValidated] = useState(false);
   const {
@@ -39,7 +44,7 @@ export const LoginView = () => {
     const loadingToast = toast.loading("Signing in...");
     const result = await signIn("credentials", {
       ...data,
-      redirect: false,
+      callbackUrl: `${window.location.origin}/dashboard`,
     });
 
     if (result?.error) {
@@ -66,42 +71,38 @@ export const LoginView = () => {
 
           <div className="mt-8">
             <div>
-              <div>
-                <p className="text-sm font-medium text-gray-700">
-                  Sign in with
-                </p>
+              <div className="mt-1 flex w-full flex-col items-stretch justify-center gap-2">
+                {Object.values(providers)
+                  .filter(
+                    (provider) => provider.id !== AUTH_PROVIDER.CREDENTIALS,
+                  )
+                  .map((provider) => {
+                    const Icon = dynamic(
+                      () => import(`public/svg/social/${provider.id}.svg`),
+                    );
 
-                <div className="mt-1 grid grid-cols-3 gap-3">
-                  <div>
-                    <a
-                      href="#"
-                      className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
-                    >
-                      <span className="sr-only">Sign in with Facebook</span>
-                      <FacebookIcon className="h-5 w-5" />
-                    </a>
-                  </div>
+                    return (
+                      <Button
+                        key={provider.id}
+                        variant="secondary"
+                        className="inline-flex w-full justify-center gap-4 py-2.5"
+                        onClick={onPromise(() =>
+                          signIn(provider.id, {
+                            callbackUrl: `${window.location.origin}/dashboard`,
+                          }),
+                        )}
+                      >
+                        <span className="sr-only">
+                          Sign in with {provider.name}
+                        </span>
 
-                  <div>
-                    <a
-                      href="#"
-                      className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
-                    >
-                      <span className="sr-only">Sign in with Twitter</span>
-                      <TwitterIcon className="h-5 w-5" />
-                    </a>
-                  </div>
-
-                  <div>
-                    <a
-                      href="#"
-                      className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
-                    >
-                      <span className="sr-only">Sign in with GitHub</span>
-                      <GithubIcon className="h-5 w-5" />
-                    </a>
-                  </div>
-                </div>
+                        <div className="h-6 w-6">
+                          <Icon />
+                        </div>
+                        <span>{provider.name}</span>
+                      </Button>
+                    );
+                  })}
               </div>
 
               <div className="relative mt-6">
@@ -113,7 +114,7 @@ export const LoginView = () => {
                 </div>
                 <div className="relative flex justify-center text-sm">
                   <span className="bg-white px-2 text-gray-500">
-                    Or continue with
+                    or continue with
                   </span>
                 </div>
               </div>
@@ -175,4 +176,6 @@ export const LoginView = () => {
       </div>
     </div>
   );
-};
+});
+
+LoginView.displayName = "LoginView";

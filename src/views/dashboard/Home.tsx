@@ -112,7 +112,7 @@ export const HomeView = () => {
             {DASHBOARD_CARDS.map((card, index) => {
               const value = cardsValues[index];
 
-              return value ? (
+              return value || value === 0 ? (
                 <Tile card={{ ...card, value }} key={card.title} />
               ) : null;
             })}
