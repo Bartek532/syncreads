@@ -18,19 +18,20 @@ enum SyncStatus {
 }
 
 model Account {
-  id                Int     @id @default(autoincrement())
-  userId            Int
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String?
-  access_token      String?
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?
-  session_state     String?
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                       Int     @id @default(autoincrement())
+  userId                   Int
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String?
+  refresh_token_expires_in Int?
+  access_token             String?
+  expires_at               Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String?
+  session_state            String?
+  user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -54,7 +55,7 @@ model VerificationToken {
 model User {
   id            Int       @id @default(autoincrement())
   name          String?
-  email         String    @unique
+  email         String?   @unique
   emailVerified DateTime?
   password      String?
   image         String?
