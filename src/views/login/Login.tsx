@@ -45,6 +45,7 @@ export const LoginView = memo<LoginProps>(({ providers }) => {
     const result = await signIn("credentials", {
       ...data,
       callbackUrl: `${window.location.origin}/dashboard`,
+      redirect: false,
     });
 
     if (result?.error) {

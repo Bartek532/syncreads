@@ -10,7 +10,7 @@ import {
 } from "../services/feed.service";
 import { deleteFeedFromUser, getUserFeedByUrl } from "../services/user.service";
 
-import type { FeedApi } from "../../utils/types";
+import type { FeedApi } from "../../../types/feed.types";
 import type {
   CreateAndConnectFeedInput,
   DeleteAndDisconnectFeedInput,

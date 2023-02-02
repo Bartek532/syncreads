@@ -104,7 +104,7 @@ export const HomeView = () => {
       </div>
 
       <div className="mt-8">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-lg font-medium leading-6 text-gray-900">
             Overview
           </h2>
@@ -117,10 +117,10 @@ export const HomeView = () => {
               ) : null;
             })}
           </div>
-        </div>
+        </section>
 
-        <section className="mx-auto mt-10 max-w-6xl sm:px-6 lg:mt-12 lg:px-8">
-          <h2 className="px-4 text-lg font-medium leading-6 text-gray-900 sm:px-0">
+        <section className="mx-auto mt-10 max-w-6xl px-4 sm:px-6 lg:mt-12 lg:px-8">
+          <h2 className="text-lg font-medium leading-6 text-gray-900 sm:px-0">
             Recent syncs
           </h2>
           {syncs.length ? (
