@@ -46,7 +46,7 @@ export const Header = memo<HeaderProps>(({ user, onSidebarOpen }) => {
                 <Avatar image={user?.image} name={user?.name} isSmall />
                 <span className="ml-3 hidden text-sm font-medium text-gray-700 lg:block">
                   <span className="sr-only">Open user menu for </span>
-                  {user?.name ?? user?.email ?? "Guest"}
+                  {user?.name?.split(" ")[0] ?? user?.email ?? "Guest"}
                 </span>
                 <ChevronDownIcon
                   className="ml-1 hidden h-5 w-5 flex-shrink-0 text-gray-400 lg:block"

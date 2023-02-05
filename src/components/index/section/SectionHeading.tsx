@@ -12,7 +12,7 @@ export const SectionHeading = memo(
         <h3 className="text-center text-4xl font-semibold text-slate-900 dark:text-white sm:text-4xl lg:text-6xl">
           {title}
         </h3>
-        <p className="mx-auto mt-4 max-w-md text-center text-slate-600 dark:text-slate-400 text-lg">
+        <p className="mx-auto mt-4 max-w-md text-center text-lg text-slate-600 dark:text-slate-400">
           {description}
         </p>
       </div>

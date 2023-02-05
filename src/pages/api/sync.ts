@@ -19,7 +19,7 @@ import {
 import { ApiError, HTTP_STATUS_CODE } from "../../utils/exceptions";
 import { nonNullable } from "../../utils/functions";
 
-import type { FeedArticle, FeedWithArticles } from "../../utils/types";
+import type { FeedArticle, FeedWithArticles } from "../../../types/feed.types";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const BROWSER_OPTIONS = {
@@ -119,9 +119,10 @@ export const syncUserFeeds = async ({
   }
 
   if (!user.device) {
+    console.log(`Device not found for user ${user.email ?? "unknown"}!`);
     throw new ApiError(
       HTTP_STATUS_CODE.NOT_FOUND,
-      `Device not found for user ${user.email}!`,
+      `Register your device first!`,
     );
   }
 

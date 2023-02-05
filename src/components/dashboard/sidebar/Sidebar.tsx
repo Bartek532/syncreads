@@ -5,7 +5,7 @@ import { memo } from "react";
 
 import Logo from "public/svg/logo.svg";
 
-import type { HeroIcon } from "../../../utils/types";
+import type { HeroIcon } from "../../../../types/common.types";
 
 interface NavigationItem {
   readonly name: string;

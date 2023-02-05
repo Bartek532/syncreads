@@ -7,10 +7,10 @@ import { INDEX_HERO_SUBTITLE, SITE_NAME } from "../../config";
 export const Hero = memo(() => {
   return (
     <section className="relative flex flex-col items-center justify-center gap-4 pt-28">
-      <div className="-z-1 pointer-events-none absolute h-64 w-80 md:opacity-100 -translate-y-[320px] md:-translate-y-60 scale-[2.5] rounded-full from-indigo-800/60 to-indigo-800/20 blur-3xl dark:bg-gradient-to-br" />
-      <div className="-z-1 pointer-events-none absolute h-12 w-80 md:translate-y-60 scale-[2] rounded-full from-yellow-800/70 to-indigo-800/30 blur-3xl dark:bg-gradient-to-br" />
+      <div className="-z-1 pointer-events-none absolute h-64 w-80 -translate-y-[320px] scale-[2.5] rounded-full from-indigo-800/60 to-indigo-800/20 blur-3xl dark:bg-gradient-to-br md:-translate-y-60 md:opacity-100" />
+      <div className="-z-1 pointer-events-none absolute h-12 w-80 scale-[2] rounded-full from-yellow-800/70 to-indigo-800/30 blur-3xl dark:bg-gradient-to-br md:translate-y-60" />
 
-      <h1 className="lg:6xl z-20 bg-gradient-to-tl from-indigo-500 to-pink-500 bg-clip-text text-5xl font-semibold tracking-normal leading-none text-transparent md:text-6xl">
+      <h1 className="lg:6xl z-20 bg-gradient-to-tl from-indigo-500 to-pink-500 bg-clip-text text-4xl font-extrabold leading-none tracking-wide text-transparent sm:text-5xl md:text-7xl">
         {SITE_NAME}
       </h1>
 
