@@ -10,7 +10,7 @@
     "lint": "next lint",
     "lint:interactive": "eslint-interactive \"{src,apps,libs,test}/**/*.{ts,tsx}\"",
     "start": "next start",
-    "test": "echo Testing",
+    "test": "echo Testing...",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "db:migrate:dev": "dotenv -e .env.development.local -- prisma migrate dev",

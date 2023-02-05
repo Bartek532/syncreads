@@ -20,18 +20,31 @@ export const ConfirmModal = ({
 }: ConfirmModalProps) => (
   <BaseModal
     onClose={onClose}
-    className="flex flex-col items-center gap-3 p-6 sm:max-w-md"
+    className="mb-0 sm:mb-auto sm:max-w-lg"
     {...props}
   >
-    <QuestionMarkCircleIcon className="h-24 w-24 text-blue-400" />
-    <h3 className="text-bold text-3xl text-gray-600">Are you sure?</h3>
-    <p className="text-center text-sm text-gray-500">{content}</p>
-    <div className="flex gap-4">
+    <div className="flex flex-col p-6 pb-8 sm:flex-row">
+      <div className="sm:h-13 sm:w-13 mx-auto flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-100 sm:mx-0">
+        <QuestionMarkCircleIcon
+          className="h-6 w-6 text-indigo-600"
+          aria-hidden="true"
+        />
+      </div>
+      <div className="mt-4 w-full sm:mt-0 sm:ml-4">
+        <h3 className="mb-3 text-center text-lg font-medium text-gray-900 sm:text-left">
+          Are you sure?
+        </h3>
+        <p className="whitespace-pre-wrap text-center text-sm text-gray-500 sm:text-left">
+          {content}
+        </p>
+      </div>
+    </div>
+    <div className="flex justify-end gap-2 bg-gray-50 px-6 py-3">
       <Button type="button" variant="secondary" onClick={onClose}>
         Cancel
       </Button>
       <Button
-        type="button"
+        type="submit"
         onClick={() => {
           onClose();
           onConfirm();
