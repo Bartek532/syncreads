@@ -3,7 +3,6 @@ import {
   CogIcon,
   HomeIcon,
   QuestionMarkCircleIcon,
-  ShieldCheckIcon,
   ArrowPathIcon,
   DeviceTabletIcon,
   SquaresPlusIcon,
@@ -39,7 +38,6 @@ export const DASHBOARD_NAVIGATION = [
 export const DASHBOARD_SECONDARY_NAVIGATION = [
   { name: "Settings", href: "/dashboard/settings", icon: CogIcon },
   { name: "Help", href: "/dashboard/help", icon: QuestionMarkCircleIcon },
-  { name: "Privacy", href: "/dashboard/privacy", icon: ShieldCheckIcon },
 ];
 
 export const DASHBOARD_CARDS = [

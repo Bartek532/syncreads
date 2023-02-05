@@ -97,7 +97,9 @@ export const HomeView = () => {
               >
                 Add feed
               </Button>
-              <Button onClick={onPromise(feedsSyncHandler)}>Sync feeds</Button>
+              <Button onClick={onPromise(feedsSyncHandler)}>
+                Sync article
+              </Button>
             </div>
           </div>
         </div>

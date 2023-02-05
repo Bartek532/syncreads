@@ -20,6 +20,7 @@ import { ApiError, HTTP_STATUS_CODE } from "../../utils/exceptions";
 import { nonNullable } from "../../utils/functions";
 
 import type { FeedArticle, FeedWithArticles } from "../../../types/feed.types";
+import type { Feed } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const BROWSER_OPTIONS = {
@@ -101,10 +102,12 @@ const syncFeed = async ({
 
 export const syncUserFeeds = async ({
   id,
+  feeds: passedFeeds,
   parser: passedParser,
   browser: passedBrowser,
 }: {
   id: number;
+  feeds?: Omit<Feed, "id">[];
   parser?: Parser;
   browser?: Browser;
 }) => {
@@ -119,14 +122,14 @@ export const syncUserFeeds = async ({
   }
 
   if (!user.device) {
-    console.log(`Device not found for user ${user.email ?? "unknown"}!`);
+    console.log(`Device not found for user ${user.email ?? user.id}!`);
     throw new ApiError(
       HTTP_STATUS_CODE.NOT_FOUND,
-      `Register your device first!`,
+      "Device not found, register it first!",
     );
   }
 
-  const feeds = await getUserFeeds({ id: user.id });
+  const feeds = passedFeeds ?? (await getUserFeeds({ id: user.id }));
   const sync = await createSync({ id: user.id });
 
   try {
@@ -136,12 +139,12 @@ export const syncUserFeeds = async ({
 
     const syncedFeeds: FeedWithArticles[] = [];
 
-    for (const feed of feeds) {
-      const { documentId: folderId } = await getFolder({
-        api,
-        name: user.folder,
-      });
+    const { documentId: folderId } = await getFolder({
+      api,
+      name: user.folder,
+    });
 
+    for (const feed of feeds) {
       const syncedFeed = await syncFeed({
         url: feed.url,
         userId: user.id,

@@ -36,7 +36,19 @@ export const userRouter = router({
     .query(({ ctx, input }) =>
       getUserSyncsHandler({ id: ctx.session.user.id, ...input }),
     ),
-  syncUserFeeds: protectedProcedure.mutation(({ ctx }) =>
-    syncUserFeedsHandler({ id: ctx.session.user.id }),
-  ),
+  syncUserFeeds: protectedProcedure
+    .input(
+      z
+        .object({
+          feeds: z.array(
+            z.object({
+              url: z.string().url(),
+            }),
+          ),
+        })
+        .optional(),
+    )
+    .mutation(({ ctx, input }) =>
+      syncUserFeedsHandler({ id: ctx.session.user.id, feeds: input?.feeds }),
+    ),
 });
