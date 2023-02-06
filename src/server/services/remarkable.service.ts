@@ -1,3 +1,5 @@
+import { webcrypto } from "crypto";
+import { remarkable } from "rmapi-js";
 import uuid4 from "uuid4";
 
 import { ENTRY_TYPE } from "../../config/remarkable";
@@ -113,4 +115,10 @@ export const getFolder = async ({
   }
 
   return folder;
+};
+
+export const getApi = async ({ token }: { token: string }) => {
+  return remarkable(token, {
+    subtle: webcrypto.subtle,
+  });
 };
