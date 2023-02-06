@@ -1,5 +1,5 @@
 import { ArrowUpRightIcon } from "@heroicons/react/24/outline";
-import { memo, useState } from "react";
+import { memo } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { useGenericLoader } from "../../../hooks/useGenericLoader";
