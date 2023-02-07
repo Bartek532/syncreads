@@ -127,7 +127,7 @@ export const FeedsView = () => {
 
         {feeds?.length ? (
           <>
-            <label className="mt-4 flex cursor-pointer justify-end gap-7 font-medium">
+            <label className="mt-4 flex cursor-pointer justify-end gap-7 font-medium dark:text-gray-300">
               <Checkbox
                 name="all"
                 onChange={handleSelectAllChange}
@@ -150,8 +150,8 @@ export const FeedsView = () => {
           </>
         ) : (
           <Empty onCreateNew={() => setIsAddModalOpen(true)}>
-            <EmptyFeedsIcon className="h-50 mx-auto w-40 text-gray-400" />
-            <span className="mt-6 block text-lg font-medium text-gray-900">
+            <EmptyFeedsIcon className="h-50 mx-auto w-40 text-gray-400 dark:text-gray-500" />
+            <span className="mt-6 block text-lg font-medium text-gray-900 dark:text-white">
               You haven&apos;t added any feed yet!
             </span>
           </Empty>

@@ -39,7 +39,7 @@ export const FormModal = ({
           {children}
         </div>
       </div>
-      <div className="flex justify-end gap-2 bg-gray-50 px-6 py-3">
+      <div className="flex justify-end gap-2 bg-gray-50 px-6 py-3 dark:bg-slate-800/30">
         <Button type="button" variant="secondary" onClick={onClose}>
           Cancel
         </Button>
