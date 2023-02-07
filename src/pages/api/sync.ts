@@ -1,14 +1,19 @@
 import { SyncStatus } from "@prisma/client";
-import { webcrypto } from "crypto";
 import dayjs from "dayjs";
-import puppeteer, { type Page, type Browser } from "puppeteer-core";
-import { remarkable, type RemarkableApi } from "rmapi-js";
 import Parser from "rss-parser";
 
 import { PDF_OPTIONS } from "../../config/sync";
 import { env } from "../../env/server.mjs";
-import { getFolder, syncEntry } from "../../server/services/remarkable.service";
-import { createSync, updateSync } from "../../server/services/sync.service";
+import {
+  getApi,
+  getFolder,
+  syncEntry,
+} from "../../server/services/remarkable.service";
+import {
+  createSync,
+  getPage,
+  updateSync,
+} from "../../server/services/sync.service";
 import {
   getAllUsers,
   getUserById,
@@ -22,30 +27,21 @@ import { nonNullable } from "../../utils/functions";
 import type { FeedArticle, FeedWithArticles } from "../../../types/feed.types";
 import type { Feed } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
+import type { Page } from "puppeteer-core";
+import type { RemarkableApi } from "rmapi-js";
 
-const BROWSER_OPTIONS = {
-  executablePath: env.CHROME_BIN,
-  args: [
-    // Required for Docker version of Puppeteer
-    "--no-sandbox",
-    "--disable-setuid-sandbox",
-    // This will write shared memory files into /tmp instead of /dev/shm,
-    // because Docker’s default for /dev/shm is 64MB
-    "--disable-dev-shm-usage",
-  ],
-};
-
-const syncArticle = async ({
+export const syncArticle = async ({
   article,
   api,
-  page,
+  page: passedPage,
   folderId = "",
 }: {
-  article: FeedArticle;
+  article: Omit<FeedArticle, "pubDate">;
   api: RemarkableApi;
-  page: Page;
+  page?: Page;
   folderId?: string;
 }) => {
+  const page = passedPage ?? (await getPage());
   await page.goto(article.link, { waitUntil: "networkidle0", timeout: 0 });
   const pdf = await page.pdf(PDF_OPTIONS);
   const title = article.title ?? (await page.title());
@@ -59,18 +55,19 @@ const syncFeed = async ({
   userId,
   api,
   parser,
-  page,
+  page: passedPage,
   folderId,
 }: {
   url: string;
   userId: number;
   api: RemarkableApi;
   parser: Parser;
-  page: Page;
   folderId: string;
+  page?: Page;
 }) => {
   const parsed = await parser.parseURL(url);
   const feed = await getUserFeed({ userId, url });
+  const page = passedPage ?? (await getPage());
 
   if (!feed) {
     throw new ApiError(
@@ -104,16 +101,15 @@ export const syncUserFeeds = async ({
   id,
   feeds: passedFeeds,
   parser: passedParser,
-  browser: passedBrowser,
+  page: passedPage,
 }: {
   id: number;
   feeds?: Omit<Feed, "id">[];
   parser?: Parser;
-  browser?: Browser;
+  page?: Page;
 }) => {
   const parser = passedParser ?? new Parser();
-  const browser = passedBrowser ?? (await puppeteer.launch(BROWSER_OPTIONS));
-  const page = await browser.newPage();
+  const page = passedPage ?? (await getPage());
 
   const user = await getUserById({ id });
 
@@ -133,9 +129,7 @@ export const syncUserFeeds = async ({
   const sync = await createSync({ id: user.id });
 
   try {
-    const api = await remarkable(user.device.token, {
-      subtle: webcrypto.subtle,
-    });
+    const api = await getApi({ token: user.device.token });
 
     const syncedFeeds: FeedWithArticles[] = [];
 
@@ -185,15 +179,16 @@ export const syncUserFeeds = async ({
 
 const syncAll = async () => {
   console.time("sync");
+
   const parser = new Parser();
-  const browser = await puppeteer.launch(BROWSER_OPTIONS);
+  const page = await getPage();
 
   const users = await getAllUsers();
 
   const data = await Promise.all(
     users.map(({ id }) => {
       try {
-        return syncUserFeeds({ id, parser, browser });
+        return syncUserFeeds({ id, parser, page });
       } catch (e: unknown) {
         console.error(e);
         return;

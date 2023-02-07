@@ -67,6 +67,10 @@ export const unregisterAndDisconnectDeviceSchema = z.object({
   id: z.number(),
 });
 
+export const syncArticleSchema = z.object({
+  url: z.string().min(1, "Url is required.").url("Url must be a valid url."),
+});
+
 export type RegisterUserInput = TypeOf<typeof registerUserSchema>;
 export type LoginUserInput = TypeOf<typeof loginUserSchema>;
 export type CreateFeedInput = TypeOf<typeof createFeedSchema>;
@@ -76,6 +80,7 @@ export type DeleteAndDisconnectFeedInput = TypeOf<
   typeof deleteAndDisconnectFeedSchema
 >;
 export type GetWebsiteDetailsInput = TypeOf<typeof getWebsiteDetailsSchema>;
+export type SyncArticleInput = TypeOf<typeof syncArticleSchema>;
 export type RegisterDeviceInput = TypeOf<typeof registerDeviceSchema>;
 export type RegisterAndConnectDeviceInput = TypeOf<
   typeof registerAndConnectDeviceSchema

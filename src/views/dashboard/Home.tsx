@@ -10,6 +10,7 @@ import { Profile } from "../../components/dashboard/profile/Profile";
 import { SyncsList } from "../../components/dashboard/sync/SyncsList";
 import { Tile } from "../../components/dashboard/tile/Tile";
 import { AddFeedModal } from "../../components/modal/feed/AddFeedModal";
+import { SyncArticleModal } from "../../components/modal/feed/SyncArticleModal";
 import { DASHBOARD_CARDS } from "../../config/dashboard";
 import { useGenericLoader } from "../../hooks/useGenericLoader";
 import { onPromise } from "../../utils/functions";
@@ -20,6 +21,7 @@ import type { TRPCError } from "@trpc/server";
 
 export const HomeView = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isSyncArticleModalOpen, setIsSyncArticleModalOpen] = useState(false);
   const [{ page, perPage, syncs, total, articles }, setSyncsData] = useState(
     () => ({
       page: 1,
@@ -85,6 +87,10 @@ export const HomeView = () => {
       <AddFeedModal
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
+      />
+      <SyncArticleModal
+        isOpen={isSyncArticleModalOpen}
+        onClose={() => setIsSyncArticleModalOpen(false)}
       />
       <div className="bg-white shadow">
         <div className="px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">

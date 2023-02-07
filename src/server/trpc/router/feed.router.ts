@@ -3,11 +3,13 @@ import {
   deleteFeedHandler,
   getAllFeedsHandler,
   getFeedDetailsHandler,
+  syncArticleHandler,
 } from "../../../server/controllers/feed.controller";
 import {
   createFeedSchema,
   deleteFeedSchema,
   getWebsiteDetailsSchema,
+  syncArticleSchema,
 } from "../../../utils/validation";
 import { router, protectedProcedure } from "../trpc";
 
@@ -26,4 +28,9 @@ export const feedRouter = router({
     .input(getWebsiteDetailsSchema)
     .query(({ input }) => getFeedDetailsHandler(input)),
   getAllFeeds: protectedProcedure.query(() => getAllFeedsHandler()),
+  syncArticle: protectedProcedure
+    .input(syncArticleSchema)
+    .mutation(({ input, ctx }) =>
+      syncArticleHandler({ id: ctx.session.user.id, ...input }),
+    ),
 });
