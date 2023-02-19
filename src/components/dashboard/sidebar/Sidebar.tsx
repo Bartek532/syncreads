@@ -5,7 +5,7 @@ import { memo } from "react";
 
 import Logo from "public/svg/logo.svg";
 
-import type { HeroIcon } from "../../../utils/types";
+import type { HeroIcon } from "../../../../types/common.types";
 
 interface NavigationItem {
   readonly name: string;
@@ -28,7 +28,7 @@ export const Sidebar = memo<SidebarProps>(
           <Logo />
         </div>
         <nav
-          className="mt-5 flex flex-1 flex-col divide-y divide-indigo-800 overflow-y-auto"
+          className="mt-5 flex flex-1 flex-col justify-between overflow-y-auto"
           aria-label="Sidebar"
         >
           <div className="space-y-1 px-2">

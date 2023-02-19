@@ -10,6 +10,7 @@ import { Profile } from "../../components/dashboard/profile/Profile";
 import { SyncsList } from "../../components/dashboard/sync/SyncsList";
 import { Tile } from "../../components/dashboard/tile/Tile";
 import { AddFeedModal } from "../../components/modal/feed/AddFeedModal";
+import { SyncArticleModal } from "../../components/modal/feed/SyncArticleModal";
 import { DASHBOARD_CARDS } from "../../config/dashboard";
 import { useGenericLoader } from "../../hooks/useGenericLoader";
 import { onPromise } from "../../utils/functions";
@@ -20,6 +21,7 @@ import type { TRPCError } from "@trpc/server";
 
 export const HomeView = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isSyncArticleModalOpen, setIsSyncArticleModalOpen] = useState(false);
   const [{ page, perPage, syncs, total, articles }, setSyncsData] = useState(
     () => ({
       page: 1,
@@ -86,6 +88,10 @@ export const HomeView = () => {
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
       />
+      <SyncArticleModal
+        isOpen={isSyncArticleModalOpen}
+        onClose={() => setIsSyncArticleModalOpen(false)}
+      />
       <div className="bg-white shadow">
         <div className="px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
           <div className="py-6 md:flex md:items-center md:justify-between">
@@ -97,14 +103,16 @@ export const HomeView = () => {
               >
                 Add feed
               </Button>
-              <Button onClick={onPromise(feedsSyncHandler)}>Sync feeds</Button>
+              <Button onClick={onPromise(feedsSyncHandler)}>
+                Sync article
+              </Button>
             </div>
           </div>
         </div>
       </div>
 
       <div className="mt-8">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-lg font-medium leading-6 text-gray-900">
             Overview
           </h2>
@@ -112,15 +120,15 @@ export const HomeView = () => {
             {DASHBOARD_CARDS.map((card, index) => {
               const value = cardsValues[index];
 
-              return value ? (
+              return value || value === 0 ? (
                 <Tile card={{ ...card, value }} key={card.title} />
               ) : null;
             })}
           </div>
-        </div>
+        </section>
 
-        <section className="mx-auto mt-10 max-w-6xl sm:px-6 lg:mt-12 lg:px-8">
-          <h2 className="px-4 text-lg font-medium leading-6 text-gray-900 sm:px-0">
+        <section className="mx-auto mt-10 max-w-6xl px-4 sm:px-6 lg:mt-12 lg:px-8">
+          <h2 className="text-lg font-medium leading-6 text-gray-900 sm:px-0">
             Recent syncs
           </h2>
           {syncs.length ? (

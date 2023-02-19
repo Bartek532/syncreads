@@ -1,28 +1,3 @@
-export enum HTTP_METHOD {
-  CONNECT = "CONNECT",
-  DELETE = "DELETE",
-  GET = "GET",
-  HEAD = "HEAD",
-  OPTIONS = "OPTIONS",
-  PATCH = "PATCH",
-  POST = "POST",
-  PUT = "PUT",
-  TRACE = "TRACE",
-}
-
-export interface Login {
-  readonly email: string;
-  readonly password: string;
-}
-
-export interface Register {
-  readonly name: string;
-  readonly email: string;
-  readonly password: string;
-}
-
-export type HeroIcon = (props: React.ComponentProps<"svg">) => JSX.Element;
-
 export interface LinkPreview {
   readonly title: string;
   readonly description: string;
@@ -59,12 +34,12 @@ export interface WebsiteDetails {
 }
 
 export interface FeedArticle {
-  link: string;
-  pubDate: string;
-  title?: string;
+  readonly link: string;
+  readonly pubDate: string;
+  readonly title?: string;
 }
 
 export interface FeedWithArticles {
-  url: string;
-  articles: FeedArticle[];
+  readonly url: string;
+  readonly articles: FeedArticle[];
 }

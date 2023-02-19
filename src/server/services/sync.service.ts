@@ -1,8 +1,11 @@
 import { SyncStatus } from "@prisma/client";
+import puppeteer from "puppeteer-core";
 
+import { env } from "../../env/server.mjs";
 import { prisma } from "../../server/db/client";
 
 import type { Sync } from "@prisma/client";
+import type { Browser } from "puppeteer-core";
 
 export const createSync = ({ id }: { id: number }) => {
   return prisma.sync.create({
@@ -54,4 +57,21 @@ export const getUserSyncs = ({
       where: { userId: id },
     }),
   ]);
+};
+
+export const getPage = async (passedBrowser?: Browser) => {
+  const browser =
+    passedBrowser ??
+    (await puppeteer.launch({
+      executablePath: env.CHROME_BIN,
+      args: [
+        // Required for Docker version of Puppeteer
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        // This will write shared memory files into /tmp instead of /dev/shm,
+        // because Docker’s default for /dev/shm is 64MB
+        "--disable-dev-shm-usage",
+      ],
+    }));
+  return browser.newPage();
 };

@@ -22,6 +22,7 @@ import type {
   RegisterUserInput,
   UnregisterAndDisconnectDeviceInput,
 } from "../../utils/validation";
+import type { Feed } from "@prisma/client";
 
 export const registerUserHandler = async ({
   input,
@@ -112,8 +113,18 @@ export const getUserDeviceHandler = async ({ id }: { id: number }) => {
   }
 };
 
-export const syncUserFeedsHandler = async ({ id }: { id: number }) => {
+export const syncUserFeedsHandler = async ({
+  id,
+  feeds,
+}: {
+  id: number;
+  feeds?: Omit<Feed, "id">[] | undefined;
+}) => {
   try {
+    if (feeds) {
+      return syncUserFeeds({ id, feeds });
+    }
+
     return syncUserFeeds({ id });
   } catch (err) {
     console.error(err);

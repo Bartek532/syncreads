@@ -3,12 +3,18 @@ import {
   CogIcon,
   HomeIcon,
   QuestionMarkCircleIcon,
-  ShieldCheckIcon,
   ArrowPathIcon,
   DeviceTabletIcon,
   SquaresPlusIcon,
   CpuChipIcon,
 } from "@heroicons/react/24/outline";
+
+export const PDF_OPTIONS = {
+  format: "A4",
+  margin: { top: 30, bottom: 30, left: 30, right: 30 },
+  printBackground: true,
+  timeout: 0,
+} as const;
 
 export const DASHBOARD_NAVIGATION = [
   { name: "Home", href: "/dashboard", icon: HomeIcon },
@@ -32,7 +38,6 @@ export const DASHBOARD_NAVIGATION = [
 export const DASHBOARD_SECONDARY_NAVIGATION = [
   { name: "Settings", href: "/dashboard/settings", icon: CogIcon },
   { name: "Help", href: "/dashboard/help", icon: QuestionMarkCircleIcon },
-  { name: "Privacy", href: "/dashboard/privacy", icon: ShieldCheckIcon },
 ];
 
 export const DASHBOARD_CARDS = [

@@ -46,7 +46,7 @@ export const Header = memo<HeaderProps>(({ user, onSidebarOpen }) => {
                 <Avatar image={user?.image} name={user?.name} isSmall />
                 <span className="ml-3 hidden text-sm font-medium text-gray-700 lg:block">
                   <span className="sr-only">Open user menu for </span>
-                  {user?.name ?? user?.email ?? "Guest"}
+                  {user?.name?.split(" ")[0] ?? user?.email ?? "Guest"}
                 </span>
                 <ChevronDownIcon
                   className="ml-1 hidden h-5 w-5 flex-shrink-0 text-gray-400 lg:block"
@@ -64,19 +64,6 @@ export const Header = memo<HeaderProps>(({ user, onSidebarOpen }) => {
               leaveTo="transform opacity-0 scale-95"
             >
               <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <Menu.Item>
-                  {({ active }) => (
-                    <Link
-                      href="#"
-                      className={clsx(
-                        active ? "bg-gray-100" : "",
-                        "block px-4 py-2 text-sm text-gray-700",
-                      )}
-                    >
-                      Your Profile
-                    </Link>
-                  )}
-                </Menu.Item>
                 <Menu.Item>
                   {({ active }) => (
                     <Link
