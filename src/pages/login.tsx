@@ -1,5 +1,6 @@
 import { getProviders } from "next-auth/react";
 
+import { Seo } from "../components/common/Seo";
 import { LoginView } from "../views/login/Login";
 
 import type { AUTH_PROVIDER } from "../../types/auth.types";
@@ -13,7 +14,12 @@ const Login = ({
     return null;
   }
 
-  return <LoginView providers={providers} />;
+  return (
+    <>
+      <Seo />
+      <LoginView providers={providers} />
+    </>
+  );
 };
 
 export default Login;

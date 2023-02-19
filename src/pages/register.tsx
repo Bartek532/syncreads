@@ -1,5 +1,6 @@
 import { getProviders } from "next-auth/react";
 
+import { Seo } from "../components/common/Seo";
 import { RegisterView } from "../views/register/Register";
 
 import type { AUTH_PROVIDER } from "../../types/auth.types";
@@ -13,7 +14,12 @@ const Register = ({
     return null;
   }
 
-  return <RegisterView providers={providers} />;
+  return (
+    <>
+      <Seo />
+      <RegisterView providers={providers} />
+    </>
+  );
 };
 
 export default Register;
