@@ -103,7 +103,7 @@ export const HomeView = () => {
               >
                 Add feed
               </Button>
-              <Button onClick={onPromise(feedsSyncHandler)}>
+              <Button onClick={() => setIsSyncArticleModalOpen(true)}>
                 Sync article
               </Button>
             </div>

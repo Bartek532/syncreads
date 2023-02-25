@@ -63,3 +63,7 @@ export const INDEX_OPEN_SOURCE_HEADING = {
     href: GITHUB_URL,
   },
 };
+
+export const APP_NAME = "RSSmarkable";
+export const APP_DESCRIPTION =
+  "Sync all of your favourite RSS feeds directly to your reMarkable tablet with just a few clicks.";

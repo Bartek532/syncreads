@@ -5,8 +5,8 @@ import {
 } from "@heroicons/react/20/solid";
 import { BellIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
-import { signOut } from "next-auth/react";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 import { Fragment, memo } from "react";
 
 import { onPromise } from "../../../utils/functions";
