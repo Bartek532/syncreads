@@ -8,10 +8,16 @@
  */
 !process.env.SKIP_ENV_VALIDATION && (await import("./src/env/server.mjs"));
 
+import pwa from "next-pwa";
+
+const withPWA = pwa({
+  dest: "public",
+  disable: process.env.NODE_ENV === "development",
+});
+
 /** @type {import("next").NextConfig} */
-const config = {
+const config = withPWA({
   reactStrictMode: true,
-  swcMinify: true,
   experimental: {
     fontLoaders: [
       {
@@ -28,5 +34,6 @@ const config = {
 
     return config;
   },
-};
+});
+
 export default config;

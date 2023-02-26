@@ -1,10 +1,9 @@
 import { getProviders } from "next-auth/react";
 
+import { Seo } from "../components/common/Seo";
 import { RegisterView } from "../views/register/Register";
 
-import type { AUTH_PROVIDER } from "../../types/auth.types";
-import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import type { ClientSafeProvider } from "next-auth/react";
+import type { InferGetServerSidePropsType } from "next";
 
 const Register = ({
   providers,
@@ -13,17 +12,20 @@ const Register = ({
     return null;
   }
 
-  return <RegisterView providers={providers} />;
+  return (
+    <>
+      <Seo />
+      <RegisterView providers={providers} />
+    </>
+  );
 };
 
 export default Register;
 
-export const getServerSideProps: GetServerSideProps<{
-  providers: Record<AUTH_PROVIDER, ClientSafeProvider> | null;
-}> = async () => {
+export async function getServerSideProps() {
   return {
     props: {
       providers: await getProviders(),
     },
   };
-};
+}
