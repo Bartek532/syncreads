@@ -6,8 +6,8 @@ import { AppProviders } from "../providers/AppProviders";
 import "../styles/globals.css";
 import { trpc } from "../utils/trpc";
 
-import type { AppType } from "next/app";
 import type { Session } from "next-auth";
+import type { AppType } from "next/app";
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700", "800", "900"],
