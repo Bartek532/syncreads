@@ -33,7 +33,7 @@ export const FormModal = ({
           <Icon className="h-7 w-7 text-indigo-600" aria-hidden="true" />
         </div>
         <div className="mt-4 w-full sm:mt-0 sm:ml-4">
-          <h3 className="mb-4 text-center text-lg font-medium text-gray-900 sm:text-left">
+          <h3 className="mb-4 text-center text-lg font-medium text-gray-900 dark:text-gray-100 sm:text-left">
             {title}
           </h3>
           {children}

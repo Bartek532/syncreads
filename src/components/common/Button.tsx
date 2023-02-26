@@ -10,7 +10,7 @@ const variants = [
   {
     name: "secondary",
     className:
-      "border-gray-300 bg-white text-gray-700 enabled:hover:bg-gray-50 enabled:hover:bg-slate-700 dark:bg-gray-900 dark:text-white dark:hover:bg-white enabled:dark:hover:text-gray-900 enabled:dark:hover:bg-white focus:ring-indigo-500 transition",
+      "border-gray-300 bg-white text-gray-700 enabled:hover:bg-gray-50 enabled:hover:bg-slate-700 dark:bg-gray-900 dark:text-white dark:hover:bg-white enabled:dark:hover:text-gray-900 enabled:dark:hover:bg-white focus:ring-indigo-500 transition dark:border-gray-700",
   },
   {
     name: "danger",
@@ -22,7 +22,7 @@ const variants = [
 export const Button = forwardRef<
   HTMLButtonElement,
   JSX.IntrinsicElements["button"] & {
-    variant?: (typeof variants)[number]["name"];
+    variant?: typeof variants[number]["name"];
   }
 >(({ variant = "primary", children, ...props }, ref) => {
   return (
