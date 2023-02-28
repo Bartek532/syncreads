@@ -186,9 +186,10 @@ const syncAll = async () => {
   const users = await getAllUsers();
 
   const data = await Promise.all(
-    users.map(({ id }) => {
+    users.map(async ({ id }) => {
       try {
-        return syncUserFeeds({ id, parser, page });
+        const data = await syncUserFeeds({ id, parser, page });
+        return data;
       } catch (e: unknown) {
         console.error(e);
         return;

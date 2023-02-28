@@ -127,7 +127,7 @@ export const FeedsView = () => {
 
         {feeds?.length ? (
           <>
-            <label className="mt-4 flex cursor-pointer justify-end gap-7 font-medium dark:text-gray-300">
+            <label className="mt-4 ml-auto flex w-fit cursor-pointer gap-7 font-medium dark:text-gray-300">
               <Checkbox
                 name="all"
                 onChange={handleSelectAllChange}
