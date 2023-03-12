@@ -6,6 +6,7 @@ jobs:
   sync:
     name: Fetch feed articles and save to reMarkable cloud.
     runs-on: ubuntu-latest
+    timeout-minutes: 40
     steps:
       - name: cURL request
         run: "curl https://rssmarkable.onrender.com/api/sync -H 'api-key: ${{ secrets.API_KEY }}'"
