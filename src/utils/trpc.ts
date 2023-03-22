@@ -28,7 +28,7 @@ const getEndingLink = () => {
   }
 
   const client = createWSClient({
-    url: process.env.NEXT_PUBLIC_WS_URL ?? "ws://localhost:3001",
+    url: process.env.NEXT_PUBLIC_WS_URL ?? "ws://localhost:3000",
   });
 
   return wsLink<AppRouter>({

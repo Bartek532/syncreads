@@ -10,7 +10,9 @@ import { appRouter } from "./src/server/trpc/router/_app";
 const port = parseInt(process.env.PORT ?? "3000", 10);
 const dev = process.env.NODE_ENV !== "production";
 
-const app = next({ dev });
+const hostname = "localhost";
+
+const app = next({ dev, port, hostname });
 const handle = app.getRequestHandler();
 
 void app.prepare().then(() => {
@@ -26,12 +28,24 @@ void app.prepare().then(() => {
     }
   });
 
-  const wss = new ws.Server({ server });
+  const wss = new ws.Server({ noServer: true });
   const handler = applyWSSHandler({ wss, router: appRouter, createContext });
 
-  process.on("SIGTERM", () => {
-    console.log("SIGTERM");
-    handler.broadcastReconnectNotification();
+  wss.on("connection", function connection(ws) {
+    console.log("Incoming websocket connection...");
+    ws.on("close", () =>
+      console.log("Websocket connection closed", wss.clients.size),
+    );
+    ws.on("error", (err) => console.error(err));
+  });
+
+  server.on("upgrade", function (req, socket, head) {
+    const { pathname } = parse(req.url ?? "", true);
+    if (pathname !== "/_next/webpack-hmr") {
+      wss.handleUpgrade(req, socket, head, function done(ws) {
+        wss.emit("connection", ws, req);
+      });
+    }
   });
 
   server.once("error", (err) => {
@@ -39,11 +53,12 @@ void app.prepare().then(() => {
     process.exit(1);
   });
 
-  wss.on("connection", (ws) => {
-    ws.on("error", console.error);
-  });
-
   server.listen(port, () => {
     console.log(`> Server listening on port ${port}`);
+  });
+
+  process.on("SIGTERM", () => {
+    console.log("SIGTERM");
+    handler.broadcastReconnectNotification();
   });
 });

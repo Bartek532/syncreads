@@ -1,7 +1,7 @@
-import EventEmitter from "events";
 import { getSession } from "next-auth/react";
 
 import { prisma } from "../db/client";
+import { ee } from "../events";
 
 import type { inferAsyncReturnType } from "@trpc/server";
 import type { CreateNextContextOptions } from "@trpc/server/adapters/next";
@@ -12,10 +12,7 @@ import type ws from "ws";
 
 interface CreateContextOptions {
   session: Session | null;
-  ee: EventEmitter;
 }
-
-const ee = new EventEmitter();
 
 /** Use this helper for:
  * - testing, so we dont have to mock Next.js' req/res
@@ -25,7 +22,7 @@ const ee = new EventEmitter();
 export const createContextInner = (opts: CreateContextOptions) => {
   return {
     session: opts.session,
-    ee: opts.ee,
+    ee,
     prisma,
   };
 };
@@ -46,7 +43,6 @@ export const createContext = async (
 
   return createContextInner({
     session,
-    ee,
   });
 };
 
