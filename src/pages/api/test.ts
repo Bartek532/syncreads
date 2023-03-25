@@ -1,9 +1,12 @@
-import { ee } from "../../server/events";
+import { redis } from "../../lib/redis";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  ee.emit("add", "test message");
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
+  await redis.publish("test", "test message");
 
   res.status(200).json({ name: "John Doe" });
 }

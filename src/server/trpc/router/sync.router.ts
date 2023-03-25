@@ -1,6 +1,7 @@
 import { observable } from "@trpc/server/observable";
 import { z } from "zod";
 
+import { redis } from "../../../lib/redis";
 import {
   getSyncLogHandler,
   getUserSyncsHandler,
@@ -26,19 +27,16 @@ export const syncRouter = router({
     )
     .query(({ input }) => getSyncLogHandler(input.id)),
 
-  addTestEvent: publicProcedure.input(z.string()).mutation(({ ctx, input }) => {
-    ctx.ee.emit("add", input);
+  addTestEvent: publicProcedure.input(z.string()).mutation(async () => {
+    await redis.publish("test", "test message");
   }),
-  getTestEvent: publicProcedure.subscription(({ ctx }) => {
+  getTestEvent: publicProcedure.subscription(() => {
     return observable<string>((emit) => {
-      const onAdd = (data: string) => {
-        emit.next(data);
-      };
-      ctx.ee.on("add", onAdd);
-
-      return () => {
-        ctx.ee.off("add", onAdd);
-      };
+      redis.on("message", (channel: string, message: string) => {
+        console.log(channel, message);
+        console.log(`Subscribed to ${message} channels.`);
+        emit.next(message);
+      });
     });
   }),
 });
