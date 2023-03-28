@@ -4,6 +4,7 @@ import next from "next";
 import { parse } from "url";
 import ws from "ws";
 
+import conf from "./next.config";
 import { createContext } from "./src/server/trpc/context";
 import { appRouter } from "./src/server/trpc/router/_app";
 
@@ -12,7 +13,12 @@ const dev = process.env.NODE_ENV !== "production";
 
 const hostname = "localhost";
 
-const app = next({ dev, port, hostname });
+const app = next({
+  dev,
+  port,
+  hostname,
+  conf,
+});
 const handle = app.getRequestHandler();
 
 void app.prepare().then(() => {
@@ -48,7 +54,7 @@ void app.prepare().then(() => {
     }
   });
 
-  server.once("error", (err) => {
+  server.on("error", (err) => {
     console.error(err);
     process.exit(1);
   });

@@ -23,6 +23,12 @@ export const initRedis = () => {
 
     const redis = new Redis(options);
 
+    redis.on("connection", (data) => {
+      console.log("Connected to Redis.", data);
+    });
+
+    console.log("REDDDDDDISSS");
+
     redis.on("error", (error: unknown) => {
       console.warn("[Redis] Error connecting", error);
     });
