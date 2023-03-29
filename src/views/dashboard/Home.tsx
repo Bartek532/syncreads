@@ -27,25 +27,25 @@ export const HomeView = () => {
       page: 1,
       perPage: 10,
       syncs: [] as Sync[],
-      total: 0,
       articles: 0,
+      total: 0,
     }),
   );
   const utils = trpc.useContext();
   const { data } = useSession();
 
   const syncFeedsMutation = trpc.user.syncUserFeeds.useMutation({
-    onSuccess: () => utils.user.getUserSyncs.invalidate(),
+    onSuccess: () => utils.sync.getUserSyncs.invalidate(),
   });
 
   const { data: feeds, isLoading: areFeedsLoading } =
     trpc.user.getUserFeeds.useQuery();
   const { data: device, isLoading: isDeviceLoading } =
     trpc.user.getUserDevice.useQuery();
-  trpc.user.getUserSyncs.useQuery(
+  trpc.sync.getUserSyncs.useQuery(
     {
-      page: page,
-      perPage: perPage,
+      page,
+      perPage,
     },
     {
       onSuccess: ({ total, syncs, articles }) =>
@@ -55,7 +55,7 @@ export const HomeView = () => {
           total,
           articles,
         })),
-      queryKey: ["user.getUserSyncs", { page: page, perPage: perPage }],
+      queryKey: ["sync.getUserSyncs", { page, perPage }],
       keepPreviousData: true,
     },
   );
@@ -132,7 +132,7 @@ export const HomeView = () => {
             Recent syncs
           </h2>
           {syncs.length ? (
-            <div className="mt-4">
+            <div className="-mx-4 mt-4 sm:mx-0">
               <SyncsList
                 syncs={syncs}
                 total={total}
