@@ -4,8 +4,6 @@ import dayjs from "dayjs";
 import Link from "next/link";
 import { memo } from "react";
 
-import { useWindowSize } from "../../../hooks/useWindowSize";
-
 import type { Sync } from "@prisma/client";
 
 interface SyncItemProps {
@@ -20,49 +18,12 @@ const statusStyles = {
 };
 
 export const SyncItem = memo<SyncItemProps>(({ sync }) => {
-  const { width } = useWindowSize();
-
-  if (width < 640) {
-    return (
-      <li key={sync.id} className="sm:hidden">
-        <Link
-          href={`/dashboard/syncs/${sync.id}`}
-          className="block bg-white px-4 py-4 hover:bg-gray-50"
-        >
-          <span className="flex items-center space-x-4">
-            <span className="flex flex-1 space-x-2 truncate">
-              <ArrowPathIcon
-                className="h-5 w-5 flex-shrink-0 text-gray-400"
-                aria-hidden="true"
-              />
-              <span className="flex flex-col items-start gap-1.5 truncate text-sm text-gray-500">
-                <span className="truncate">{sync.id}</span>
-                <span
-                  className={clsx(
-                    statusStyles[sync.status],
-                    "inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium capitalize",
-                  )}
-                >
-                  {sync.status.toLocaleLowerCase()}
-                </span>
-                <time dateTime={sync.startedAt.toString()}>
-                  {dayjs(sync.startedAt).format("MMMM D, HH:mm")}
-                </time>
-              </span>
-            </span>
-            <ChevronRightIcon
-              className="h-5 w-5 flex-shrink-0 text-gray-400"
-              aria-hidden="true"
-            />
-          </span>
-        </Link>
-      </li>
-    );
-  }
-
   return (
-    <tr key={sync.id} className="bg-white">
-      <td className="w-full max-w-0 whitespace-nowrap px-6 py-4 text-sm text-gray-900">
+    <tr
+      key={sync.id}
+      className="relative flex flex-col items-start gap-1.5 bg-white px-4 py-4 sm:table-row"
+    >
+      <td className="w-full whitespace-nowrap text-sm text-gray-900 sm:max-w-0 sm:px-6 sm:py-4">
         <div className="flex">
           <Link
             href={`/dashboard/syncs/${sync.id}`}
@@ -78,10 +39,10 @@ export const SyncItem = memo<SyncItemProps>(({ sync }) => {
           </Link>
         </div>
       </td>
-      <td className="whitespace-nowrap px-6 py-4 text-right text-sm text-gray-500">
+      <td className="hidden whitespace-nowrap text-right text-sm text-gray-500 sm:px-6 sm:py-4 md:table-cell">
         {sync.syncedArticlesCount}
       </td>
-      <td className="hidden whitespace-nowrap px-6 py-4 text-sm text-gray-500 md:block">
+      <td className="ml-6 whitespace-nowrap text-sm text-gray-500 sm:ml-0 sm:px-6 sm:py-4 md:block">
         <span
           className={clsx(
             statusStyles[sync.status],
@@ -91,10 +52,19 @@ export const SyncItem = memo<SyncItemProps>(({ sync }) => {
           {sync.status.toLocaleLowerCase()}
         </span>
       </td>
-      <td className="whitespace-nowrap px-6 py-4 text-right text-sm text-gray-500">
+      <td className="ml-7 whitespace-nowrap text-right text-sm text-gray-500 sm:px-6 sm:py-4">
         <time dateTime={sync.startedAt.toString()}>
           {dayjs(sync.startedAt).format("MMMM D, HH:mm")}
         </time>
+      </td>
+
+      <td
+        className="absolute right-0 top-0 block flex h-full items-center justify-center bg-white px-4 sm:hidden"
+        aria-hidden="true"
+      >
+        <Link href={`/dashboard/syncs/${sync.id}`}>
+          <ChevronRightIcon className="h-5 w-5 text-gray-400" />
+        </Link>
       </td>
     </tr>
   );
