@@ -1,7 +1,6 @@
 import { getSession } from "next-auth/react";
 
 import { prisma } from "../db/client";
-import { ee } from "../events";
 
 import type { inferAsyncReturnType } from "@trpc/server";
 import type { CreateNextContextOptions } from "@trpc/server/adapters/next";
@@ -22,7 +21,6 @@ interface CreateContextOptions {
 export const createContextInner = (opts: CreateContextOptions) => {
   return {
     session: opts.session,
-    ee,
     prisma,
   };
 };
@@ -32,7 +30,7 @@ export const createContextInner = (opts: CreateContextOptions) => {
  * @link https://trpc.io/docs/context
  **/
 export const createContext = async (
-  opts:
+  opts?:
     | CreateNextContextOptions
     | NodeHTTPCreateContextFnOptions<IncomingMessage, ws>,
 ) => {

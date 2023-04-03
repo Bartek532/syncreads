@@ -1,42 +1,41 @@
 import { observable } from "@trpc/server/observable";
 import { z } from "zod";
 
-import { redis } from "../../../lib/redis";
+import { subscriber } from "../../../lib/redis";
+import { offsetPaginationSchema } from "../../../utils/validation";
 import {
   getSyncLogHandler,
   getUserSyncsHandler,
 } from "../../controllers/sync.controller";
-import { protectedProcedure, publicProcedure, router } from "../trpc";
+import { protectedProcedure, router } from "../trpc";
+
+import type { LogMessage } from "../../../../types/log.types";
 
 export const syncRouter = router({
   getUserSyncs: protectedProcedure
-    .input(
-      z.object({
-        perPage: z.number().min(1).max(100).nullish(),
-        page: z.number().nullish(),
-      }),
-    )
+    .input(offsetPaginationSchema)
     .query(({ ctx, input }) =>
       getUserSyncsHandler({ id: ctx.session.user.id, ...input }),
     ),
   getSyncLog: protectedProcedure
     .input(
       z.object({
-        id: z.string(),
+        uid: z.string(),
       }),
     )
-    .query(({ input }) => getSyncLogHandler(input.id)),
-
-  addTestEvent: publicProcedure.input(z.string()).mutation(async () => {
-    await redis.publish("test", "test message");
-  }),
-  getTestEvent: publicProcedure.subscription(() => {
-    return observable<string>((emit) => {
-      redis.on("message", (channel: string, message: string) => {
-        console.log(channel, message);
-        console.log(`Subscribed to ${message} channels.`);
-        emit.next(message);
+    .query(({ input: { uid } }) => getSyncLogHandler(uid)),
+  getSyncLogUpdate: protectedProcedure
+    .input(
+      z.object({
+        uid: z.string(),
+      }),
+    )
+    .subscription(({ input: { uid } }) => {
+      return observable<LogMessage>((emit) => {
+        void subscriber.subscribe(`sync-${uid}`);
+        subscriber.on("message", (_, data: string) => {
+          emit.next(JSON.parse(data) as LogMessage); // TODO: add zod validation to avoid casting
+        });
       });
-    });
-  }),
+    }),
 });

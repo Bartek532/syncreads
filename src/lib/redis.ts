@@ -19,7 +19,7 @@ const options: RedisOptions = {
   },
 };
 
-export const initRedis = () => {
+export const createRedisClient = () => {
   try {
     const redis = new Redis(options);
 
@@ -37,4 +37,5 @@ export const initRedis = () => {
   }
 };
 
-export const redis = initRedis();
+export const publisher = createRedisClient();
+export const subscriber = createRedisClient();

@@ -118,7 +118,7 @@ export const getFolder = async ({
 };
 
 export const getApi = async ({ token }: { token: string }) => {
-  return remarkable(token, {
-    subtle: webcrypto.subtle,
-  });
+  return webcrypto
+    ? remarkable(token, { subtle: webcrypto.subtle })
+    : remarkable(token);
 };

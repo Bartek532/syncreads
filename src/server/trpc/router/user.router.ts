@@ -2,7 +2,6 @@ import { z } from "zod";
 
 import {
   getUserDeviceHandler,
-  getUserSyncsHandler,
   registerDeviceHandler,
   syncUserFeedsHandler,
   unregisterDeviceHandler,
@@ -26,16 +25,6 @@ export const userRouter = router({
   getUserDevice: protectedProcedure.query(({ ctx }) =>
     getUserDeviceHandler({ id: ctx.session.user.id }),
   ),
-  getUserSyncs: protectedProcedure
-    .input(
-      z.object({
-        perPage: z.number().min(1).max(100).nullish(),
-        page: z.number().nullish(),
-      }),
-    )
-    .query(({ ctx, input }) =>
-      getUserSyncsHandler({ id: ctx.session.user.id, ...input }),
-    ),
   syncUserFeeds: protectedProcedure
     .input(
       z
