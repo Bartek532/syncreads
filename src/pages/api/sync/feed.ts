@@ -1,54 +1,33 @@
 import { SyncStatus } from "@prisma/client";
 import dayjs from "dayjs";
+import { ApiError } from "next/dist/server/api-utils";
 import Parser from "rss-parser";
 
-import { PDF_OPTIONS } from "../../config/sync";
-import { env } from "../../env/server.mjs";
-import {
-  getApi,
-  getFolder,
-  syncEntry,
-} from "../../server/services/remarkable.service";
+import { createSyncLogger } from "../../../server/controllers/sync.controller";
+import { getApi, getFolder } from "../../../server/services/remarkable.service";
 import {
   createSync,
   getPage,
   updateSync,
-} from "../../server/services/sync.service";
+} from "../../../server/services/sync.service";
 import {
-  getAllUsers,
   getUserById,
   getUserFeed,
   getUserFeeds,
   updateFeedSyncDate,
-} from "../../server/services/user.service";
-import { ApiError, HTTP_STATUS_CODE } from "../../utils/exceptions";
-import { nonNullable } from "../../utils/functions";
+} from "../../../server/services/user.service";
+import { HTTP_STATUS_CODE } from "../../../utils/exceptions";
 
-import type { FeedArticle, FeedWithArticles } from "../../../types/feed.types";
-import type { Feed } from "@prisma/client";
-import type { NextApiRequest, NextApiResponse } from "next";
+import { syncArticle } from "./article";
+
+import type {
+  FeedArticle,
+  FeedWithArticles,
+} from "../../../../types/feed.types";
+import type { Logger } from "../../../../types/log.types";
+import type { Feed, Sync } from "@prisma/client";
 import type { Page } from "puppeteer-core";
 import type { RemarkableApi } from "rmapi-js";
-
-export const syncArticle = async ({
-  article,
-  api,
-  page: passedPage,
-  folderId = "",
-}: {
-  article: Omit<FeedArticle, "pubDate">;
-  api: RemarkableApi;
-  page?: Page;
-  folderId?: string;
-}) => {
-  const page = passedPage ?? (await getPage());
-  await page.goto(article.link, { waitUntil: "networkidle0", timeout: 0 });
-  const pdf = await page.pdf(PDF_OPTIONS);
-  const title = article.title ?? (await page.title());
-
-  const pdfEntry = await api.putPdf(title, pdf, { parent: folderId });
-  await syncEntry({ api, entry: pdfEntry });
-};
 
 const syncFeed = async ({
   url,
@@ -57,6 +36,8 @@ const syncFeed = async ({
   parser,
   page: passedPage,
   folderId,
+  sync: passedSync,
+  logger: passedLogger,
 }: {
   url: string;
   userId: number;
@@ -64,10 +45,16 @@ const syncFeed = async ({
   parser: Parser;
   folderId: string;
   page?: Page;
+  sync?: Sync;
+  logger?: Logger;
 }) => {
   const parsed = await parser.parseURL(url);
   const feed = await getUserFeed({ userId, url });
   const page = passedPage ?? (await getPage());
+  const sync = passedSync ?? (await createSync({ id: userId }));
+  const logger = passedLogger ?? (await createSyncLogger(sync.id));
+
+  await logger.info(`Starting synchronization of feed with url ${url}...`);
 
   if (!feed) {
     throw new ApiError(
@@ -75,6 +62,14 @@ const syncFeed = async ({
       `Feed ${url} not found for user with id ${userId}!`,
     );
   }
+
+  await logger.info(
+    feed.lastSyncDate
+      ? `Syncing articles published after ${dayjs(feed.feedId).format(
+          "DD-MM-YYYY",
+        )}.`
+      : `Syncing last ${feed.startArticlesCount} article(s).`,
+  );
 
   const articles = parsed.items
     .filter((item): item is FeedArticle => !!item.link && !!item.pubDate)
@@ -84,8 +79,12 @@ const syncFeed = async ({
         : index < feed.startArticlesCount,
     );
 
+  await logger.info(
+    `Found ${articles.length} article(s) to synchronize within current feed.`,
+  );
+
   for (const article of articles) {
-    await syncArticle({ article, api, page, folderId });
+    await syncArticle({ userId, article, api, page, folderId, sync, logger });
   }
 
   await updateFeedSyncDate({
@@ -93,6 +92,10 @@ const syncFeed = async ({
     feedId: feed.feedId,
     date: articles[0] ? new Date(articles[0].pubDate) : new Date(),
   });
+
+  await logger.info(
+    `Successfully synced feed ${url} including **${articles.length}** articles.`,
+  );
 
   return { url, articles };
 };
@@ -127,9 +130,13 @@ export const syncUserFeeds = async ({
 
   const feeds = passedFeeds ?? (await getUserFeeds({ id: user.id }));
   const sync = await createSync({ id: user.id });
+  const logger = await createSyncLogger(sync.id);
 
   try {
+    await logger.info("Attempting to start feeds synchronization.");
+    await logger.info("Trying to connect to the reMarkable cloud...");
     const api = await getApi({ token: user.device.token });
+    await logger.info("Connection to the reMarkable cloud is established.");
 
     const syncedFeeds: FeedWithArticles[] = [];
 
@@ -138,14 +145,20 @@ export const syncUserFeeds = async ({
       name: user.folder,
     });
 
+    await logger.info(
+      `Got _${user.folder}_ folder from reMarkable cloud with uid ${folderId}.`,
+    );
+
     for (const feed of feeds) {
       const syncedFeed = await syncFeed({
         url: feed.url,
         userId: user.id,
+        folderId,
         api,
         page,
         parser,
-        folderId,
+        sync,
+        logger,
       });
 
       syncedFeeds.push(syncedFeed);
@@ -161,9 +174,23 @@ export const syncUserFeeds = async ({
       },
     });
 
+    await logger.info("Successfully completed sync."); // TODO add some stats here
+
     return { id, feeds: syncedFeeds };
   } catch (e: unknown) {
-    console.error(user, e);
+    console.error(e);
+
+    if (e instanceof Error) {
+      await logger.error(e.message);
+      if (e.stack) {
+        await logger.error(`\`\`\`js
+${e.stack}`);
+      }
+    } else {
+      await logger.error(
+        "Unknown error occured during synchronization! Try to sync once again.",
+      );
+    }
 
     await updateSync({
       id: sync.id,
@@ -173,70 +200,8 @@ export const syncUserFeeds = async ({
       },
     });
 
+    await logger.info("Sync exited with an error.");
+
     return;
   }
 };
-
-const syncAll = async () => {
-  console.time("sync");
-
-  const parser = new Parser();
-  const page = await getPage();
-
-  const users = await getAllUsers();
-
-  const data = await Promise.all(
-    users.map(async ({ id }) => {
-      try {
-        const data = await syncUserFeeds({ id, parser, page });
-        return data;
-      } catch (e: unknown) {
-        console.error(e);
-        return;
-      }
-    }),
-  );
-
-  console.timeEnd("sync");
-
-  return {
-    data,
-  };
-};
-
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
-  try {
-    if (!(req.headers["api-key"] === env.API_KEY)) {
-      throw new ApiError(HTTP_STATUS_CODE.UNAUTHORIZED, "Missing api key!");
-    }
-
-    const { data } = await syncAll();
-
-    const syncedFeeds = data
-      .filter(nonNullable)
-      .map(({ feeds }) => feeds)
-      .flat();
-    const syncedArticles = syncedFeeds.map(({ articles }) => articles).flat();
-
-    return res.status(200).json({
-      status: "Success",
-      message: `Successfully synced ${syncedFeeds.length} feed(s) - ${syncedArticles.length} article(s) for ${data.length} user(s)`,
-    });
-  } catch (e: unknown) {
-    console.log(e);
-    if (e instanceof ApiError) {
-      return res.status(e.status).json({ status: "Error", message: e.message });
-    }
-
-    if (e instanceof Error) {
-      return res.status(500).json({ status: "Error", message: e.message });
-    }
-
-    return res
-      .status(500)
-      .json({ status: "Error", message: "Internal Server Error" });
-  }
-}
