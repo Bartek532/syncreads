@@ -2,12 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { hashSync } from "bcrypt";
 import { register } from "rmapi-js";
 
-import {
-  SYNCS_PAGINATION_DEFAULT_PAGE,
-  SYNCS_PAGINATION_DEFAULT_PER_PAGE,
-} from "../../config/sync";
-import { syncUserFeeds } from "../../pages/api/sync";
-import { getUserSyncs } from "../services/sync.service";
+import { syncUserFeeds } from "../../pages/api/sync/feed";
 import {
   createUser,
   getUserByEmail,
@@ -126,29 +121,6 @@ export const syncUserFeedsHandler = async ({
     }
 
     return syncUserFeeds({ id });
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
-};
-
-export const getUserSyncsHandler = async ({
-  id,
-  page,
-  perPage,
-}: {
-  id: number;
-  page?: number | null | undefined;
-  perPage?: number | null | undefined;
-}) => {
-  try {
-    const [total, syncs, articles] = await getUserSyncs({
-      id,
-      page: page ?? SYNCS_PAGINATION_DEFAULT_PAGE,
-      perPage: perPage ?? SYNCS_PAGINATION_DEFAULT_PER_PAGE,
-    });
-
-    return { total, syncs, articles: articles._sum.syncedArticlesCount ?? 0 };
   } catch (err) {
     console.error(err);
     throw err;

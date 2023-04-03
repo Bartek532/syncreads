@@ -71,6 +71,11 @@ export const syncArticleSchema = z.object({
   url: z.string().min(1, "Url is required.").url("Url must be a valid url."),
 });
 
+export const offsetPaginationSchema = z.object({
+  perPage: z.number().min(1).max(100).nullish(),
+  page: z.number().nullish(),
+});
+
 export type RegisterUserInput = TypeOf<typeof registerUserSchema>;
 export type LoginUserInput = TypeOf<typeof loginUserSchema>;
 export type CreateFeedInput = TypeOf<typeof createFeedSchema>;
@@ -88,3 +93,4 @@ export type RegisterAndConnectDeviceInput = TypeOf<
 export type UnregisterAndDisconnectDeviceInput = TypeOf<
   typeof unregisterAndDisconnectDeviceSchema
 >;
+export type OffsetPaginationInput = TypeOf<typeof offsetPaginationSchema>;

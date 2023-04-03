@@ -2,7 +2,7 @@ import { SyncStatus } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { parse } from "rss-to-json";
 
-import { syncArticle } from "../../pages/api/sync";
+import { syncArticle } from "../../pages/api/sync/article";
 import { ApiError, HTTP_STATUS_CODE } from "../../utils/exceptions";
 import {
   createFeed,
@@ -117,7 +117,7 @@ export const syncArticleHandler = async ({
     const sync = await createSync({ id: user.id });
 
     try {
-      await syncArticle({ article: { link: url }, api });
+      await syncArticle({ article: { link: url }, api, userId: user.id });
 
       await updateSync({
         id: sync.id,
