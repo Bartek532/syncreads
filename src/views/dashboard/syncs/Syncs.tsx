@@ -18,7 +18,7 @@ import type { TRPCError } from "@trpc/server";
 export const SyncsView = () => {
   const [{ page, perPage, syncs, total }, setSyncsData] = useState(() => ({
     page: 1,
-    perPage: 20,
+    perPage: 10,
     syncs: [] as Sync[],
     total: 0,
   }));
@@ -34,11 +34,15 @@ export const SyncsView = () => {
       onSuccess: ({ total, syncs }) =>
         setSyncsData((previousData) => ({
           ...previousData,
-          syncs: [...previousData.syncs, ...syncs],
+          syncs: [
+            ...previousData.syncs,
+            ...syncs.filter(
+              (sync) => !previousData.syncs.map((s) => s.id).includes(sync.id),
+            ),
+          ],
           total,
         })),
       queryKey: ["sync.getUserSyncs", { page, perPage }],
-      keepPreviousData: true,
     },
   );
 
@@ -61,9 +65,9 @@ export const SyncsView = () => {
   return (
     <section className="mx-auto mt-8 max-w-6xl px-4 sm:px-6 lg:mt-12 lg:px-8">
       <div className="flex w-full flex-wrap items-center justify-between gap-3">
-        <h2 className="text-lg font-medium leading-6 text-gray-900">
+        <h1 className="text-lg font-medium leading-6 text-gray-900">
           You synced data <b>{total}</b> times!
-        </h2>
+        </h1>
         <Button onClick={onPromise(feedsSyncHandler)}>
           <ArrowPathIcon className="h-6 w-6" />{" "}
           <span className="hidden sm:inline">Sync now</span>
