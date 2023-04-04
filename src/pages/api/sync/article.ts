@@ -1,7 +1,10 @@
+import dayjs from "dayjs";
+
 import { PDF_OPTIONS } from "../../../config/sync";
 import { createSyncLogger } from "../../../server/controllers/sync.controller";
 import { syncEntry } from "../../../server/services/remarkable.service";
 import { createSync, getPage } from "../../../server/services/sync.service";
+import { formatTime } from "../../../utils/functions";
 
 import type { FeedArticle } from "../../../../types/feed.types";
 import type { Logger } from "../../../../types/log.types";
@@ -33,16 +36,22 @@ export const syncArticle = async ({
   await page.goto(article.link, { waitUntil: "networkidle0", timeout: 0 });
   const title = article.title ?? (await page.title());
 
-  await logger.info(`[${title}](${article.link}) is being synced now...`);
+  const { updatedAt: articleSyncStartDate } = await logger.info(
+    `[${title}](${article.link}) is being synced now...`,
+  );
   await logger.info(`Generating PDF file with article content...`);
 
   const pdf = await page.pdf(PDF_OPTIONS);
 
   await logger.info(`PDF file generated.`);
-  await logger.info(`Trying to push output to the reMarkable cloud.`);
+  await logger.info(`Trying to push output to the reMarkable cloud...`);
 
   const pdfEntry = await api.putPdf(title, pdf, { parent: folderId });
   await syncEntry({ api, entry: pdfEntry });
 
-  await logger.info(`reMarkable cloud successfully synced.`);
+  await logger.info(
+    `reMarkable cloud successfully synced: ${formatTime(
+      dayjs().diff(articleSyncStartDate, "ms"),
+    )}`,
+  );
 };

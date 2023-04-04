@@ -1,4 +1,5 @@
 import { ArrowPathIcon } from "@heroicons/react/20/solid";
+import dayjs from "dayjs";
 import { useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
 
@@ -39,7 +40,7 @@ export const SyncsView = () => {
             ...syncs.filter(
               (sync) => !previousData.syncs.map((s) => s.id).includes(sync.id),
             ),
-          ],
+          ].sort((a, b) => (dayjs(a.startedAt).isBefore(b.startedAt) ? 1 : -1)),
           total,
         })),
       queryKey: ["sync.getUserSyncs", { page, perPage }],

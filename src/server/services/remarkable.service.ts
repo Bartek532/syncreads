@@ -4,6 +4,7 @@ import uuid4 from "uuid4";
 
 import { ENTRY_TYPE } from "../../config/remarkable";
 
+import type { Logger } from "../../../types/log.types";
 import type {
   CollectionTypeMetadata,
   Entry,
@@ -104,16 +105,32 @@ export const createFolder = async ({
 export const getFolder = async ({
   api,
   name,
+  logger,
 }: {
   api: RemarkableApi;
   name: string;
+  logger?: Logger;
 }) => {
+  logger && (await logger.info("Fetching folder for rss content..."));
   const folder = await checkIfFolderExists({ api, name });
 
   if (!folder) {
-    return createFolder({ api, name });
+    logger &&
+      (await logger.info(
+        `Folder with name **${name}** not found, attempting to create it...`,
+      ));
+    const newFolder = await createFolder({ api, name });
+
+    logger &&
+      (await logger.info(`New folder successfully created on your device.`));
+
+    return newFolder;
   }
 
+  logger &&
+    (await logger.info(
+      `Successfully fetched folder with name **${name}** from your reMarkable device.`,
+    ));
   return folder;
 };
 

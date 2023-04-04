@@ -17,6 +17,7 @@ import {
   updateFeedSyncDate,
 } from "../../../server/services/user.service";
 import { HTTP_STATUS_CODE } from "../../../utils/exceptions";
+import { formatTime } from "../../../utils/functions";
 
 import { syncArticle } from "./article";
 
@@ -54,7 +55,9 @@ const syncFeed = async ({
   const sync = passedSync ?? (await createSync({ id: userId }));
   const logger = passedLogger ?? (await createSyncLogger(sync.id));
 
-  await logger.info(`Starting synchronization of feed with url ${url}...`);
+  const { updatedAt: feedSyncStartDate } = await logger.info(
+    `Starting synchronization of feed with url ${url}...`,
+  );
 
   if (!feed) {
     throw new ApiError(
@@ -65,10 +68,10 @@ const syncFeed = async ({
 
   await logger.info(
     feed.lastSyncDate
-      ? `Syncing articles published after ${dayjs(feed.feedId).format(
+      ? `Syncing articles published after ${dayjs(feed.lastSyncDate).format(
           "DD-MM-YYYY",
-        )}.`
-      : `Syncing last ${feed.startArticlesCount} article(s).`,
+        )}...`
+      : `Syncing last ${feed.startArticlesCount} article(s)...`,
   );
 
   const articles = parsed.items
@@ -93,8 +96,10 @@ const syncFeed = async ({
     date: articles[0] ? new Date(articles[0].pubDate) : new Date(),
   });
 
-  await logger.info(
-    `Successfully synced feed ${url} including **${articles.length}** articles.`,
+  await logger.verbose(
+    `Successfully synced feed ${url} including **${
+      articles.length
+    }** articles: ${formatTime(dayjs().diff(feedSyncStartDate, "ms"))}`,
   );
 
   return { url, articles };
@@ -133,7 +138,7 @@ export const syncUserFeeds = async ({
   const logger = await createSyncLogger(sync.id);
 
   try {
-    await logger.info("Attempting to start feeds synchronization.");
+    await logger.info("Feeds synchronization started.");
     await logger.info("Trying to connect to the reMarkable cloud...");
     const api = await getApi({ token: user.device.token });
     await logger.info("Connection to the reMarkable cloud is established.");
@@ -144,10 +149,6 @@ export const syncUserFeeds = async ({
       api,
       name: user.folder,
     });
-
-    await logger.info(
-      `Got _${user.folder}_ folder from reMarkable cloud with uid ${folderId}.`,
-    );
 
     for (const feed of feeds) {
       const syncedFeed = await syncFeed({
@@ -174,7 +175,16 @@ export const syncUserFeeds = async ({
       },
     });
 
-    await logger.info("Successfully completed sync."); // TODO add some stats here
+    await logger.info("Sync completed successfully:");
+    await logger.info(` \\- Feeds: ${syncedFeeds.length}`);
+    await logger.info(
+      ` \\- Articles: ${
+        syncedFeeds.map(({ articles }) => articles).flat().length
+      }`,
+    );
+    await logger.info(
+      ` \\- Total time: ${formatTime(dayjs().diff(sync.startedAt, "ms"))}`,
+    );
 
     return { id, feeds: syncedFeeds };
   } catch (e: unknown) {
