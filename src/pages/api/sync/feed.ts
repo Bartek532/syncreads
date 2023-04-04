@@ -183,7 +183,7 @@ export const syncUserFeeds = async ({
       }`,
     );
     await logger.info(
-      ` \\- Total time: ${formatTime(dayjs().diff(sync.startedAt, "ms"))}`,
+      `Total time: ${formatTime(dayjs().diff(sync.startedAt, "ms"))}`,
     );
 
     return { id, feeds: syncedFeeds };

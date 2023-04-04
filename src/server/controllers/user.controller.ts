@@ -16,7 +16,7 @@ import type {
   RegisterAndConnectDeviceInput,
   RegisterUserInput,
   UnregisterAndDisconnectDeviceInput,
-} from "../../utils/validation";
+} from "../../utils/validation/types";
 import type { Feed } from "@prisma/client";
 
 export const registerUserHandler = async ({

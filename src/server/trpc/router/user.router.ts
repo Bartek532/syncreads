@@ -7,7 +7,7 @@ import {
   unregisterDeviceHandler,
 } from "../../../server/controllers/user.controller";
 import { getUserFeeds } from "../../../server/services/user.service";
-import { registerDeviceSchema } from "../../../utils/validation";
+import { registerDeviceSchema } from "../../../utils/validation/schema";
 import { router, protectedProcedure } from "../trpc";
 
 export const userRouter = router({

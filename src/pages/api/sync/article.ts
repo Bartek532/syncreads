@@ -50,7 +50,7 @@ export const syncArticle = async ({
   await syncEntry({ api, entry: pdfEntry });
 
   await logger.info(
-    `reMarkable cloud successfully synced: ${formatTime(
+    `Article successfully synced: ${formatTime(
       dayjs().diff(articleSyncStartDate, "ms"),
     )}`,
   );

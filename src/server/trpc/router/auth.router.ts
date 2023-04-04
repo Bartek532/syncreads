@@ -1,4 +1,4 @@
-import { registerUserSchema } from "../../../utils/validation";
+import { registerUserSchema } from "../../../utils/validation/schema";
 import { registerUserHandler } from "../../controllers/user.controller";
 import { router, publicProcedure } from "../trpc";
 

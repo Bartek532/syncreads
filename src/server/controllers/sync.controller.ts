@@ -9,7 +9,7 @@ import { createLog, getSyncLog, updateLog } from "../services/log.service";
 import { getUserSyncs } from "../services/sync.service";
 
 import type { Logger } from "../../../types/log.types";
-import type { OffsetPaginationInput } from "../../utils/validation";
+import type { OffsetPaginationInput } from "../../utils/validation/types";
 
 export const createSyncLogger = async (syncId: string) => {
   const START_LOG = SYNC_START_LOG();

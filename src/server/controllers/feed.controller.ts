@@ -24,7 +24,7 @@ import type {
   DeleteAndDisconnectFeedInput,
   GetWebsiteDetailsInput,
   SyncArticleInput,
-} from "../../utils/validation";
+} from "../../utils/validation/types";
 
 export const createFeedHandler = async ({
   url,

@@ -2,14 +2,15 @@ import { observable } from "@trpc/server/observable";
 import { z } from "zod";
 
 import { subscriber } from "../../../lib/redis";
-import { offsetPaginationSchema } from "../../../utils/validation";
+import { offsetPaginationSchema } from "../../../utils/validation/schema";
+import { isLogMessage } from "../../../utils/validation/validator";
 import {
   getSyncLogHandler,
   getUserSyncsHandler,
 } from "../../controllers/sync.controller";
 import { protectedProcedure, router } from "../trpc";
 
-import type { LogMessage } from "../../../../types/log.types";
+import type { LogMessage } from "../../../utils/validation/types";
 
 export const syncRouter = router({
   getUserSyncs: protectedProcedure
@@ -34,7 +35,10 @@ export const syncRouter = router({
       return observable<LogMessage>((emit) => {
         void subscriber.subscribe(`sync-${uid}`);
         subscriber.on("message", (_, data: string) => {
-          emit.next(JSON.parse(data) as LogMessage); // TODO: add zod validation to avoid casting
+          const json: unknown = JSON.parse(data);
+          if (isLogMessage(json)) {
+            emit.next(json);
+          }
         });
       });
     }),

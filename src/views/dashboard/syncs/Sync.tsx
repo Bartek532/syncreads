@@ -8,8 +8,9 @@ import { LOG_LEVEL } from "../../../../types/log.types";
 import { useWindowSize } from "../../../hooks/useWindowSize";
 import { onPromise } from "../../../utils/functions";
 import { trpc } from "../../../utils/trpc";
+import { isLogMessage } from "../../../utils/validation/validator";
 
-import type { LogMessage } from "../../../../types/log.types";
+import type { LogMessage } from "../../../utils/validation/types";
 
 interface SyncViewProps {
   readonly uid: string;
@@ -48,9 +49,12 @@ export const SyncView = memo<SyncViewProps>(({ uid }) => {
 
   useEffect(() => {
     if (data) {
-      const logs = JSON.parse(data.json as string) as LogMessage[];
+      const logs: unknown = JSON.parse(data.json as string);
 
-      setLogs(logs);
+      if (Array.isArray(logs)) {
+        console.log(logs);
+        setLogs(logs.filter(isLogMessage));
+      }
     }
   }, [data]);
 
@@ -63,7 +67,7 @@ export const SyncView = memo<SyncViewProps>(({ uid }) => {
       <h1 className="px-4 text-lg font-medium leading-6 text-gray-900 sm:px-0">
         {uid}
       </h1>
-      <div className="mt-8 overflow-hidden overflow-x-auto rounded-lg bg-gray-50 py-3 sm:py-4">
+      <div className="mt-8 overflow-hidden overflow-x-auto bg-gray-50 py-3 sm:rounded-lg sm:py-4">
         <table className="min-w-full divide-y divide-gray-200">
           <tbody>
             {logs.map(({ date, message, level }, index) => (
