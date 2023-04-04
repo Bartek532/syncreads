@@ -7,10 +7,4 @@ export enum LOG_LEVEL {
   VERBOSE = "verbose",
 }
 
-export interface LogMessage {
-  message: string;
-  date: Date;
-  level: LOG_LEVEL;
-}
-
 export type Logger = Record<LOG_LEVEL, (message: string) => Promise<Log>>;
