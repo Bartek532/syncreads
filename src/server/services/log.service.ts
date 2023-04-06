@@ -2,7 +2,7 @@ import { publisher } from "../../lib/redis";
 import { prisma } from "../../server/db/client";
 import { ApiError, HTTP_STATUS_CODE } from "../../utils/exceptions";
 
-import type { LogMessage } from "../../../types/log.types";
+import type { LogMessage } from "../../utils/validation/types";
 
 export const getLogById = (id: number) => {
   return prisma.log.findUnique({ where: { id } });
