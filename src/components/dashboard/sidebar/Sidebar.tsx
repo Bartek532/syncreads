@@ -24,7 +24,9 @@ export const Sidebar = memo<SidebarProps>(
 
     return (
       <>
-        <div className="flex flex-shrink-0 items-center px-4"></div>
+        <div className="flex flex-shrink-0 items-center px-4">
+          <Logo />
+        </div>
         <nav
           className="mt-5 flex flex-1 flex-col justify-between overflow-y-auto"
           aria-label="Sidebar"
