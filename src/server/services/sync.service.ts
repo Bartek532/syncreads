@@ -1,7 +1,7 @@
 import { SyncStatus } from "@prisma/client";
 import puppeteer from "puppeteer-core";
 
-import { env } from "../../env/server";
+import { env } from "../../env/server.mjs";
 import { prisma } from "../../server/db/client";
 
 import type { Sync } from "@prisma/client";

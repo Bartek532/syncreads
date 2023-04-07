@@ -5,7 +5,7 @@ import Credentials from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 
-import { env } from "../../../env/server";
+import { env } from "../../../env/server.mjs";
 import { prisma } from "../../../server/db/client";
 import { getUserByEmail } from "../../../server/services/user.service";
 import { ApiError, HTTP_STATUS_CODE } from "../../../utils/exceptions";
