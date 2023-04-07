@@ -4,7 +4,7 @@ import next from "next";
 import { parse } from "url";
 import ws from "ws";
 
-import conf from "./next.config";
+import conf from "./next.config.mjs";
 import { createContext } from "./src/server/trpc/context";
 import { appRouter } from "./src/server/trpc/router/_app";
 

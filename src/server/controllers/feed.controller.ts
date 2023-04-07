@@ -175,7 +175,11 @@ ${e.stack}`);
 
       await logger.info("Sync exited with an error.");
 
-      return;
+      return {
+        status: "Error",
+        message: `Error occurred during article sync!`,
+        url,
+      };
     }
   } catch (err) {
     console.error(err);
