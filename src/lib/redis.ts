@@ -6,10 +6,9 @@ import type { RedisOptions } from "ioredis";
 
 const options: RedisOptions = {
   host: env.REDIS_HOST,
-  password: env.REDIS_PASSWORD,
   port: env.REDIS_PORT,
   lazyConnect: true,
-  maxRetriesPerRequest: 0,
+  maxRetriesPerRequest: 3,
   retryStrategy: (times: number) => {
     if (times > 3) {
       throw new Error(`[Redis] Could not connect after ${times} attempts`);
@@ -17,6 +16,7 @@ const options: RedisOptions = {
 
     return Math.min(times * 200, 1000);
   },
+  ...(env.REDIS_PASSWORD ? { password: env.REDIS_PASSWORD } : {}),
 };
 
 export const createRedisClient = () => {

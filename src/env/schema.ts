@@ -19,7 +19,7 @@ export const serverSchema = z.object({
   GOOGLE_CLIENT_SECRET: z.string(),
   REDIS_HOST: z.string(),
   REDIS_PORT: z.coerce.number(),
-  REDIS_PASSWORD: z.string(),
+  REDIS_PASSWORD: z.string().optional(),
 });
 
 export const clientSchema = z.object({
