@@ -6,9 +6,7 @@
  * This is especially useful for Docker builds.
  */
 
-void (async () => {
-  !process.env.SKIP_ENV_VALIDATION && (await import("./src/env/server"));
-})();
+!process.env.SKIP_ENV_VALIDATION && (await import("./src/env/server"));
 
 import pwa from "next-pwa";
 

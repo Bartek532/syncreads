@@ -22,6 +22,6 @@ jobs:
         env:
           SKIP_ENV_VALIDATION: true
       - name: Build
-        run: npm run build
+        run: npm run next:build
         env:
           SKIP_ENV_VALIDATION: true

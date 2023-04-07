@@ -10,7 +10,7 @@
     "postinstall": "prisma generate",
     "prebuild": "rm -rf .next dist && prisma generate",
     "build": "run-p *:build",
-    "next:build": "cross-env NODE_ENV=production next build",
+    "next:build": "next build",
     "server:build": "tsc --project tsconfig.server.json",
     "dev": "concurrently --kill-others-on-fail \"npm run docker:start:dev\" \"wait-on tcp:5432 && run-p *:dev\"",
     "next:dev": "dotenv -e .env.development.local -- ts-node --project tsconfig.server.json --transpile-only server.ts",
