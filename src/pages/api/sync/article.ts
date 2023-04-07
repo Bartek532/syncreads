@@ -32,6 +32,8 @@ export const syncArticle = async ({
   const sync = passedSync ?? (await createSync({ id: userId }));
   const logger = passedLogger ?? (await createSyncLogger(sync.id));
 
+  await logger.info(`Article synchronization started.`);
+
   const page = passedPage ?? (await getPage());
   await page.goto(article.link, { waitUntil: "networkidle0", timeout: 0 });
   const title = article.title ?? (await page.title());
@@ -49,7 +51,7 @@ export const syncArticle = async ({
   const pdfEntry = await api.putPdf(title, pdf, { parent: folderId });
   await syncEntry({ api, entry: pdfEntry });
 
-  await logger.info(
+  await logger.verbose(
     `Article successfully synced: ${formatTime(
       dayjs().diff(articleSyncStartDate, "ms"),
     )}`,

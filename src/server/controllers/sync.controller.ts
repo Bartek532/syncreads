@@ -22,7 +22,7 @@ export const createSyncLogger = async (syncId: string) => {
       return [
         level,
         (message: string) =>
-          updateLog(log.id, { message, date: new Date().toString(), level }),
+          updateLog(log.id, { message, date: new Date().toISOString(), level }),
       ] as const;
     }),
   ) as Logger;

@@ -49,11 +49,12 @@ const syncFeed = async ({
   sync?: Sync;
   logger?: Logger;
 }) => {
+  const sync = passedSync ?? (await createSync({ id: userId }));
+  const logger = passedLogger ?? (await createSyncLogger(sync.id));
+
   const parsed = await parser.parseURL(url);
   const feed = await getUserFeed({ userId, url });
   const page = passedPage ?? (await getPage());
-  const sync = passedSync ?? (await createSync({ id: userId }));
-  const logger = passedLogger ?? (await createSyncLogger(sync.id));
 
   const { updatedAt: feedSyncStartDate } = await logger.info(
     `Starting synchronization of feed with url ${url}...`,
@@ -187,7 +188,7 @@ export const syncUserFeeds = async ({
     );
 
     return { id, feeds: syncedFeeds };
-  } catch (e: unknown) {
+  } catch (e) {
     console.error(e);
 
     if (e instanceof Error) {

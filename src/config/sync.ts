@@ -15,5 +15,5 @@ export const SYNCS_PAGINATION_DEFAULT_LIMIT = 10;
 export const SYNC_START_LOG = () => ({
   level: LOG_LEVEL.INFO,
   message: "Synchronization is starting...",
-  date: new Date().toString(),
+  date: new Date().toISOString(),
 });

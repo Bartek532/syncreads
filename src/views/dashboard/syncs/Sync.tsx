@@ -52,7 +52,6 @@ export const SyncView = memo<SyncViewProps>(({ uid }) => {
       const logs: unknown = JSON.parse(data.json as string);
 
       if (Array.isArray(logs)) {
-        console.log(logs);
         setLogs(logs.filter(isLogMessage));
       }
     }

@@ -1,9 +1,11 @@
 import { SyncStatus } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
+import dayjs from "dayjs";
 import { parse } from "rss-to-json";
 
 import { syncArticle } from "../../pages/api/sync/article";
 import { ApiError, HTTP_STATUS_CODE } from "../../utils/exceptions";
+import { formatTime } from "../../utils/functions";
 import {
   createFeed,
   deleteFeed,
@@ -17,6 +19,8 @@ import {
   getUserById,
   getUserFeedByUrl,
 } from "../services/user.service";
+
+import { createSyncLogger } from "./sync.controller";
 
 import type { FeedApi } from "../../../types/feed.types";
 import type {
@@ -115,9 +119,16 @@ export const syncArticleHandler = async ({
 
     const api = await getApi({ token: user.device.token });
     const sync = await createSync({ id: user.id });
+    const logger = await createSyncLogger(sync.id);
 
     try {
-      await syncArticle({ article: { link: url }, api, userId: user.id });
+      await syncArticle({
+        article: { link: url },
+        api,
+        userId: user.id,
+        sync,
+        logger,
+      });
 
       await updateSync({
         id: sync.id,
@@ -128,22 +139,43 @@ export const syncArticleHandler = async ({
         },
       });
 
+      await logger.info(
+        `Sync completed successfully: ${formatTime(
+          dayjs().diff(sync.startedAt, "ms"),
+        )}`,
+      );
+
       return {
         status: "Success",
         message: `Successfully synced article!`,
         url,
       };
-    } catch (err) {
+    } catch (e) {
+      console.error(e);
+
+      if (e instanceof Error) {
+        await logger.error(e.message);
+        if (e.stack) {
+          await logger.error(`\`\`\`js
+${e.stack}`);
+        }
+      } else {
+        await logger.error(
+          "Unknown error occured during synchronization! Try to sync once again.",
+        );
+      }
+
       await updateSync({
         id: sync.id,
         data: {
           finishedAt: new Date(),
-          syncedArticlesCount: 0,
           status: SyncStatus.FAILED,
         },
       });
 
-      throw err;
+      await logger.info("Sync exited with an error.");
+
+      return;
     }
   } catch (err) {
     console.error(err);
