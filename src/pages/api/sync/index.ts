@@ -1,6 +1,6 @@
 import Parser from "rss-parser";
 
-import { env } from "../../../env/server.mjs";
+import { env } from "../../../env/server";
 import { getPage } from "../../../server/services/sync.service";
 import { getAllUsers } from "../../../server/services/user.service";
 import { ApiError, HTTP_STATUS_CODE } from "../../../utils/exceptions";

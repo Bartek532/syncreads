@@ -1,6 +1,6 @@
 import Redis from "ioredis";
 
-import { env } from "../env/server.mjs";
+import { env } from "../env/server";
 
 import type { RedisOptions } from "ioredis";
 

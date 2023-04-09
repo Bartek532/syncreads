@@ -4,9 +4,10 @@ import next from "next";
 import { parse } from "url";
 import ws from "ws";
 
-import conf from "./next.config.mjs";
 import { createContext } from "./src/server/trpc/context";
 import { appRouter } from "./src/server/trpc/router/_app";
+
+const conf = import("./next.config.mjs");
 
 const port = parseInt(process.env.PORT ?? "3000", 10);
 const dev = process.env.NODE_ENV !== "production";
