@@ -1,3 +1,5 @@
+import type { ForwardRefExoticComponent, RefAttributes, SVGProps } from "react";
+
 export enum HTTP_METHOD {
   CONNECT = "CONNECT",
   DELETE = "DELETE",
@@ -10,6 +12,9 @@ export enum HTTP_METHOD {
   TRACE = "TRACE",
 }
 
-export type HeroIcon = (
-  props: React.ComponentProps<"svg">,
-) => JSX.Element | null;
+export type HeroIcon = ForwardRefExoticComponent<
+  Omit<SVGProps<SVGSVGElement>, "ref"> & {
+    title?: string;
+    titleId?: string;
+  } & RefAttributes<SVGSVGElement>
+>;

@@ -1,4 +1,4 @@
-import { createProxySSGHelpers } from "@trpc/react-query/ssg";
+import { createServerSideHelpers } from "@trpc/react-query/server";
 import superjson from "superjson";
 
 import { Seo } from "../../../components/common/Seo";
@@ -28,7 +28,7 @@ const Sync = ({
 export const getServerSideProps = async ({
   params,
 }: GetServerSidePropsContext<{ uid: string }>) => {
-  const ssg = createProxySSGHelpers({
+  const ssg = createServerSideHelpers({
     router: appRouter,
     ctx: await createContext(),
     transformer: superjson,

@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-// @ts-check
-
-import pwa from "next-pwa";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const pwa = require("next-pwa");
 
 const withPWA = pwa({
   dest: "public",
@@ -11,7 +10,7 @@ const withPWA = pwa({
 });
 
 /** @type {import("next").NextConfig} */
-const config = withPWA({
+module.exports = withPWA({
   reactStrictMode: true,
   webpack(config) {
     config.module.rules.push({
@@ -23,4 +22,4 @@ const config = withPWA({
   },
 });
 
-export default config;
+// export default config;
