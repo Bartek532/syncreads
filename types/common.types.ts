@@ -10,4 +10,6 @@ export enum HTTP_METHOD {
   TRACE = "TRACE",
 }
 
-export type HeroIcon = (props: React.ComponentProps<"svg">) => JSX.Element;
+export type HeroIcon = (
+  props: React.ComponentProps<"svg">,
+) => JSX.Element | null;

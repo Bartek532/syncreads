@@ -14,7 +14,7 @@ import { AUTH_PROVIDER } from "../../../types/auth.types";
 import { Button } from "../../components/common/Button";
 import { Input } from "../../components/common/Input";
 import { onPromise } from "../../utils/functions";
-import { loginUserSchema } from "../../utils/validation";
+import { loginUserSchema } from "../../utils/validation/schema";
 
 import type { Login } from "../../../types/auth.types";
 import type { ClientSafeProvider } from "next-auth/react";

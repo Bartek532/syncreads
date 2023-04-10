@@ -14,7 +14,7 @@ import { Button } from "../../components/common/Button";
 import { Input } from "../../components/common/Input";
 import { onPromise } from "../../utils/functions";
 import { trpc } from "../../utils/trpc";
-import { registerUserSchema } from "../../utils/validation";
+import { registerUserSchema } from "../../utils/validation/schema";
 
 import type { Register } from "../../../types/auth.types";
 import type { TRPCError } from "@trpc/server";

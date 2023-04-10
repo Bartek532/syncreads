@@ -19,6 +19,17 @@ services:
     env_file:
       - ../../.env.development.local
 
+  redis:
+    image: bitnami/redis:7.0
+    restart: always
+    container_name: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redis:/bitnami/redis/data
+    env_file:
+      - ../../.env.development.local
+
   # TODO: In the future NextJS app also should be dockerized on dev environment, but now hot reload is not supported in container
   # app:
   #   build:
@@ -37,4 +48,5 @@ services:
 
 volumes:
   postgres:
+  redis:
   # app:
