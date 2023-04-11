@@ -12,9 +12,13 @@ export enum HTTP_METHOD {
   TRACE = "TRACE",
 }
 
-export type HeroIcon = ForwardRefExoticComponent<
-  Omit<SVGProps<SVGSVGElement>, "ref"> & {
-    title?: string;
-    titleId?: string;
-  } & RefAttributes<SVGSVGElement>
->;
+export type HeroIcon =
+  | ForwardRefExoticComponent<
+      Omit<SVGProps<SVGSVGElement>, "ref"> & {
+        title?: string;
+        titleId?: string;
+      } & RefAttributes<SVGSVGElement>
+    >
+  | ForwardRefExoticComponent<
+      SVGProps<SVGSVGElement> & { title?: string; titleId?: string }
+    >;
