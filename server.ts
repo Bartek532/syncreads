@@ -11,7 +11,7 @@ import { appRouter } from "./src/server/trpc/router/_app";
 const port = parseInt(process.env.PORT ?? "3000", 10);
 const dev = process.env.NODE_ENV !== "production";
 
-const hostname = "localhost";
+const hostname = process.env.HOST ?? "localhost";
 
 const app = next({
   dev,
