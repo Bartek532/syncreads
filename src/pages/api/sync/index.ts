@@ -57,6 +57,7 @@ export default async function handler(
       .filter(nonNullable)
       .map(({ feeds }) => feeds)
       .flat();
+
     const syncedArticles = syncedFeeds.map(({ articles }) => articles).flat();
 
     return res.status(200).json({

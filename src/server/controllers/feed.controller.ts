@@ -1,4 +1,4 @@
-import { SyncStatus } from "@prisma/client";
+import { SyncStatus, SyncTrigger } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import dayjs from "dayjs";
 import { parse } from "rss-to-json";
@@ -118,7 +118,7 @@ export const syncArticleHandler = async ({
     }
 
     const api = await getApi({ token: user.device.token });
-    const sync = await createSync({ id: user.id });
+    const sync = await createSync({ id: user.id, trigger: SyncTrigger.MANUAL });
     const logger = await createSyncLogger(sync.id);
 
     try {
