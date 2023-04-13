@@ -17,6 +17,10 @@ const getBaseUrl = () => {
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`;
   } // SSR should use vercel url
+
+  if (process.env.RENDER_EXTERNAL_URL) {
+    return process.env.RENDER_EXTERNAL_URL;
+  }
   return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
 };
 
@@ -30,6 +34,8 @@ const getEndingLink = () => {
   const client = createWSClient({
     url: process.env.NEXT_PUBLIC_WS_URL ?? "ws://localhost:3000",
   });
+
+  console.log(process.env, client);
 
   return wsLink<AppRouter>({
     client,
