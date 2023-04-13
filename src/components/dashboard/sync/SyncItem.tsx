@@ -4,18 +4,13 @@ import dayjs from "dayjs";
 import Link from "next/link";
 import { memo } from "react";
 
+import { SYNC_STATUS_STYLES, SYNC_TRIGGER_EMOJIS } from "../../../config/sync";
+
 import type { Sync } from "@prisma/client";
 
 interface SyncItemProps {
   readonly sync: Sync;
 }
-
-const statusStyles = {
-  SUCCESS: "bg-green-100 text-green-800",
-  PENDING: "bg-yellow-100 text-yellow-800",
-  FAILED: "bg-red-100 text-red-800",
-  UNKNOWN: "bg-gray-100 text-gray-800",
-};
 
 export const SyncItem = memo<SyncItemProps>(({ sync }) => {
   return (
@@ -39,13 +34,19 @@ export const SyncItem = memo<SyncItemProps>(({ sync }) => {
           </Link>
         </div>
       </td>
+      <td
+        className="absolute top-11 left-10 whitespace-nowrap text-right text-sm text-gray-500 sm:static sm:px-6 sm:py-4"
+        aria-label={sync.trigger.toLowerCase()}
+      >
+        {SYNC_TRIGGER_EMOJIS[sync.trigger]}
+      </td>
       <td className="hidden whitespace-nowrap text-right text-sm text-gray-500 sm:px-6 sm:py-4 md:table-cell">
         {sync.syncedArticlesCount}
       </td>
-      <td className="ml-6 whitespace-nowrap text-sm text-gray-500 sm:ml-0 sm:px-6 sm:py-4 md:block">
+      <td className="ml-12 whitespace-nowrap text-sm text-gray-500 sm:ml-0 sm:px-6 sm:py-4 md:block">
         <span
           className={clsx(
-            statusStyles[sync.status],
+            SYNC_STATUS_STYLES[sync.status],
             "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize",
           )}
         >
@@ -59,7 +60,7 @@ export const SyncItem = memo<SyncItemProps>(({ sync }) => {
       </td>
 
       <td
-        className="absolute right-0 top-0 block flex h-full items-center justify-center bg-white px-4 sm:hidden"
+        className="absolute right-0 top-0 flex h-full items-center justify-center bg-white px-4 sm:hidden"
         aria-hidden="true"
       >
         <Link href={`/dashboard/syncs/${sync.id}`}>

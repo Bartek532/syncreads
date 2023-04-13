@@ -39,7 +39,13 @@ export const SyncsList = memo<SyncsListProps>(
                   Sync uid
                 </th>
                 <th
-                  className="hidden whitespace-nowrap bg-gray-50 px-6 py-3 text-right text-sm font-semibold text-gray-900 md:block"
+                  className="whitespace-nowrap bg-gray-50 px-6 py-3 text-right text-sm font-semibold text-gray-900"
+                  scope="col"
+                >
+                  Trigger
+                </th>
+                <th
+                  className="hidden whitespace-nowrap bg-gray-50 px-6 py-3 text-right text-sm font-semibold text-gray-900 md:table-cell"
                   scope="col"
                 >
                   Articles

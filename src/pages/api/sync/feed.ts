@@ -1,4 +1,4 @@
-import { SyncStatus } from "@prisma/client";
+import { SyncStatus, SyncTrigger } from "@prisma/client";
 import dayjs from "dayjs";
 import { ApiError } from "next/dist/server/api-utils";
 import Parser from "rss-parser";
@@ -39,6 +39,7 @@ const syncFeed = async ({
   folderId,
   sync: passedSync,
   logger: passedLogger,
+  trigger = SyncTrigger.MANUAL,
 }: {
   url: string;
   userId: number;
@@ -48,8 +49,14 @@ const syncFeed = async ({
   page?: Page;
   sync?: Sync;
   logger?: Logger;
+  trigger?: SyncTrigger;
 }) => {
-  const sync = passedSync ?? (await createSync({ id: userId }));
+  const sync =
+    passedSync ??
+    (await createSync({
+      id: userId,
+      trigger,
+    }));
   const logger = passedLogger ?? (await createSyncLogger(sync.id));
 
   const parsed = await parser.parseURL(url);
@@ -111,11 +118,13 @@ export const syncUserFeeds = async ({
   feeds: passedFeeds,
   parser: passedParser,
   page: passedPage,
+  trigger = SyncTrigger.MANUAL,
 }: {
   id: number;
   feeds?: Omit<Feed, "id">[];
   parser?: Parser;
   page?: Page;
+  trigger?: SyncTrigger;
 }) => {
   const parser = passedParser ?? new Parser();
   const page = passedPage ?? (await getPage());
@@ -135,7 +144,7 @@ export const syncUserFeeds = async ({
   }
 
   const feeds = passedFeeds ?? (await getUserFeeds({ id: user.id }));
-  const sync = await createSync({ id: user.id });
+  const sync = await createSync({ id: user.id, trigger });
   const logger = await createSyncLogger(sync.id);
 
   try {
@@ -161,6 +170,7 @@ export const syncUserFeeds = async ({
         parser,
         sync,
         logger,
+        trigger,
       });
 
       syncedFeeds.push(syncedFeed);
