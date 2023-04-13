@@ -4,13 +4,20 @@ import puppeteer from "puppeteer-core";
 import { env } from "../../env/server";
 import { prisma } from "../../server/db/client";
 
-import type { Sync } from "@prisma/client";
+import type { Sync, SyncTrigger } from "@prisma/client";
 import type { Browser } from "puppeteer-core";
 
-export const createSync = ({ id }: { id: number }) => {
+export const createSync = ({
+  id,
+  trigger,
+}: {
+  id: number;
+  trigger: SyncTrigger;
+}) => {
   return prisma.sync.create({
     data: {
       status: SyncStatus.PENDING,
+      trigger,
       user: {
         connect: { id },
       },
