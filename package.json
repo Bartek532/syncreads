@@ -54,7 +54,7 @@
     "react-hook-form": "^7.41.3",
     "react-hot-toast": "^2.4.0",
     "rmapi-js": "^2.0.0",
-    "rss-parser": "^3.12.0",
+    "rss-parser": "^3.13.0",
     "rss-to-json": "^2.1.0",
     "sharp": "^0.31.3",
     "superjson": "1.9.1",
