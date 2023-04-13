@@ -1,3 +1,4 @@
+import { SyncTrigger } from "@prisma/client";
 import Parser from "rss-parser";
 
 import { env } from "../../../env/server";
@@ -10,9 +11,11 @@ import { syncUserFeeds } from "./feed";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
-const syncAll = async () => {
-  console.time("sync");
-
+const syncAll = async ({
+  trigger = SyncTrigger.MANUAL,
+}: {
+  trigger?: SyncTrigger;
+}) => {
   const parser = new Parser();
   const page = await getPage();
 
@@ -21,7 +24,7 @@ const syncAll = async () => {
   const data = await Promise.all(
     users.map(async ({ id }) => {
       try {
-        const data = await syncUserFeeds({ id, parser, page });
+        const data = await syncUserFeeds({ id, parser, page, trigger });
         return data;
       } catch (e: unknown) {
         console.error(e);
@@ -29,8 +32,6 @@ const syncAll = async () => {
       }
     }),
   );
-
-  console.timeEnd("sync");
 
   return {
     data,
@@ -46,7 +47,11 @@ export default async function handler(
       throw new ApiError(HTTP_STATUS_CODE.UNAUTHORIZED, "Missing api key!");
     }
 
-    const { data } = await syncAll();
+    const isScheduledSync = req.headers.trigger === SyncTrigger.SCHEDULE;
+
+    const { data } = await syncAll({
+      trigger: isScheduledSync ? SyncTrigger.SCHEDULE : SyncTrigger.MANUAL,
+    });
 
     const syncedFeeds = data
       .filter(nonNullable)

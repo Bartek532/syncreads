@@ -1,3 +1,4 @@
+import { SyncTrigger } from "@prisma/client";
 import dayjs from "dayjs";
 
 import { PDF_OPTIONS } from "../../../config/sync";
@@ -20,6 +21,7 @@ export const syncArticle = async ({
   sync: passedSync,
   logger: passedLogger,
   folderId = "",
+  trigger = SyncTrigger.MANUAL,
 }: {
   userId: number;
   article: Omit<FeedArticle, "pubDate">;
@@ -28,8 +30,9 @@ export const syncArticle = async ({
   folderId?: string;
   sync?: Sync;
   logger?: Logger;
+  trigger?: SyncTrigger;
 }) => {
-  const sync = passedSync ?? (await createSync({ id: userId }));
+  const sync = passedSync ?? (await createSync({ id: userId, trigger }));
   const logger = passedLogger ?? (await createSyncLogger(sync.id));
 
   await logger.info(`Article synchronization started.`);
