@@ -7,8 +7,6 @@ import { memo, useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
-import Logo from "public/svg/logo.svg";
-
 import { AUTH_PROVIDER } from "../../../types/auth.types";
 import { Button } from "../../components/common/Button";
 import { Input } from "../../components/common/Input";
@@ -58,7 +56,12 @@ export const RegisterView = memo<RegisterProps>(({ providers }) => {
       <div className="flex flex-1 flex-col justify-start  py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-28">
         <div className="mx-auto w-full max-w-sm lg:w-96">
           <div>
-            <Logo />
+            <Image
+              src="/android-icon-72x72.png"
+              width="36"
+              height="36"
+              alt="rssmarkable logo"
+            />{" "}
             <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">
               Register to RSSmarkable
             </h2>

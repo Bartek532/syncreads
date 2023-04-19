@@ -39,6 +39,8 @@ void app.prepare().then(() => {
     server,
   });
 
+  console.log(wss.options, wss.address(), wss.path);
+
   const handler = applyWSSHandler({ wss, router: appRouter, createContext });
 
   wss.on("connection", function connection(ws) {
