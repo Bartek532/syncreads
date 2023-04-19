@@ -1,13 +1,25 @@
 import { getProviders } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 import { Seo } from "../components/common/Seo";
 import { RegisterView } from "../views/register/Register";
 
-import type { InferGetServerSidePropsType } from "next";
+import type { AUTH_PROVIDER } from "../../types/auth.types";
+import type { ClientSafeProvider } from "next-auth/react";
 
-const Register = ({
-  providers,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Register = () => {
+  const [providers, setProviders] = useState<Record<
+    AUTH_PROVIDER,
+    ClientSafeProvider
+  > | null>(null);
+
+  useEffect(() => {
+    void (async () => {
+      const res = await getProviders();
+      setProviders(res);
+    })();
+  }, []);
+
   if (!providers) {
     return null;
   }
@@ -21,11 +33,3 @@ const Register = ({
 };
 
 export default Register;
-
-export async function getServerSideProps() {
-  return {
-    props: {
-      providers: await getProviders(),
-    },
-  };
-}

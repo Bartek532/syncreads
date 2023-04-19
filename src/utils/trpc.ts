@@ -35,8 +35,6 @@ const getEndingLink = () => {
     url: process.env.NEXT_PUBLIC_WS_URL ?? "ws://localhost:3000",
   });
 
-  console.log(process.env, client);
-
   return wsLink<AppRouter>({
     client,
   });
