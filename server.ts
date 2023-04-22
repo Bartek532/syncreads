@@ -26,6 +26,15 @@ void app.prepare().then(() => {
   const server = createServer((req, res) => {
     try {
       const parsedUrl = parse(req.url ?? "", true);
+      const proto = req.headers["x-forwarded-proto"];
+      if (proto && proto === "http") {
+        res.writeHead(303, {
+          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+          location: `https://` + req.headers.host + (req.headers.url ?? ""),
+        });
+        res.end();
+        return;
+      }
 
       void handle(req, res, parsedUrl);
     } catch (err) {
@@ -35,11 +44,7 @@ void app.prepare().then(() => {
     }
   });
 
-  const wss = new ws.Server({
-    server,
-  });
-
-  console.log(wss.options, wss.address(), wss.path);
+  const wss = new ws.Server({ ...(dev ? { noServer: true } : { server }) });
 
   const handler = applyWSSHandler({ wss, router: appRouter, createContext });
 
@@ -51,14 +56,18 @@ void app.prepare().then(() => {
     ws.on("error", (err) => console.error(err));
   });
 
-  server.on("upgrade", function (req, socket, head) {
-    const { pathname } = parse(req.url ?? "", true);
-    if (pathname !== "/_next/webpack-hmr") {
-      wss.handleUpgrade(req, socket, head, function done(ws) {
-        wss.emit("connection", ws, req);
-      });
-    }
-  });
+  if (dev) {
+    server.on("upgrade", function (req, socket, head) {
+      const { pathname } = parse(req.url ?? "", true);
+      if (pathname !== "/_next/webpack-hmr") {
+        wss.handleUpgrade(req, socket, head, function done(ws) {
+          wss.emit("connection", ws, req);
+        });
+      }
+    });
+  }
+
+  console.log(process.env);
 
   server.on("error", (err) => {
     console.error(err);
