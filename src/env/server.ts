@@ -1,9 +1,13 @@
 import { env as clientEnv, formatErrors } from "./client";
 import { serverSchema } from "./schema";
 
+import type { clientSchema } from "./schema";
+import type { z } from "zod";
+
 const validateEnvVariables = () => {
   if (process.env.SKIP_ENV_VALIDATION === "1") {
-    return { ...process.env, ...clientEnv };
+    return { ...process.env, ...clientEnv } as z.infer<typeof serverSchema> &
+      z.infer<typeof clientSchema>;
   }
 
   const _serverEnv = serverSchema.safeParse(process.env);

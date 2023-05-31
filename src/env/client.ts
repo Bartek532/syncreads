@@ -1,6 +1,6 @@
 import { clientEnv, clientSchema } from "./schema";
 
-import type { ZodFormattedError } from "zod";
+import type { ZodFormattedError, z } from "zod";
 
 export const formatErrors = <T>(errors: ZodFormattedError<T>) =>
   Object.entries(errors)
@@ -15,7 +15,7 @@ export const formatErrors = <T>(errors: ZodFormattedError<T>) =>
 
 const validateClientEnvVariables = () => {
   if (process.env.SKIP_ENV_VALIDATION === "1") {
-    return clientEnv;
+    return clientEnv as z.infer<typeof clientSchema>;
   }
 
   const _clientEnv = clientSchema.safeParse(clientEnv);
