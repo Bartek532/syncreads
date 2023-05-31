@@ -27,10 +27,13 @@ const Sync = ({
 
 export const getServerSideProps = async ({
   params,
+  req,
+  res,
 }: GetServerSidePropsContext<{ uid: string }>) => {
   const ssg = createServerSideHelpers({
     router: appRouter,
-    ctx: await createContext(),
+    //@ts-expect-error res is not compatible with trpc
+    ctx: await createContext({ req, res }),
     transformer: superjson,
   });
 

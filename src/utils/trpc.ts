@@ -9,6 +9,7 @@ import superjson from "superjson";
 
 import type { AppRouter } from "../server/trpc/router/_app";
 import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
+import type { NextPageContext } from "next";
 
 const getBaseUrl = () => {
   if (typeof window !== "undefined") {
@@ -18,16 +19,28 @@ const getBaseUrl = () => {
     return `https://${process.env.VERCEL_URL}`;
   } // SSR should use vercel url
 
-  if (process.env.RENDER_EXTERNAL_URL) {
-    return process.env.RENDER_EXTERNAL_URL;
+  if (process.env.EXTERNAL_URL) {
+    return process.env.EXTERNAL_URL;
   }
   return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
 };
 
-const getEndingLink = () => {
+const getEndingLink = (ctx: NextPageContext | undefined) => {
   if (typeof window === "undefined") {
     return httpBatchLink({
       url: `${getBaseUrl()}/api/trpc`,
+      headers() {
+        if (!ctx?.req?.headers) {
+          return {};
+        }
+
+        const { connection, ...headers } = ctx.req.headers;
+
+        return {
+          ...headers,
+          "x-ssr": "1",
+        };
+      },
     });
   }
 
@@ -41,17 +54,17 @@ const getEndingLink = () => {
 };
 
 export const trpc = createTRPCNext<AppRouter>({
-  config() {
+  config({ ctx }) {
     return {
-      transformer: superjson,
       links: [
         loggerLink({
           enabled: (opts) =>
             process.env.NODE_ENV === "development" ||
             (opts.direction === "down" && opts.result instanceof Error),
         }),
-        getEndingLink(),
+        getEndingLink(ctx),
       ],
+      transformer: superjson,
     };
   },
   ssr: false,

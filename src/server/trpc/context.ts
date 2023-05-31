@@ -4,10 +4,8 @@ import { prisma } from "../db/client";
 
 import type { inferAsyncReturnType } from "@trpc/server";
 import type { CreateNextContextOptions } from "@trpc/server/adapters/next";
-import type { NodeHTTPCreateContextFnOptions } from "@trpc/server/dist/adapters/node-http";
-import type { IncomingMessage } from "http";
+import type { CreateWSSContextFnOptions } from "@trpc/server/adapters/ws";
 import type { Session } from "next-auth";
-import type ws from "ws";
 
 interface CreateContextOptions {
   session: Session | null;
@@ -30,18 +28,13 @@ export const createContextInner = (opts: CreateContextOptions) => {
  * @link https://trpc.io/docs/context
  **/
 export const createContext = async (
-  opts?:
-    | CreateNextContextOptions
-    | NodeHTTPCreateContextFnOptions<IncomingMessage, ws>,
+  opts: CreateNextContextOptions | CreateWSSContextFnOptions,
 ) => {
   const session = await getSession(opts);
 
-  // Get the session from the server using the unstable_getServerSession wrapper function
-  //const session = await getServerAuthSession({ req, res });
-
-  return createContextInner({
+  return {
     session,
-  });
+  };
 };
 
 export type Context = inferAsyncReturnType<typeof createContext>;

@@ -11,7 +11,7 @@ import { appRouter } from "./src/server/trpc/router/_app";
 const port = parseInt(process.env.PORT ?? "3000", 10);
 const dev = process.env.NODE_ENV !== "production";
 
-const hostname = process.env.RENDER_EXTERNAL_HOSTNAME ?? "localhost";
+const hostname = process.env.HOSTNAME ?? "localhost";
 
 const app = next({
   dev,
@@ -46,7 +46,11 @@ void app.prepare().then(() => {
 
   const wss = new ws.Server({ ...(dev ? { noServer: true } : { server }) });
 
-  const handler = applyWSSHandler({ wss, router: appRouter, createContext });
+  const handler = applyWSSHandler({
+    wss,
+    router: appRouter,
+    createContext,
+  });
 
   wss.on("connection", function connection(ws) {
     console.log("Incoming websocket connection...");
@@ -66,8 +70,6 @@ void app.prepare().then(() => {
       }
     });
   }
-
-  console.log(process.env);
 
   server.on("error", (err) => {
     console.error(err);

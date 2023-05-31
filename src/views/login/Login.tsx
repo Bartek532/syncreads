@@ -42,7 +42,6 @@ export const LoginView = memo<LoginProps>(({ providers }) => {
     const loadingToast = toast.loading("Signing in...");
     const result = await signIn("credentials", {
       ...data,
-      callbackUrl: `${window.location.origin}/dashboard`,
       redirect: false,
     });
 
@@ -51,7 +50,7 @@ export const LoginView = memo<LoginProps>(({ providers }) => {
     }
 
     toast.dismiss(loadingToast);
-    return router.push("/dashboard");
+    return router.replace("/dashboard");
   };
 
   return (

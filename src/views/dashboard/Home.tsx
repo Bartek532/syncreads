@@ -82,6 +82,12 @@ export const HomeView = () => {
 
   useGenericLoader([areFeedsLoading, isDeviceLoading]);
 
+  console.log(data);
+
+  if (!data) {
+    return null;
+  }
+
   return (
     <>
       <AddFeedModal
@@ -95,7 +101,7 @@ export const HomeView = () => {
       <div className="bg-white shadow">
         <div className="px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
           <div className="py-6 md:flex md:items-center md:justify-between">
-            <Profile user={data?.user} isRegistered={!!device} />
+            <Profile user={data.user} isRegistered={!!device} />
             <div className="mt-6 flex space-x-3 md:mt-0 md:ml-4">
               <Button
                 variant="secondary"
