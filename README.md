@@ -29,7 +29,7 @@ Please read [CONTRIBUTING.md](https://github.com/Bartek532/rssmarkable/blob/main
 
 ### Prerequisite
 
-- Node.js v16.\*
+- Node.js v18.\*
 - Docker + docker compose
 
 ```bash
@@ -49,4 +49,4 @@ npm run dev
 
 ## Live 🎆
 
-https://rssmarkable.onrender.com
+https://rssmarkable.fly.dev
