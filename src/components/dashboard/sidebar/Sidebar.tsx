@@ -1,9 +1,8 @@
 import clsx from "clsx";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { memo } from "react";
-
-import Logo from "public/svg/logo.svg";
 
 import type { HeroIcon } from "../../../../types/common.types";
 
@@ -24,9 +23,14 @@ export const Sidebar = memo<SidebarProps>(
 
     return (
       <>
-        <div className="flex flex-shrink-0 items-center px-4">
-          <Logo />
-        </div>
+        <Link className="flex flex-shrink-0 items-center px-4" href="/">
+          <Image
+            src="/android-icon-72x72.png"
+            width="36"
+            height="36"
+            alt="rssmarkable logo"
+          />
+        </Link>
         <nav
           className="mt-5 flex flex-1 flex-col justify-between overflow-y-auto"
           aria-label="Sidebar"

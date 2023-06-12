@@ -22,7 +22,7 @@ const variants = [
 export const Button = forwardRef<
   HTMLButtonElement,
   JSX.IntrinsicElements["button"] & {
-    variant?: typeof variants[number]["name"];
+    variant?: (typeof variants)[number]["name"];
   }
 >(({ variant = "primary", children, ...props }, ref) => {
   return (

@@ -67,3 +67,23 @@ export const INDEX_OPEN_SOURCE_HEADING = {
 export const APP_NAME = "RSSmarkable";
 export const APP_DESCRIPTION =
   "Sync all of your favourite RSS feeds directly to your reMarkable tablet with just a few clicks.";
+
+export const TOASTER_CONFIG = {
+  style: {
+    padding: "14px 25px",
+    minWidth: "250px",
+    gap: "10px",
+  },
+  error: {
+    style: {
+      backgroundColor: "#fef2f2",
+      color: "#991b1b",
+    },
+  },
+  success: {
+    style: {
+      backgroundColor: "#f0fdf4",
+      color: "#15803d",
+    },
+  },
+};

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import type { TypeOf } from "zod";
+import { LOG_LEVEL } from "../../../types/log.types";
 
 const PASSWORD_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,}$/;
@@ -71,20 +71,13 @@ export const syncArticleSchema = z.object({
   url: z.string().min(1, "Url is required.").url("Url must be a valid url."),
 });
 
-export type RegisterUserInput = TypeOf<typeof registerUserSchema>;
-export type LoginUserInput = TypeOf<typeof loginUserSchema>;
-export type CreateFeedInput = TypeOf<typeof createFeedSchema>;
-export type CreateAndConnectFeedInput = TypeOf<typeof createAndConnectSchema>;
-export type DeleteFeedInput = TypeOf<typeof deleteFeedSchema>;
-export type DeleteAndDisconnectFeedInput = TypeOf<
-  typeof deleteAndDisconnectFeedSchema
->;
-export type GetWebsiteDetailsInput = TypeOf<typeof getWebsiteDetailsSchema>;
-export type SyncArticleInput = TypeOf<typeof syncArticleSchema>;
-export type RegisterDeviceInput = TypeOf<typeof registerDeviceSchema>;
-export type RegisterAndConnectDeviceInput = TypeOf<
-  typeof registerAndConnectDeviceSchema
->;
-export type UnregisterAndDisconnectDeviceInput = TypeOf<
-  typeof unregisterAndDisconnectDeviceSchema
->;
+export const offsetPaginationSchema = z.object({
+  perPage: z.number().min(1).max(100).nullish(),
+  page: z.number().nullish(),
+});
+
+export const logMessageSchema = z.object({
+  message: z.string(),
+  date: z.string().datetime(),
+  level: z.nativeEnum(LOG_LEVEL),
+});

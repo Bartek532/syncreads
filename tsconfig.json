@@ -23,9 +23,16 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "importsNotUsedAsValues": "error",
     "checkJs": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.mjs"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.cjs",
+    "**/*.mjs",
+    "next.config.js"
+  ],
+  "exclude": ["node_modules"],
+  "files": ["typings/next-auth.d.ts"]
 }

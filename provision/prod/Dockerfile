@@ -12,6 +12,8 @@ RUN npm install
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED 1
+ENV SKIP_ENV_VALIDATION 1
+ARG NEXT_PUBLIC_WS_URL
 
 RUN npm run build
 
@@ -22,6 +24,9 @@ WORKDIR /app
 
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
+
+ARG DATABASE_URL
+ENV DATABASE_URL ${DATABASE_URL}
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs

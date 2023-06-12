@@ -1,10 +1,10 @@
 import { twMerge } from "tailwind-merge";
 
-type LoadingSpinnerProps = Readonly<{
+type SpinnerProps = Readonly<{
   className?: string;
 }>;
 
-export const LoadingSpinner = ({ className }: LoadingSpinnerProps) => (
+export const Spinner = ({ className }: SpinnerProps) => (
   <div role="status">
     <svg
       aria-hidden="true"

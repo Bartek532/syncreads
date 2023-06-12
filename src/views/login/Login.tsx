@@ -8,13 +8,11 @@ import { memo, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-import Logo from "public/svg/logo.svg";
-
 import { AUTH_PROVIDER } from "../../../types/auth.types";
 import { Button } from "../../components/common/Button";
 import { Input } from "../../components/common/Input";
 import { onPromise } from "../../utils/functions";
-import { loginUserSchema } from "../../utils/validation";
+import { loginUserSchema } from "../../utils/validation/schema";
 
 import type { Login } from "../../../types/auth.types";
 import type { ClientSafeProvider } from "next-auth/react";
@@ -44,7 +42,6 @@ export const LoginView = memo<LoginProps>(({ providers }) => {
     const loadingToast = toast.loading("Signing in...");
     const result = await signIn("credentials", {
       ...data,
-      callbackUrl: `${window.location.origin}/dashboard`,
       redirect: false,
     });
 
@@ -53,7 +50,7 @@ export const LoginView = memo<LoginProps>(({ providers }) => {
     }
 
     toast.dismiss(loadingToast);
-    return router.push("/dashboard");
+    return router.replace("/dashboard");
   };
 
   return (
@@ -61,7 +58,12 @@ export const LoginView = memo<LoginProps>(({ providers }) => {
       <div className="flex flex-1 flex-col justify-start  py-12 px-4  dark:bg-slate-900 sm:px-6 lg:flex-none lg:px-20 xl:px-28">
         <div className="mx-auto w-full max-w-sm lg:w-96">
           <div>
-            <Logo />
+            <Image
+              src="/android-icon-72x72.png"
+              width="36"
+              height="36"
+              alt="rssmarkable logo"
+            />
             <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
               Log in to your account
             </h2>
