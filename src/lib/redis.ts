@@ -5,8 +5,6 @@ import { env } from "../env/server";
 import type { RedisOptions } from "ioredis";
 
 const options: RedisOptions = {
-  host: env.REDIS_HOST,
-  port: env.REDIS_PORT,
   lazyConnect: true,
   maxRetriesPerRequest: 3,
   retryStrategy: (times: number) => {
@@ -16,12 +14,11 @@ const options: RedisOptions = {
 
     return Math.min(times * 200, 1000);
   },
-  ...(env.REDIS_PASSWORD ? { password: env.REDIS_PASSWORD } : {}),
 };
 
 export const createRedisClient = () => {
   try {
-    const redis = new Redis(options);
+    const redis = new Redis(env.REDIS_URL, options);
 
     redis.on("connection", (data) => {
       console.log("[Redis] Connected.", data);

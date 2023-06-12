@@ -82,8 +82,6 @@ export const HomeView = () => {
 
   useGenericLoader([areFeedsLoading, isDeviceLoading]);
 
-  console.log(data);
-
   if (!data) {
     return null;
   }

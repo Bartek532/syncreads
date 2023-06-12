@@ -26,6 +26,7 @@ export const createLog = (syncId: string, json: LogMessage[]) => {
 };
 
 export const updateLog = async (logId: number, json: LogMessage) => {
+  console.log(json);
   const log = await getLogById(logId);
 
   if (!log) {
