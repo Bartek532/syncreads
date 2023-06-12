@@ -5,6 +5,7 @@ import { env } from "../env/server";
 import type { RedisOptions } from "ioredis";
 
 const options: RedisOptions = {
+  family: 6,
   lazyConnect: true,
   maxRetriesPerRequest: 3,
   retryStrategy: (times: number) => {
