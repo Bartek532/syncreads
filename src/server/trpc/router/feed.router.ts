@@ -1,5 +1,6 @@
 import {
   createFeedHandler,
+  importFeedsHandler,
   deleteFeedHandler,
   getAllFeedsHandler,
   getFeedDetailsHandler,
@@ -9,6 +10,7 @@ import {
   createFeedSchema,
   deleteFeedSchema,
   getWebsiteDetailsSchema,
+  importFeedsSchema,
   syncArticleSchema,
 } from "../../../utils/validation/schema";
 import { router, protectedProcedure } from "../trpc";
@@ -18,6 +20,11 @@ export const feedRouter = router({
     .input(createFeedSchema)
     .mutation(({ input, ctx }) =>
       createFeedHandler({ ...input, id: ctx.session.user.id }),
+    ),
+  importFeeds: protectedProcedure
+    .input(importFeedsSchema)
+    .mutation(({ input, ctx }) =>
+      importFeedsHandler({ ...input, id: ctx.session.user.id }),
     ),
   deleteFeed: protectedProcedure
     .input(deleteFeedSchema)

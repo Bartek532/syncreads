@@ -43,3 +43,7 @@ export interface FeedWithArticles {
   readonly url: string;
   readonly articles: FeedArticle[];
 }
+
+export enum FILE_TYPE {
+  OPML = "opml",
+}

@@ -1,6 +1,5 @@
-import { prisma } from "../../server/db/client";
-
-import { getUserById } from "./user.service";
+import { prisma } from "../../db/client";
+import { getUserById } from "../user.service";
 
 export const createFeed = async ({ url, id }: { url: string; id: number }) => {
   const feed = await prisma.feed.upsert({
@@ -46,3 +45,5 @@ export const getAllFeeds = () => {
 export const deleteFeed = ({ url }: { url: string }) => {
   return prisma.feed.delete({ where: { url } });
 };
+
+export { importStrategies } from "./import/import.provider";
