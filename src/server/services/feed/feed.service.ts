@@ -1,9 +1,5 @@
-import { XMLParser } from "fast-xml-parser";
-
-import { prisma } from "../../server/db/client";
-import { isURL } from "../../utils/url";
-
-import { getUserById } from "./user.service";
+import { prisma } from "../../db/client";
+import { getUserById } from "../user.service";
 
 export const createFeed = async ({ url, id }: { url: string; id: number }) => {
   const feed = await prisma.feed.upsert({
@@ -38,26 +34,6 @@ export const createFeed = async ({ url, id }: { url: string; id: number }) => {
   return feed;
 };
 
-export const getFeedsFromOPML = (content: string) => {
-  try {
-    const urls: string[] = [];
-    const parser = new XMLParser({
-      ignoreAttributes: false,
-      attributeValueProcessor: (name, value) => {
-        if (name === "xmlUrl" && isURL(value)) {
-          urls.push(value);
-        }
-      },
-    });
-
-    parser.parse(content);
-
-    return urls;
-  } catch (err) {
-    return [];
-  }
-};
-
 export const getFeedByUrl = ({ url }: { url: string }) => {
   return prisma.feed.findUnique({ where: { url }, include: { users: true } });
 };
@@ -69,3 +45,5 @@ export const getAllFeeds = () => {
 export const deleteFeed = ({ url }: { url: string }) => {
   return prisma.feed.delete({ where: { url } });
 };
+
+export { importStrategies } from "./import/import.provider";

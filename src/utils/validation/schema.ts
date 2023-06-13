@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { FILE_TYPE } from "../../../types/feed.types";
 import { LOG_LEVEL } from "../../../types/log.types";
 
 const PASSWORD_REGEX =
@@ -35,8 +36,15 @@ export const createAndConnectSchema = z.object({
   id: z.number(),
 });
 
-export const createFeedsFromOPMLSchema = z.object({
+export const importFeedsSchema = z.object({
   content: z.string(),
+  type: z.nativeEnum(FILE_TYPE),
+});
+
+export const importAndConnectFeedsSchema = z.object({
+  content: z.string(),
+  type: z.nativeEnum(FILE_TYPE),
+  id: z.number(),
 });
 
 export const deleteFeedSchema = z.object({

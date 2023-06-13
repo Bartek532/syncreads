@@ -4,6 +4,7 @@ import { memo, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
+import { FILE_TYPE } from "../../../../types/feed.types";
 import { onPromise } from "../../../utils/functions";
 import { trpc } from "../../../utils/trpc";
 import { createFeedSchema } from "../../../utils/validation/schema";
@@ -34,11 +35,9 @@ export const AddFeedModal = memo<AddFeedModalProps>(({ onClose, ...props }) => {
   const addFeedMutation = trpc.feed.createFeed.useMutation({
     onSuccess: () => utils.user.getUserFeeds.invalidate(),
   });
-  const createFeedsFromOPMLMutation = trpc.feed.createFeedsFromOPML.useMutation(
-    {
-      onSuccess: () => utils.user.getUserFeeds.invalidate(),
-    },
-  );
+  const importFeedsMutation = trpc.feed.importFeeds.useMutation({
+    onSuccess: () => utils.user.getUserFeeds.invalidate(),
+  });
 
   useEffect(() => {
     reset();
@@ -61,20 +60,29 @@ export const AddFeedModal = memo<AddFeedModalProps>(({ onClose, ...props }) => {
   });
 
   const handleFileUpload = async ([file]: File[]) => {
+    const extension = file?.name.split(".").pop();
+
+    if (!extension || !Object.values<string>(FILE_TYPE).includes(extension)) {
+      return toast.error("Unsupported file type provided!");
+    }
+
     if (!file) {
       return;
     }
 
     const content = await file.text();
 
-    await toast.promise(createFeedsFromOPMLMutation.mutateAsync({ content }), {
-      loading: "Adding feeds...",
-      success: ({ message }) => {
-        onClose();
-        return message;
+    return toast.promise(
+      importFeedsMutation.mutateAsync({ content, type: FILE_TYPE.OPML }),
+      {
+        loading: "Uploading feeds...",
+        success: ({ message }) => {
+          onClose();
+          return message;
+        },
+        error: (err: TRPCError | Error) => err.message,
       },
-      error: (err: TRPCError | Error) => err.message,
-    });
+    );
   };
 
   return (
@@ -103,7 +111,7 @@ export const AddFeedModal = memo<AddFeedModalProps>(({ onClose, ...props }) => {
             type="button"
             className="font-medium text-indigo-700 hover:text-indigo-900"
           >
-            Import OPML file
+            import OPML file
           </button>
         </FileUpload>
       </p>

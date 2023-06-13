@@ -6,13 +6,13 @@ import { parse } from "rss-to-json";
 import { syncArticle } from "../../pages/api/sync/article";
 import { ApiError, HTTP_STATUS_CODE } from "../../utils/exceptions";
 import { formatTime } from "../../utils/functions";
+import { importStrategies } from "../services/feed/feed.service";
 import {
   createFeed,
   deleteFeed,
   getAllFeeds,
   getFeedByUrl,
-  getFeedsFromOPML,
-} from "../services/feed.service";
+} from "../services/feed/feed.service";
 import { getApi } from "../services/remarkable.service";
 import { createSync, updateSync } from "../services/sync.service";
 import {
@@ -26,9 +26,9 @@ import { createSyncLogger } from "./sync.controller";
 import type { FeedApi } from "../../../types/feed.types";
 import type {
   CreateAndConnectFeedInput,
-  CreateFeedsFromOPMLInput,
   DeleteAndDisconnectFeedInput,
   GetWebsiteDetailsInput,
+  ImportAndConnectFeedsInput,
   SyncArticleInput,
 } from "../../utils/validation/types";
 
@@ -39,6 +39,7 @@ export const createFeedHandler = async ({
   try {
     const isFeedExists = await getUserFeedByUrl({ url, id });
     if (isFeedExists) {
+      console.log("exists", url);
       throw new TRPCError({
         code: "CONFLICT",
         message: "You've already added this feed!",
@@ -51,6 +52,7 @@ export const createFeedHandler = async ({
       response.status !== HTTP_STATUS_CODE.OK ||
       !response.headers.get("content-type")?.includes("xml")
     ) {
+      console.log(url);
       throw new ApiError(
         HTTP_STATUS_CODE.BAD_REQUEST,
         "Error occured! Please check your provided url and try again!",
@@ -70,24 +72,35 @@ export const createFeedHandler = async ({
   }
 };
 
-export const createFeedsFromOPMLHandler = async ({
+export const importFeedsHandler = async ({
   content,
   id,
-}: CreateFeedsFromOPMLInput) => {
-  const urls = getFeedsFromOPML(content);
+  type,
+}: ImportAndConnectFeedsInput) => {
+  try {
+    const urls = importStrategies[type].parse(content);
 
-  await Promise.all(
-    urls.map(async (url) => {
-      try {
-        await createFeedHandler({ url, id });
-      } catch (_err) {}
-    }),
-  );
+    const results = await Promise.allSettled(
+      urls.map((url) => createFeedHandler({ url, id })),
+    );
 
-  return {
-    status: "Success",
-    message: `Successfully added feeds!`,
-  };
+    const addedFeeds = results.filter(({ status }) => status === "fulfilled");
+
+    if (!addedFeeds.length) {
+      throw new ApiError(
+        HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR,
+        "Feeds import failed!",
+      );
+    }
+
+    return {
+      status: "Success",
+      message: `Successfully added ${addedFeeds.length}/${urls.length} feed(s)!`,
+    };
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
 };
 
 export const deleteFeedHandler = async ({

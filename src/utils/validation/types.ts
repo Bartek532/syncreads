@@ -4,6 +4,8 @@ import type {
   deleteAndDisconnectFeedSchema,
   deleteFeedSchema,
   getWebsiteDetailsSchema,
+  importAndConnectFeedsSchema,
+  importFeedsSchema,
   loginUserSchema,
   logMessageSchema,
   offsetPaginationSchema,
@@ -19,6 +21,10 @@ export type RegisterUserInput = TypeOf<typeof registerUserSchema>;
 export type LoginUserInput = TypeOf<typeof loginUserSchema>;
 export type CreateFeedInput = TypeOf<typeof createFeedSchema>;
 export type CreateAndConnectFeedInput = TypeOf<typeof createAndConnectSchema>;
+export type ImportFeedsInput = TypeOf<typeof importFeedsSchema>;
+export type ImportAndConnectFeedsInput = TypeOf<
+  typeof importAndConnectFeedsSchema
+>;
 export type DeleteFeedInput = TypeOf<typeof deleteFeedSchema>;
 export type DeleteAndDisconnectFeedInput = TypeOf<
   typeof deleteAndDisconnectFeedSchema
