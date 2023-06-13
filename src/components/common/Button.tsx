@@ -10,7 +10,7 @@ const variants = [
   {
     name: "secondary",
     className:
-      "border-gray-300 bg-white text-gray-700 enabled:hover:bg-gray-50 enabled:hover:bg-slate-700 dark:bg-gray-900 dark:text-white dark:hover:bg-white enabled:dark:hover:text-gray-900 enabled:dark:hover:bg-white focus:ring-indigo-500 transition dark:border-gray-700",
+      "border-gray-300 bg-white text-gray-700 enabled:hover:bg-gray-50 dark:bg-slate-800 dark:text-white enabled:dark:hover:bg-slate-900 focus:ring-indigo-500 dark:border-gray-700",
   },
   {
     name: "danger",
@@ -30,7 +30,7 @@ export const Button = forwardRef<
       {...props}
       ref={ref}
       className={twMerge(
-        "inline-flex items-center gap-2 rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50",
+        "inline-flex items-center gap-2 rounded-md border px-4 py-2 text-sm font-medium shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50",
         variants.find(({ name }) => variant === name)?.className,
         props.className,
       )}

@@ -16,7 +16,7 @@ export const SyncItem = memo<SyncItemProps>(({ sync }) => {
   return (
     <tr
       key={sync.id}
-      className="relative flex flex-col items-start gap-1.5 bg-white px-4 py-4 dark:bg-gray-800 sm:table-row"
+      className="relative flex flex-col items-start gap-1.5 px-4 py-4 sm:table-row"
     >
       <td className="w-full whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 sm:max-w-0 sm:px-6 sm:py-4">
         <div className="flex">
@@ -25,7 +25,7 @@ export const SyncItem = memo<SyncItemProps>(({ sync }) => {
             className="group inline-flex space-x-2 truncate text-sm dark:hover:bg-gray-800"
           >
             <ArrowPathIcon
-              className="h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500 dark:text-gray-300 dark:group-hover:text-gray-400"
+              className="h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500 dark:text-gray-400 dark:group-hover:text-gray-300"
               aria-hidden="true"
             />
             <p className="truncate text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-gray-100">

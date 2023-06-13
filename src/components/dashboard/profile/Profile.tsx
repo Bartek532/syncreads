@@ -26,7 +26,7 @@ export const Profile = memo<ProfileProps>(({ user, isRegistered }) => {
         <div>
           <div className="flex items-center">
             {width <= 640 && <Avatar image={user.image} name={user.name} />}
-            <h1 className="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:leading-9 dark:text-gray-100">
+            <h1 className="ml-3 text-2xl font-bold leading-7 text-gray-900 dark:text-gray-100 sm:truncate sm:leading-9">
               Welcome back, {user.name?.split(" ")[0] ?? user.email}!
             </h1>
           </div>

@@ -21,7 +21,7 @@ interface HeaderProps {
 
 export const Header = memo<HeaderProps>(({ user, onSidebarOpen }) => {
   return (
-    <div className="flex h-16 flex-shrink-0 border-b border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-slate-900 lg:border-none">
+    <div className="flex h-16 flex-shrink-0 border-b border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-slate-800 lg:border-none">
       <button
         type="button"
         className="border-r border-gray-200 px-4 text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 dark:border-gray-700 lg:hidden"
@@ -42,7 +42,7 @@ export const Header = memo<HeaderProps>(({ user, onSidebarOpen }) => {
 
           <Menu as="div" className="relative ml-3">
             <div>
-              <Menu.Button className="flex max-w-xs items-center gap-2 rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:bg-slate-900 dark:text-gray-300 dark:hover:bg-slate-800 lg:rounded-md lg:p-2">
+              <Menu.Button className="flex max-w-xs items-center gap-2 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-300 lg:rounded-md lg:p-2">
                 <Avatar image={user?.image} name={user?.name} isSmall />
                 <span className="ml-3 hidden text-sm font-medium text-gray-700 dark:text-gray-300 lg:block">
                   <span className="sr-only">Open user menu for </span>
@@ -70,7 +70,7 @@ export const Header = memo<HeaderProps>(({ user, onSidebarOpen }) => {
                       href="/dashboard/settings"
                       className={clsx(
                         active ? "bg-gray-100 dark:bg-gray-700" : "",
-                        "block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 dark:hover:bg-slate-800",
+                        "block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 dark:hover:bg-slate-800 ",
                       )}
                     >
                       Settings

@@ -96,7 +96,7 @@ export const HomeView = () => {
         isOpen={isSyncArticleModalOpen}
         onClose={() => setIsSyncArticleModalOpen(false)}
       />
-      <div className="bg-white shadow dark:bg-slate-900">
+      <div className="bg-white shadow dark:bg-slate-800">
         <div className="px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
           <div className="py-6 md:flex md:items-center md:justify-between">
             <Profile user={data.user} isRegistered={!!device} />
@@ -117,7 +117,7 @@ export const HomeView = () => {
 
       <div className="mt-8">
         <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-lg font-medium leading-6 text-gray-900">
+          <h2 className="text-lg font-medium leading-6 text-gray-900 dark:text-white">
             Overview
           </h2>
           <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -132,7 +132,7 @@ export const HomeView = () => {
         </section>
 
         <section className="mx-auto mt-10 max-w-6xl px-4 sm:px-6 lg:mt-12 lg:px-8">
-          <h2 className="text-lg font-medium leading-6 text-gray-900 sm:px-0">
+          <h2 className="text-lg font-medium leading-6 text-gray-900 dark:text-white sm:px-0">
             Recent syncs
           </h2>
           {syncs.length ? (

@@ -19,7 +19,7 @@ export const Tile = memo<TileProps>(({ card }) => {
   return (
     <div
       key={card.title}
-      className="overflow-hidden rounded-lg bg-white shadow-md dark:bg-slate-800/20 dark:shadow-slate-900"
+      className="overflow-hidden rounded-lg bg-white shadow dark:bg-slate-800 dark:shadow-slate-900"
     >
       <div className="p-5">
         <div className="flex items-center">
@@ -43,7 +43,7 @@ export const Tile = memo<TileProps>(({ card }) => {
           </div>
         </div>
       </div>
-      <div className="bg-slate-50 px-5 py-3 dark:bg-slate-800/30">
+      <div className="bg-slate-50 px-5 py-3 dark:bg-slate-900/50">
         <div className="text-sm">
           <Link
             href={card.href}
