@@ -16,34 +16,34 @@ export const SyncItem = memo<SyncItemProps>(({ sync }) => {
   return (
     <tr
       key={sync.id}
-      className="relative flex flex-col items-start gap-1.5 bg-white px-4 py-4 sm:table-row"
+      className="relative flex flex-col items-start gap-1.5 px-4 py-4 sm:table-row"
     >
-      <td className="w-full whitespace-nowrap text-sm text-gray-900 sm:max-w-0 sm:px-6 sm:py-4">
+      <td className="w-full whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 sm:max-w-0 sm:px-6 sm:py-4">
         <div className="flex">
           <Link
             href={`/dashboard/syncs/${sync.id}`}
-            className="group inline-flex space-x-2 truncate text-sm"
+            className="group inline-flex space-x-2 truncate text-sm dark:hover:bg-gray-800"
           >
             <ArrowPathIcon
-              className="h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+              className="h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500 dark:text-gray-400 dark:group-hover:text-gray-300"
               aria-hidden="true"
             />
-            <p className="truncate text-gray-500 group-hover:text-gray-900">
+            <p className="truncate text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-gray-100">
               {sync.id}
             </p>
           </Link>
         </div>
       </td>
       <td
-        className="absolute top-11 left-10 whitespace-nowrap text-right text-sm text-gray-500 sm:static sm:px-6 sm:py-4"
+        className="absolute top-11 left-10 whitespace-nowrap text-right text-sm sm:static sm:px-6 sm:py-4"
         aria-label={sync.trigger.toLowerCase()}
       >
         {SYNC_TRIGGER_EMOJIS[sync.trigger]}
       </td>
-      <td className="hidden whitespace-nowrap text-right text-sm text-gray-500 sm:px-6 sm:py-4 md:table-cell">
+      <td className="hidden whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400 sm:px-6 sm:py-4 md:table-cell">
         {sync.syncedArticlesCount}
       </td>
-      <td className="ml-12 whitespace-nowrap text-sm text-gray-500 sm:ml-0 sm:px-6 sm:py-4 md:block">
+      <td className="ml-12 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 sm:ml-0 sm:px-6 sm:py-4 md:block">
         <span
           className={clsx(
             SYNC_STATUS_STYLES[sync.status],
@@ -53,7 +53,7 @@ export const SyncItem = memo<SyncItemProps>(({ sync }) => {
           {sync.status.toLocaleLowerCase()}
         </span>
       </td>
-      <td className="ml-7 whitespace-nowrap text-right text-sm text-gray-500 sm:px-6 sm:py-4">
+      <td className="ml-7 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400 sm:px-6 sm:py-4">
         <time dateTime={sync.startedAt.toString()}>
           {dayjs(sync.startedAt).format("MMMM D, HH:mm")}
         </time>

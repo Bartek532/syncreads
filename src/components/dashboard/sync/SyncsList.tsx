@@ -29,42 +29,42 @@ export const SyncsList = memo<SyncsListProps>(
     return (
       <div className="flex min-w-full flex-col ">
         <div className="overflow-hidden overflow-x-auto shadow sm:rounded-lg">
-          <table className="min-w-full divide-y divide-gray-200">
+          <table className="min-w-full divide-y divide-gray-200 dark:divide-slate-800">
             <thead className="hidden sm:table-header-group">
-              <tr>
+              <tr className="bg-gray-50 text-gray-900 dark:bg-slate-800 dark:text-white">
                 <th
-                  className="bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
+                  className="px-6 py-3 text-left text-sm font-semibold dark:bg-slate-900/50"
                   scope="col"
                 >
                   Sync uid
                 </th>
                 <th
-                  className="whitespace-nowrap bg-gray-50 px-6 py-3 text-right text-sm font-semibold text-gray-900"
+                  className="whitespace-nowrap px-6 py-3 text-right text-sm font-semibold dark:bg-slate-900/50"
                   scope="col"
                 >
                   Trigger
                 </th>
                 <th
-                  className="hidden whitespace-nowrap bg-gray-50 px-6 py-3 text-right text-sm font-semibold text-gray-900 md:table-cell"
+                  className="hidden whitespace-nowrap px-6 py-3 text-right text-sm font-semibold dark:bg-slate-900/50 md:table-cell"
                   scope="col"
                 >
                   Articles
                 </th>
                 <th
-                  className=" bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900 "
+                  className=" px-6 py-3 text-left text-sm font-semibold dark:bg-slate-900/50"
                   scope="col"
                 >
                   Status
                 </th>
                 <th
-                  className="bg-gray-50 px-6 py-3 text-right text-sm font-semibold text-gray-900"
+                  className="px-6 py-3 text-right text-sm font-semibold dark:bg-slate-900/50"
                   scope="col"
                 >
                   Date
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200 bg-white">
+            <tbody className="divide-y divide-gray-200 bg-white dark:bg-slate-800">
               {syncs.map((sync) => (
                 <SyncItem sync={sync} key={sync.id} />
               ))}
@@ -73,11 +73,11 @@ export const SyncsList = memo<SyncsListProps>(
 
           {paginationType === PAGINATION_TYPE.OFFSET ? (
             <nav
-              className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6"
+              className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 dark:border-slate-900 dark:bg-slate-800 sm:px-6"
               aria-label="Pagination"
             >
               <div className="hidden sm:block">
-                <p className="text-sm text-gray-700">
+                <p className="text-sm text-gray-700 dark:text-gray-500">
                   Showing{" "}
                   <span className="font-medium">
                     {(page - 1) * perPage + 1}

@@ -55,7 +55,7 @@ export const LoginView = memo<LoginProps>(({ providers }) => {
 
   return (
     <div className="flex min-h-screen">
-      <div className="flex flex-1 flex-col justify-start  py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-28">
+      <div className="flex flex-1 flex-col justify-start  py-12 px-4  dark:bg-slate-900 sm:px-6 lg:flex-none lg:px-20 xl:px-28">
         <div className="mx-auto w-full max-w-sm lg:w-96">
           <div>
             <Image
@@ -64,10 +64,10 @@ export const LoginView = memo<LoginProps>(({ providers }) => {
               height="36"
               alt="rssmarkable logo"
             />
-            <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">
+            <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
               Log in to your account
             </h2>
-            <p className="mt-2 text-sm text-gray-600">
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
               to begin your journey 🚀
             </p>
           </div>
@@ -99,7 +99,7 @@ export const LoginView = memo<LoginProps>(({ providers }) => {
                           Sign in with {provider.name}
                         </span>
 
-                        <div className="h-6 w-6">
+                        <div className="h-6 w-6 dark:brightness-125">
                           <Icon />
                         </div>
                         <span>{provider.name}</span>
@@ -113,10 +113,10 @@ export const LoginView = memo<LoginProps>(({ providers }) => {
                   className="absolute inset-0 flex items-center"
                   aria-hidden="true"
                 >
-                  <div className="w-full border-t border-gray-300" />
+                  <div className="w-full border-t border-gray-300 dark:text-gray-700" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="bg-white px-2 text-gray-500">
+                  <span className="bg-white px-2 text-gray-500 dark:bg-slate-900 dark:text-gray-400">
                     or continue with
                   </span>
                 </div>
@@ -145,7 +145,7 @@ export const LoginView = memo<LoginProps>(({ providers }) => {
                   Password
                 </Input>
                 <div className="flex items-center justify-end">
-                  <div className="text-sm">
+                  <div className="text-sm dark:text-gray-400">
                     Don&apos;t have an account yet?
                     <Link
                       href="/register"
@@ -157,12 +157,9 @@ export const LoginView = memo<LoginProps>(({ providers }) => {
                 </div>
 
                 <div>
-                  <button
-                    type="submit"
-                    className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                  >
+                  <Button type="submit" className="flex w-full justify-center">
                     Sign in
-                  </button>
+                  </Button>
                 </div>
               </form>
             </div>

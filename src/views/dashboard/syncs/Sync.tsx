@@ -17,10 +17,14 @@ interface SyncViewProps {
 }
 
 const variants = {
-  [LOG_LEVEL.ERROR]: "bg-red-100 text-red-600 hover:bg-red-200",
-  [LOG_LEVEL.INFO]: "bg-gray-50 hover:bg-gray-200",
-  [LOG_LEVEL.VERBOSE]: "bg-sky-50 text-sky-600 hover:bg-sky-100",
-  [LOG_LEVEL.WARN]: "bg-amber-100 text-amber-600 hover:bg-amber-200",
+  [LOG_LEVEL.INFO]:
+    "bg-gray-50 hover:bg-gray-200 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-gray-400",
+  [LOG_LEVEL.ERROR]:
+    "bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-300 dark:text-red-800 dark:hover:bg-red-400",
+  [LOG_LEVEL.VERBOSE]:
+    "bg-sky-50 text-sky-600 hover:bg-sky-100 dark:bg-sky-200 text-sky-700 dark:hover:bg-sky-300",
+  [LOG_LEVEL.WARN]:
+    "bg-amber-100 text-amber-600 hover:bg-amber-200 dark:bg-amber-200 dark:text-amber-700 dark:hover:bg-amber-300",
 };
 
 export const SyncView = memo<SyncViewProps>(({ uid }) => {
@@ -63,10 +67,10 @@ export const SyncView = memo<SyncViewProps>(({ uid }) => {
 
   return (
     <section className="mx-auto mt-8 max-w-6xl sm:px-6 lg:mt-12 lg:px-8">
-      <h1 className="px-4 text-lg font-medium leading-6 text-gray-900 sm:px-0">
+      <h1 className="px-4 text-lg font-medium leading-6 text-gray-900 dark:text-white sm:px-0">
         {uid}
       </h1>
-      <div className="mt-8 overflow-hidden overflow-x-auto bg-gray-50 py-3 sm:rounded-lg sm:py-4">
+      <div className="mt-8 overflow-hidden overflow-x-auto bg-gray-50 py-3 dark:bg-slate-800 sm:rounded-lg sm:py-4">
         <table className="min-w-full divide-y divide-gray-200">
           <tbody>
             {logs.map(({ date, message, level }, index) => (
@@ -75,7 +79,7 @@ export const SyncView = memo<SyncViewProps>(({ uid }) => {
                 className={twMerge(
                   variants[level],
                   activeId === `#L${index + 1}` &&
-                    "bg-orange-300 text-orange-800 hover:bg-orange-400",
+                    "bg-orange-300 text-orange-800 hover:bg-orange-400 dark:bg-orange-400 dark:text-orange-100 dark:hover:bg-orange-500",
                   "text-sm sm:text-base",
                 )}
               >

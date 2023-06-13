@@ -66,7 +66,7 @@ export const SyncsView = () => {
   return (
     <section className="mx-auto mt-8 max-w-6xl px-4 sm:px-6 lg:mt-12 lg:px-8">
       <div className="flex w-full flex-wrap items-center justify-between gap-3">
-        <h1 className="text-lg font-medium leading-6 text-gray-900">
+        <h1 className="text-lg font-medium leading-6 text-gray-900 dark:text-white">
           You synced data <b>{total}</b> times!
         </h1>
         <Button onClick={onPromise(feedsSyncHandler)}>
