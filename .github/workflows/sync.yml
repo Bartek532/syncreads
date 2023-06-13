@@ -1,11 +1,12 @@
-name: Fetch feeds every 6 hours
+name: Fetch feeds every day on 10:00 AM
 on:
   schedule:
-    - cron: "* */6 * * *"
+    - cron: "0 10 * * *"
 jobs:
   sync:
     name: Fetch feed articles and save to reMarkable cloud.
     runs-on: ubuntu-latest
+    timeout-minutes: 40
     steps:
       - name: cURL request
-        run: "curl https://rssmarkable.onrender.com/api/sync -H 'api-key: ${{ secrets.API_KEY }}'"
+        run: "curl -v https://rssmarkable.onrender.com/api/sync -H 'api-key: ${{ secrets.API_KEY }}' -H 'trigger: SCHEDULE'"

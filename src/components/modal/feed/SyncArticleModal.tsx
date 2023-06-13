@@ -6,11 +6,11 @@ import toast from "react-hot-toast";
 
 import { onPromise } from "../../../utils/functions";
 import { trpc } from "../../../utils/trpc";
-import { createFeedSchema } from "../../../utils/validation";
+import { createFeedSchema } from "../../../utils/validation/schema";
 import { Input } from "../../common/Input";
 import { FormModal } from "../FormModal";
 
-import type { SyncArticleInput } from "../../../utils/validation";
+import type { SyncArticleInput } from "../../../utils/validation/types";
 import type { BaseModal } from "../BaseModal";
 import type { TRPCError } from "@trpc/server";
 import type { ComponentProps } from "react";
@@ -32,7 +32,7 @@ export const SyncArticleModal = memo<SyncArticleModalProps>(
     });
     const utils = trpc.useContext();
     const syncArticleMutation = trpc.feed.syncArticle.useMutation({
-      onSuccess: () => utils.user.getUserSyncs.invalidate(),
+      onSuccess: () => utils.sync.getUserSyncs.invalidate(),
     });
 
     useEffect(() => {

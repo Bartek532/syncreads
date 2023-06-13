@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("markdown.css");
 
 html,
 body {
@@ -9,4 +10,20 @@ body {
 
 #__next {
   @apply flex min-h-full flex-col;
+}
+
+*::-webkit-scrollbar {
+  @apply h-2 w-2.5;
+}
+
+*::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+*::-webkit-scrollbar-thumb {
+  @apply rounded-lg bg-gray-300;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
 }

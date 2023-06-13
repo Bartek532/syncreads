@@ -1,20 +1,18 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
 import { memo, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-
-import Logo from "public/svg/logo.svg";
 
 import { AUTH_PROVIDER } from "../../../types/auth.types";
 import { Button } from "../../components/common/Button";
 import { Input } from "../../components/common/Input";
 import { onPromise } from "../../utils/functions";
-import { loginUserSchema } from "../../utils/validation";
+import { loginUserSchema } from "../../utils/validation/schema";
 
 import type { Login } from "../../../types/auth.types";
 import type { ClientSafeProvider } from "next-auth/react";
@@ -44,7 +42,6 @@ export const LoginView = memo<LoginProps>(({ providers }) => {
     const loadingToast = toast.loading("Signing in...");
     const result = await signIn("credentials", {
       ...data,
-      callbackUrl: `${window.location.origin}/dashboard`,
       redirect: false,
     });
 
@@ -53,19 +50,24 @@ export const LoginView = memo<LoginProps>(({ providers }) => {
     }
 
     toast.dismiss(loadingToast);
-    return router.push("/dashboard");
+    return router.replace("/dashboard");
   };
 
   return (
     <div className="flex min-h-screen">
-      <div className="flex flex-1 flex-col justify-start  py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-28">
+      <div className="flex flex-1 flex-col justify-start  py-12 px-4  dark:bg-slate-900 sm:px-6 lg:flex-none lg:px-20 xl:px-28">
         <div className="mx-auto w-full max-w-sm lg:w-96">
           <div>
-            <Logo />
-            <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">
+            <Image
+              src="/android-icon-72x72.png"
+              width="36"
+              height="36"
+              alt="rssmarkable logo"
+            />
+            <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
               Log in to your account
             </h2>
-            <p className="mt-2 text-sm text-gray-600">
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
               to begin your journey 🚀
             </p>
           </div>
@@ -97,7 +99,7 @@ export const LoginView = memo<LoginProps>(({ providers }) => {
                           Sign in with {provider.name}
                         </span>
 
-                        <div className="h-6 w-6">
+                        <div className="h-6 w-6 dark:brightness-125">
                           <Icon />
                         </div>
                         <span>{provider.name}</span>
@@ -111,10 +113,10 @@ export const LoginView = memo<LoginProps>(({ providers }) => {
                   className="absolute inset-0 flex items-center"
                   aria-hidden="true"
                 >
-                  <div className="w-full border-t border-gray-300" />
+                  <div className="w-full border-t border-gray-300 dark:text-gray-700" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="bg-white px-2 text-gray-500">
+                  <span className="bg-white px-2 text-gray-500 dark:bg-slate-900 dark:text-gray-400">
                     or continue with
                   </span>
                 </div>
@@ -143,7 +145,7 @@ export const LoginView = memo<LoginProps>(({ providers }) => {
                   Password
                 </Input>
                 <div className="flex items-center justify-end">
-                  <div className="text-sm">
+                  <div className="text-sm dark:text-gray-400">
                     Don&apos;t have an account yet?
                     <Link
                       href="/register"
@@ -155,12 +157,9 @@ export const LoginView = memo<LoginProps>(({ providers }) => {
                 </div>
 
                 <div>
-                  <button
-                    type="submit"
-                    className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                  >
+                  <Button type="submit" className="flex w-full justify-center">
                     Sign in
-                  </button>
+                  </Button>
                 </div>
               </form>
             </div>

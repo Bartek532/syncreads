@@ -12,7 +12,7 @@ import {
   deleteFeedSchema,
   getWebsiteDetailsSchema,
   syncArticleSchema,
-} from "../../../utils/validation";
+} from "../../../utils/validation/schema";
 import { router, protectedProcedure } from "../trpc";
 
 export const feedRouter = router({

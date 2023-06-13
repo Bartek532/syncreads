@@ -6,11 +6,11 @@ import toast from "react-hot-toast";
 
 import { onPromise } from "../../../utils/functions";
 import { trpc } from "../../../utils/trpc";
-import { registerDeviceSchema } from "../../../utils/validation";
+import { registerDeviceSchema } from "../../../utils/validation/schema";
 import { Input } from "../../common/Input";
 import { FormModal } from "../FormModal";
 
-import type { RegisterDeviceInput } from "../../../utils/validation";
+import type { RegisterDeviceInput } from "../../../utils/validation/types";
 import type { BaseModal } from "../BaseModal";
 import type { TRPCError } from "@trpc/server";
 import type { ComponentProps } from "react";
@@ -67,12 +67,11 @@ export const AddDeviceModal = memo<AddDeviceModalProps>(
         {...props}
       >
         <Input
-          type="code"
           placeholder="Enter your one-time code..."
           error={errors.code}
           {...register("code")}
         />
-        <p className="mt-3 text-xs text-gray-500">
+        <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">
           You can find one-time code on{" "}
           <a
             href="https://my.remarkable.com/device/desktop/connect"

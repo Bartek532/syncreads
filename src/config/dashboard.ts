@@ -9,13 +9,6 @@ import {
   CpuChipIcon,
 } from "@heroicons/react/24/outline";
 
-export const PDF_OPTIONS = {
-  format: "A4",
-  margin: { top: 30, bottom: 30, left: 30, right: 30 },
-  printBackground: true,
-  timeout: 0,
-} as const;
-
 export const DASHBOARD_NAVIGATION = [
   { name: "Home", href: "/dashboard", icon: HomeIcon },
   {
@@ -60,3 +53,8 @@ export const DASHBOARD_CARDS = [
     link: "View syncs",
   },
 ];
+
+export enum PAGINATION_TYPE {
+  OFFSET = "OFFSET",
+  CURSOR = "CURSOR",
+}

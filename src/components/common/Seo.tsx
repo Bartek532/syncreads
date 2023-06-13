@@ -1,6 +1,6 @@
 import { NextSeo } from "next-seo";
 
-import { APP_NAME } from "../../utils/constants";
+import { APP_NAME, APP_DESCRIPTION } from "../../config";
 
 type SeoProps = Readonly<{
   title?: string;
@@ -11,7 +11,7 @@ const titleSuffix = ` • ${APP_NAME}`;
 
 export const Seo = ({
   title = "",
-  description = "RSSmarkable.com - Sync all of your favourite RSS feeds directly to your Remarkable tablet with just a few clicks.",
+  description = APP_DESCRIPTION,
 }: SeoProps) => {
   const formattedTitle = title.trim() ? `${title}${titleSuffix}` : APP_NAME;
 
@@ -21,7 +21,7 @@ export const Seo = ({
       description={description}
       openGraph={{
         type: "website",
-        siteName: "RSSmarkable.com",
+        siteName: APP_NAME,
         locale: "en_US",
         // TODO: add image
       }}

@@ -27,7 +27,7 @@ export const FeedTile = memo<FeedTileProps>(({ url, onChange, isChecked }) => {
 
   return (
     <>
-      <li className="flex items-center gap-6">
+      <li className="flex items-center gap-4 md:gap-6">
         <Checkbox
           name={url}
           // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -36,23 +36,22 @@ export const FeedTile = memo<FeedTileProps>(({ url, onChange, isChecked }) => {
         />
         <div
           className={twMerge(
-            "group relative flex w-full items-center rounded-2xl bg-white p-2 shadow focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 md:py-1",
+            "group relative flex w-full items-stretch gap-3 rounded-2xl bg-white pl-1 shadow focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 dark:bg-slate-800 md:pl-0",
             isChecked && "ring-2 ring-indigo-500 ring-offset-2",
           )}
         >
           <div
-            className="aspect-square h-24 rounded-l-2xl bg-cover bg-center"
+            className="hidden shrink-0 grow-0 basis-1/5 rounded-l-2xl bg-cover bg-center md:block"
             style={{ backgroundImage: `url(${data.feed.image ?? ""})` }}
           ></div>
-          <div className="p-3 pr-10 md:py-0">
-            <h3 className="text-base font-medium sm:text-lg">
+          <div className="p-3 pr-12 md:py-4">
+            <h3 className="text-base font-medium dark:text-white sm:text-lg">
               <a
                 href={data.feed.url}
                 className="focus:outline-none"
                 target="_blank"
                 rel="noreferrer"
               >
-                <span className="absolute inset-0" aria-hidden="true" />
                 {data.feed.title}
               </a>
             </h3>
