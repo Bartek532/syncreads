@@ -131,7 +131,7 @@ export const FeedsView = () => {
               <Checkbox
                 name="all"
                 onChange={handleSelectAllChange}
-                isChecked={feeds.length === checkedFeeds.length}
+                checked={feeds.length === checkedFeeds.length}
               />
               Select all
             </label>
@@ -141,8 +141,8 @@ export const FeedsView = () => {
                   url={feed.url}
                   key={feed.id}
                   isChecked={checkedFeeds.some((url) => url === feed.url)}
-                  onChange={(e) =>
-                    handleFeedCheckChange(feed.url, e.target.checked)
+                  onChange={(checked) =>
+                    handleFeedCheckChange(feed.url, checked)
                   }
                 />
               ))}

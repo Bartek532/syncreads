@@ -1,6 +1,7 @@
 import { SyncStatus, SyncTrigger } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import dayjs from "dayjs";
+import { getLinkPreview } from "link-preview-js";
 import { parse } from "rss-to-json";
 
 import { syncArticle } from "../../pages/api/sync/article";
@@ -226,15 +227,30 @@ export const getFeedDetailsHandler = async ({
   url,
 }: GetWebsiteDetailsInput) => {
   try {
-    const feed = (await parse(url)) as FeedApi; // TODO: fix title
+    const feed = (await parse(url)) as FeedApi;
+    const link =
+      typeof feed.link === "string"
+        ? feed.link
+        : feed.link
+        ? feed.link.find(({ rel }) => rel === "alternate")?.href
+          ? feed.link.find(({ rel }) => rel === "alternate")?.href
+          : feed.link[0]?.href
+        : url;
+
+    const preview = await getLinkPreview(link ?? url, {
+      followRedirects: "follow",
+    });
 
     return {
       status: "Success",
       feed: {
-        title: feed.title,
-        description: feed.description,
-        image: feed.image,
-        url: feed.link,
+        title: typeof feed.title === "string" ? feed.title : feed.title.$text,
+        description:
+          "description" in preview
+            ? preview.description ?? feed.description
+            : feed.description,
+        image: "images" in preview ? preview.images[0] : feed.image,
+        url: link,
       },
     };
   } catch (err) {
