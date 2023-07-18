@@ -21,5 +21,3 @@ module.exports = withPWA({
     return config;
   },
 });
-
-// export default config;

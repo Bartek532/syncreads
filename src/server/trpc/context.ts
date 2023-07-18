@@ -6,6 +6,7 @@ import type { inferAsyncReturnType } from "@trpc/server";
 import type { CreateNextContextOptions } from "@trpc/server/adapters/next";
 import type { CreateWSSContextFnOptions } from "@trpc/server/adapters/ws";
 import type { Session } from "next-auth";
+import type { GetSessionParams } from "next-auth/react";
 
 interface CreateContextOptions {
   session: Session | null;
@@ -30,7 +31,7 @@ export const createContextInner = (opts: CreateContextOptions) => {
 export const createContext = async (
   opts: CreateNextContextOptions | CreateWSSContextFnOptions,
 ) => {
-  const session = await getSession(opts);
+  const session = await getSession(opts as GetSessionParams);
 
   return {
     session,
