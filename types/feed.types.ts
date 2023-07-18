@@ -19,9 +19,11 @@ export interface FeedItemApi {
 }
 
 export interface FeedApi {
-  readonly title: string;
+  readonly title: string | { $text: string; type: string };
   readonly description?: string;
-  readonly link?: string;
+  readonly link?:
+    | string
+    | { href: string; rel: string; type?: string; hreflang?: string }[];
   readonly image?: string;
   readonly items: FeedItemApi[];
 }

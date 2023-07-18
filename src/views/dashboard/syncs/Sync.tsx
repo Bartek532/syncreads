@@ -18,7 +18,7 @@ interface SyncViewProps {
 
 const variants = {
   [LOG_LEVEL.INFO]:
-    "bg-gray-50 hover:bg-gray-200 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-gray-400",
+    "bg-white hover:bg-gray-200 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-gray-400",
   [LOG_LEVEL.ERROR]:
     "bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-300 dark:text-red-800 dark:hover:bg-red-400",
   [LOG_LEVEL.VERBOSE]:
@@ -70,7 +70,7 @@ export const SyncView = memo<SyncViewProps>(({ uid }) => {
       <h1 className="px-4 text-lg font-medium leading-6 text-gray-900 dark:text-white sm:px-0">
         {uid}
       </h1>
-      <div className="mt-8 overflow-hidden overflow-x-auto bg-gray-50 py-3 dark:bg-slate-800 sm:rounded-lg sm:py-4">
+      <div className="mt-8 overflow-hidden overflow-x-auto bg-white py-3 dark:bg-slate-800 sm:rounded-lg sm:py-4">
         <table className="min-w-full divide-y divide-gray-200">
           <tbody>
             {logs.map(({ date, message, level }, index) => (
