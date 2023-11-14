@@ -21,7 +21,7 @@ jobs:
       matrix:
         language: ["javascript"]
     steps:
-      - name: ✅ Checkout repository
+      - name: ✅ Checkout code
         uses: actions/checkout@v3
       - name: 🎬 Initialize CodeQL
         uses: github/codeql-action/init@v2
