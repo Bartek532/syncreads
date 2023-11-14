@@ -1,0 +1,46 @@
+name: Pull request
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-test-lint:
+    name: 🧩 Build, lint and test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ✅ Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔨 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+
+      - name: ✨ Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: 🔌 Install
+        run: npm ci
+
+      - name: 🖼️ Format
+        run: npm run format:check
+
+      - name: 🖍️ Build
+        env:
+          SKIP_ENV_VALIDATION: 1
+        run: npm run build
+
+      - name: 🧪 Test
+        run: npm run test:ci
