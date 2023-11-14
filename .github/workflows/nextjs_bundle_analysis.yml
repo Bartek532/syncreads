@@ -24,14 +24,17 @@ jobs:
   analyze:
     name: 🧑‍🔬 Analyze
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
     steps:
       - name: ✅ Checkout code
         uses: actions/checkout@v3
 
-      - name: 🔨 Setup Node.js
+      - name: 🔨 Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: 20.x
+          node-version: ${{ matrix.node-version }}
 
       - uses: pnpm/action-setup@v2
         name: 🔌 Install pnpm
@@ -51,7 +54,7 @@ jobs:
           path: .next/cache
           key: ${{ runner.os }}-build-${{ env.cache-name }}
 
-      - name: 📦 Build next.js app
+      - name: 📦 Build Next.js app
         env:
           SKIP_ENV_VALIDATION: 1
         run: ./node_modules/.bin/next build
