@@ -15,35 +15,49 @@ In order to create a pull request for RSSmarkable, follow the GitHub instruction
 Description of the project files and directories.
 
 ```bash
-├── .husky/                     # Husky config
-├── .github/                    # Github related files
-├── prisma/                     # Prisma schema and migrations
-├── provision/                  # Mainly config for local and prod Docker
-├── public/                     # All images, icons, fonts
-├── src/                        # Main source of app
-│    ├── components/            # React components
-│    ├── env/                   # Config for environment variables
-│    ├── pages/                 # Next.js pages
-│    ├── server/                # All files related to backend side (mainly tRPC)
-│    ├── styles/                # All shared styles
-│    ├── types/                 # TypeScript types
-│    ├── utils/                 # All utilities
-│    └── views/                 # All views used in pages
-├── .dockerignore               # Files ignored by Docker
-├── .env.example                # Examples of env variables
-├── .eslintrc.js                # ESLint configuration file
-├── .gitignore                  # Files ignored by git
-├── .prettierrc                 # Code convention enforced by Prettier
-├── next.config.mjs             # Next.js config
-├── package-lock.json           # NPM lockfile
-├── package.json                # Dependencies and additional information
+├── .husky/                       # Husky config
+├── .github/                      # Github related files (workflows, templates)
+├── provision/                    # Configs for deployment and local development (Docker)
+├── public/                       # All images, icons, fonts
+├── src/                          # Main source of app
+│    ├── components/              # React components
+│    ├── config/                  # Static data used to config components/logic
+│    ├── env/                     # Config for environment variables
+│    ├── hooks/                   # Shared React hooks
+│    ├── lib/                     # External libs configuration files
+│    ├── pages/                   # Next.js pages
+│    ├── providers/               # Providers from React Context
+│    ├── server/                  # All files related to backend side (mainly tRPC)
+│        ├── common/              # Shared utils
+│        ├── controllers/         # Controllers for handling input/output
+│        ├── db/                  # Database files (Prisma)
+│        ├── services/            # Server business logic
+│        └── trpc/                # tRPC config
+│    ├── styles/                  # All shared styles
+│    ├── types/                   # TypeScript types
+│    ├── typings/                 # TypeScript types definitions
+│    ├── utils/                   # All utilities
+│    └── views/                   # All views used in pages
+├── .dockerignore                 # Files ignored by Docker
+├── .env.example                  # Examples of env variables
+├── .eslintrc.json                # ESLint configuration file
+├── .gitignore                    # Files ignored by git
+├── commitlint.config.cjs         # Config for CommitLint - to enforce commit consistency
+├── next.config.js                # Next.js config
+├── package.json                  # Dependencies and additional informations about the project
+├── pnpm-lock.yaml                # Pnpm lockfile
+├── prettier.config.cjs           # Code convention enforced by Prettier
 ├── README.md
-└── tsconfig.json               # Typescript configuration
+├── server.ts                     # Custom Next.js server code
+├── tailwind.config.js            # Tailwind config
+├── tsconfig.json                 # Typescript configuration
+├── tsconfig.server.json          # Typescript configuration for server
+└── vitest.config.ts              # Vitest configuration
 ```
 
 ## Styleguide
 
-Coding conventions are enforced by [ESLint](.eslintrc.js) and [Prettier](.prettierrc).
+Coding conventions are enforced by [ESLint](.eslintrc.json) and [Prettier](prettier.config.cjs).
 
 - Semicolons
 - Double quotes
@@ -88,6 +102,8 @@ Component.displayName = "Component";
 | [Docker](https://www.docker.com/)              | An open platform for developing, shipping, and running applications |
 | [PostgreSQL](https://www.postgresql.org)       | Relational database                                                 |
 | [Prisma](https://www.prisma.io)                | ORM for TypeScript and Node.js                                      |
+| [Redis](https://redis.io)                      | Open source, in-memory data store                                   |
+| [Vitest](https://vitest.dev)                   | Testing framework                                                   |
 | [Tailwind](https://tailwindcss.com/)           | Utility-first CSS framework                                         |
 | [React Hook Form](https://react-hook-form.com) | Forms with easy-to-use validation                                   |
 | [Husky](https://github.com/typicode/husky)     | Git hooks                                                           |
