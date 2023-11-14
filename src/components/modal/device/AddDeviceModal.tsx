@@ -10,6 +10,7 @@ import { registerDeviceSchema } from "../../../utils/validation/schema";
 import { Input } from "../../common/Input";
 import { FormModal } from "../FormModal";
 
+import type { HeroIcon } from "../../../types/common.types";
 import type { RegisterDeviceInput } from "../../../utils/validation/types";
 import type { BaseModal } from "../BaseModal";
 import type { TRPCError } from "@trpc/server";
@@ -61,7 +62,7 @@ export const AddDeviceModal = memo<AddDeviceModalProps>(
         isOpen={isOpen}
         onClose={onClose}
         title="Register device to enable sync!"
-        icon={PuzzlePieceIcon}
+        icon={PuzzlePieceIcon as HeroIcon}
         submitText="Register device"
         onSubmit={onPromise(onSubmit)}
         {...props}

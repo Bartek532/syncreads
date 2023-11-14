@@ -116,6 +116,9 @@
       "prettier --write"
     ]
   },
+  "prisma": {
+    "schema": "src/server/db/schema.prisma"
+  },
   "nextBundleAnalysis": {
     "budget": 358400,
     "budgetPercentIncreaseRed": 20,
