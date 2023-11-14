@@ -1,4 +1,4 @@
-import type { FILE_TYPE } from "../../../../../types/feed.types";
+import type { FILE_TYPE } from "../../../../types/feed.types";
 
 export interface ImportStrategy {
   readonly parse: (content: string) => string[];

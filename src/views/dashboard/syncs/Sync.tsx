@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 import { memo, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { LOG_LEVEL } from "../../../../types/log.types";
 import { useWindowSize } from "../../../hooks/useWindowSize";
+import { LOG_LEVEL } from "../../../types/log.types";
 import { onPromise } from "../../../utils/functions";
 import { trpc } from "../../../utils/trpc";
 import { isLogMessage } from "../../../utils/validation/validator";

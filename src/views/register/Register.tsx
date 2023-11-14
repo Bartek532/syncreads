@@ -7,14 +7,14 @@ import { memo, useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
-import { AUTH_PROVIDER } from "../../../types/auth.types";
 import { Button } from "../../components/common/Button";
 import { Input } from "../../components/common/Input";
+import { AUTH_PROVIDER } from "../../types/auth.types";
 import { onPromise } from "../../utils/functions";
 import { trpc } from "../../utils/trpc";
 import { registerUserSchema } from "../../utils/validation/schema";
 
-import type { Register } from "../../../types/auth.types";
+import type { Register } from "../../types/auth.types";
 import type { TRPCError } from "@trpc/server";
 import type { ClientSafeProvider } from "next-auth/react";
 

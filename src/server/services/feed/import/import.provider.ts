@@ -1,4 +1,4 @@
-import { FILE_TYPE } from "../../../../../types/feed.types";
+import { FILE_TYPE } from "../../../../types/feed.types";
 
 import { opmlStrategy } from "./opml/opml.strategy";
 

@@ -4,7 +4,7 @@ import uuid4 from "uuid4";
 
 import { ENTRY_TYPE } from "../../config/remarkable";
 
-import type { Logger } from "../../../types/log.types";
+import type { Logger } from "../../types/log.types";
 import type {
   CollectionTypeMetadata,
   Entry,

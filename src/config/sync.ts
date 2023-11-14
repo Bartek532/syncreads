@@ -1,6 +1,6 @@
 import { SyncTrigger } from "@prisma/client";
 
-import { LOG_LEVEL } from "../../types/log.types";
+import { LOG_LEVEL } from "../types/log.types";
 
 export const PDF_OPTIONS = {
   format: "A4",

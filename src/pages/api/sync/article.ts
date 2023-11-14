@@ -7,8 +7,8 @@ import { syncEntry } from "../../../server/services/remarkable.service";
 import { createSync, getPage } from "../../../server/services/sync.service";
 import { formatTime } from "../../../utils/functions";
 
-import type { FeedArticle } from "../../../../types/feed.types";
-import type { Logger } from "../../../../types/log.types";
+import type { FeedArticle } from "../../../types/feed.types";
+import type { Logger } from "../../../types/log.types";
 import type { Sync } from "@prisma/client";
 import type { Page } from "puppeteer-core";
 import type { RemarkableApi } from "rmapi-js";

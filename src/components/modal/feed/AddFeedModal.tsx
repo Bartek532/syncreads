@@ -4,7 +4,7 @@ import { memo, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-import { FILE_TYPE } from "../../../../types/feed.types";
+import { FILE_TYPE } from "../../../types/feed.types";
 import { onPromise } from "../../../utils/functions";
 import { trpc } from "../../../utils/trpc";
 import { createFeedSchema } from "../../../utils/validation/schema";

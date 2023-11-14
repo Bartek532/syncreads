@@ -21,11 +21,8 @@ import { formatTime } from "../../../utils/functions";
 
 import { syncArticle } from "./article";
 
-import type {
-  FeedArticle,
-  FeedWithArticles,
-} from "../../../../types/feed.types";
-import type { Logger } from "../../../../types/log.types";
+import type { FeedArticle, FeedWithArticles } from "../../../types/feed.types";
+import type { Logger } from "../../../types/log.types";
 import type { Feed, Sync } from "@prisma/client";
 import type { Page } from "puppeteer-core";
 import type { RemarkableApi } from "rmapi-js";
