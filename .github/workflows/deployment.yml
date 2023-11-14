@@ -8,6 +8,7 @@ jobs:
   deploy:
     name: 🚀 Deploy
     runs-on: ubuntu-latest
+    environment: Production
     steps:
       - name: ✅ Checkout code
         uses: actions/checkout@v3

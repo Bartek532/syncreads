@@ -1,4 +1,4 @@
-name: Pull request
+name: Tests
 
 on:
   pull_request:
@@ -9,8 +9,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-test-lint:
-    name: 🧩 Build, lint and test
+  test:
+    name: 🧪 Test
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -33,14 +33,6 @@ jobs:
 
       - name: 🔌 Install
         run: pnpm install
-
-      - name: 🖼️ Format
-        run: pnpm run format:check
-
-      - name: 🖍️ Build
-        env:
-          SKIP_ENV_VALIDATION: 1
-        run: pnpm run build
 
       - name: 🧪 Test
         run: pnpm run test:ci
