@@ -4,12 +4,13 @@ import uuid4 from "uuid4";
 
 import { ENTRY_TYPE } from "../../config/remarkable";
 
-import type { Logger } from "../../../types/log.types";
+import type { Logger } from "../../types/log.types";
 import type {
   CollectionTypeMetadata,
   Entry,
   Metadata,
   RemarkableApi,
+  SubtleCryptoLike,
 } from "rmapi-js";
 
 export const syncEntry = async ({
@@ -136,6 +137,8 @@ export const getFolder = async ({
 
 export const getApi = async ({ token }: { token: string }) => {
   return webcrypto
-    ? remarkable(token, { subtle: webcrypto.subtle })
+    ? remarkable(token, {
+        subtle: (webcrypto as unknown as { subtle: SubtleCryptoLike }).subtle,
+      })
     : remarkable(token);
 };

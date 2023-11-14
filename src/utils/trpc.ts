@@ -34,7 +34,7 @@ const getEndingLink = (ctx: NextPageContext | undefined) => {
           return {};
         }
 
-        const { connection, ...headers } = ctx.req.headers;
+        const { connection: _, ...headers } = ctx.req.headers;
 
         return {
           ...headers,

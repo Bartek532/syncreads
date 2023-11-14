@@ -4,7 +4,7 @@ import { memo, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-import { FILE_TYPE } from "../../../../types/feed.types";
+import { FILE_TYPE } from "../../../types/feed.types";
 import { onPromise } from "../../../utils/functions";
 import { trpc } from "../../../utils/trpc";
 import { createFeedSchema } from "../../../utils/validation/schema";
@@ -12,6 +12,7 @@ import { FileUpload } from "../../common/FileUpload";
 import { Input } from "../../common/Input";
 import { FormModal } from "../FormModal";
 
+import type { HeroIcon } from "../../../types/common.types";
 import type { CreateFeedInput } from "../../../utils/validation/types";
 import type { BaseModal } from "../BaseModal";
 import type { TRPCError } from "@trpc/server";
@@ -89,7 +90,7 @@ export const AddFeedModal = memo<AddFeedModalProps>(({ onClose, ...props }) => {
     <FormModal
       onClose={onClose}
       title="Add feed and be up to date!"
-      icon={PlusIcon}
+      icon={PlusIcon as HeroIcon}
       submitText="Add feed"
       onSubmit={onPromise(onSubmit)}
       {...props}

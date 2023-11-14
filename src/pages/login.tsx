@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Seo } from "../components/common/Seo";
 import { LoginView } from "../views/login/Login";
 
-import type { AUTH_PROVIDER } from "../../types/auth.types";
+import type { AUTH_PROVIDER } from "../types/auth.types";
 import type { ClientSafeProvider } from "next-auth/react";
 
 const Login = () => {

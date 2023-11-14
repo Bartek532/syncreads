@@ -9,47 +9,53 @@ import {
   CpuChipIcon,
 } from "@heroicons/react/24/outline";
 
+import type { HeroIcon } from "../types/common.types";
+
 export const DASHBOARD_NAVIGATION = [
-  { name: "Home", href: "/dashboard", icon: HomeIcon },
+  { name: "Home", href: "/dashboard", icon: HomeIcon as HeroIcon },
   {
     name: "Feeds",
     href: "/dashboard/feeds",
-    icon: SquaresPlusIcon,
+    icon: SquaresPlusIcon as HeroIcon,
   },
   {
     name: "Device",
     href: "/dashboard/device",
-    icon: CpuChipIcon,
+    icon: CpuChipIcon as HeroIcon,
   },
   {
     name: "Syncs",
     href: "/dashboard/syncs",
-    icon: ArrowPathIcon,
+    icon: ArrowPathIcon as HeroIcon,
   },
 ];
 
 export const DASHBOARD_SECONDARY_NAVIGATION = [
-  { name: "Settings", href: "/dashboard/settings", icon: CogIcon },
-  { name: "Help", href: "/dashboard/help", icon: QuestionMarkCircleIcon },
+  { name: "Settings", href: "/dashboard/settings", icon: CogIcon as HeroIcon },
+  {
+    name: "Help",
+    href: "/dashboard/help",
+    icon: QuestionMarkCircleIcon as HeroIcon,
+  },
 ];
 
 export const DASHBOARD_CARDS = [
   {
     title: "Your feeds",
     href: "/dashboard/feeds",
-    icon: RssIcon,
+    icon: RssIcon as HeroIcon,
     link: "View feeds",
   },
   {
     title: "Your device",
     href: "/dashboard/device",
-    icon: DeviceTabletIcon,
+    icon: DeviceTabletIcon as HeroIcon,
     link: "View details",
   },
   {
     title: "Synced articles",
     href: "/dashboard/syncs",
-    icon: ArrowPathIcon,
+    icon: ArrowPathIcon as HeroIcon,
     link: "View syncs",
   },
 ];

@@ -57,6 +57,13 @@
         "format": ["UPPER_CASE"]
       }
     ],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
+      }
+    ],
     "curly": "error"
   }
 }

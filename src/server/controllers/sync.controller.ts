@@ -1,14 +1,14 @@
-import { LOG_LEVEL } from "../../../types/log.types";
 import {
   SYNCS_PAGINATION_DEFAULT_PAGE,
   SYNCS_PAGINATION_DEFAULT_PER_PAGE,
   SYNC_START_LOG,
 } from "../../config/sync";
 import { publisher } from "../../lib/redis";
+import { LOG_LEVEL } from "../../types/log.types";
 import { createLog, getSyncLog, updateLog } from "../services/log.service";
 import { getUserSyncs } from "../services/sync.service";
 
-import type { Logger } from "../../../types/log.types";
+import type { Logger } from "../../types/log.types";
 import type { OffsetPaginationInput } from "../../utils/validation/types";
 
 export const createSyncLogger = async (syncId: string) => {

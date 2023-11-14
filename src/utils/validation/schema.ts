@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-import { FILE_TYPE } from "../../../types/feed.types";
-import { LOG_LEVEL } from "../../../types/log.types";
+import { FILE_TYPE } from "../../types/feed.types";
+import { LOG_LEVEL } from "../../types/log.types";
 
 const PASSWORD_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,}$/;

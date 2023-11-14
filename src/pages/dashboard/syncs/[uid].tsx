@@ -37,7 +37,7 @@ export const getServerSideProps = async ({
     transformer: superjson,
   });
 
-  const uid = params!.uid;
+  const uid = params?.uid ?? "";
 
   await ssg.sync.getSyncLog.prefetch({ uid });
 

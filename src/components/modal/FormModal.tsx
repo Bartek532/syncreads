@@ -2,7 +2,7 @@ import { Button } from "../common/Button";
 
 import { BaseModal } from "./BaseModal";
 
-import type { HeroIcon } from "../../../types/common.types";
+import type { HeroIcon } from "../../types/common.types";
 import type { ComponentProps, FormEventHandler } from "react";
 
 type FormModalProps = Readonly<{

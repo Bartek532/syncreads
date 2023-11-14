@@ -34,5 +34,5 @@
     "next.config.js"
   ],
   "exclude": ["node_modules"],
-  "files": ["typings/next-auth.d.ts"]
+  "files": ["src/typings/next-auth.d.ts"]
 }

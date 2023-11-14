@@ -19,6 +19,8 @@ Please read [CONTRIBUTING.md](https://github.com/Bartek532/rssmarkable/blob/main
 | [Docker](https://www.docker.com/)              | An open platform for developing, shipping, and running applications |
 | [PostgreSQL](https://www.postgresql.org)       | Relational database                                                 |
 | [Prisma](https://www.prisma.io)                | ORM for TypeScript and Node.js                                      |
+| [Redis](https://redis.io)                      | Open source, in-memory data store                                   |
+| [Vitest](https://vitest.dev)                   | Testing framework                                                   |
 | [Tailwind](https://tailwindcss.com/)           | Utility-first CSS framework                                         |
 | [React Hook Form](https://react-hook-form.com) | Forms with easy-to-use validation                                   |
 | [Husky](https://github.com/typicode/husky)     | Git hooks                                                           |
@@ -29,21 +31,21 @@ Please read [CONTRIBUTING.md](https://github.com/Bartek532/rssmarkable/blob/main
 
 ### Prerequisite
 
-- Node.js v18.\*
+- Node.js v20.\*
 - Docker + docker compose
 
 ```bash
 
 git clone https://github.com/Bartek532/rssmarkable.git
 
-npm install
+pnpm install
 
 cp .env.example .env.development.local
 # set up environment variables
 
-npm run db:migrate:dev
+pnpm run db:migrate:dev
 
-npm run dev
+pnpm run dev
 
 ```
 

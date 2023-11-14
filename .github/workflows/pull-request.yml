@@ -12,35 +12,35 @@ jobs:
   build-test-lint:
     name: 🧩 Build, lint and test
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
 
     steps:
       - name: ✅ Checkout code
         uses: actions/checkout@v4
 
-      - name: 🔨 Setup Node.js
+      - name: 🎬 Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: 🔨 Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
-          node-version: 20.x
-
-      - name: ✨ Cache node_modules
-        uses: actions/cache@v3
-        with:
-          path: |
-            node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
 
       - name: 🔌 Install
-        run: npm ci
+        run: pnpm install
 
       - name: 🖼️ Format
-        run: npm run format:check
+        run: pnpm run format:check
 
       - name: 🖍️ Build
         env:
           SKIP_ENV_VALIDATION: 1
-        run: npm run build
+        run: pnpm run build
 
       - name: 🧪 Test
-        run: npm run test:ci
+        run: pnpm run test:ci

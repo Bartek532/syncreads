@@ -24,7 +24,7 @@ import {
 
 import { createSyncLogger } from "./sync.controller";
 
-import type { FeedApi } from "../../../types/feed.types";
+import type { FeedApi } from "../../types/feed.types";
 import type {
   CreateAndConnectFeedInput,
   DeleteAndDisconnectFeedInput,
