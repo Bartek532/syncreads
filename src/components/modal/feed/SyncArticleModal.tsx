@@ -10,6 +10,7 @@ import { createFeedSchema } from "../../../utils/validation/schema";
 import { Input } from "../../common/Input";
 import { FormModal } from "../FormModal";
 
+import type { HeroIcon } from "../../../types/common.types";
 import type { SyncArticleInput } from "../../../utils/validation/types";
 import type { BaseModal } from "../BaseModal";
 import type { TRPCError } from "@trpc/server";
@@ -59,7 +60,7 @@ export const SyncArticleModal = memo<SyncArticleModalProps>(
       <FormModal
         onClose={onClose}
         title="Sync any article from the web!"
-        icon={ArrowPathIcon}
+        icon={ArrowPathIcon as HeroIcon}
         submitText="Sync!"
         onSubmit={onPromise(onSubmit)}
         {...props}

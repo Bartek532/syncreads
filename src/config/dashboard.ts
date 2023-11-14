@@ -43,19 +43,19 @@ export const DASHBOARD_CARDS = [
   {
     title: "Your feeds",
     href: "/dashboard/feeds",
-    icon: RssIcon,
+    icon: RssIcon as HeroIcon,
     link: "View feeds",
   },
   {
     title: "Your device",
     href: "/dashboard/device",
-    icon: DeviceTabletIcon,
+    icon: DeviceTabletIcon as HeroIcon,
     link: "View details",
   },
   {
     title: "Synced articles",
     href: "/dashboard/syncs",
-    icon: ArrowPathIcon,
+    icon: ArrowPathIcon as HeroIcon,
     link: "View syncs",
   },
 ];
