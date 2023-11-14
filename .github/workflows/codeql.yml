@@ -1,4 +1,4 @@
-name: "🧃 CodeQL"
+name: CodeQL
 
 on:
   push:
@@ -7,6 +7,10 @@ on:
     branches: [main]
   schedule:
     - cron: "41 18 * * 2"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   analyze:
@@ -23,12 +27,15 @@ jobs:
     steps:
       - name: ✅ Checkout code
         uses: actions/checkout@v3
+
       - name: 🎬 Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
           languages: ${{ matrix.language }}
+
       - name: 📦 Autobuild
         uses: github/codeql-action/autobuild@v2
+
       - name: 🧑‍🔬 Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         with:

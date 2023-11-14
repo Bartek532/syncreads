@@ -1,4 +1,4 @@
-name: "📦 Next.js Bundle Analysis"
+name: Next.js bundle analysis
 
 on:
   pull_request:
@@ -6,6 +6,10 @@ on:
     branches:
       - main
   workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 defaults:
   run:
@@ -53,6 +57,8 @@ jobs:
           key: ${{ runner.os }}-build-${{ env.cache-name }}
 
       - name: 📦 Build next.js app
+        env:
+          SKIP_ENV_VALIDATION: 1
         run: ./node_modules/.bin/next build
 
       - name: 🧪 Analyze bundle
