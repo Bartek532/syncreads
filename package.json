@@ -64,7 +64,7 @@
     "uuid4": "^2.0.3",
     "webpack": "5.78.0",
     "ws": "^8.13.0",
-    "zod": "^3.18.0"
+    "zod": "^3.22.3"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.2",
