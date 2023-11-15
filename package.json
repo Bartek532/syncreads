@@ -3,18 +3,17 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": "^20.0.0"
+    "node": "^18.0.0"
   },
   "scripts": {
-    "prepare": "husky install",
-    "postinstall": "prisma generate",
-    "prebuild": "rm -rf .next dist && prisma generate",
+    "prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\"",
     "build": "run-p *:build",
     "next:build": "next build",
     "server:build": "tsc --project tsconfig.server.json",
     "dev": "concurrently --kill-others-on-fail \"pnpm run docker:start:dev\" \"wait-on tcp:5432 && run-p *:dev\"",
     "next:dev": "dotenv -e .env.development.local -- ts-node --project tsconfig.server.json --transpile-only server.ts",
-    "start": "cross-env NODE_ENV=production node dist/server.js",
+    "start": "node dist/server.js",
+    "db:generate": "prisma generate",
     "db:migrate:dev": "dotenv -e .env.development.local -- prisma migrate dev",
     "db:migrate:prod": "prisma migrate deploy",
     "docker:start:dev": "docker compose -f provision/dev/docker-compose.yml up",
@@ -117,7 +116,7 @@
     ]
   },
   "prisma": {
-    "schema": "src/server/db/schema.prisma"
+    "schema": "./src/server/db/schema.prisma"
   },
   "nextBundleAnalysis": {
     "budget": 358400,
