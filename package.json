@@ -58,7 +58,7 @@
     "rmapi-js": "^2.0.0",
     "rss-parser": "^3.13.0",
     "rss-to-json": "^2.1.0",
-    "sharp": "0.32.1",
+    "sharp": "0.32.6",
     "superjson": "1.9.1",
     "tailwind-merge": "^1.8.1",
     "uuid4": "^2.0.3",
