@@ -47,7 +47,7 @@
     "link-preview-js": "3.0.4",
     "marked": "4.3.0",
     "next": "13.4.5",
-    "next-auth": "^4.20.1",
+    "next-auth": "^4.24.5",
     "next-pwa": "^5.6.0",
     "next-seo": "^5.15.0",
     "puppeteer-core": "^19.4.1",
