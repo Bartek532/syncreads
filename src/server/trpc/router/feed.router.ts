@@ -5,6 +5,7 @@ import {
   deleteFeedHandler,
   getFeedDetailsHandler,
   syncArticleHandler,
+  getAllFeedsHandler,
 } from "../../../server/controllers/feed.controller";
 import {
   createFeedSchema,
@@ -13,7 +14,6 @@ import {
   importFeedsSchema,
   syncArticleSchema,
 } from "../../../utils/validation/schema";
-import { getAllFeeds } from "../../services/feed/feed.service";
 
 export const feedRouter = router({
   createFeed: protectedProcedure
@@ -34,7 +34,7 @@ export const feedRouter = router({
   getFeedDetails: protectedProcedure
     .input(getWebsiteDetailsSchema)
     .query(({ input }) => getFeedDetailsHandler(input)),
-  getAllFeeds: protectedProcedure.query(() => getAllFeeds()),
+  getAllFeeds: protectedProcedure.query(() => getAllFeedsHandler()),
   syncArticle: protectedProcedure
     .input(syncArticleSchema)
     .mutation(({ input, ctx }) =>
