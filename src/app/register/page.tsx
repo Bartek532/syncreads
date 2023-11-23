@@ -1,10 +1,12 @@
+"use client";
+
 import { getProviders } from "next-auth/react";
 import { useEffect, useState } from "react";
 
-import { Seo } from "../components/common/Seo";
-import { RegisterView } from "../views/register/Register";
+import { Seo } from "../../components/common/Seo";
+import { RegisterView } from "../../views/register/Register";
 
-import type { AUTH_PROVIDER } from "../types/auth.types";
+import type { AUTH_PROVIDER } from "../../types/auth.types";
 import type { ClientSafeProvider } from "next-auth/react";
 
 const Register = () => {
