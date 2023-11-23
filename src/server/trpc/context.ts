@@ -3,10 +3,14 @@ import { getSession } from "next-auth/react";
 import { prisma } from "../db/client";
 
 import type { inferAsyncReturnType } from "@trpc/server";
-import type { CreateNextContextOptions } from "@trpc/server/adapters/next";
 import type { CreateWSSContextFnOptions } from "@trpc/server/adapters/ws";
+import type { NextRequest } from "next/server";
 import type { Session } from "next-auth";
 import type { GetSessionParams } from "next-auth/react";
+
+type CreateNextContextOptions = {
+  req: NextRequest;
+};
 
 interface CreateContextOptions {
   session: Session | null;

@@ -13,7 +13,7 @@ import {
   importFeedsSchema,
   syncArticleSchema,
 } from "../../../utils/validation/schema";
-import { router, protectedProcedure } from "../trpc";
+import { router, protectedProcedure, publicProcedure } from "../trpc";
 
 export const feedRouter = router({
   createFeed: protectedProcedure
@@ -34,7 +34,7 @@ export const feedRouter = router({
   getFeedDetails: protectedProcedure
     .input(getWebsiteDetailsSchema)
     .query(({ input }) => getFeedDetailsHandler(input)),
-  getAllFeeds: protectedProcedure.query(() => getAllFeedsHandler()),
+  getAllFeeds: publicProcedure.query(() => [{ id: 1 }]),
   syncArticle: protectedProcedure
     .input(syncArticleSchema)
     .mutation(({ input, ctx }) =>
