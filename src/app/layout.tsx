@@ -1,9 +1,8 @@
-import { headers } from "next/headers";
-import { getServerSession } from "next-auth";
+import { cookies } from "next/headers";
 
 import { GlobalUI } from "../components/common/GlobalUI";
-import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { AppProviders } from "../providers/AppProviders";
+import { getServerAuthSession } from "../server/auth";
 import "../styles/globals.css";
 import { TRPCReactProvider } from "../trpc/react";
 
@@ -12,12 +11,12 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(authOptions);
+  const session = await getServerAuthSession();
 
   return (
     <html lang="en">
       <body>
-        <TRPCReactProvider headers={headers()}>
+        <TRPCReactProvider cookies={cookies().toString()}>
           <AppProviders session={session}>
             {children}
             <GlobalUI />

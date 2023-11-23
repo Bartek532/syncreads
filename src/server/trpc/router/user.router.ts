@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { router, protectedProcedure } from "..";
 import {
   getUserDeviceHandler,
   registerDeviceHandler,
@@ -8,7 +9,6 @@ import {
 } from "../../../server/controllers/user.controller";
 import { getUserFeeds } from "../../../server/services/user.service";
 import { registerDeviceSchema } from "../../../utils/validation/schema";
-import { router, protectedProcedure } from "../trpc";
 
 export const userRouter = router({
   getUserFeeds: protectedProcedure.query(({ ctx }) =>

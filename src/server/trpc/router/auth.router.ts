@@ -1,6 +1,6 @@
+import { router, publicProcedure } from "..";
 import { registerUserSchema } from "../../../utils/validation/schema";
 import { registerUserHandler } from "../../controllers/user.controller";
-import { router, publicProcedure } from "../trpc";
 
 export const authRouter = router({
   register: publicProcedure

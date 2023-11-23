@@ -4,7 +4,7 @@ import superjson from "superjson";
 import { Seo } from "../../../components/common/Seo";
 import { DashboardLayout } from "../../../components/dashboard/layout/Layout";
 import { createContext } from "../../../server/trpc/context";
-import { appRouter } from "../../../server/trpc/router/_app";
+import { appRouter } from "../../../server/trpc/router";
 import { SyncView } from "../../../views/dashboard/syncs/Sync";
 
 import type {
@@ -33,6 +33,7 @@ export const getServerSideProps = async ({
   const ssg = createServerSideHelpers({
     router: appRouter,
     //@ts-expect-error res is not compatible with trpc
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     ctx: await createContext({ req, res }),
     transformer: superjson,
   });

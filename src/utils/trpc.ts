@@ -7,7 +7,7 @@ import {
 import { createTRPCNext } from "@trpc/next";
 import superjson from "superjson";
 
-import type { AppRouter } from "../server/trpc/router/_app";
+import type { AppRouter } from "../server/trpc/router";
 import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 import type { NextPageContext } from "next";
 
