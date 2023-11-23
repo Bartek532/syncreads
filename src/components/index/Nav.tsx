@@ -1,3 +1,5 @@
+"use client";
+
 import { Bars2Icon, XMarkIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { memo, useState } from "react";

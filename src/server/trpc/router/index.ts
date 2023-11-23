@@ -1,4 +1,4 @@
-import { router } from "../trpc";
+import { router } from "..";
 
 import { authRouter } from "./auth.router";
 import { feedRouter } from "./feed.router";
@@ -12,5 +12,4 @@ export const appRouter = router({
   sync: syncRouter,
 });
 
-// export type definition of API
 export type AppRouter = typeof appRouter;

@@ -1,10 +1,11 @@
+import { router, protectedProcedure } from "..";
 import {
   createFeedHandler,
   importFeedsHandler,
   deleteFeedHandler,
-  getAllFeedsHandler,
   getFeedDetailsHandler,
   syncArticleHandler,
+  getAllFeedsHandler,
 } from "../../../server/controllers/feed.controller";
 import {
   createFeedSchema,
@@ -13,7 +14,6 @@ import {
   importFeedsSchema,
   syncArticleSchema,
 } from "../../../utils/validation/schema";
-import { router, protectedProcedure } from "../trpc";
 
 export const feedRouter = router({
   createFeed: protectedProcedure

@@ -9,7 +9,6 @@ const withPWA = pwa({
   disable: process.env.NODE_ENV === "development",
 });
 
-/** @type {import("next").NextConfig} */
 module.exports = withPWA({
   reactStrictMode: true,
   webpack(config) {

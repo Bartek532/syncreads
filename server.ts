@@ -6,7 +6,7 @@ import ws from "ws";
 
 import conf from "./next.config";
 import { createContext } from "./src/server/trpc/context";
-import { appRouter } from "./src/server/trpc/router/_app";
+import { appRouter } from "./src/server/trpc/router";
 
 const port = parseInt(process.env.PORT ?? "3000", 10);
 const dev = process.env.NODE_ENV !== "production";

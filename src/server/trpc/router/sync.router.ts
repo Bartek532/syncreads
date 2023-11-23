@@ -1,6 +1,7 @@
 import { observable } from "@trpc/server/observable";
 import { z } from "zod";
 
+import { protectedProcedure, router } from "..";
 import { subscriber } from "../../../lib/redis";
 import { offsetPaginationSchema } from "../../../utils/validation/schema";
 import { isLogMessage } from "../../../utils/validation/validator";
@@ -8,7 +9,6 @@ import {
   getSyncLogHandler,
   getUserSyncsHandler,
 } from "../../controllers/sync.controller";
-import { protectedProcedure, router } from "../trpc";
 
 import type { LogMessage } from "../../../utils/validation/types";
 

@@ -23,7 +23,12 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "checkJs": true
+    "checkJs": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",
@@ -31,8 +36,8 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs",
-    "next.config.js"
+    "next.config.js",
+    ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules"],
-  "files": ["src/typings/next-auth.d.ts"]
+  "exclude": ["node_modules"]
 }

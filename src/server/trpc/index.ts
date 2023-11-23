@@ -1,26 +1,35 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
+import { ZodError } from "zod";
 
-import type { Context } from "./context";
+import { getServerAuthSession } from "../auth";
 
-const t = initTRPC.context<Context>().create({
+export const createTRPCContext = async (opts: { headers: Headers }) => {
+  const session = await getServerAuthSession();
+
+  return {
+    session,
+    ...opts,
+  };
+};
+
+const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,
-  errorFormatter({ shape }) {
-    return shape;
+  errorFormatter({ shape, error }) {
+    return {
+      ...shape,
+      data: {
+        ...shape.data,
+        zodError:
+          error.cause instanceof ZodError ? error.cause.flatten() : null,
+      },
+    };
   },
 });
 
 export const router = t.router;
-
-/**
- * Unprotected procedure
- **/
 export const publicProcedure = t.procedure;
 
-/**
- * Reusable middleware to ensure
- * users are logged in
- */
 const isAuthed = t.middleware(({ ctx, next }) => {
   if (!ctx.session?.user) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
@@ -33,7 +42,4 @@ const isAuthed = t.middleware(({ ctx, next }) => {
   });
 });
 
-/**
- * Protected procedure
- **/
 export const protectedProcedure = t.procedure.use(isAuthed);

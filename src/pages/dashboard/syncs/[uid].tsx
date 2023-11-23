@@ -1,10 +1,5 @@
-import { createServerSideHelpers } from "@trpc/react-query/server";
-import superjson from "superjson";
-
 import { Seo } from "../../../components/common/Seo";
 import { DashboardLayout } from "../../../components/dashboard/layout/Layout";
-import { createContext } from "../../../server/trpc/context";
-import { appRouter } from "../../../server/trpc/router/_app";
 import { SyncView } from "../../../views/dashboard/syncs/Sync";
 
 import type {
@@ -25,25 +20,24 @@ const Sync = ({
   );
 };
 
-export const getServerSideProps = async ({
+export const getServerSideProps = ({
   params,
-  req,
-  res,
 }: GetServerSidePropsContext<{ uid: string }>) => {
-  const ssg = createServerSideHelpers({
-    router: appRouter,
-    //@ts-expect-error res is not compatible with trpc
-    ctx: await createContext({ req, res }),
-    transformer: superjson,
-  });
+  // const ssg = createServerSideHelpers({
+  //   router: appRouter,
+  //   //@ts-expect-error res is not compatible with trpc
+  //   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+  //   ctx: await createTRPCContext({ req, res }),
+  //   transformer: superjson,
+  // });
 
   const uid = params?.uid ?? "";
 
-  await ssg.sync.getSyncLog.prefetch({ uid });
+  // await ssg.sync.getSyncLog.prefetch({ uid });
 
   return {
     props: {
-      trpcState: ssg.dehydrate(),
+      // trpcState: ssg.dehydrate(),
       uid,
     },
   };

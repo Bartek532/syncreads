@@ -1,15 +1,33 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { compareSync } from "bcrypt";
-import NextAuth, { type NextAuthOptions } from "next-auth";
+import { getServerSession } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 
-import { env } from "../../../env/server";
-import { prisma } from "../../../server/db/client";
-import { getUserByEmail } from "../../../server/services/user.service";
-import { ApiError, HTTP_STATUS_CODE } from "../../../utils/exceptions";
-import { loginUserSchema } from "../../../utils/validation/schema";
+import { env } from "../env/server";
+import { ApiError, HTTP_STATUS_CODE } from "../utils/exceptions";
+import { loginUserSchema } from "../utils/validation/schema";
+
+import { prisma } from "./db/client";
+import { getUserByEmail } from "./services/user.service";
+
+import type { DefaultSession, NextAuthOptions } from "next-auth";
+
+declare module "next-auth" {
+  interface Session {
+    user?: {
+      id: number;
+      email: string;
+    } & DefaultSession["user"];
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface DefaultUser {
+    id: number;
+  }
+}
 
 export const authOptions: NextAuthOptions = {
   pages: {
@@ -85,4 +103,4 @@ export const authOptions: NextAuthOptions = {
   ],
 };
 
-export default NextAuth(authOptions);
+export const getServerAuthSession = () => getServerSession(authOptions);
