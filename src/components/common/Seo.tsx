@@ -17,6 +17,7 @@ export const Seo = ({
 
   return (
     <NextSeo
+      useAppDir={true}
       title={formattedTitle}
       description={description}
       openGraph={{

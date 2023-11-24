@@ -1,26 +1,10 @@
-"use client";
-
 import { getProviders } from "next-auth/react";
-import { useEffect, useState } from "react";
 
 import { Seo } from "../../components/common/Seo";
 import { LoginView } from "../../views/login/Login";
 
-import type { AUTH_PROVIDER } from "../../types/auth.types";
-import type { ClientSafeProvider } from "next-auth/react";
-
-const Login = () => {
-  const [providers, setProviders] = useState<Record<
-    AUTH_PROVIDER,
-    ClientSafeProvider
-  > | null>(null);
-
-  useEffect(() => {
-    void (async () => {
-      const res = await getProviders();
-      setProviders(res);
-    })();
-  }, []);
+const Login = async () => {
+  const providers = await getProviders();
 
   if (!providers) {
     return null;
