@@ -1,6 +1,6 @@
-import { Seo } from "../../components/common/Seo";
-import { DashboardLayout } from "../../components/dashboard/layout/Layout";
-import { FeedsView } from "../../views/dashboard/feeds/Feeds";
+import { Seo } from "../../../components/common/Seo";
+import { DashboardLayout } from "../../../components/dashboard/layout/Layout";
+import { FeedsView } from "../../../views/dashboard/feeds/Feeds";
 
 import type { NextPage } from "next";
 
