@@ -1,7 +1,7 @@
 module.exports = {
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    project: ["../../apps/sync/tsconfig.json"],
+    project: "../../apps/sync/tsconfig.json",
     tsconfigRootDir: __dirname,
     sourceType: "module",
   },
@@ -11,6 +11,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:@typescript-eslint/strict",
   ],
+  ignorePatterns: [".eslintrc.js"],
   env: {
     node: true,
     jest: true,

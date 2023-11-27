@@ -1,0 +1,7 @@
+{
+  "extends": "@rssmarkable/tsconfig/base.json",
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  }
+}

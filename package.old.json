@@ -104,9 +104,6 @@
     "vitest": "0.34.6",
     "wait-on": "^7.0.1"
   },
-  "ct3aMetadata": {
-    "initVersion": "6.11.5"
-  },
   "lint-staged": {
     "src/**/*.{js,ts,jsx,tsx}": [
       "eslint --fix",
@@ -116,11 +113,5 @@
   },
   "prisma": {
     "schema": "./src/server/db/schema.prisma"
-  },
-  "nextBundleAnalysis": {
-    "budget": 358400,
-    "budgetPercentIncreaseRed": 20,
-    "minimumChangeThreshold": 0,
-    "showDetails": true
   }
 }
