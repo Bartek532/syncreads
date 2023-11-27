@@ -1,0 +1,33 @@
+{
+  "name": "@rssmarkable/database",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "clean": "rimraf .turbo node_modules dist",
+    "dev": "tsup --watch",
+    "lint": "eslint \"src/**/*.ts\"",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:migrate:dev": "prisma migrate dev",
+    "db:push": "prisma db push",
+    "db:seed": "tsx src/seed.ts",
+    "db:generate": "prisma generate"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.5.0"
+  },
+  "devDependencies": {
+    "@rssmarkable/eslint-preset": "workspace:*",
+    "@rssmarkable/tsconfig": "workspace:*",
+    "@types/node": "^18.0.0",
+    "prisma": "^4.5.0",
+    "rimraf": "3.0.2",
+    "tsup": "8.0.1",
+    "tsx": "4.5.0"
+  }
+}
