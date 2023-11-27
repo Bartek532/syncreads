@@ -1,4 +1,4 @@
-import { prisma } from "../../server/db/client";
+import { prisma } from "../db/client";
 
 export const getAllUsers = () => {
   return prisma.user.findMany();

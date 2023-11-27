@@ -6,7 +6,7 @@ import {
   getFeedDetailsHandler,
   syncArticleHandler,
   getAllFeedsHandler,
-} from "../../../server/controllers/feed.controller";
+} from "../../controllers/feed.controller";
 import {
   createFeedSchema,
   deleteFeedSchema,

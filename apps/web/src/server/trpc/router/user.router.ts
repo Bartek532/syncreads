@@ -6,8 +6,8 @@ import {
   registerDeviceHandler,
   syncUserFeedsHandler,
   unregisterDeviceHandler,
-} from "../../../server/controllers/user.controller";
-import { getUserFeeds } from "../../../server/services/user.service";
+} from "../../controllers/user.controller";
+import { getUserFeeds } from "../../services/user.service";
 import { registerDeviceSchema } from "../../../utils/validation/schema";
 
 export const userRouter = router({
