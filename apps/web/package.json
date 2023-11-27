@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "start": "next start",
+    "start:dev": "next dev",
+    "build": "next build",
     "test": "vitest",
     "test:ci": "vitest --run",
     "lint": "next lint"

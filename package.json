@@ -6,8 +6,20 @@
     "node": "^18.0.0"
   },
   "scripts": {
+    "prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\"",
+    "build": "turbo build --filter=!./apps/test-*",
+    "build:apps": "turbo build --filter=./apps/*",
+    "build:packages": "turbo build --filter=./packages/*",
+    "clean": "turbo clean && rm -rf node_modules",
+    "db:generate": "turbo db:generate",
+    "db:migrate:dev": "turbo db:migrate:dev",
+    "db:migrate:deploy": "turbo db:migrate:deploy",
+    "lint": "turbo lint",
+    "lint:fix": "turbo lint -- --fix",
     "test": "turbo test",
-    "test:ci": "turbo test:ci"
+    "test:ci": "turbo test:ci",
+    "format:write": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.2",

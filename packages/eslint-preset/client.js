@@ -1,7 +1,7 @@
 module.exports = {
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    project: "../../apps/web/tsconfig.json",
+    project: "./apps/web/tsconfig.json",
   },
   plugins: ["@typescript-eslint"],
   extends: [
@@ -14,6 +14,7 @@ module.exports = {
     browser: true,
     node: true,
   },
+  ignorePatterns: [".eslintrc.js"],
   settings: {
     "import/parsers": {
       "@typescript-eslint/parser": [".ts"],

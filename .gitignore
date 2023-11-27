@@ -2,22 +2,22 @@
 
 # dependencies
 node_modules
-/.pnp
-/.cache
+.pnp
+.cache
 .pnp.js
 
 
 # testing
-/coverage
+coverage/
 
 # next.js
-/.next/
-/out/
+.next/
+out/
 next-env.d.ts
 
 # production
-/build
-/dist
+build/
+dist/
 
 # misc
 .DS_Store
