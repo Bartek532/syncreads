@@ -36,6 +36,7 @@
     "@commitlint/cli": "^17.4.2",
     "@commitlint/config-conventional": "^17.4.2",
     "concurrently": "7.6.0",
+    "eslint": "8.54.0",
     "husky": "^8.0.0",
     "lint-staged": "^13.1.0",
     "prettier": "^2.8.1",

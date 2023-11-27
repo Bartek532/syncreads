@@ -1,5 +1,12 @@
 import { router, protectedProcedure } from "..";
 import {
+  createFeedSchema,
+  deleteFeedSchema,
+  getWebsiteDetailsSchema,
+  importFeedsSchema,
+  syncArticleSchema,
+} from "../../../utils/validation/schema";
+import {
   createFeedHandler,
   importFeedsHandler,
   deleteFeedHandler,
@@ -7,13 +14,6 @@ import {
   syncArticleHandler,
   getAllFeedsHandler,
 } from "../../controllers/feed.controller";
-import {
-  createFeedSchema,
-  deleteFeedSchema,
-  getWebsiteDetailsSchema,
-  importFeedsSchema,
-  syncArticleSchema,
-} from "../../../utils/validation/schema";
 
 export const feedRouter = router({
   createFeed: protectedProcedure

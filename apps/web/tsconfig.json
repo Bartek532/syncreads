@@ -1,6 +1,7 @@
 {
   "extends": "@rssmarkable/tsconfig/base.json",
   "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
     "noEmit": true,
     "resolveJsonModule": true,
     "isolatedModules": true,

@@ -1,5 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
-import { SyncService } from './sync.service';
+import { Controller, Get } from "@nestjs/common";
+
+import { SyncService } from "./sync.service";
 
 @Controller()
 export class SyncController {
