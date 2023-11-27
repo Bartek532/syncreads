@@ -1,0 +1,9 @@
+{
+  "name": "@rssmarkable/web",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "@rssmarkable/eslint-preset": "workspace:*",
+    "@rssmarkable/tsconfig": "workspace:*"
+  }
+}

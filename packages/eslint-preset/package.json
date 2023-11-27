@@ -1,0 +1,12 @@
+{
+  "name": "@rssmarkable/eslint-preset",
+  "files": [
+    "client.js",
+    "server.js"
+  ],
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.11.0",
+    "@typescript-eslint/parser": "^6.11.0",
+    "eslint-config-next": "13.1.1"
+  }
+}
