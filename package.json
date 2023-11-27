@@ -2,34 +2,26 @@
   "name": "rssmarkable",
   "version": "1.0.0",
   "private": true,
-  "engines": {
-    "node": "^18.0.0"
-  },
   "scripts": {
-    "prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\"",
     "build": "turbo build",
     "build:apps": "turbo build --filter=./apps/*",
     "build:packages": "turbo build --filter=./packages/*",
     "clean": "turbo clean && rm -rf node_modules",
-    "dev": "turbo dev",
     "db:generate": "turbo db:generate",
-    "db:migrate:dev": "turbo db:migrate:dev",
     "db:migrate:deploy": "turbo db:migrate:deploy",
+    "db:migrate:dev": "turbo db:migrate:dev",
+    "dev": "concurrently --kill-others-on-fail \"pnpm run docker:start:dev\" \"wait-on tcp:5432 && turbo dev\"",
+    "docker:start:dev": "docker compose -f provision/dev/docker-compose.yml up -d",
+    "docker:stop:dev": "docker compose -f provision/dev/docker-compose.yml down",
+    "docker:build:dev": "docker compose -f provision/dev/docker-compose.yml build",
+    "docker:logs": "docker logs --follow rssmarkable",
+    "format:check": "prettier --check \"**/*.{ts,tsx,md}\"",
+    "format:write": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo lint",
     "lint:fix": "turbo lint -- --fix",
+    "prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\"",
     "test": "turbo test",
-    "test:ci": "turbo test:ci",
-    "format:write": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "format:check": "prettier --check \"**/*.{ts,tsx,md}\""
-  },
-  "devDependencies": {
-    "@commitlint/cli": "^17.4.2",
-    "@commitlint/config-conventional": "^17.4.2",
-    "husky": "^8.0.0",
-    "lint-staged": "^13.1.0",
-    "prettier": "^2.8.1",
-    "turbo": "1.10.16",
-    "typescript": "^5.2.2"
+    "test:ci": "turbo test:ci"
   },
   "lint-staged": {
     "src/**/*.{js,ts,jsx,tsx}": [
@@ -39,5 +31,19 @@
     "*.json": [
       "prettier --write"
     ]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.4.2",
+    "@commitlint/config-conventional": "^17.4.2",
+    "concurrently": "7.6.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.1.0",
+    "prettier": "^2.8.1",
+    "turbo": "1.10.16",
+    "typescript": "^5.2.2",
+    "wait-on": "^7.0.1"
+  },
+  "engines": {
+    "node": "^18.0.0"
   }
 }

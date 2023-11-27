@@ -9,6 +9,7 @@
     "build:apps": {},
     "build:packages": {},
     "dev": {
+      "dependsOn": ["db:generate", "db:migrate:dev"],
       "cache": false,
       "persistent": true
     },
