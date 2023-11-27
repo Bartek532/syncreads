@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "start": "next start",
-    "start:dev": "next dev",
+    "dev": "next dev",
     "build": "next build",
+    "lint": "next lint",
     "test": "vitest",
-    "test:ci": "vitest --run",
-    "lint": "next lint"
+    "test:ci": "vitest --run"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.7",
