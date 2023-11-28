@@ -1,20 +1,25 @@
 module.exports = {
-  parser: "@typescript-eslint/parser",
   parserOptions: {
-    project: "../../apps/web/tsconfig.json",
+    project: ["../../apps/web/tsconfig.json"],
+    tsconfigRootDir: __dirname,
   },
-  plugins: ["@typescript-eslint"],
+  env: {
+    browser: true,
+    node: true,
+  },
+  globals: {
+    React: true,
+    JSX: true,
+  },
   extends: [
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:@typescript-eslint/strict",
   ],
-  env: {
-    browser: true,
-    node: true,
-  },
-  ignorePatterns: [".eslintrc.js"],
+  parser: "@typescript-eslint/parser",
+  plugins: ["@typescript-eslint"],
+  ignorePatterns: [".*.js", "node_modules/"],
   settings: {
     "import/parsers": {
       "@typescript-eslint/parser": [".ts"],
@@ -27,10 +32,6 @@ module.exports = {
       typescript: {
         alwaysTryTypes: true,
       },
-    },
-    react: {
-      pragma: "React",
-      version: "detect",
     },
   },
   rules: {

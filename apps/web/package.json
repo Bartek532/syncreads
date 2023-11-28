@@ -6,7 +6,7 @@
     "start": "next start",
     "dev": "next dev",
     "build": "next build",
-    "lint": "next lint",
+    "lint": "eslint . --max-warnings 0",
     "test": "vitest",
     "test:ci": "vitest --run"
   },
@@ -15,6 +15,7 @@
     "@heroicons/react": "^2.0.13",
     "@hookform/resolvers": "^2.9.10",
     "@next-auth/prisma-adapter": "^1.0.5",
+    "@rssmarkable/database": "workspace:*",
     "@tanstack/react-query": "4.29.1",
     "@trpc/client": "10.44.0",
     "@trpc/next": "10.19.1",

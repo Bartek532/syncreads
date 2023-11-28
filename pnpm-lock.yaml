@@ -129,6 +129,9 @@ importers:
       '@next-auth/prisma-adapter':
         specifier: ^1.0.5
         version: 1.0.5(@prisma/client@4.5.0)(next-auth@4.24.5)
+      '@rssmarkable/database':
+        specifier: workspace:*
+        version: link:../../packages/database
       '@tanstack/react-query':
         specifier: 4.29.1
         version: 4.29.1(react-dom@18.2.0)(react@18.2.0)

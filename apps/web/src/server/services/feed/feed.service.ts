@@ -1,4 +1,5 @@
-import { prisma } from "../../db/client";
+import { prisma } from "@rssmarkable/database";
+
 import { getUserById } from "../user.service";
 
 export const createFeed = async ({ url, id }: { url: string; id: number }) => {

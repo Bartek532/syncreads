@@ -1,4 +1,4 @@
-import { prisma } from "../db/client";
+import { prisma } from "@rssmarkable/database";
 
 export const getAllUsers = () => {
   return prisma.user.findMany();

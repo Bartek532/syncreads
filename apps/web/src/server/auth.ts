@@ -1,4 +1,5 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { prisma } from "@rssmarkable/database";
 import { compareSync } from "bcrypt";
 import { getServerSession } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
@@ -9,7 +10,6 @@ import { env } from "../env/server";
 import { ApiError, HTTP_STATUS_CODE } from "../utils/exceptions";
 import { loginUserSchema } from "../utils/validation/schema";
 
-import { prisma } from "./db/client";
 import { getUserByEmail } from "./services/user.service";
 
 import type { DefaultSession, NextAuthOptions } from "next-auth";
