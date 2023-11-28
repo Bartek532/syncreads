@@ -12,14 +12,13 @@
     "clean": "rimraf .turbo dist",
     "dev": "tsup --watch",
     "lint": "eslint \"src/**/*.ts\"",
-    "db:migrate:deploy": "prisma migrate deploy",
-    "db:migrate:dev": "prisma migrate dev",
-    "db:push": "prisma db push",
-    "db:seed": "tsx src/seed.ts",
-    "db:generate": "prisma generate"
+    "db:migrate:dev": "supabase migration up",
+    "db:migrate:deploy": "supabase db push",
+    "db:generate": "supabase gen types typescript --schema public --local > src/types/database-generated.types.ts"
   },
   "dependencies": {
-    "@prisma/client": "^4.5.0"
+    "@prisma/client": "^4.5.0",
+    "@supabase/supabase-js": "2.39.0"
   },
   "devDependencies": {
     "@rssmarkable/eslint-preset": "workspace:*",
@@ -27,6 +26,7 @@
     "@types/node": "^18.0.0",
     "prisma": "^4.5.0",
     "rimraf": "3.0.2",
+    "supabase": "1.115.4",
     "tsup": "8.0.1",
     "tsx": "4.5.0"
   }

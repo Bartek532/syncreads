@@ -10,7 +10,7 @@
     "db:generate": "turbo db:generate",
     "db:migrate:deploy": "turbo db:migrate:deploy",
     "db:migrate:dev": "turbo db:migrate:dev",
-    "dev": "concurrently --kill-others-on-fail \"pnpm run docker:start:dev\" \"wait-on tcp:5432 && dotenv -- turbo dev\"",
+    "dev": "dotenv -- turbo dev",
     "docker:start:dev": "docker compose -f provision/dev/docker-compose.yml up -d",
     "docker:stop:dev": "docker compose -f provision/dev/docker-compose.yml down",
     "docker:build:dev": "docker compose -f provision/dev/docker-compose.yml build",
