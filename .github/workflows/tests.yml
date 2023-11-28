@@ -34,6 +34,9 @@ jobs:
       - name: 🔌 Install
         run: pnpm install
 
+      - name: 🖌️ Format
+        run: pnpm run format:check
+
       - name: 🛻 Lint
         run: pnpm run lint
 

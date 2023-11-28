@@ -11,6 +11,7 @@ const config: Config = {
   },
   collectCoverageFrom: ["**/*.(t|j)s"],
   testEnvironment: "node",
+  passWithNoTests: true,
 };
 
 export default config;

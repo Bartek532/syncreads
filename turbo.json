@@ -1,9 +1,10 @@
 {
   "$schema": "https://turborepo.org/schema.json",
   "globalEnv": ["NODE_ENV"],
+  "globalDotEnv": [".env"],
   "pipeline": {
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["clean", "db:generate", "^build"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "build:apps": {},
@@ -26,7 +27,9 @@
     "clean": {
       "cache": false
     },
-    "lint": {},
+    "lint": {
+      "dependsOn": ["db:generate"]
+    },
     "test": {},
     "test:ci": {}
   }

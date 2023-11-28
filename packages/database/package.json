@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "build": "tsup",
-    "clean": "rimraf .turbo node_modules dist",
+    "clean": "rimraf .turbo dist",
     "dev": "tsup --watch",
     "lint": "eslint \"src/**/*.ts\"",
     "db:migrate:deploy": "prisma migrate deploy",
