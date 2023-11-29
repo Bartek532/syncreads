@@ -37,6 +37,9 @@ jobs:
       - name: 🖌️ Format
         run: pnpm run format:check
 
+      - name: 📦 Build
+        run: pnpm run build
+
       - name: 🛻 Lint
         run: pnpm run lint
 

@@ -12,9 +12,9 @@
     "clean": "rimraf .turbo dist",
     "dev": "tsup --watch",
     "lint": "eslint \"src/**/*.ts\"",
-    "db:migrate:dev": "supabase migration up",
+    "db:migrate:dev": "supabase migration up && pnpm run db:generate",
     "db:migrate:deploy": "supabase db push",
-    "db:generate": "supabase gen types typescript --schema public --local > src/types/database-generated.types.ts"
+    "db:generate": "supabase gen types typescript --schema public --local > src/types/generated/schema.ts"
   },
   "dependencies": {
     "@prisma/client": "^4.5.0",

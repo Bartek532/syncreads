@@ -1,4 +1,4 @@
-import type { Database } from "./database-generated.types.ts";
+import type { Database } from "./generated/schema";
 
 type Tables<T extends keyof Database["public"]["Tables"]> =
   Database["public"]["Tables"][T]["Row"];
@@ -18,4 +18,4 @@ export type VerificationToken = Tables<"VerificationToken">;
 export type SyncStatus = Enums<"SyncStatus">;
 export type SyncTrigger = Enums<"SyncTrigger">;
 
-export type { Database } from "./database-generated.types";
+export type { Database } from "./generated/schema";
