@@ -1,4 +1,4 @@
-import { SyncTrigger } from "@prisma/client";
+import { SyncTrigger } from "@rssmarkable/database";
 import dayjs from "dayjs";
 
 import { PDF_OPTIONS } from "../../../config/sync";
@@ -9,7 +9,7 @@ import { formatTime } from "../../../utils/functions";
 
 import type { FeedArticle } from "../../../types/feed.types";
 import type { Logger } from "../../../types/log.types";
-import type { Sync } from "@prisma/client";
+import type { Sync } from "@rssmarkable/database";
 import type { Page } from "puppeteer-core";
 import type { RemarkableApi } from "rmapi-js";
 

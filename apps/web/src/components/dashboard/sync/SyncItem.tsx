@@ -6,7 +6,7 @@ import { memo } from "react";
 
 import { SYNC_STATUS_STYLES, SYNC_TRIGGER_EMOJIS } from "../../../config/sync";
 
-import type { Sync } from "@prisma/client";
+import type { Sync } from "@rssmarkable/database";
 
 interface SyncItemProps {
   readonly sync: Sync;

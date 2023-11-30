@@ -10,7 +10,6 @@
     "build:apps": {},
     "build:packages": {},
     "dev": {
-      "dependsOn": ["db:migrate:dev"],
       "cache": false,
       "persistent": true
     },
@@ -18,6 +17,9 @@
       "dependsOn": ["^db:generate"],
       "cache": false
     },
+    "db:setup:dev": {},
+    "db:start:dev": {},
+    "db:stop:dev": {},
     "db:migrate:dev": {
       "cache": false
     },

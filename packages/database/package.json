@@ -12,19 +12,20 @@
     "clean": "rimraf .turbo dist",
     "dev": "tsup --watch",
     "lint": "eslint \"src/**/*.ts\"",
+    "db:start:dev": "supabase start",
+    "db:stop:dev": "supabase stop",
+    "db:setup:dev": "pnpm run db:start:dev && pnpm run db:migrate:dev",
     "db:migrate:dev": "supabase migration up && pnpm run db:generate",
     "db:migrate:deploy": "supabase db push",
     "db:generate": "supabase gen types typescript --schema public --local > src/types/generated/schema.ts"
   },
   "dependencies": {
-    "@prisma/client": "^4.5.0",
     "@supabase/supabase-js": "2.39.0"
   },
   "devDependencies": {
     "@rssmarkable/eslint-preset": "workspace:*",
     "@rssmarkable/tsconfig": "workspace:*",
     "@types/node": "^18.0.0",
-    "prisma": "^4.5.0",
     "rimraf": "3.0.2",
     "supabase": "1.115.4",
     "tsup": "8.0.1",

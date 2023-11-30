@@ -18,4 +18,16 @@ export type VerificationToken = Tables<"VerificationToken">;
 export type SyncStatus = Enums<"SyncStatus">;
 export type SyncTrigger = Enums<"SyncTrigger">;
 
+export const SyncStatus: { [K in SyncStatus]: K } = {
+  SUCCESS: "SUCCESS",
+  FAILED: "FAILED",
+  PENDING: "PENDING",
+  UNKNOWN: "UNKNOWN",
+} as const;
+
+export const SyncTrigger: { [K in SyncTrigger]: K } = {
+  MANUAL: "MANUAL",
+  SCHEDULE: "SCHEDULE",
+} as const;
+
 export type { Database } from "./generated/schema";

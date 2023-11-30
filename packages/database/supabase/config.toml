@@ -1,7 +1,6 @@
 project_id = "rssmarkable"
 
 [api]
-enabled = true
 port = 54321
 max_rows = 1000
 
@@ -11,16 +10,14 @@ shadow_port = 54320
 major_version = 15
 
 [db.pooler]
-enabled = true
 port = 54329
 pool_mode = "transaction"
 default_pool_size = 20
 max_client_conn = 100
 
 [studio]
-enabled = true
 port = 54323
-api_url = "http://127.0.0.1"
+api_url = "http://localhost"
 
 [realtime]
 enabled = false

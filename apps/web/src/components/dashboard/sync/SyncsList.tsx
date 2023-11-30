@@ -6,7 +6,7 @@ import { Button } from "../../common/Button";
 
 import { SyncItem } from "./SyncItem";
 
-import type { Sync } from "@prisma/client";
+import type { Sync } from "@rssmarkable/database";
 
 interface SyncsListProps {
   readonly syncs: Sync[];

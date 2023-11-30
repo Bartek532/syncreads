@@ -1,4 +1,4 @@
-import type { Log } from "@prisma/client";
+import type { Log } from "@rssmarkable/database";
 
 export enum LOG_LEVEL {
   ERROR = "error",
