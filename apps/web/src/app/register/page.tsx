@@ -1,16 +1,13 @@
-import { supabase } from "../../utils/supabase/server";
+import { Seo } from "../../components/common/Seo";
+import { RegisterView } from "../../views/register/Register";
 
-export default async function Register() {
-  const email = "bartzagr@gmail.com";
-  const password = "12345678";
-  const { error } = await supabase.auth.signUp({
-    email,
-    password,
-  });
+const Register = () => {
+  return (
+    <>
+      <Seo />
+      <RegisterView />
+    </>
+  );
+};
 
-  if (error) {
-    throw error;
-  }
-
-  return <h1>Register</h1>;
-}
+export default Register;

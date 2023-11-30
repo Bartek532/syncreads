@@ -15,7 +15,7 @@ export const getLogById = async (id: number) => {
   return data;
 };
 
-export const getSyncLog = (syncId: string) => {
+export const getSyncLog = async (syncId: string) => {
   const { data } = await supabase
     .from("Log")
     .select("*")

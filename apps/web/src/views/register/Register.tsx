@@ -3,8 +3,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { signIn } from "next-auth/react";
-import { memo, useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
@@ -12,18 +12,13 @@ import { Button } from "../../components/common/Button";
 import { Input } from "../../components/common/Input";
 import { AUTH_PROVIDER } from "../../types/auth.types";
 import { onPromise } from "../../utils/functions";
-import { trpc } from "../../utils/trpc";
+import { supabase } from "../../utils/supabase/client";
 import { registerUserSchema } from "../../utils/validation/schema";
 
 import type { Register } from "../../types/auth.types";
-import type { TRPCError } from "@trpc/server";
-import type { ClientSafeProvider } from "next-auth/react";
 
-interface RegisterProps {
-  readonly providers: Record<AUTH_PROVIDER, ClientSafeProvider>;
-}
-
-export const RegisterView = memo<RegisterProps>(({ providers }) => {
+export const RegisterView = () => {
+  const router = useRouter();
   const [isFormValidated, setIsFormValidated] = useState(false);
   const {
     register,
@@ -33,18 +28,27 @@ export const RegisterView = memo<RegisterProps>(({ providers }) => {
     resolver: zodResolver(registerUserSchema),
   });
 
-  const { mutateAsync } = trpc.auth.register.useMutation();
+  const onSubmit = async (data: Register) => {
+    const loadingToast = toast.loading("Registering...");
+    const { data: s, error } = await supabase.auth.signUp({
+      email: data.email,
+      password: data.password,
+      options: {
+        data: {
+          name: data.name,
+        },
+      },
+    });
 
-  const onSubmit = useCallback(
-    async (data: Register) => {
-      await toast.promise(mutateAsync(data), {
-        loading: "Registering...",
-        success: "Successfully registered!",
-        error: (err: TRPCError) => err.message,
-      });
-    },
-    [mutateAsync],
-  );
+    console.log(s, error);
+
+    if (error) {
+      return toast.error(error.message, { id: loadingToast });
+    }
+
+    toast.success("Successfully registered!", { id: loadingToast });
+    return router.push("/login");
+  };
 
   useEffect(() => {
     if (isValidating) {
@@ -74,37 +78,34 @@ export const RegisterView = memo<RegisterProps>(({ providers }) => {
           <div className="mt-8">
             <div>
               <div className="mt-1 flex w-full flex-col items-stretch justify-center gap-2">
-                {Object.values(providers)
-                  .filter(
-                    (provider) => provider.id !== AUTH_PROVIDER.CREDENTIALS,
-                  )
-                  .map((provider) => {
-                    const Icon = dynamic(
-                      () => import(`public/svg/social/${provider.id}.svg`),
-                    );
+                {Object.values(AUTH_PROVIDER).map((provider) => {
+                  const Icon = dynamic(
+                    () => import(`public/svg/social/${provider}.svg`),
+                  );
 
-                    return (
-                      <Button
-                        key={provider.id}
-                        variant="secondary"
-                        className="inline-flex w-full justify-center gap-4 py-2.5"
-                        onClick={onPromise(() =>
-                          signIn(provider.id, {
-                            callbackUrl: `${window.location.origin}/dashboard`,
-                          }),
-                        )}
-                      >
-                        <span className="sr-only">
-                          Sign in with {provider.name}
-                        </span>
+                  return (
+                    <Button
+                      key={provider}
+                      variant="secondary"
+                      className="inline-flex w-full justify-center gap-4 py-2.5"
+                      onClick={onPromise(() =>
+                        supabase.auth.signInWithOAuth({
+                          provider,
+                          options: {
+                            redirectTo: `${window.location.origin}/dashboard`,
+                          },
+                        }),
+                      )}
+                    >
+                      <span className="sr-only">Sign in with {provider}</span>
 
-                        <div className="h-6 w-6 dark:brightness-125">
-                          <Icon />
-                        </div>
-                        <span>{provider.name}</span>
-                      </Button>
-                    );
-                  })}
+                      <div className="h-6 w-6 dark:brightness-125">
+                        <Icon />
+                      </div>
+                      <span className="capitalize">{provider}</span>
+                    </Button>
+                  );
+                })}
               </div>
 
               <div className="relative mt-6">
@@ -181,6 +182,4 @@ export const RegisterView = memo<RegisterProps>(({ providers }) => {
       </div>
     </div>
   );
-});
-
-RegisterView.displayName = "RegisterView";
+};

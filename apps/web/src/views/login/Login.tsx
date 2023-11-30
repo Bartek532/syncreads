@@ -4,8 +4,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
-import { memo, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
@@ -13,16 +12,12 @@ import { Button } from "../../components/common/Button";
 import { Input } from "../../components/common/Input";
 import { AUTH_PROVIDER } from "../../types/auth.types";
 import { onPromise } from "../../utils/functions";
+import { supabase } from "../../utils/supabase/client";
 import { loginUserSchema } from "../../utils/validation/schema";
 
 import type { Login } from "../../types/auth.types";
-import type { ClientSafeProvider } from "next-auth/react";
 
-interface LoginProps {
-  readonly providers: Record<AUTH_PROVIDER, ClientSafeProvider>;
-}
-
-export const LoginView = memo<LoginProps>(({ providers }) => {
+export const LoginView = () => {
   const router = useRouter();
   const [isFormValidated, setIsFormValidated] = useState(false);
   const {
@@ -41,13 +36,12 @@ export const LoginView = memo<LoginProps>(({ providers }) => {
 
   const onSubmit = async (data: Login) => {
     const loadingToast = toast.loading("Signing in...");
-    const result = await signIn("credentials", {
+    const { error } = await supabase.auth.signInWithPassword({
       ...data,
-      redirect: false,
     });
 
-    if (result?.error) {
-      return toast.error(result.error, { id: loadingToast });
+    if (error) {
+      return toast.error(error.message, { id: loadingToast });
     }
 
     toast.dismiss(loadingToast);
@@ -76,37 +70,34 @@ export const LoginView = memo<LoginProps>(({ providers }) => {
           <div className="mt-8">
             <div>
               <div className="mt-1 flex w-full flex-col items-stretch justify-center gap-2">
-                {Object.values(providers)
-                  .filter(
-                    (provider) => provider.id !== AUTH_PROVIDER.CREDENTIALS,
-                  )
-                  .map((provider) => {
-                    const Icon = dynamic(
-                      () => import(`public/svg/social/${provider.id}.svg`),
-                    );
+                {Object.values(AUTH_PROVIDER).map((provider) => {
+                  const Icon = dynamic(
+                    () => import(`public/svg/social/${provider}.svg`),
+                  );
 
-                    return (
-                      <Button
-                        key={provider.id}
-                        variant="secondary"
-                        className="inline-flex w-full justify-center gap-4 py-2.5"
-                        onClick={onPromise(() =>
-                          signIn(provider.id, {
-                            callbackUrl: `${window.location.origin}/dashboard`,
-                          }),
-                        )}
-                      >
-                        <span className="sr-only">
-                          Sign in with {provider.name}
-                        </span>
+                  return (
+                    <Button
+                      key={provider}
+                      variant="secondary"
+                      className="inline-flex w-full justify-center gap-4 py-2.5"
+                      onClick={onPromise(() =>
+                        supabase.auth.signInWithOAuth({
+                          provider,
+                          options: {
+                            redirectTo: `${window.location.origin}/dashboard`,
+                          },
+                        }),
+                      )}
+                    >
+                      <span className="sr-only">Sign in with {provider}</span>
 
-                        <div className="h-6 w-6 dark:brightness-125">
-                          <Icon />
-                        </div>
-                        <span>{provider.name}</span>
-                      </Button>
-                    );
-                  })}
+                      <div className="h-6 w-6 dark:brightness-125">
+                        <Icon />
+                      </div>
+                      <span className="capitalize">{provider}</span>
+                    </Button>
+                  );
+                })}
               </div>
 
               <div className="relative mt-6">
@@ -177,6 +168,4 @@ export const LoginView = memo<LoginProps>(({ providers }) => {
       </div>
     </div>
   );
-});
-
-LoginView.displayName = "LoginView";
+};

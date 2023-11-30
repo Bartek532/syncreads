@@ -6,13 +6,10 @@ import {
 import { BellIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import Link from "next/link";
-import { signOut } from "next-auth/react";
 import { Fragment, memo } from "react";
 
 import { onPromise } from "../../../utils/functions";
 import { Avatar } from "../../common/Avatar";
-
-import type { Session } from "next-auth";
 
 interface HeaderProps {
   readonly user: Session["user"];
