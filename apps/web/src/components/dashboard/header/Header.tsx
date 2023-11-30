@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Fragment, memo } from "react";
 
 import { onPromise } from "../../../utils/functions";
+import { supabase } from "../../../utils/supabase/server";
 import { Avatar } from "../../common/Avatar";
 
 import type { User } from "@rssmarkable/database";
@@ -85,7 +86,7 @@ export const Header = memo<HeaderProps>(({ user, onSidebarOpen }) => {
                         active ? "bg-gray-100 dark:bg-gray-700" : "",
                         "block w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 dark:hover:bg-slate-800",
                       )}
-                      onClick={onPromise(() => signOut())}
+                      onClick={onPromise(() => supabase.auth.signOut())}
                     >
                       Logout
                     </button>
