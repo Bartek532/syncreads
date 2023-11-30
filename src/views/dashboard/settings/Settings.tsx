@@ -1,3 +1,5 @@
+"use client";
+
 import { Switch } from "@headlessui/react";
 import { twMerge } from "tailwind-merge";
 
@@ -18,7 +20,6 @@ export const SettingsView = () => {
             Dark mode
           </Switch.Label>
         </span>
-
         <Switch
           checked={theme === THEME.DARK}
           onChange={(checked) =>

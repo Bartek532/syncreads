@@ -1,18 +1,18 @@
 import { Seo } from "../../../components/common/Seo";
 import { DashboardLayout } from "../../../components/dashboard/layout/Layout";
-import { SyncsView } from "../../../views/dashboard/syncs/Syncs";
+import { DeviceView } from "../../../views/dashboard/device/Device";
 
 import type { NextPage } from "next";
 
-const Syncs: NextPage = () => {
+const Device: NextPage = () => {
   return (
     <>
-      <Seo title="Dashboard - Syncs" />
+      <Seo title="Dashboard - Device" />
       <DashboardLayout>
-        <SyncsView />
+        <DeviceView />
       </DashboardLayout>
     </>
   );
 };
 
-export default Syncs;
+export default Device;

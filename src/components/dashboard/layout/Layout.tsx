@@ -1,3 +1,4 @@
+"use client";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useSession } from "next-auth/react";
