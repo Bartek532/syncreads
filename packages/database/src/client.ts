@@ -6,7 +6,7 @@ import { type SupabaseClient } from "@supabase/supabase-js";
 
 import { env } from "./env";
 
-import type { Database } from "./types/database.types";
+import type { Database } from "./types/generated/schema";
 import type { CookieMethods } from "@supabase/ssr";
 
 export const createBrowserClient = (options?: {
