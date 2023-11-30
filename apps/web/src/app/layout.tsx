@@ -7,6 +7,8 @@ import { getServerAuthSession } from "../server/auth";
 import "../styles/globals.css";
 import { TRPCReactProvider } from "../trpc/react";
 
+// import { supabase } from "@rssmarkable/database";
+
 const poppins = Poppins({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -14,21 +16,23 @@ const poppins = Poppins({
   display: "swap",
 });
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerAuthSession();
+  // const { data } = await supabase.from("Feed").select("*");
+
+  // const session = await getServerAuthSession();
 
   return (
     <html lang="en">
       <body className={`font-sans ${poppins.variable}`}>
         <TRPCReactProvider cookies={cookies().toString()}>
-          <AppProviders session={session}>
-            {children}
-            <GlobalUI />
-          </AppProviders>
+          {/* <AppProviders session={session}> */}
+          {children}
+          {/* <GlobalUI /> */}
+          {/* </AppProviders> */}
         </TRPCReactProvider>
       </body>
     </html>

@@ -1,21 +1,16 @@
-import { getProviders } from "next-auth/react";
+import { supabase } from "../../utils/supabase/server";
 
-import { Seo } from "../../components/common/Seo";
-import { RegisterView } from "../../views/register/Register";
+export default async function Register() {
+  const email = "bartzagr@gmail.com";
+  const password = "12345678";
+  const { error } = await supabase.auth.signUp({
+    email,
+    password,
+  });
 
-const Register = async () => {
-  const providers = await getProviders();
-
-  if (!providers) {
-    return null;
+  if (error) {
+    throw error;
   }
 
-  return (
-    <>
-      <Seo />
-      <RegisterView providers={providers} />
-    </>
-  );
-};
-
-export default Register;
+  return <h1>Register</h1>;
+}
