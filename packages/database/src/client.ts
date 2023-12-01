@@ -1,21 +1,41 @@
-import { PrismaClient } from "@prisma/client";
+import {
+  createBrowserClient as createBrowserSupabaseClient,
+  createServerClient as createServerSupabaseClient,
+} from "@supabase/ssr";
 
-declare global {
-  // eslint-disable-next-line no-var
-  var prisma: PrismaClient | undefined;
-}
+import { env } from "./env";
 
-export const prisma =
-  global.prisma ||
-  new PrismaClient({
-    log:
-      process.env.NODE_ENV === "development"
-        ? ["query", "error", "warn"]
-        : ["error"],
-  });
+import type { Database } from "./types/generated/schema";
+import type { CookieMethods, CookieOptionsWithName } from "@supabase/ssr";
+import type {
+  SupabaseClientOptions as SupabaseClientOptionsType,
+  SupabaseClient as SupabaseClientType,
+} from "@supabase/supabase-js";
 
-if (process.env.NODE_ENV !== "production") {
-  global.prisma = prisma;
-}
+export type SupabaseClientOptions = SupabaseClientOptionsType<"public"> & {
+  cookies: CookieMethods;
+  cookieOptions?: CookieOptionsWithName;
+  isSingleton?: boolean;
+};
 
-export * from "@prisma/client";
+export type SupabaseClient = SupabaseClientType<Database, "public">;
+
+export const createBrowserClient = (
+  options?: SupabaseClientOptions,
+): SupabaseClient =>
+  createBrowserSupabaseClient(
+    env.NEXT_PUBLIC_SUPABASE_URL,
+    env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    options,
+  );
+
+export const createServerClient = (
+  options: SupabaseClientOptions,
+): SupabaseClient =>
+  createServerSupabaseClient(
+    env.NEXT_PUBLIC_SUPABASE_URL,
+    env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    options,
+  );
+
+export type { CookieOptions } from "@supabase/ssr";

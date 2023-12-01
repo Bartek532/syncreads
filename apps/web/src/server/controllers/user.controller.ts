@@ -17,7 +17,7 @@ import type {
   RegisterUserInput,
   UnregisterAndDisconnectDeviceInput,
 } from "../../utils/validation/types";
-import type { Feed } from "@prisma/client";
+import type { Feed } from "@rssmarkable/database";
 
 export const registerUserHandler = async ({
   input,

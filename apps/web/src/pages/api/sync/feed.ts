@@ -1,4 +1,4 @@
-import { SyncStatus, SyncTrigger } from "@prisma/client";
+import { SyncStatus, SyncTrigger } from "@rssmarkable/database";
 import dayjs from "dayjs";
 import { ApiError } from "next/dist/server/api-utils";
 import Parser from "rss-parser";
@@ -23,7 +23,7 @@ import { syncArticle } from "./article";
 
 import type { FeedArticle, FeedWithArticles } from "../../../types/feed.types";
 import type { Logger } from "../../../types/log.types";
-import type { Feed, Sync } from "@prisma/client";
+import type { Feed, Sync } from "@rssmarkable/database";
 import type { Page } from "puppeteer-core";
 import type { RemarkableApi } from "rmapi-js";
 

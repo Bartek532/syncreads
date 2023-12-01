@@ -6,7 +6,7 @@ import RemarkableIcon from "public/svg/remarkable.svg";
 import { onPromise } from "../../../utils/functions";
 import { Button } from "../../common/Button";
 
-import type { Device } from "@prisma/client";
+import type { Device } from "@rssmarkable/database";
 
 interface DeviceTileProps {
   readonly device: Device;

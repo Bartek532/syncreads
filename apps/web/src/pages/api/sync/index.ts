@@ -1,4 +1,4 @@
-import { SyncTrigger } from "@prisma/client";
+import { SyncTrigger } from "@rssmarkable/database";
 import Parser from "rss-parser";
 
 import { env } from "../../../env/server";

@@ -13,9 +13,6 @@ const getBaseUrl = () => {
     return `https://${process.env.VERCEL_URL}`;
   }
 
-  if (process.env.EXTERNAL_URL) {
-    return process.env.EXTERNAL_URL;
-  }
   return `http://localhost:${process.env.PORT ?? 3000}`;
 };
 

@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "User" ADD COLUMN     "folder" TEXT NOT NULL DEFAULT 'RSS',
-ADD COLUMN     "startArticlesCount" INTEGER NOT NULL DEFAULT 1;

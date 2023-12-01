@@ -16,7 +16,7 @@ import { useGenericLoader } from "../../hooks/useGenericLoader";
 import { onPromise } from "../../utils/functions";
 import { trpc } from "../../utils/trpc";
 
-import type { Sync } from "@prisma/client";
+import type { Sync } from "@rssmarkable/database";
 import type { TRPCError } from "@trpc/server";
 
 export const HomeView = () => {

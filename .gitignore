@@ -43,3 +43,7 @@ yarn-error.log*
 
 # turbo
 .turbo
+
+# supabase
+.branches
+.temp

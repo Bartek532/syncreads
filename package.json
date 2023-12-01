@@ -7,13 +7,12 @@
     "build:apps": "dotenv -- turbo build --filter=./apps/*",
     "build:packages": "dotenv -- turbo build --filter=./packages/*",
     "clean": "turbo clean && rm -rf node_modules",
+    "db:setup:dev": "turbo db:setup:dev",
+    "db:stop:dev": "turbo db:stop:dev",
     "db:generate": "turbo db:generate",
     "db:migrate:deploy": "turbo db:migrate:deploy",
     "db:migrate:dev": "turbo db:migrate:dev",
-    "dev": "concurrently --kill-others-on-fail \"pnpm run docker:start:dev\" \"wait-on tcp:5432 && dotenv -- turbo dev\"",
-    "docker:start:dev": "docker compose -f provision/dev/docker-compose.yml up -d",
-    "docker:stop:dev": "docker compose -f provision/dev/docker-compose.yml down",
-    "docker:build:dev": "docker compose -f provision/dev/docker-compose.yml build",
+    "dev": "dotenv -- turbo dev",
     "format:check": "prettier --check \"**/*.{ts,tsx,md}\"",
     "format:write": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo lint",
@@ -45,6 +44,6 @@
     "wait-on": "^7.0.1"
   },
   "engines": {
-    "node": "^18.0.0"
+    "node": "^20.0.0"
   }
 }

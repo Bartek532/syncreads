@@ -16,7 +16,7 @@ module.exports = {
     "plugin:import/recommended",
     "plugin:import/typescript",
   ],
-  ignorePatterns: [".eslintrc.js"],
+  ignorePatterns: [".*.js", "node_modules/", "dist/"],
   env: {
     node: true,
     jest: true,

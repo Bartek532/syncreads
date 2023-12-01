@@ -1,4 +1,4 @@
-import { SyncStatus, SyncTrigger } from "@prisma/client";
+import { SyncStatus, SyncTrigger } from "@rssmarkable/database";
 import { TRPCError } from "@trpc/server";
 import dayjs from "dayjs";
 import { getLinkPreview } from "link-preview-js";

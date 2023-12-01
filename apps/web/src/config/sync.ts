@@ -1,4 +1,4 @@
-import { SyncTrigger } from "@prisma/client";
+import { SyncTrigger } from "@rssmarkable/database";
 
 import { LOG_LEVEL } from "../types/log.types";
 

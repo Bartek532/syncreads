@@ -16,6 +16,7 @@
   "dependencies": {
     "@nestjs/common": "10.2.10",
     "@nestjs/platform-express": "10.2.10",
+    "@rssmarkable/database": "workspace:*",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
     "rxjs": "7.2.0"

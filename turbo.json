@@ -4,18 +4,26 @@
   "globalDotEnv": [".env"],
   "pipeline": {
     "build": {
-      "dependsOn": ["clean", "db:generate", "^build"],
+      "dependsOn": ["clean", "^build"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "build:apps": {},
     "build:packages": {},
     "dev": {
-      "dependsOn": ["db:generate", "db:migrate:dev"],
       "cache": false,
       "persistent": true
     },
     "db:generate": {
       "dependsOn": ["^db:generate"],
+      "cache": false
+    },
+    "db:setup:dev": {
+      "cache": false
+    },
+    "db:start:dev": {
+      "cache": false
+    },
+    "db:stop:dev": {
       "cache": false
     },
     "db:migrate:dev": {
@@ -27,9 +35,7 @@
     "clean": {
       "cache": false
     },
-    "lint": {
-      "dependsOn": ["db:generate"]
-    },
+    "lint": {},
     "test": {},
     "test:ci": {}
   }
