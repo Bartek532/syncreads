@@ -6,16 +6,16 @@ import {
 import { BellIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import Link from "next/link";
-import { signOut } from "next-auth/react";
 import { Fragment, memo } from "react";
 
 import { onPromise } from "../../../utils/functions";
+import { supabase } from "../../../utils/supabase/server";
 import { Avatar } from "../../common/Avatar";
 
-import type { Session } from "next-auth";
+import type { User } from "@rssmarkable/database";
 
 interface HeaderProps {
-  readonly user: Session["user"];
+  readonly user: User;
   readonly onSidebarOpen: () => void;
 }
 
@@ -43,10 +43,12 @@ export const Header = memo<HeaderProps>(({ user, onSidebarOpen }) => {
           <Menu as="div" className="relative ml-3">
             <div>
               <Menu.Button className="flex max-w-xs items-center gap-2 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-300 lg:rounded-md lg:p-2">
-                <Avatar image={user?.image} name={user?.name} isSmall />
+                {/* <Avatar image={user?.image} name={user?.name} isSmall /> */}
                 <span className="ml-3 hidden text-sm font-medium text-gray-700 dark:text-gray-300 lg:block">
                   <span className="sr-only">Open user menu for </span>
-                  {user?.name?.split(" ")[0] ?? user?.email ?? "Guest"}
+                  {user?.user_metadata.name?.split(" ")[0] ??
+                    user?.email ??
+                    "Guest"}
                 </span>
                 <ChevronDownIcon
                   className="ml-1 hidden h-5 w-5 flex-shrink-0 text-gray-400 lg:block"
@@ -84,7 +86,7 @@ export const Header = memo<HeaderProps>(({ user, onSidebarOpen }) => {
                         active ? "bg-gray-100 dark:bg-gray-700" : "",
                         "block w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 dark:hover:bg-slate-800",
                       )}
-                      onClick={onPromise(() => signOut())}
+                      onClick={onPromise(() => supabase.auth.signOut())}
                     >
                       Logout
                     </button>

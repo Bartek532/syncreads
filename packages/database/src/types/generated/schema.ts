@@ -9,100 +9,45 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      Account: {
-        Row: {
-          access_token: string | null
-          expires_at: number | null
-          id: number
-          id_token: string | null
-          provider: string
-          providerAccountId: string
-          refresh_token: string | null
-          refresh_token_expires_in: number | null
-          scope: string | null
-          session_state: string | null
-          token_type: string | null
-          type: string
-          userId: number
-        }
-        Insert: {
-          access_token?: string | null
-          expires_at?: number | null
-          id?: number
-          id_token?: string | null
-          provider: string
-          providerAccountId: string
-          refresh_token?: string | null
-          refresh_token_expires_in?: number | null
-          scope?: string | null
-          session_state?: string | null
-          token_type?: string | null
-          type: string
-          userId: number
-        }
-        Update: {
-          access_token?: string | null
-          expires_at?: number | null
-          id?: number
-          id_token?: string | null
-          provider?: string
-          providerAccountId?: string
-          refresh_token?: string | null
-          refresh_token_expires_in?: number | null
-          scope?: string | null
-          session_state?: string | null
-          token_type?: string | null
-          type?: string
-          userId?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "Account_userId_fkey"
-            columns: ["userId"]
-            referencedRelation: "User"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
       Device: {
         Row: {
-          id: number
+          id: string
           registeredAt: string
           token: string
-          userId: number
+          userId: string
         }
         Insert: {
-          id?: number
+          id: string
           registeredAt?: string
           token: string
-          userId: number
+          userId: string
         }
         Update: {
-          id?: number
+          id?: string
           registeredAt?: string
           token?: string
-          userId?: number
+          userId?: string
         }
         Relationships: [
           {
             foreignKeyName: "Device_userId_fkey"
             columns: ["userId"]
-            referencedRelation: "User"
+            referencedRelation: "users"
             referencedColumns: ["id"]
           }
         ]
       }
       Feed: {
         Row: {
-          id: number
+          id: string
           url: string
         }
         Insert: {
-          id?: number
+          id: string
           url: string
         }
         Update: {
-          id?: number
+          id?: string
           url?: string
         }
         Relationships: []
@@ -110,21 +55,21 @@ export interface Database {
       Log: {
         Row: {
           createdAt: string
-          id: number
+          id: string
           json: Json
           syncId: string
           updatedAt: string
         }
         Insert: {
           createdAt?: string
-          id?: number
+          id: string
           json: Json
           syncId: string
           updatedAt: string
         }
         Update: {
           createdAt?: string
-          id?: number
+          id?: string
           json?: Json
           syncId?: string
           updatedAt?: string
@@ -138,34 +83,6 @@ export interface Database {
           }
         ]
       }
-      Session: {
-        Row: {
-          expires: string
-          id: number
-          sessionToken: string
-          userId: number
-        }
-        Insert: {
-          expires: string
-          id?: number
-          sessionToken: string
-          userId: number
-        }
-        Update: {
-          expires?: string
-          id?: number
-          sessionToken?: string
-          userId?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "Session_userId_fkey"
-            columns: ["userId"]
-            referencedRelation: "User"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
       Sync: {
         Row: {
           finishedAt: string | null
@@ -174,7 +91,7 @@ export interface Database {
           status: Database["public"]["Enums"]["SyncStatus"]
           syncedArticlesCount: number
           trigger: Database["public"]["Enums"]["SyncTrigger"]
-          userId: number
+          userId: string
         }
         Insert: {
           finishedAt?: string | null
@@ -183,7 +100,7 @@ export interface Database {
           status: Database["public"]["Enums"]["SyncStatus"]
           syncedArticlesCount?: number
           trigger: Database["public"]["Enums"]["SyncTrigger"]
-          userId: number
+          userId: string
         }
         Update: {
           finishedAt?: string | null
@@ -192,65 +109,35 @@ export interface Database {
           status?: Database["public"]["Enums"]["SyncStatus"]
           syncedArticlesCount?: number
           trigger?: Database["public"]["Enums"]["SyncTrigger"]
-          userId?: number
+          userId?: string
         }
         Relationships: [
           {
             foreignKeyName: "Sync_userId_fkey"
             columns: ["userId"]
-            referencedRelation: "User"
+            referencedRelation: "users"
             referencedColumns: ["id"]
           }
         ]
       }
-      User: {
-        Row: {
-          email: string | null
-          emailVerified: string | null
-          folder: string
-          id: number
-          image: string | null
-          name: string | null
-          password: string | null
-        }
-        Insert: {
-          email?: string | null
-          emailVerified?: string | null
-          folder?: string
-          id?: number
-          image?: string | null
-          name?: string | null
-          password?: string | null
-        }
-        Update: {
-          email?: string | null
-          emailVerified?: string | null
-          folder?: string
-          id?: number
-          image?: string | null
-          name?: string | null
-          password?: string | null
-        }
-        Relationships: []
-      }
       UserFeed: {
         Row: {
-          feedId: number
+          feedId: string
           lastSyncDate: string | null
           startArticlesCount: number
-          userId: number
+          userId: string
         }
         Insert: {
-          feedId: number
+          feedId: string
           lastSyncDate?: string | null
           startArticlesCount?: number
-          userId: number
+          userId: string
         }
         Update: {
-          feedId?: number
+          feedId?: string
           lastSyncDate?: string | null
           startArticlesCount?: number
-          userId?: number
+          userId?: string
         }
         Relationships: [
           {
@@ -262,28 +149,10 @@ export interface Database {
           {
             foreignKeyName: "UserFeed_userId_fkey"
             columns: ["userId"]
-            referencedRelation: "User"
+            referencedRelation: "users"
             referencedColumns: ["id"]
           }
         ]
-      }
-      VerificationToken: {
-        Row: {
-          expires: string
-          identifier: string
-          token: string
-        }
-        Insert: {
-          expires: string
-          identifier: string
-          token: string
-        }
-        Update: {
-          expires?: string
-          identifier?: string
-          token?: string
-        }
-        Relationships: []
       }
     }
     Views: {

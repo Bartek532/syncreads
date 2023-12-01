@@ -1,14 +1,18 @@
-// export { default } from "next-auth/middleware";
-
-// export const config = { matcher: ["/dashboard/:path*"] };
-import { type NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 
 import { createClient } from "./utils/supabase/middleware";
 
 export async function middleware(request: NextRequest) {
   const { supabase, response } = createClient(request);
 
-  await supabase.auth.getSession();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
+  if (!session && request.nextUrl.pathname.startsWith("/dashboard")) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  console.log(session?.user);
   return response;
 }

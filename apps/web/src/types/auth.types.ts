@@ -10,7 +10,6 @@ export interface Register {
 }
 
 export enum AUTH_PROVIDER {
-  CREDENTIALS = "credentials",
   GITHUB = "github",
   GOOGLE = "google",
 }
