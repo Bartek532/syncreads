@@ -11,7 +11,7 @@ ALTER TABLE "User" DROP COLUMN "deviceToken";
 CREATE TABLE "UserToken" (
     "id" SERIAL NOT NULL,
     "token" TEXT NOT NULL,
-    "userId" INTEGER NOT NULL,
+    "userId" TEXT NOT NULL,
 
     CONSTRAINT "UserToken_pkey" PRIMARY KEY ("id")
 );

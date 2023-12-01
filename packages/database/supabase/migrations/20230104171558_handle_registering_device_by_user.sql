@@ -12,9 +12,9 @@ DROP TABLE "UserToken";
 
 -- CreateTable
 CREATE TABLE "Device" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "token" TEXT NOT NULL,
-    "userId" INTEGER NOT NULL,
+    "userId" TEXT NOT NULL,
 
     CONSTRAINT "Device_pkey" PRIMARY KEY ("id")
 );

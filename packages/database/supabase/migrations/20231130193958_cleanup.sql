@@ -10,6 +10,8 @@ alter table "public"."Sync" drop constraint "Sync_userId_fkey";
 
 alter table "public"."UserFeed" drop constraint "UserFeed_userId_fkey";
 
+alter table "public"."UserFeed" drop constraint "UserFeed_feedId_fkey";
+
 alter table "public"."Account" drop constraint "Account_pkey";
 
 alter table "public"."Session" drop constraint "Session_pkey";
@@ -98,4 +100,6 @@ alter table "public"."UserFeed" add constraint "UserFeed_userId_fkey" FOREIGN KE
 
 alter table "public"."UserFeed" validate constraint "UserFeed_userId_fkey";
 
+alter table "public"."UserFeed" add constraint "UserFeed_feedId_fkey" FOREIGN KEY ("feedId") REFERENCES "Feed"(id) ON UPDATE CASCADE ON DELETE CASCADE not valid;
 
+alter table "public"."UserFeed" validate constraint "UserFeed_feedId_fkey";
