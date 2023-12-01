@@ -8,7 +8,7 @@ CREATE TABLE "Sync" (
     "finishedAt" TIMESTAMP(3),
     "status" "SyncStatus" NOT NULL,
     "syncedArticlesCount" INTEGER NOT NULL DEFAULT 0,
-    "userId" INTEGER NOT NULL,
+    "userId" TEXT NOT NULL,
 
     CONSTRAINT "Sync_pkey" PRIMARY KEY ("id")
 );

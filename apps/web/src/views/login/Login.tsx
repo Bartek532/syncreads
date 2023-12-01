@@ -80,14 +80,17 @@ export const LoginView = () => {
                       key={provider}
                       variant="secondary"
                       className="inline-flex w-full justify-center gap-4 py-2.5"
-                      onClick={onPromise(() =>
-                        supabase.auth.signInWithOAuth({
-                          provider,
-                          options: {
-                            redirectTo: `${window.location.origin}/dashboard`,
-                          },
-                        }),
-                      )}
+                      onClick={onPromise(async () => {
+                        const { data, error } =
+                          await supabase.auth.signInWithOAuth({
+                            provider,
+                            options: {
+                              redirectTo: `${window.location.origin}/dashboard`,
+                            },
+                          });
+
+                        console.log(data, error);
+                      })}
                     >
                       <span className="sr-only">Sign in with {provider}</span>
 

@@ -2,25 +2,36 @@ import {
   createBrowserClient as createBrowserSupabaseClient,
   createServerClient as createServerSupabaseClient,
 } from "@supabase/ssr";
-import { type SupabaseClient } from "@supabase/supabase-js";
 
 import { env } from "./env";
 
 import type { Database } from "./types/generated/schema";
-import type { CookieMethods } from "@supabase/ssr";
+import type { CookieMethods, CookieOptionsWithName } from "@supabase/ssr";
+import type {
+  SupabaseClientOptions as SupabaseClientOptionsType,
+  SupabaseClient as SupabaseClientType,
+} from "@supabase/supabase-js";
 
-export const createBrowserClient = (options?: {
+export type SupabaseClientOptions = SupabaseClientOptionsType<"public"> & {
   cookies: CookieMethods;
-}): SupabaseClient<Database, "public", any> =>
+  cookieOptions?: CookieOptionsWithName;
+  isSingleton?: boolean;
+};
+
+export type SupabaseClient = SupabaseClientType<Database, "public">;
+
+export const createBrowserClient = (
+  options?: SupabaseClientOptions,
+): SupabaseClient =>
   createBrowserSupabaseClient(
     env.NEXT_PUBLIC_SUPABASE_URL,
     env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
     options,
   );
 
-export const createServerClient = (options: {
-  cookies: CookieMethods;
-}): SupabaseClient<Database, "public", any> =>
+export const createServerClient = (
+  options: SupabaseClientOptions,
+): SupabaseClient =>
   createServerSupabaseClient(
     env.NEXT_PUBLIC_SUPABASE_URL,
     env.NEXT_PUBLIC_SUPABASE_ANON_KEY,

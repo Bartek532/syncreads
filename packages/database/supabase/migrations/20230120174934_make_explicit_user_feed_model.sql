@@ -21,8 +21,8 @@ DROP TABLE "_FeedToUser";
 
 -- CreateTable
 CREATE TABLE "UserFeed" (
-    "userId" INTEGER NOT NULL,
-    "feedId" INTEGER NOT NULL,
+    "userId" TEXT NOT NULL,
+    "feedId" TEXT NOT NULL,
     "lastSyncDate" TIMESTAMP(3),
     "startArticlesCount" INTEGER NOT NULL DEFAULT 1
 );

@@ -1,11 +1,11 @@
 import { Module } from "@nestjs/common";
 
+import { SupabaseModule } from "../supabase/supabase.module";
+
 import { SyncController } from "./sync.controller";
-import { SyncService } from "./sync.service";
 
 @Module({
-  imports: [],
+  imports: [SupabaseModule],
   controllers: [SyncController],
-  providers: [SyncService],
 })
 export class SyncModule {}

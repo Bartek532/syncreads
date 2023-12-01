@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "User" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "deviceToken" TEXT NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "Feed" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "url" TEXT NOT NULL,
 
     CONSTRAINT "Feed_pkey" PRIMARY KEY ("id")
@@ -19,8 +19,8 @@ CREATE TABLE "Feed" (
 
 -- CreateTable
 CREATE TABLE "_FeedToUser" (
-    "A" INTEGER NOT NULL,
-    "B" INTEGER NOT NULL
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
 );
 
 -- CreateIndex
