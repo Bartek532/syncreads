@@ -15,7 +15,7 @@ type SocialProvidersProps = {
 
 export const SocialProviders = memo<SocialProvidersProps>(({ providers }) => {
   return (
-    <div className="mt-1 flex w-full flex-col items-stretch justify-center gap-2">
+    <div className="flex w-full flex-col items-stretch justify-center gap-2">
       {Object.values(providers).map((provider) => {
         const Icon = dynamic(() => import(`public/svg/social/${provider}.svg`));
 

@@ -7,58 +7,72 @@ import { memo } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-import { loginUserSchema, type LoginData } from "../../../types/auth.types";
+import { SYNC_DEFAULT_FOLDER_NAME } from "../../../config/sync";
+import {
+  registerUserSchema,
+  type RegisterData,
+} from "../../../types/auth.types";
 import { onPromise } from "../../../utils/functions";
 import { supabase } from "../../../utils/supabase/client";
 import { Button } from "../../common/Button";
 import { Input } from "../../common/Input";
 
-export const LoginForm = memo(() => {
+export const RegisterForm = memo(() => {
   const router = useRouter();
-  const { handleSubmit, control } = useForm<LoginData>({
-    resolver: zodResolver(loginUserSchema),
+  const { control, handleSubmit } = useForm<RegisterData>({
+    resolver: zodResolver(registerUserSchema),
   });
 
-  const onSubmit = async (data: LoginData) => {
-    const loadingToast = toast.loading("Signing in...");
-    const { error } = await supabase.auth.signInWithPassword({
-      ...data,
+  const onSubmit = async (data: RegisterData) => {
+    const loadingToast = toast.loading("Registering...");
+    const { error } = await supabase.auth.signUp({
+      email: data.email,
+      password: data.password,
+      options: {
+        data: {
+          name: data.name,
+          folder: SYNC_DEFAULT_FOLDER_NAME,
+        },
+      },
     });
 
     if (error) {
       return toast.error(error.message, { id: loadingToast });
     }
 
-    toast.dismiss(loadingToast);
-    return router.replace("/dashboard");
+    toast.success("Successfully registered!", { id: loadingToast });
+    return router.push("/dashboard");
   };
+
   return (
     <form className="space-y-6" onSubmit={onPromise(handleSubmit(onSubmit))}>
-      <Input type="email" name="email" control={control}>
+      <Input name="name" control={control}>
+        Name
+      </Input>
+      <Input type="email" control={control} name="email">
         Email
       </Input>
-      <Input type="password" name="password" control={control}>
+      <Input type="password" control={control} name="password">
         Password
       </Input>
       <div className="flex items-center justify-end">
         <div className="text-sm dark:text-gray-400">
-          Don&apos;t have an account yet?
+          Already have an account?
           <Link
-            href="/register"
+            href="/login"
             className="pl-2 font-medium text-indigo-600 hover:text-indigo-500"
           >
-            Sign up!
+            Sign in!
           </Link>
         </div>
       </div>
-
       <div>
         <Button type="submit" className="flex w-full justify-center">
-          Sign in
+          Sign up
         </Button>
       </div>
     </form>
   );
 });
 
-LoginForm.displayName = "LoginForm";
+RegisterForm.displayName = "RegisterForm";

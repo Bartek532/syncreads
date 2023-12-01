@@ -4,6 +4,7 @@ import { memo } from "react";
 import { retrieveChild } from "../../utils/retrieveChild";
 
 import { LoginForm } from "./form/LoginForm";
+import { RegisterForm } from "./form/RegisterForm";
 import { SocialProviders } from "./form/SocialProviders";
 import { AuthDivider } from "./layout/AuthDivider";
 import { AuthHeader } from "./layout/AuthHeader";
@@ -18,10 +19,12 @@ const AuthLayout = memo<AuthLayoutProps>(({ children }) => {
       <div className="flex flex-1 flex-col justify-start  py-12 px-4  dark:bg-slate-900 sm:px-6 lg:flex-none lg:px-20 xl:px-28">
         <div className="mx-auto w-full max-w-sm lg:w-96">
           {retrieveChild(children, AuthHeader.displayName)}
-          {retrieveChild(children, SocialProviders.displayName)}
-          {retrieveChild(children, AuthDivider.name)}
-
-          {retrieveChild(children, LoginForm.displayName)}
+          <div className="mt-8 flex flex-col gap-6">
+            {retrieveChild(children, SocialProviders.displayName)}
+            {retrieveChild(children, AuthDivider.name)}
+            {retrieveChild(children, LoginForm.displayName) ??
+              retrieveChild(children, RegisterForm.displayName)}
+          </div>
         </div>
       </div>
       <div className="relative hidden flex-1 lg:block">
@@ -44,4 +47,5 @@ export const Auth = {
   Providers: SocialProviders,
   Divider: AuthDivider,
   Login: LoginForm,
+  Register: RegisterForm,
 };

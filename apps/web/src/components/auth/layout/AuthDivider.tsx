@@ -1,5 +1,5 @@
 export const AuthDivider = () => (
-  <>
+  <div className="relative">
     <div className="absolute inset-0 flex items-center" aria-hidden="true">
       <div className="w-full border-t border-gray-300 dark:text-gray-700" />
     </div>
@@ -8,5 +8,5 @@ export const AuthDivider = () => (
         or continue with
       </span>
     </div>
-  </>
+  </div>
 );
