@@ -1,3 +1,5 @@
+"use client";
+
 import { ArrowPathIcon } from "@heroicons/react/20/solid";
 import dayjs from "dayjs";
 import { useCallback, useState } from "react";

@@ -1,5 +1,7 @@
+"use client";
+
 import { useState } from "react";
-import { toast } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 import EmptyDeviceIcon from "public/svg/empty-device.svg";
 
@@ -7,13 +9,11 @@ import { Empty } from "../../../components/common/Empty";
 import { AddDeviceModal } from "../../../components/modal/device/AddDeviceModal";
 import { DeviceTile } from "../../../components/tile/deviceTile/DeviceTile";
 import { useGenericLoader } from "../../../hooks/useGenericLoader";
-import { trpc } from "../../../utils/trpc";
-
-import type { TRPCError } from "@trpc/server";
 
 export const DeviceView = () => {
   const utils = trpc.useContext();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
   const { data: device, isLoading: isDeviceLoading } =
     trpc.user.getUserDevice.useQuery();
 
