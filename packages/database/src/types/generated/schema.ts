@@ -17,7 +17,7 @@ export interface Database {
           userId: string
         }
         Insert: {
-          id: string
+          id?: string
           registeredAt?: string
           token: string
           userId: string
@@ -43,7 +43,7 @@ export interface Database {
           url: string
         }
         Insert: {
-          id: string
+          id?: string
           url: string
         }
         Update: {
@@ -62,7 +62,7 @@ export interface Database {
         }
         Insert: {
           createdAt?: string
-          id: string
+          id?: string
           json: Json
           syncId: string
           updatedAt: string
@@ -95,7 +95,7 @@ export interface Database {
         }
         Insert: {
           finishedAt?: string | null
-          id: string
+          id?: string
           startedAt?: string
           status: Database["public"]["Enums"]["SyncStatus"]
           syncedArticlesCount?: number

@@ -17,12 +17,11 @@ max_client_conn = 100
 
 [studio]
 port = 54323
-api_url = "http://localhost"
 
 [auth]
 site_url = "http://localhost:3000"
-additional_redirect_urls = ["https://localhost:3000"]
-jwt_expiry = 3600
+additional_redirect_urls = ["https://localhost:3000", "http://localhost:54321/auth/v1/callback"]
+jwt_expiry = 86400 # 24 hours
 enable_refresh_token_rotation = true
 refresh_token_reuse_interval = 10
 enable_signup = true
@@ -36,11 +35,13 @@ enable_confirmations = false
 enabled = true
 client_id = "env(GITHUB_CLIENT_ID)"
 secret = "env(GITHUB_CLIENT_SECRET)"
+redirect_uri = "http://localhost:54321/auth/v1/callback"
 
 [auth.external.google]
 enabled = true
 client_id = "env(GOOGLE_CLIENT_ID)"
 secret = "env(GOOGLE_CLIENT_SECRET)"
+redirect_uri = "http://localhost:54321/auth/v1/callback"
 
 
 [realtime]

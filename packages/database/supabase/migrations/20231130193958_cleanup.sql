@@ -72,6 +72,14 @@ alter table "public"."UserFeed" alter column "feedId" set data type uuid using "
 
 alter table "public"."UserFeed" alter column "userId" set data type uuid using "userId"::uuid;
 
+alter table "public"."Device" alter column "id" set default gen_random_uuid();
+
+alter table "public"."Feed" alter column "id" set default gen_random_uuid();
+
+alter table "public"."Log" alter column "id" set default gen_random_uuid();
+
+alter table "public"."Sync" alter column "id" set default gen_random_uuid();
+
 drop sequence if exists "public"."Account_id_seq";
 
 drop sequence if exists "public"."Device_id_seq";

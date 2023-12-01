@@ -30,7 +30,7 @@ export const RegisterView = () => {
 
   const onSubmit = async (data: Register) => {
     const loadingToast = toast.loading("Registering...");
-    const { data: s, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email: data.email,
       password: data.password,
       options: {
@@ -40,14 +40,12 @@ export const RegisterView = () => {
       },
     });
 
-    console.log(s, error);
-
     if (error) {
       return toast.error(error.message, { id: loadingToast });
     }
 
     toast.success("Successfully registered!", { id: loadingToast });
-    return router.push("/login");
+    return router.push("/dashboard");
   };
 
   useEffect(() => {
