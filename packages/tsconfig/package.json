@@ -1,0 +1,6 @@
+{
+  "name": "@rssmarkable/tsconfig",
+  "files": [
+    "base.json"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "assets": ["public/**"],
+    "builder": {
+      "type": "swc",
+      "options": {
+        "sourceMaps": true,
+        "copyFiles": true
+      }
+    },
+    "watchAssets": true
+  }
+}

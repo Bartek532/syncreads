@@ -1,6 +1,11 @@
-node_modules
-npm-debug.log
-*.md
-.next
 .git
-dist
+.dockerignore
+**/*Dockerfile*
+**/*docker-compose*
+**/node_modules
+**/dist
+**/build
+**/.turbo
+**/.pnpm-store
+.pnpm-store
+node_modules
