@@ -28,14 +28,7 @@ export interface Database {
           token?: string
           userId?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "Device_userId_fkey"
-            columns: ["userId"]
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
+        Relationships: []
       }
       Feed: {
         Row: {

@@ -1,17 +1,19 @@
 import { Controller, Get, Inject } from "@nestjs/common";
 
-import { SUPABASE_CLIENT_FACTORY_TOKEN } from "../supabase/supabase.constants";
-import { SupabaseProviderFactory } from "../supabase/supabase.provider";
+import { DeviceStrategiesProviderFactory } from "../device/device-strategies.provider";
+import { DEVICE_STRATEGIES_TOKEN } from "../device/device.constants";
 
 @Controller()
 export class SyncController {
   constructor(
-    @Inject(SUPABASE_CLIENT_FACTORY_TOKEN)
-    private readonly supabase: SupabaseProviderFactory,
+    @Inject(DEVICE_STRATEGIES_TOKEN)
+    private readonly deviceStrategies: DeviceStrategiesProviderFactory,
   ) {}
 
   @Get()
   async getHello() {
-    return this.supabase().from("Feed").select("*");
+    return this.deviceStrategies.remarkable.getFiles(
+      "cb97431a-cb90-4a23-aa5f-04af7752c5f9",
+    );
   }
 }

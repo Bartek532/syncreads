@@ -16,15 +16,17 @@
   "dependencies": {
     "@nestjs/bull": "10.0.1",
     "@nestjs/common": "10.2.10",
+    "@nestjs/config": "3.1.1",
     "@nestjs/platform-express": "10.2.10",
     "@rssmarkable/database": "workspace:*",
     "bull": "4.11.5",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
-    "rmapi-js": "^2.0.0",
+    "rmapi-js": "^3.0.2",
     "rss-parser": "^3.13.0",
     "rxjs": "7.2.0",
-    "uuid4": "^2.0.3"
+    "uuid4": "^2.0.3",
+    "zod": "^3.22.3"
   },
   "devDependencies": {
     "@nestjs/cli": "9.0.0",

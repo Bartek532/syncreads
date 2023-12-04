@@ -8,16 +8,17 @@ import {
 import { RemarkableProviderFactory } from "./remarkable.provider";
 import { generateFolderMetadata } from "./utils/generate-folder-metadata";
 
+import type { DeviceStrategy } from "../device/device.interface";
 import type { Entry, Metadata } from "rmapi-js";
 
 @Injectable()
-export class RemarkableStrategy {
+export class RemarkableStrategy implements DeviceStrategy {
   constructor(
     @Inject(REMARKABLE_CLIENT_FACTORY_TOKEN)
     private readonly remarkableProvider: RemarkableProviderFactory,
   ) {}
 
-  private async getFiles(userId: string) {
+  async getFiles(userId: string) {
     const api = await this.remarkableProvider(userId);
 
     const [root] = await api.getRootHash();
