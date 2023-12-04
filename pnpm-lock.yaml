@@ -58,6 +58,9 @@ importers:
       bull:
         specifier: 4.11.5
         version: 4.11.5
+      puppeteer-core:
+        specifier: ^19.4.1
+        version: 19.4.1
       reflect-metadata:
         specifier: 0.1.13
         version: 0.1.13

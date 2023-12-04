@@ -9,3 +9,5 @@ export const ConfigurationSchema = z.object({
   // Path to Chrome executable
   CHROME_BIN: z.string(),
 });
+
+export type Configuration = z.infer<typeof ConfigurationSchema>;
