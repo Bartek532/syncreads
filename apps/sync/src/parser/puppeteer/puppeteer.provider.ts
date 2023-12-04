@@ -9,7 +9,7 @@ import {
 import type { Configuration } from "../../types/configuration.schema";
 import type { Page } from "puppeteer-core";
 
-export type PuppeteerProviderFactory = () => Promise<Page>;
+export type PuppeteerProviderFactory = Promise<Page>;
 
 export const puppeteerProvider = {
   provide: PUPPETEER_PROVIDER_FACTORY_TOKEN,

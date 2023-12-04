@@ -1,4 +1,4 @@
-import { Inject } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 
 import {
   PDF_OPTIONS,
@@ -10,6 +10,7 @@ import { RssParserProviderFactory } from "./rss/rss.provider";
 
 import type { FeedArticle } from "./parser.types";
 
+@Injectable()
 export class ParserService {
   constructor(
     @Inject(PUPPETEER_PROVIDER_FACTORY_TOKEN)
@@ -19,7 +20,7 @@ export class ParserService {
   ) {}
 
   async parseFeed(url: string) {
-    const parsed = await this.rssParserProvider().parseURL(url);
+    const parsed = await this.rssParserProvider.parseURL(url);
 
     return parsed.items.filter(
       (item): item is FeedArticle => !!item.link && !!item.pubDate,
@@ -27,7 +28,7 @@ export class ParserService {
   }
 
   async generatePdf(url: string) {
-    const page = await this.puppeteerProvider();
+    const page = await this.puppeteerProvider;
     await page.goto(url, { waitUntil: "networkidle2" });
 
     return page.pdf(PDF_OPTIONS);
