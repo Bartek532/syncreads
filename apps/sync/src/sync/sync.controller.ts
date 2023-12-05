@@ -10,14 +10,14 @@ import { ApiKeyGuard } from "../auth/guards/api-key.guard";
 import { UserService } from "../auth/user/user.service";
 
 import { SyncArticlePayloadDto } from "./dto/article.dto";
-import { SyncService } from "./sync.service";
+// import { SyncService } from "./sync.service";
 
 @Controller("sync")
 export class SyncController {
   constructor(
     private readonly userService: UserService,
-    private readonly syncService: SyncService,
-  ) {}
+  ) // private readonly syncService: SyncService,
+  {}
 
   @Post("article")
   @UseGuards(ApiKeyGuard)

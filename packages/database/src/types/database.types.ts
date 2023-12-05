@@ -2,19 +2,33 @@ import type { Database } from "./generated/schema";
 import type { User as UserType } from "@supabase/supabase-js";
 
 // Generics
-type Tables<T extends keyof Database["public"]["Tables"]> =
-  Database["public"]["Tables"][T]["Row"];
+type Tables<
+  T extends keyof Database["public"]["Tables"],
+  U extends keyof Database["public"]["Tables"][T] = "Row",
+> = Database["public"]["Tables"][T][U];
 type Enums<T extends keyof Database["public"]["Enums"]> =
   Database["public"]["Enums"][T];
 
-// Tables
 export type Device = Tables<"Device">;
-export type Feed = Tables<"Feed">;
-export type Log = Tables<"Log">;
-export type Sync = Tables<"Sync">;
-export type UserFeed = Tables<"UserFeed">;
+export type InsertDevice = Tables<"Device", "Insert">;
+export type UpdateDevice = Tables<"Device", "Update">;
 
-// Enums
+export type Feed = Tables<"Feed">;
+export type InsertFeed = Tables<"Feed", "Insert">;
+export type UpdateFeed = Tables<"Feed", "Update">;
+
+export type Log = Tables<"Log">;
+export type InsertLog = Tables<"Log", "Insert">;
+export type UpdateLog = Tables<"Log", "Update">;
+
+export type Sync = Tables<"Sync">;
+export type InsertSync = Tables<"Sync", "Insert">;
+export type UpdateSync = Tables<"Sync", "Update">;
+
+export type UserFeed = Tables<"UserFeed">;
+export type InsertUserFeed = Tables<"UserFeed", "Insert">;
+export type UpdateUserFeed = Tables<"UserFeed", "Update">;
+
 export type SyncStatus = Enums<"SyncStatus">;
 export type SyncTrigger = Enums<"SyncTrigger">;
 
