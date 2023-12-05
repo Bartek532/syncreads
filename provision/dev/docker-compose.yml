@@ -1,0 +1,16 @@
+version: "3.8"
+name: "rssmarkable"
+
+services:
+  redis:
+    container_name: redis
+    ports:
+      - 6379:6379
+    image: docker.io/bitnami/redis:7.0
+    env_file:
+      - ../../.env
+    volumes:
+      - "redis_data:/bitnami/redis/data"
+
+volumes:
+  redis_data:
