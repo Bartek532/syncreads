@@ -1,9 +1,9 @@
-import { SUPABASE_CLIENT_FACTORY_TOKEN } from "../supabase/supabase.constants";
+import { SUPABASE_CLIENT_FACTORY_TOKEN } from "../../supabase/supabase.constants";
 
 import { getClient } from "./api/remarkable.client";
 import { REMARKABLE_CLIENT_FACTORY_TOKEN } from "./remarkable.constants";
 
-import type { SupabaseProviderFactory } from "../supabase/supabase.provider";
+import type { SupabaseProviderFactory } from "../../supabase/supabase.provider";
 import type { RemarkableApi } from "rmapi-js";
 
 export type RemarkableProviderFactory = (

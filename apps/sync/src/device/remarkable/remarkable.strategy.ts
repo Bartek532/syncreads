@@ -8,7 +8,7 @@ import {
 import { RemarkableProviderFactory } from "./remarkable.provider";
 import { generateFolderMetadata } from "./utils/generate-folder-metadata";
 
-import type { DeviceStrategy } from "../device/device.interface";
+import type { DeviceStrategy } from "../device.interface";
 import type { CollectionMetadataEntry, Entry } from "rmapi-js";
 
 @Injectable()

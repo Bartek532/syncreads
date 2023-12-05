@@ -1,6 +1,5 @@
-import { RemarkableStrategy } from "../remarkable/remarkable.strategy";
-
 import { DEVICE_STRATEGIES_TOKEN, DEVICE_TYPE } from "./device.constants";
+import { RemarkableStrategy } from "./remarkable/remarkable.strategy";
 
 import type { DeviceStrategy } from "./device.interface";
 

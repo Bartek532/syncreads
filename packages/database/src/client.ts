@@ -2,15 +2,16 @@ import {
   createBrowserClient as createBrowserSupabaseClient,
   createServerClient as createServerSupabaseClient,
 } from "@supabase/ssr";
+import {
+  createClient,
+  type SupabaseClientOptions as SupabaseClientOptionsType,
+  type SupabaseClient as SupabaseClientType,
+} from "@supabase/supabase-js";
 
 import { env } from "./env";
 
 import type { Database } from "./types/generated/schema";
 import type { CookieMethods, CookieOptionsWithName } from "@supabase/ssr";
-import type {
-  SupabaseClientOptions as SupabaseClientOptionsType,
-  SupabaseClient as SupabaseClientType,
-} from "@supabase/supabase-js";
 
 export type SupabaseClientOptions = SupabaseClientOptionsType<"public"> & {
   cookies: CookieMethods;

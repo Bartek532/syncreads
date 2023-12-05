@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 
-import { SupabaseModule } from "../supabase/supabase.module";
+import { SupabaseModule } from "../../supabase/supabase.module";
 
 import { remarkableProvider } from "./remarkable.provider";
 import { RemarkableStrategy } from "./remarkable.strategy";
