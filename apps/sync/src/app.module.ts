@@ -3,8 +3,8 @@ import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { serverSchema, validateConfig } from "@rssmarkable/shared";
 
+import { DeviceModule } from "./device/device.module";
 import { ParserModule } from "./parser/parser.module";
-import { DeviceRemarkableModule } from "./remarkable/remarkable.module";
 import { SupabaseModule } from "./supabase/supabase.module";
 import { SyncModule } from "./sync/sync.module";
 
@@ -35,7 +35,7 @@ import type { ServerConfig } from "@rssmarkable/shared";
       validate: (config) => validateConfig(serverSchema, config),
     }),
     SupabaseModule,
-    DeviceRemarkableModule,
+    DeviceModule,
     ParserModule,
     SyncModule,
   ],

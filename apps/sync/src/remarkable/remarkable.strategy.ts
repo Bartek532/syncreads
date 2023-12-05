@@ -73,4 +73,20 @@ export class RemarkableStrategy implements DeviceStrategy {
 
     return folder;
   }
+
+  async upload({
+    userId,
+    folder,
+    title,
+    pdf,
+  }: {
+    userId: string;
+    folder?: string;
+    title: string;
+    pdf: Buffer;
+  }) {
+    const api = await this.remarkableProvider(userId);
+
+    return api.putPdf(title, pdf, { parent: folder });
+  }
 }
