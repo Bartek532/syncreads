@@ -1,0 +1,27 @@
+{
+  "name": "@rssmarkable/shared",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "clean": "rimraf .turbo dist",
+    "dev": "tsup --watch",
+    "lint": "eslint \"src/**/*.ts\""
+  },
+  "dependencies": {
+    "zod": "^3.22.3"
+  },
+  "devDependencies": {
+    "@rssmarkable/eslint-preset": "workspace:*",
+    "@rssmarkable/tsconfig": "workspace:*",
+    "@types/node": "^18.0.0",
+    "rimraf": "3.0.2",
+    "tsup": "8.0.1",
+    "tsx": "4.5.0"
+  }
+}

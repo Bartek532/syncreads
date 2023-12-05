@@ -20,6 +20,7 @@
     "db:generate": "supabase gen types typescript --schema public --local > src/types/generated/schema.ts"
   },
   "dependencies": {
+    "@rssmarkable/shared": "workspace:*",
     "@supabase/ssr": "0.0.10",
     "@supabase/supabase-js": "2.39.0",
     "zod": "^3.22.3"

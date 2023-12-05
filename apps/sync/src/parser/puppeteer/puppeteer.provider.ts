@@ -6,14 +6,14 @@ import {
   PUPPETEER_PROVIDER_FACTORY_TOKEN,
 } from "./puppeteer.constants";
 
-import type { Configuration } from "../../types/configuration.schema";
+import type { ServerConfig } from "@rssmarkable/shared";
 import type { Page } from "puppeteer-core";
 
 export type PuppeteerProviderFactory = Promise<Page>;
 
 export const puppeteerProvider = {
   provide: PUPPETEER_PROVIDER_FACTORY_TOKEN,
-  useFactory: async (configService: ConfigService<Configuration, true>) => {
+  useFactory: async (configService: ConfigService<ServerConfig, true>) => {
     const browser = await puppeteer.launch({
       args: BROWSER_CONFIG,
       executablePath: configService.get<string>("CHROME_BIN"),

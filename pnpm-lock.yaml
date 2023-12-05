@@ -59,6 +59,9 @@ importers:
       '@rssmarkable/database':
         specifier: workspace:*
         version: link:../../packages/database
+      '@rssmarkable/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
       bull:
         specifier: 4.11.5
         version: 4.11.5
@@ -83,9 +86,6 @@ importers:
       uuid4:
         specifier: ^2.0.3
         version: 2.0.3
-      zod:
-        specifier: ^3.22.3
-        version: 3.22.3
     devDependencies:
       '@nestjs/cli':
         specifier: 9.0.0
@@ -298,6 +298,9 @@ importers:
 
   packages/database:
     dependencies:
+      '@rssmarkable/shared':
+        specifier: workspace:*
+        version: link:../shared
       '@supabase/ssr':
         specifier: 0.0.10
         version: 0.0.10(@supabase/supabase-js@2.39.0)
@@ -344,6 +347,31 @@ importers:
       eslint-plugin-import:
         specifier: ^2.29.0
         version: 2.29.0(@typescript-eslint/parser@6.13.0)(eslint@8.54.0)
+
+  packages/shared:
+    dependencies:
+      zod:
+        specifier: ^3.22.3
+        version: 3.22.3
+    devDependencies:
+      '@rssmarkable/eslint-preset':
+        specifier: workspace:*
+        version: link:../eslint-preset
+      '@rssmarkable/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
+      '@types/node':
+        specifier: ^18.0.0
+        version: 18.0.0
+      rimraf:
+        specifier: 3.0.2
+        version: 3.0.2
+      tsup:
+        specifier: 8.0.1
+        version: 8.0.1(ts-node@10.9.1)(typescript@5.2.2)
+      tsx:
+        specifier: 4.5.0
+        version: 4.5.0
 
   packages/tsconfig: {}
 
