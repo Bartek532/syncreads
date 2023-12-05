@@ -9,7 +9,7 @@ import { RemarkableProviderFactory } from "./remarkable.provider";
 import { generateFolderMetadata } from "./utils/generate-folder-metadata";
 
 import type { DeviceStrategy } from "../device/device.interface";
-import type { Entry, Metadata } from "rmapi-js";
+import type { CollectionMetadataEntry, Entry } from "rmapi-js";
 
 @Injectable()
 export class RemarkableStrategy implements DeviceStrategy {
@@ -18,31 +18,9 @@ export class RemarkableStrategy implements DeviceStrategy {
     private readonly remarkableProvider: RemarkableProviderFactory,
   ) {}
 
-  async getFiles(userId: string) {
+  private async getFiles(userId: string) {
     const api = await this.remarkableProvider(userId);
-
-    const [root] = await api.getRootHash();
-    const fileEntries = await api.getEntries(root);
-
-    return Promise.all(
-      fileEntries.map(async (fileEntry) => {
-        const children = await api.getEntries(fileEntry.hash);
-        const [file] = await Promise.all(
-          children
-            .map(({ hash, documentId }) => ({ hash, documentId }))
-            .filter(({ documentId }) => documentId.endsWith(".metadata"))
-            .map(async ({ hash, documentId }) => {
-              const meta = await api.getMetadata(hash);
-              return {
-                documentId: documentId.replace(".metadata", ""),
-                ...meta,
-              };
-            }),
-        );
-
-        return file as Metadata & { documentId: string };
-      }),
-    );
+    return api.getEntriesMetadata();
   }
 
   private async checkIfFolderExists(userId: string, name: string) {
@@ -57,7 +35,10 @@ export class RemarkableStrategy implements DeviceStrategy {
     );
   }
 
-  private async createFolder(userId: string, name: string) {
+  private async createFolder(
+    userId: string,
+    name: string,
+  ): Promise<CollectionMetadataEntry> {
     const documentId = uuid4();
     const metadata = generateFolderMetadata(name);
     const api = await this.remarkableProvider(userId);
@@ -70,7 +51,7 @@ export class RemarkableStrategy implements DeviceStrategy {
     const folderEntry = await api.putEntries(documentId, entries);
     await this.syncEntry(userId, folderEntry);
 
-    return { documentId, ...metadata } as Metadata & { documentId: string };
+    return { ...metadata, hash: folderEntry.hash, id: documentId };
   }
 
   async syncEntry(userId: string, entry: Entry) {

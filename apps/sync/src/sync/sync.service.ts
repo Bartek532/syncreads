@@ -23,7 +23,7 @@ export class SyncService {
   }) {
     return this.supabaseProvider()
       .from("UserFeed")
-      .update({ lastSyncDate: date })
+      .update({ lastSyncDate: date.toString() })
       .match({ userId, feedId })
       .throwOnError();
   }
