@@ -1,15 +1,14 @@
-import { Module } from "@nestjs/common";
+import { Module, forwardRef } from "@nestjs/common";
 
 import { UserModule } from "../auth/user/user.module";
-import { DeviceModule } from "../device/device.module";
-import { ParserModule } from "../parser/parser.module";
+import { ArticleQueueModule } from "../queue/article/article.module";
 import { SupabaseModule } from "../supabase/supabase.module";
 
 import { SyncController } from "./sync.controller";
 import { SyncService } from "./sync.service";
 
 @Module({
-  imports: [SupabaseModule, ParserModule, DeviceModule, UserModule],
+  imports: [SupabaseModule, UserModule, forwardRef(() => ArticleQueueModule)],
   providers: [SyncService],
   controllers: [SyncController],
   exports: [SyncService],

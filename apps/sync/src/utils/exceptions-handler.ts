@@ -7,6 +7,8 @@ import type { IncomingMessage } from "http";
 export const getStatusCode = (exception: unknown): number => {
   return exception instanceof HttpException
     ? exception.getStatus()
+    : typeof exception === "object" && exception && "status" in exception
+    ? Number(exception.status)
     : HttpStatus.INTERNAL_SERVER_ERROR;
 };
 

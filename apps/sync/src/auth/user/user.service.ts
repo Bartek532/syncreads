@@ -1,9 +1,36 @@
-import type { SupabaseProviderFactory } from "../../supabase/supabase.provider";
+import { Inject } from "@nestjs/common";
+
+import { SUPABASE_CLIENT_FACTORY_TOKEN } from "../../supabase/supabase.constants";
+import { SupabaseProviderFactory } from "../../supabase/supabase.provider";
 
 export class UserService {
-  constructor(private readonly supabase: SupabaseProviderFactory) {}
+  constructor(
+    @Inject(SUPABASE_CLIENT_FACTORY_TOKEN)
+    private readonly supabaseProvider: SupabaseProviderFactory,
+  ) {}
 
-  getUserById(id: string) {
-    return this.supabase().auth.admin.getUserById(id);
+  async getUserById(id: string) {
+    const { data, error } =
+      await this.supabaseProvider().auth.admin.getUserById(id);
+
+    if (error) {
+      throw error;
+    }
+
+    return data.user;
+  }
+
+  async getUserDevice(userId: string) {
+    const { data, error } = await this.supabaseProvider()
+      .from("Device")
+      .select()
+      .eq("userId", userId)
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
   }
 }

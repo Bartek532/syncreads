@@ -35,7 +35,8 @@ export type SyncTrigger = Enums<"SyncTrigger">;
 export const SyncStatus: { [K in SyncStatus]: K } = {
   SUCCESS: "SUCCESS",
   FAILED: "FAILED",
-  PENDING: "PENDING",
+  QUEUED: "QUEUED",
+  IN_PROGRESS: "IN_PROGRESS",
   UNKNOWN: "UNKNOWN",
 } as const;
 
