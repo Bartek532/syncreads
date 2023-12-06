@@ -1,4 +1,4 @@
-import { Processor, Process, OnQueueFailed } from "@nestjs/bull";
+import { Processor, Process, OnQueueFailed, OnQueueActive } from "@nestjs/bull";
 import { Logger } from "@nestjs/common";
 import { SyncStatus } from "@rssmarkable/database";
 import { Job } from "bull";
@@ -38,6 +38,14 @@ export class ArticleQueueConsumer {
     await this.syncService.updateSync(job.data.syncId, {
       finishedAt: dayjs().toISOString(),
       status: SyncStatus.FAILED,
+    });
+  }
+
+  @OnQueueActive()
+  async onQueueActive(job: Job<ArticleQueueJobPayload>) {
+    Logger.log(`Sync ${job.data.syncId} started!`);
+    await this.syncService.updateSync(job.data.syncId, {
+      status: SyncStatus.IN_PROGRESS,
     });
   }
 }

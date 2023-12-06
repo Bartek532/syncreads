@@ -8,7 +8,7 @@ import {
 } from "../../parser/puppeteer/puppeteer.constants";
 import { PuppeteerProviderFactory } from "../../parser/puppeteer/puppeteer.provider";
 
-export class ArticleQueueService {
+export class FeedQueueService {
   constructor(
     @Inject(PUPPETEER_PROVIDER_FACTORY_TOKEN)
     private readonly puppeteerProvider: PuppeteerProviderFactory,
@@ -16,7 +16,15 @@ export class ArticleQueueService {
     private readonly deviceStrategies: DeviceStrategiesProviderFactory,
   ) {}
 
-  async syncArticle({ userId, url }: { userId: string; url: string }) {
+  async syncArticle({
+    userId,
+    url,
+    folder,
+  }: {
+    userId: string;
+    url: string;
+    folder?: string;
+  }) {
     const page = await this.puppeteerProvider;
 
     await page.goto(url, { waitUntil: "networkidle0", timeout: 0 });
@@ -27,6 +35,7 @@ export class ArticleQueueService {
       title,
       pdf,
       userId,
+      ...(folder ? { folder } : {}),
     });
 
     await this.deviceStrategies.remarkable.syncEntry(userId, entry);

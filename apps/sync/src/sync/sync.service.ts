@@ -33,11 +33,11 @@ export class SyncService {
   }: {
     userId: string;
     feedId: string;
-    date: Date;
+    date: string;
   }) {
     return this.supabaseProvider()
       .from("UserFeed")
-      .update({ lastSyncDate: date.toString() })
+      .update({ lastSyncDate: date })
       .match({ userId, feedId })
       .throwOnError();
   }

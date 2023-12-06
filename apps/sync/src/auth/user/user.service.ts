@@ -33,4 +33,18 @@ export class UserService {
 
     return data;
   }
+
+  async getUserFeeds(userId: string, feedIds: string[]) {
+    const { data, error } = await this.supabaseProvider()
+      .from("UserFeed")
+      .select("*, Feed (id, url)")
+      .eq("userId", userId)
+      .in("feedId", feedIds);
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  }
 }
