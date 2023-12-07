@@ -1,4 +1,5 @@
 import type { Database } from "./generated/schema";
+import type { UserMetadata } from "@rssmarkable/shared";
 import type { User as UserType } from "@supabase/supabase-js";
 
 // Generics
@@ -46,10 +47,6 @@ export const SyncTrigger: { [K in SyncTrigger]: K } = {
 } as const;
 
 // Auth
-type UserMetadata = {
-  name?: string;
-  folder?: string;
-};
 export type User = UserType & { user_metadata: UserMetadata };
 
 export type { Session } from "@supabase/supabase-js";

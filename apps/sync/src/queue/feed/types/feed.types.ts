@@ -1,9 +1,6 @@
-import type { Feed, UserFeed } from "@rssmarkable/database";
-
 export type FeedQueueJobPayload = {
   userId: string;
-  feed: Pick<Feed, "id" | "url"> &
-    Pick<UserFeed, "lastSyncDate" | "startArticlesCount">;
+  feedId: string;
   syncId: string;
   last: boolean;
 };

@@ -65,7 +65,7 @@ export class RemarkableStrategy implements DeviceStrategy {
   }
 
   // TODO: add logger
-  async upsertFolder(userId: string, name: string) {
+  private async upsertFolder(userId: string, name: string) {
     const folder = await this.checkIfFolderExists(userId, name);
     if (!folder) {
       return this.createFolder(userId, name);
@@ -86,7 +86,10 @@ export class RemarkableStrategy implements DeviceStrategy {
     pdf: Buffer;
   }) {
     const api = await this.remarkableProvider(userId);
+    const folderId = folder
+      ? (await this.upsertFolder(userId, folder)).id
+      : undefined;
 
-    return api.putPdf(title, pdf, { parent: folder });
+    return api.putPdf(title, pdf, { parent: folderId });
   }
 }

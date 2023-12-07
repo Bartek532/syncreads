@@ -26,22 +26,6 @@ export class SyncService {
     return data;
   }
 
-  updateFeedSyncDate({
-    userId,
-    feedId,
-    date,
-  }: {
-    userId: string;
-    feedId: string;
-    date: string;
-  }) {
-    return this.supabaseProvider()
-      .from("UserFeed")
-      .update({ lastSyncDate: date })
-      .match({ userId, feedId })
-      .throwOnError();
-  }
-
   updateSync(id: string, data: UpdateSync) {
     return this.supabaseProvider()
       .from("Sync")

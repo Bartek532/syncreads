@@ -87,19 +87,16 @@ export class SyncController {
       trigger: SyncTrigger.MANUAL,
     });
 
-    for (const feed of feeds) {
-      await this.feedQueue.add({
-        userId: user.id,
-        feed: {
-          id: feed.feedId,
-          url: feed.Feed?.url ?? "",
-          lastSyncDate: feed.lastSyncDate,
-          startArticlesCount: feed.startArticlesCount,
+    await this.feedQueue.addBulk(
+      feeds.map(({ feedId }) => ({
+        data: {
+          userId: user.id,
+          feedId,
+          syncId: sync.id,
+          last: ids.indexOf(feedId) === ids.length - 1,
         },
-        syncId: sync.id,
-        last: ids.indexOf(feed.feedId) === ids.length - 1,
-      });
-    }
+      })),
+    );
 
     return {
       sync,
