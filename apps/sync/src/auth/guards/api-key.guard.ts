@@ -1,30 +1,37 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
+
+import { UserService } from "../user/user.service";
 
 import type { CanActivate, ExecutionContext } from "@nestjs/common";
-import type { ServerConfig } from "@rssmarkable/shared";
 import type { Request } from "express";
-import type { Observable } from "rxjs";
 
 const API_TOKEN_HEADER_NAME = "Authorization";
 
 @Injectable()
 export class ApiKeyGuard implements CanActivate {
-  constructor(private readonly configService: ConfigService<ServerConfig>) {}
+  constructor(private readonly userService: UserService) {}
 
-  canActivate(
-    context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
+  async canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest<Request>();
 
     const token = request.get(API_TOKEN_HEADER_NAME);
-    const isTokenValid = token === this.configService.get("API_KEY");
 
-    if (!isTokenValid) {
+    if (!token) {
       throw new UnauthorizedException(
-        "Request is missing API KEY or supplied token is incorrect",
+        "Request is missing API KEY or supplied token is incorrect!",
       );
     }
+
+    const key = await this.userService.getUserByApiKey(token);
+
+    if (!key) {
+      throw new UnauthorizedException(
+        "Request is missing API KEY or supplied token is incorrect!",
+      );
+    }
+
+    // @ts-expect-error - userId is added to request
+    request["userId"] = key.userId;
 
     return true;
   }

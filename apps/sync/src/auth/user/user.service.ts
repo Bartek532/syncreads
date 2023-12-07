@@ -28,6 +28,16 @@ export class UserService {
     };
   }
 
+  async getUserByApiKey(apiKey: string) {
+    const { data } = await this.supabaseProvider()
+      .from("ApiKey")
+      .select("*")
+      .eq("key", apiKey)
+      .single();
+
+    return data;
+  }
+
   async getUserDevice(userId: string) {
     const { data, error } = await this.supabaseProvider()
       .from("Device")

@@ -10,6 +10,10 @@ type Tables<
 type Enums<T extends keyof Database["public"]["Enums"]> =
   Database["public"]["Enums"][T];
 
+export type ApiKey = Tables<"ApiKey">;
+export type InsertApiKey = Tables<"ApiKey", "Insert">;
+export type UpdateApiKey = Tables<"ApiKey", "Update">;
+
 export type Device = Tables<"Device">;
 export type InsertDevice = Tables<"Device", "Insert">;
 export type UpdateDevice = Tables<"Device", "Update">;

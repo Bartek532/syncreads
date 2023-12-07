@@ -9,6 +9,34 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      ApiKey: {
+        Row: {
+          createdAt: string
+          key: string
+          updatedAt: string
+          userId: string
+        }
+        Insert: {
+          createdAt?: string
+          key?: string
+          updatedAt?: string
+          userId?: string
+        }
+        Update: {
+          createdAt?: string
+          key?: string
+          updatedAt?: string
+          userId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ApiKey_userId_fkey"
+            columns: ["userId"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       Device: {
         Row: {
           id: string
@@ -159,7 +187,12 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      gen_random_string: {
+        Args: {
+          length: number
+        }
+        Returns: string
+      }
     }
     Enums: {
       SyncStatus: "SUCCESS" | "FAILED" | "QUEUED" | "IN_PROGRESS" | "UNKNOWN"
