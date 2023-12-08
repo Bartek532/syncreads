@@ -51,6 +51,6 @@ export const SyncTrigger: { [K in SyncTrigger]: K } = {
 } as const;
 
 // Auth
-export type User = UserType & { user_metadata: UserMetadata };
+export type User = UserType & { user_metadata: Partial<UserMetadata> };
 
 export type { Session } from "@supabase/supabase-js";

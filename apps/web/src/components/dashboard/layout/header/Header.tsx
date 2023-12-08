@@ -1,3 +1,5 @@
+"use client";
+
 import { Menu, Transition } from "@headlessui/react";
 import {
   Bars3CenterLeftIcon,
@@ -8,9 +10,9 @@ import clsx from "clsx";
 import Link from "next/link";
 import { Fragment, memo } from "react";
 
-import { onPromise } from "../../../utils/functions";
-import { supabase } from "../../../utils/supabase/server";
-import { Avatar } from "../../common/Avatar";
+import { onPromise } from "../../../../utils/functions";
+import { supabase } from "../../../../utils/supabase/client";
+// import { Avatar } from "../../../common/Avatar";
 
 import type { User } from "@rssmarkable/database";
 
@@ -47,6 +49,7 @@ export const Header = memo<HeaderProps>(({ user, onSidebarOpen }) => {
                 <span className="ml-3 hidden text-sm font-medium text-gray-700 dark:text-gray-300 lg:block">
                   <span className="sr-only">Open user menu for </span>
                   {user?.user_metadata.name?.split(" ")[0] ??
+                    user.identities?.[0]?.identity_data?.name ??
                     user?.email ??
                     "Guest"}
                 </span>

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { memo } from "react";
 
-import type { HeroIcon } from "../../../types/common.types";
+import type { HeroIcon } from "../../../../types/common.types";
 
 interface NavigationItem {
   readonly name: string;
