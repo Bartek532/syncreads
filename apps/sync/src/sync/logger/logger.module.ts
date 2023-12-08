@@ -8,6 +8,6 @@ import { LoggerService } from "./logger.service";
 @Module({
   imports: [SupabaseModule],
   providers: [syncLoggerProvider, LoggerService],
-  exports: [syncLoggerProvider],
+  exports: [syncLoggerProvider, LoggerService],
 })
 export class SyncLoggerModule {}

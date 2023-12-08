@@ -25,15 +25,6 @@ export class LoggerService {
     return data;
   }
 
-  async upsertLog(syncId: string, json: LogMessage[]) {
-    try {
-      const log = await this.getLogBySyncId(syncId);
-      return log;
-    } catch {
-      return this.createLog(syncId, json);
-    }
-  }
-
   async updateLog(logId: string, json: LogMessage) {
     const log = await this.getLogById(logId);
 
@@ -53,6 +44,12 @@ export class LoggerService {
     Logger[json.level](`[${log.syncId}] ${json.message}`);
 
     return data;
+  }
+
+  async updateLogBySyncId(syncId: string, json: LogMessage) {
+    const log = await this.getLogBySyncId(syncId);
+
+    return this.updateLog(log.id, json);
   }
 
   async getLogBySyncId(syncId: string) {

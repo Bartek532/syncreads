@@ -38,21 +38,21 @@ export class FeedQueueService {
     await page.goto(url, { waitUntil: "networkidle0", timeout: 0 });
     const title = await page.title();
 
-    const { updatedAt: articleSyncStartDate } = await (
-      await this.syncLogger(syncId)
+    const { updatedAt: articleSyncStartDate } = await this.syncLogger(
+      syncId,
     ).log(`[${title}](${url}) is being synced now...`);
 
-    await (
-      await this.syncLogger(syncId)
-    ).log(`Generating PDF file with article content...`);
+    await this.syncLogger(syncId).log(
+      `Generating PDF file with article content...`,
+    );
 
     const pdf = await page.pdf(PDF_OPTIONS);
 
-    await (await this.syncLogger(syncId)).log(`PDF file generated.`);
+    await this.syncLogger(syncId).log(`PDF file generated.`);
 
-    await (
-      await this.syncLogger(syncId)
-    ).log(`Trying to push output to the reMarkable cloud...`);
+    await this.syncLogger(syncId).log(
+      `Trying to push output to the reMarkable cloud...`,
+    );
 
     const entry = await this.deviceStrategies.remarkable.upload({
       title,
@@ -63,9 +63,7 @@ export class FeedQueueService {
 
     await this.deviceStrategies.remarkable.syncEntry(userId, entry);
 
-    await (
-      await this.syncLogger(syncId)
-    ).verbose(
+    await this.syncLogger(syncId).verbose(
       `Article successfully synced: ${formatTime(
         dayjs().diff(articleSyncStartDate, "ms"),
       )}`,

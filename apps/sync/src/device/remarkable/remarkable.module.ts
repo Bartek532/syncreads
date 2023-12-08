@@ -1,13 +1,14 @@
 import { Module } from "@nestjs/common";
 
-import { SupabaseModule } from "../../supabase/supabase.module";
+import { UserModule } from "../../auth/user/user.module";
 
+import { RemarkableCacheService } from "./cache.service";
 import { remarkableProvider } from "./remarkable.provider";
 import { RemarkableStrategy } from "./remarkable.strategy";
 
 @Module({
-  imports: [SupabaseModule],
-  providers: [RemarkableStrategy, remarkableProvider],
+  imports: [UserModule],
+  providers: [RemarkableStrategy, remarkableProvider, RemarkableCacheService],
   exports: [RemarkableStrategy, remarkableProvider],
 })
 export class DeviceRemarkableModule {}

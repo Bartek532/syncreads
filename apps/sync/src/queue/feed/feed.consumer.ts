@@ -39,13 +39,11 @@ export class FeedQueueConsumer {
     const feed = await this.userService.getUserFeed(data.userId, data.feedId);
     const user = await this.userService.getUserById(data.userId);
 
-    const { updatedAt: feedSyncStartDate } = await (
-      await this.syncLogger(data.syncId)
+    const { updatedAt: feedSyncStartDate } = await this.syncLogger(
+      data.syncId,
     ).log(`Starting synchronization of feed with url ${feed.Feed.url}...`);
 
-    await (
-      await this.syncLogger(data.syncId)
-    ).log(
+    await this.syncLogger(data.syncId).log(
       feed.lastSyncDate
         ? `Syncing articles published after ${dayjs(feed.lastSyncDate).format(
             "DD-MM-YYYY",
@@ -60,9 +58,7 @@ export class FeedQueueConsumer {
         : index < feed.startArticlesCount,
     );
 
-    await (
-      await this.syncLogger(data.syncId)
-    ).log(
+    await this.syncLogger(data.syncId).log(
       `Found ${articles.length} article(s) to synchronize within current feed.`,
     );
 
@@ -80,9 +76,7 @@ export class FeedQueueConsumer {
       });
     }
 
-    await (
-      await this.syncLogger(data.syncId)
-    ).verbose(
+    await this.syncLogger(data.syncId).verbose(
       `Successfully synced feed ${feed.Feed.url} including **${
         articles.length
       }** articles: ${formatTime(dayjs().diff(feedSyncStartDate, "ms"))}`,
@@ -91,11 +85,9 @@ export class FeedQueueConsumer {
 
   @OnQueueFailed()
   async onQueueFailed(job: Job<FeedQueueJobPayload>, err: Error) {
-    await (await this.syncLogger(job.data.syncId)).error(err.message);
+    await this.syncLogger(job.data.syncId).error(err.message);
     if (err.stack) {
-      await (
-        await this.syncLogger(job.data.syncId)
-      ).error(`\`\`\`js
+      await this.syncLogger(job.data.syncId).error(`\`\`\`js
 ${err.stack}`);
     }
     // TODO handle deleting other jobs from the same sync
@@ -113,9 +105,7 @@ ${err.stack}`);
       lastSyncDate: dayjs().toISOString(),
     });
 
-    await (
-      await this.syncLogger(data.syncId)
-    ).log(`Feed synchronization finished.`);
+    await this.syncLogger(data.syncId).log(`Feed synchronization finished.`);
 
     if (data.last) {
       await this.syncService.updateSync(data.syncId, {
@@ -123,9 +113,7 @@ ${err.stack}`);
         status: SyncStatus.SUCCESS,
       });
 
-      await (
-        await this.syncLogger(data.syncId)
-      ).log(`Synchronization finished.`);
+      await this.syncLogger(data.syncId).log(`Synchronization finished.`);
     }
   }
 
@@ -135,8 +123,8 @@ ${err.stack}`);
       status: SyncStatus.IN_PROGRESS,
     });
 
-    await (
-      await this.syncLogger(job.data.syncId)
-    ).log(`Article synchronization started.`);
+    await this.syncLogger(job.data.syncId).log(
+      `Article synchronization started.`,
+    );
   }
 }

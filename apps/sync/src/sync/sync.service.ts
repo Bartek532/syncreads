@@ -3,8 +3,8 @@ import { HttpException, Inject, Injectable } from "@nestjs/common";
 import { SUPABASE_CLIENT_FACTORY_TOKEN } from "../supabase/supabase.constants";
 import { SupabaseProviderFactory } from "../supabase/supabase.provider";
 
-import { SYNC_LOGGER_PROVIDER_TOKEN } from "./logger/logger.constants";
-import { SyncLoggerProviderFactory } from "./logger/logger.provider";
+import { SYNC_QUEUED_LOG } from "./logger/logger.constants";
+import { LoggerService } from "./logger/logger.service";
 
 import type { InsertSync, UpdateSync } from "@rssmarkable/database";
 
@@ -13,8 +13,7 @@ export class SyncService {
   constructor(
     @Inject(SUPABASE_CLIENT_FACTORY_TOKEN)
     private readonly supabaseProvider: SupabaseProviderFactory,
-    @Inject(SYNC_LOGGER_PROVIDER_TOKEN)
-    private readonly syncLogger: SyncLoggerProviderFactory,
+    private readonly syncLoggerService: LoggerService,
   ) {}
 
   async createSync(payload: InsertSync) {
@@ -28,7 +27,7 @@ export class SyncService {
       throw new HttpException(error.details, status);
     }
 
-    await this.syncLogger(data.id);
+    await this.syncLoggerService.createLog(data.id, [SYNC_QUEUED_LOG()]);
 
     return data;
   }

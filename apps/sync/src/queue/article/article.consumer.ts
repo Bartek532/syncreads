@@ -39,11 +39,9 @@ export class ArticleQueueConsumer {
 
   @OnQueueFailed()
   async onQueueFailed(job: Job<ArticleQueueJobPayload>, err: Error) {
-    await (await this.syncLogger(job.data.syncId)).error(err.message);
+    await this.syncLogger(job.data.syncId).error(err.message);
     if (err.stack) {
-      await (
-        await this.syncLogger(job.data.syncId)
-      ).error(`\`\`\`js
+      await this.syncLogger(job.data.syncId).error(`\`\`\`js
 ${err.stack}`);
     }
 
@@ -61,9 +59,7 @@ ${err.stack}`);
       syncedArticlesCount: 1,
     });
 
-    await (
-      await this.syncLogger(job.data.syncId)
-    ).log(`Synchronization finished.`);
+    await this.syncLogger(job.data.syncId).log(`Synchronization finished.`);
   }
 
   @OnQueueActive()
@@ -72,8 +68,8 @@ ${err.stack}`);
       status: SyncStatus.IN_PROGRESS,
     });
 
-    await (
-      await this.syncLogger(job.data.syncId)
-    ).log(`Article synchronization started.`);
+    await this.syncLogger(job.data.syncId).log(
+      `Article synchronization started.`,
+    );
   }
 }

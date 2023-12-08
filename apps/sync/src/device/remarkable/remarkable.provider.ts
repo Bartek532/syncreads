@@ -1,9 +1,9 @@
-import { SUPABASE_CLIENT_FACTORY_TOKEN } from "../../supabase/supabase.constants";
+import { UserService } from "../../auth/user/user.service";
 
 import { getClient } from "./api/remarkable.client";
+import { RemarkableCacheService } from "./cache.service";
 import { REMARKABLE_CLIENT_FACTORY_TOKEN } from "./remarkable.constants";
 
-import type { SupabaseProviderFactory } from "../../supabase/supabase.provider";
 import type { RemarkableApi } from "rmapi-js";
 
 export type RemarkableProviderFactory = (
@@ -12,8 +12,21 @@ export type RemarkableProviderFactory = (
 
 export const remarkableProvider = {
   provide: REMARKABLE_CLIENT_FACTORY_TOKEN,
-  useFactory: (supabase: SupabaseProviderFactory) => {
-    return (userId: string) => getClient(supabase(), userId);
+  useFactory: (
+    userService: UserService,
+    cacheService: RemarkableCacheService,
+  ) => {
+    return async (userId: string) => {
+      const { token } = await userService.getUserDevice(userId);
+
+      if (cacheService.get(token)) {
+        return cacheService.get(token);
+      }
+
+      const client = await getClient(token);
+      cacheService.set(token, client);
+      return client;
+    };
   },
-  inject: [SUPABASE_CLIENT_FACTORY_TOKEN],
+  inject: [UserService, RemarkableCacheService],
 };
