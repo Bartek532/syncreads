@@ -4,7 +4,10 @@ import dayjs from "dayjs";
 import Link from "next/link";
 import { memo } from "react";
 
-import { SYNC_STATUS_STYLES, SYNC_TRIGGER_EMOJIS } from "../../../config/sync";
+import {
+  SYNC_STATUS_STYLES,
+  SYNC_TRIGGER_EMOJIS,
+} from "../../../../config/sync";
 
 import type { Sync } from "@rssmarkable/database";
 

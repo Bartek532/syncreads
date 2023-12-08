@@ -1,128 +1,104 @@
-import { TRPCError } from "@trpc/server";
-import { hashSync } from "bcrypt";
-import { register } from "rmapi-js";
+// export const registerUserHandler = async ({
+//   input,
+// }: {
+//   input: RegisterUserInput;
+// }) => {
+//   try {
+//     const { email, password, name } = input;
 
-import { syncUserFeeds } from "../../pages/api/sync/feed";
-import {
-  createUser,
-  getUserByEmail,
-  getUserDevice,
-  getUserFeeds,
-  registerUserDevice,
-  unregisterUserDevice,
-} from "../services/user.service";
+import { ApiError } from "../../utils/exceptions";
+import { getUserDevice, getUserFeeds } from "../services/user.service";
 
-import type {
-  RegisterAndConnectDeviceInput,
-  RegisterUserInput,
-  UnregisterAndDisconnectDeviceInput,
-} from "../../utils/validation/types";
-import type { Feed } from "@rssmarkable/database";
+//     const isUserExists = await getUserByEmail({ email });
 
-export const registerUserHandler = async ({
-  input,
-}: {
-  input: RegisterUserInput;
-}) => {
-  try {
-    const { email, password, name } = input;
+//     if (isUserExists) {
+//       throw new TRPCError({
+//         code: "CONFLICT",
+//         message: "User already exists.",
+//       });
+//     }
 
-    const isUserExists = await getUserByEmail({ email });
+//     const hashedPassword = hashSync(password, 10);
+//     const user = await createUser({ email, password: hashedPassword, name });
 
-    if (isUserExists) {
-      throw new TRPCError({
-        code: "CONFLICT",
-        message: "User already exists.",
-      });
-    }
+//     return {
+//       status: "Success",
+//       message: `Successfully created user account!`,
+//       user,
+//     };
+//   } catch (err) {
+//     console.error(err);
+//     throw err;
+//   }
+// };
 
-    const hashedPassword = hashSync(password, 10);
-    const user = await createUser({ email, password: hashedPassword, name });
+// export const registerDeviceHandler = async ({
+//   id,
+//   code,
+// }: RegisterAndConnectDeviceInput) => {
+//   try {
+//     const token = await register(code);
+//     const device = await registerUserDevice({ token, id });
 
-    return {
-      status: "Success",
-      message: `Successfully created user account!`,
-      user,
-    };
-  } catch (err) {
-    console.error(err);
-    throw err;
+//     return {
+//       status: "Success",
+//       message: `Successfully registered your device!`,
+//       device,
+//     };
+//   } catch (err) {
+//     console.error(err);
+//     throw err;
+//   }
+// };
+
+// export const unregisterDeviceHandler = async ({
+//   id,
+// }: UnregisterAndDisconnectDeviceInput) => {
+//   try {
+//     const device = await unregisterUserDevice({ id });
+
+//     return {
+//       status: "Success",
+//       message: `Successfully unregistered your device!`,
+//       device,
+//     };
+//   } catch (err) {
+//     console.error(err);
+//     throw err;
+//   }
+// };
+
+export const getUserFeedsHandler = async ({ id }: { id: string }) => {
+  const { data, error, status } = await getUserFeeds({ id });
+
+  if (error) {
+    throw new ApiError(status, error.message);
   }
+
+  return data;
 };
 
-export const registerDeviceHandler = async ({
-  id,
-  code,
-}: RegisterAndConnectDeviceInput) => {
-  try {
-    const token = await register(code);
-    const device = await registerUserDevice({ token, id });
+export const getUserDeviceHandler = async ({ id }: { id: string }) => {
+  const { data } = await getUserDevice({ id });
 
-    return {
-      status: "Success",
-      message: `Successfully registered your device!`,
-      device,
-    };
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
+  return data;
 };
 
-export const unregisterDeviceHandler = async ({
-  id,
-}: UnregisterAndDisconnectDeviceInput) => {
-  try {
-    const device = await unregisterUserDevice({ id });
+// export const syncUserFeedsHandler = async ({
+//   id,
+//   feeds,
+// }: {
+//   id: number;
+//   feeds?: Omit<Feed, "id">[] | undefined;
+// }) => {
+//   try {
+//     if (feeds) {
+//       return syncUserFeeds({ id, feeds });
+//     }
 
-    return {
-      status: "Success",
-      message: `Successfully unregistered your device!`,
-      device,
-    };
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
-};
-
-export const getUserFeedsHandler = async ({
-  input,
-}: {
-  input: { id: number };
-}) => {
-  try {
-    return getUserFeeds({ id: input.id });
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
-};
-
-export const getUserDeviceHandler = async ({ id }: { id: number }) => {
-  try {
-    return getUserDevice({ id });
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
-};
-
-export const syncUserFeedsHandler = async ({
-  id,
-  feeds,
-}: {
-  id: number;
-  feeds?: Omit<Feed, "id">[] | undefined;
-}) => {
-  try {
-    if (feeds) {
-      return syncUserFeeds({ id, feeds });
-    }
-
-    return syncUserFeeds({ id });
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
-};
+//     return syncUserFeeds({ id });
+//   } catch (err) {
+//     console.error(err);
+//     throw err;
+//   }
+// };

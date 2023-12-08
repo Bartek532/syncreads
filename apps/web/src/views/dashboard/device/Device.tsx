@@ -7,7 +7,7 @@ import EmptyDeviceIcon from "public/svg/empty-device.svg";
 
 import { Empty } from "../../../components/common/Empty";
 import { AddDeviceModal } from "../../../components/modal/device/AddDeviceModal";
-import { DeviceTile } from "../../../components/tile/deviceTile/DeviceTile";
+import { DeviceTile } from "../../../components/dashboard/tile/deviceTile/DeviceTile";
 import { useGenericLoader } from "../../../hooks/useGenericLoader";
 
 export const DeviceView = () => {

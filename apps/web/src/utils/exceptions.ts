@@ -1,8 +1,12 @@
+const isHttpStatus = (status: number): status is HTTP_STATUS_CODE =>
+  Object.values<number>(HTTP_STATUS_CODE).includes(status);
 export class ApiError extends Error {
   status: HTTP_STATUS_CODE;
-  constructor(status: HTTP_STATUS_CODE, message: string) {
+  constructor(status: number, message: string) {
     super(message);
-    this.status = status;
+    this.status = isHttpStatus(status)
+      ? status
+      : HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR;
   }
 }
 

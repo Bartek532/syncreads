@@ -53,7 +53,7 @@ export const DASHBOARD_CARDS = [
     link: "View details",
   },
   {
-    title: "Synced articles",
+    title: "Synced times",
     href: "/dashboard/syncs",
     icon: ArrowPathIcon as HeroIcon,
     link: "View syncs",

@@ -2,16 +2,25 @@
 // import { DashboardLayout } from "../../components/dashboard/layout/Layout";
 // import { HomeView } from "../../views/dashboard/Home";
 
-import type { NextPage } from "next";
+import { DashboardHome } from "../../components/dashboard/home/Home";
 
-const Dashboard: NextPage = () => {
+import type { PaginationParams } from "../../types/common.types";
+
+const Dashboard = ({ searchParams }: { searchParams: PaginationParams }) => {
   return (
     <>
       {/* <Seo title="Dashboard - Home" />
       <DashboardLayout>
         <HomeView />
       </DashboardLayout> */}
-      <h1>Dashboard</h1>
+      <DashboardHome
+        {...(!isNaN(Number(searchParams.page)) && {
+          page: Number(searchParams.page),
+        })}
+        {...(!isNaN(Number(searchParams.perPage)) && {
+          perPage: Number(searchParams.perPage),
+        })}
+      />
     </>
   );
 };

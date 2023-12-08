@@ -2,11 +2,11 @@ import { ArrowUpRightIcon } from "@heroicons/react/24/outline";
 import { memo } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { useGenericLoader } from "../../../hooks/useGenericLoader";
-import useLongPress from "../../../hooks/useLongPress";
-import { truncateTextByWordsCount } from "../../../utils/functions";
+import { useGenericLoader } from "../../../../hooks/useGenericLoader";
+import useLongPress from "../../../../hooks/useLongPress";
+import { truncateTextByWordsCount } from "../../../../utils/functions";
 import { trpc } from "../../../utils/trpc";
-import { Checkbox } from "../../common/Checkbox";
+import { Checkbox } from "../../../common/Checkbox";
 
 interface FeedTileProps {
   readonly url: string;

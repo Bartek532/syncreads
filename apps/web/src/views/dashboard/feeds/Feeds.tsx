@@ -15,7 +15,7 @@ import { Checkbox } from "../../../components/common/Checkbox";
 import { Empty } from "../../../components/common/Empty";
 import { ConfirmModal } from "../../../components/modal/ConfirmModal";
 import { AddFeedModal } from "../../../components/modal/feed/AddFeedModal";
-import { FeedTile } from "../../../components/tile/feedTile/FeedTile";
+import { FeedTile } from "../../../components/dashboard/tile/feedTile/FeedTile";
 import { useGenericLoader } from "../../../hooks/useGenericLoader";
 import { onPromise } from "../../../utils/functions";
 import { trpc } from "../../../utils/trpc";
