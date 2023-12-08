@@ -25,15 +25,15 @@ export class LoggerService {
     return data;
   }
 
-  async updateLog(logId: string, json: LogMessage) {
-    const log = await this.getLogById(logId);
+  async updateLog(syncId: string, json: LogMessage) {
+    const log = await this.getLogById(syncId);
 
     const previousLogJson = JSON.parse(log.json as string) as LogMessage[];
 
     const { data, error, status } = await this.supabaseProvider()
       .from("Log")
       .update({ json: JSON.stringify([...previousLogJson, json]) })
-      .match({ id: logId })
+      .match({ syncId })
       .select()
       .single();
 
@@ -46,31 +46,11 @@ export class LoggerService {
     return data;
   }
 
-  async updateLogBySyncId(syncId: string, json: LogMessage) {
-    const log = await this.getLogBySyncId(syncId);
-
-    return this.updateLog(log.id, json);
-  }
-
-  async getLogBySyncId(syncId: string) {
+  async getLogById(syncId: string) {
     const { data, error, status } = await this.supabaseProvider()
       .from("Log")
       .select()
       .match({ syncId })
-      .single();
-
-    if (error) {
-      throw new HttpException(error.details, status);
-    }
-
-    return data;
-  }
-
-  async getLogById(logId: string) {
-    const { data, error, status } = await this.supabaseProvider()
-      .from("Log")
-      .select()
-      .match({ id: logId })
       .single();
 
     if (error) {

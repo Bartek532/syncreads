@@ -83,21 +83,18 @@ export interface Database {
       Log: {
         Row: {
           createdAt: string
-          id: string
           json: Json
           syncId: string
           updatedAt: string
         }
         Insert: {
           createdAt?: string
-          id?: string
           json: Json
           syncId: string
           updatedAt?: string
         }
         Update: {
           createdAt?: string
-          id?: string
           json?: Json
           syncId?: string
           updatedAt?: string

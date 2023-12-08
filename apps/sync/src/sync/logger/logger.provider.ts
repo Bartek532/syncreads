@@ -17,7 +17,7 @@ export const syncLoggerProvider = {
           return [
             level,
             (message: string) =>
-              loggerService.updateLogBySyncId(syncId, {
+              loggerService.updateLog(syncId, {
                 message,
                 date: dayjs().toISOString(),
                 level,
