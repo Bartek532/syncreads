@@ -4,6 +4,7 @@ module.exports = {
     project: [
       "../../apps/sync/tsconfig.json",
       "../../packages/database/tsconfig.json",
+      "../../packages/shared/tsconfig.json",
     ],
     tsconfigRootDir: __dirname,
     sourceType: "module",

@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "SyncStatus" AS ENUM ('SUCCESS', 'FAILED', 'PENDING', 'UNKNOWN');
+CREATE TYPE "SyncStatus" AS ENUM ('SUCCESS', 'FAILED', 'QUEUED', 'IN_PROGRESS', 'UNKNOWN');
 
 -- CreateTable
 CREATE TABLE "Sync" (

@@ -9,6 +9,34 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      ApiKey: {
+        Row: {
+          createdAt: string
+          key: string
+          updatedAt: string
+          userId: string
+        }
+        Insert: {
+          createdAt?: string
+          key?: string
+          updatedAt?: string
+          userId?: string
+        }
+        Update: {
+          createdAt?: string
+          key?: string
+          updatedAt?: string
+          userId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ApiKey_userId_fkey"
+            columns: ["userId"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       Device: {
         Row: {
           id: string
@@ -17,7 +45,7 @@ export interface Database {
           userId: string
         }
         Insert: {
-          id: string
+          id?: string
           registeredAt?: string
           token: string
           userId: string
@@ -43,7 +71,7 @@ export interface Database {
           url: string
         }
         Insert: {
-          id: string
+          id?: string
           url: string
         }
         Update: {
@@ -55,21 +83,18 @@ export interface Database {
       Log: {
         Row: {
           createdAt: string
-          id: string
           json: Json
           syncId: string
           updatedAt: string
         }
         Insert: {
           createdAt?: string
-          id: string
           json: Json
           syncId: string
-          updatedAt: string
+          updatedAt?: string
         }
         Update: {
           createdAt?: string
-          id?: string
           json?: Json
           syncId?: string
           updatedAt?: string
@@ -95,7 +120,7 @@ export interface Database {
         }
         Insert: {
           finishedAt?: string | null
-          id: string
+          id?: string
           startedAt?: string
           status: Database["public"]["Enums"]["SyncStatus"]
           syncedArticlesCount?: number
@@ -159,10 +184,15 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      gen_random_string: {
+        Args: {
+          length: number
+        }
+        Returns: string
+      }
     }
     Enums: {
-      SyncStatus: "SUCCESS" | "FAILED" | "PENDING" | "UNKNOWN"
+      SyncStatus: "SUCCESS" | "FAILED" | "QUEUED" | "IN_PROGRESS" | "UNKNOWN"
       SyncTrigger: "MANUAL" | "SCHEDULE"
     }
     CompositeTypes: {
