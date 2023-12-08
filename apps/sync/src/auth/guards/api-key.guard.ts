@@ -18,17 +18,11 @@ export class ApiKeyGuard implements CanActivate {
 
     if (!token) {
       throw new UnauthorizedException(
-        "Request is missing API KEY or supplied token is incorrect!",
+        "Request is missing API key or supplied key is invalid.",
       );
     }
 
     const key = await this.userService.getUserByApiKey(token);
-
-    if (!key) {
-      throw new UnauthorizedException(
-        "Request is missing API KEY or supplied token is incorrect!",
-      );
-    }
 
     // @ts-expect-error - userId is added to request
     request["userId"] = key.userId;

@@ -1,26 +1,23 @@
 import { InjectQueue } from "@nestjs/bull";
 import {
-  BadRequestException,
   Body,
   Controller,
-  NotFoundException,
   Post,
   UseGuards,
+  UseInterceptors,
 } from "@nestjs/common";
 import { SyncStatus, SyncTrigger } from "@rssmarkable/database";
 import { Queue } from "bull";
 
 import { UserId } from "../auth/decorators/user-id.decorator";
 import { ApiKeyGuard } from "../auth/guards/api-key.guard";
-import { UserService } from "../auth/user/user.service";
 import { ARTICLE_QUEUE_TOKEN } from "../queue/article/article.constants";
-import {
-  FEED_QUEUE_TOKEN,
-  MAX_FEEDS_IN_ONE_SYNC,
-} from "../queue/feed/feed.constants";
+import { FEED_QUEUE_TOKEN } from "../queue/feed/feed.constants";
 
 import { SyncArticlePayloadDto, SyncFeedPayloadDto } from "./dto/sync.dto";
 import { SyncService } from "./sync.service";
+import { DeviceInterceptor } from "./validation/device.interceptor";
+import { SyncFeedInterceptor } from "./validation/feed.interceptor";
 
 import type { ArticleQueueJobPayload } from "../queue/article/types/article.types";
 import type { FeedQueueJobPayload } from "../queue/feed/types/feed.types";
@@ -28,7 +25,6 @@ import type { FeedQueueJobPayload } from "../queue/feed/types/feed.types";
 @Controller("sync")
 export class SyncController {
   constructor(
-    private readonly userService: UserService,
     private readonly syncService: SyncService,
     @InjectQueue(ARTICLE_QUEUE_TOKEN)
     private readonly articleQueue: Queue<ArticleQueueJobPayload>,
@@ -38,6 +34,7 @@ export class SyncController {
 
   @Post("article")
   @UseGuards(ApiKeyGuard)
+  @UseInterceptors(DeviceInterceptor)
   async handleSyncArticle(
     @Body() payload: SyncArticlePayloadDto,
     @UserId() userId: string,
@@ -55,49 +52,31 @@ export class SyncController {
     });
 
     return {
-      userId,
+      sync,
       message: "Sync successfully queued!",
     };
   }
 
   @Post("feed")
   @UseGuards(ApiKeyGuard)
+  @UseInterceptors(DeviceInterceptor, SyncFeedInterceptor)
   async handleSyncFeed(
     @Body() payload: SyncFeedPayloadDto,
     @UserId() userId: string,
   ) {
-    const user = await this.userService.getUserById(userId);
-
-    const feeds = await this.userService.getUserFeeds(user.id, payload.in);
-    const ids = feeds.map((feed) => feed.feedId);
-
-    if (ids.length !== payload.in.length) {
-      throw new NotFoundException(
-        `Feed(s) with id ${JSON.stringify(
-          payload.in.filter((i) => !ids.includes(i)),
-        )} not found!`,
-      );
-    }
-
-    if (ids.length > MAX_FEEDS_IN_ONE_SYNC) {
-      throw new BadRequestException(
-        `You can only sync up to ${MAX_FEEDS_IN_ONE_SYNC} feeds at once!`,
-      );
-    }
-
     const sync = await this.syncService.createSync({
-      userId: user.id,
+      userId: userId,
       status: SyncStatus.QUEUED,
       trigger: SyncTrigger.MANUAL,
     });
 
     await this.feedQueue.addBulk(
-      feeds.map(({ feedId }) => ({
+      payload.in.map((feedId) => ({
         data: {
-          userId: user.id,
+          userId: userId,
           feedId,
           syncId: sync.id,
-          last: ids.indexOf(feedId) === ids.length - 1,
+          last: payload.in.indexOf(feedId) === payload.in.length - 1,
         },
       })),
     );

@@ -5,6 +5,7 @@ import { ArticleQueueModule } from "../queue/article/article.module";
 import { FeedQueueModule } from "../queue/feed/feed.module";
 import { SupabaseModule } from "../supabase/supabase.module";
 
+import { SyncLoggerModule } from "./logger/logger.module";
 import { SyncController } from "./sync.controller";
 import { SyncService } from "./sync.service";
 
@@ -12,11 +13,12 @@ import { SyncService } from "./sync.service";
   imports: [
     SupabaseModule,
     UserModule,
+    SyncLoggerModule,
     forwardRef(() => ArticleQueueModule),
     forwardRef(() => FeedQueueModule),
   ],
   providers: [SyncService],
   controllers: [SyncController],
-  exports: [SyncService],
+  exports: [SyncService, SyncLoggerModule],
 })
 export class SyncModule {}

@@ -13,7 +13,9 @@ export const getStatusCode = (exception: unknown): number => {
 };
 
 export const getErrorMessage = (exception: unknown): string => {
-  return String(exception);
+  return typeof exception === "object" && exception && "message" in exception
+    ? String(exception.message)
+    : String(exception);
 };
 
 @Catch()

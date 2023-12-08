@@ -1,5 +1,14 @@
-import { Inject, NotFoundException } from "@nestjs/common";
-import { DEFAULT_USER_METADATA, isUserMetadata } from "@rssmarkable/shared";
+import {
+  HttpException,
+  Inject,
+  NotFoundException,
+  UnauthorizedException,
+} from "@nestjs/common";
+import {
+  DEFAULT_USER_METADATA,
+  HTTP_STATUS_CODE,
+  isUserMetadata,
+} from "@rssmarkable/shared";
 
 import { SUPABASE_CLIENT_FACTORY_TOKEN } from "../../supabase/supabase.constants";
 import { SupabaseProviderFactory } from "../../supabase/supabase.provider";
@@ -29,31 +38,45 @@ export class UserService {
   }
 
   async getUserByApiKey(apiKey: string) {
-    const { data } = await this.supabaseProvider()
+    const { data, error, status } = await this.supabaseProvider()
       .from("ApiKey")
       .select("*")
       .eq("key", apiKey)
       .single();
 
+    if (status === HTTP_STATUS_CODE.NOT_ACCEPTABLE) {
+      throw new UnauthorizedException(
+        "Request is missing an API key or supplied key is invalid.",
+      );
+    }
+
+    if (error) {
+      throw new HttpException(error.details, status);
+    }
+
     return data;
   }
 
   async getUserDevice(userId: string) {
-    const { data, error } = await this.supabaseProvider()
+    const { data, error, status } = await this.supabaseProvider()
       .from("Device")
       .select()
       .eq("userId", userId)
       .single();
 
+    if (status === HTTP_STATUS_CODE.NOT_ACCEPTABLE) {
+      throw new NotFoundException("Device not found!");
+    }
+
     if (error) {
-      throw error;
+      throw new HttpException(error.details, status);
     }
 
     return data;
   }
 
   async getUserFeed(userId: string, feedId: string) {
-    const { data, error } = await this.supabaseProvider()
+    const { data, error, status } = await this.supabaseProvider()
       .from("UserFeed")
       .select("*, Feed (id, url)")
       .eq("userId", userId)
@@ -61,7 +84,7 @@ export class UserService {
       .single();
 
     if (error) {
-      throw error;
+      throw new HttpException(error.details, status);
     }
 
     const Feed = data.Feed;
@@ -74,14 +97,14 @@ export class UserService {
   }
 
   async getUserFeeds(userId: string, feedIds: string[]) {
-    const { data, error } = await this.supabaseProvider()
+    const { data, error, status } = await this.supabaseProvider()
       .from("UserFeed")
       .select("*, Feed (id, url)")
       .eq("userId", userId)
       .in("feedId", feedIds);
 
     if (error) {
-      throw error;
+      throw new HttpException(error.details, status);
     }
 
     return data;

@@ -1,11 +1,11 @@
 import { createZodDto } from "nestjs-zod";
 import { z } from "zod";
 
-const syncFeedPayloadSchema = z.object({
+export const syncFeedPayloadSchema = z.object({
   in: z.array(z.string().uuid()),
 });
 
-const syncArticlePayloadSchema = z.object({
+export const syncArticlePayloadSchema = z.object({
   url: z.string().url(),
 });
 

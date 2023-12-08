@@ -5,13 +5,16 @@ import {
   Process,
   Processor,
 } from "@nestjs/bull";
-import { Logger } from "@nestjs/common";
+import { Inject } from "@nestjs/common";
 import { SyncStatus } from "@rssmarkable/database";
 import { Job } from "bull";
 import dayjs from "dayjs";
 
 import { UserService } from "../../auth/user/user.service";
 import { ParserService } from "../../parser/parser.service";
+import { SYNC_LOGGER_PROVIDER_TOKEN } from "../../sync/logger/logger.constants";
+import { SyncLoggerProviderFactory } from "../../sync/logger/logger.provider";
+import { formatTime } from "../../sync/logger/utils/time";
 import { SyncService } from "../../sync/sync.service";
 
 import { FEED_QUEUE_TOKEN } from "./feed.constants";
@@ -26,6 +29,8 @@ export class FeedQueueConsumer {
     private readonly syncService: SyncService,
     private readonly userService: UserService,
     private readonly feedQueueService: FeedQueueService,
+    @Inject(SYNC_LOGGER_PROVIDER_TOKEN)
+    private readonly syncLogger: SyncLoggerProviderFactory,
   ) {}
 
   @Process()
@@ -33,6 +38,21 @@ export class FeedQueueConsumer {
     let articlesCount = 0;
     const feed = await this.userService.getUserFeed(data.userId, data.feedId);
     const user = await this.userService.getUserById(data.userId);
+
+    const { updatedAt: feedSyncStartDate } = await (
+      await this.syncLogger(data.syncId)
+    ).log(`Starting synchronization of feed with url ${feed.Feed.url}...`);
+
+    await (
+      await this.syncLogger(data.syncId)
+    ).log(
+      feed.lastSyncDate
+        ? `Syncing articles published after ${dayjs(feed.lastSyncDate).format(
+            "DD-MM-YYYY",
+          )}...`
+        : `Syncing last ${feed.startArticlesCount} article(s)...`,
+    );
+
     const items = await this.parserService.parseFeed(feed.Feed.url);
     const articles = items.filter(({ pubDate }, index) =>
       feed.lastSyncDate
@@ -40,11 +60,18 @@ export class FeedQueueConsumer {
         : index < feed.startArticlesCount,
     );
 
+    await (
+      await this.syncLogger(data.syncId)
+    ).log(
+      `Found ${articles.length} article(s) to synchronize within current feed.`,
+    );
+
     for (const article of articles) {
       await this.feedQueueService.syncArticle({
         userId: data.userId,
         url: article.link,
         folder: user.user_metadata.folder,
+        syncId: data.syncId,
       });
 
       articlesCount++;
@@ -52,39 +79,64 @@ export class FeedQueueConsumer {
         syncedArticlesCount: articlesCount,
       });
     }
+
+    await (
+      await this.syncLogger(data.syncId)
+    ).verbose(
+      `Successfully synced feed ${feed.Feed.url} including **${
+        articles.length
+      }** articles: ${formatTime(dayjs().diff(feedSyncStartDate, "ms"))}`,
+    );
   }
 
   @OnQueueFailed()
   async onQueueFailed(job: Job<FeedQueueJobPayload>, err: Error) {
-    Logger.error(err);
+    await (await this.syncLogger(job.data.syncId)).error(err.message);
+    if (err.stack) {
+      await (
+        await this.syncLogger(job.data.syncId)
+      ).error(`\`\`\`js
+${err.stack}`);
+    }
     // TODO handle deleting other jobs from the same sync
-    await this.syncService.updateSync(job.data.syncId, {
-      finishedAt: dayjs().toISOString(),
-      status: SyncStatus.FAILED,
-    });
+    if (job.data.last) {
+      await this.syncService.updateSync(job.data.syncId, {
+        finishedAt: dayjs().toISOString(),
+        status: SyncStatus.FAILED,
+      });
+    }
   }
 
   @OnQueueCompleted()
   async onQueueCompleted({ data }: Job<FeedQueueJobPayload>) {
-    Logger.log(`Sync ${data.syncId} completed!`);
-
     await this.userService.updateUserFeed(data.userId, data.feedId, {
       lastSyncDate: dayjs().toISOString(),
     });
+
+    await (
+      await this.syncLogger(data.syncId)
+    ).log(`Feed synchronization finished.`);
 
     if (data.last) {
       await this.syncService.updateSync(data.syncId, {
         finishedAt: dayjs().toISOString(),
         status: SyncStatus.SUCCESS,
       });
+
+      await (
+        await this.syncLogger(data.syncId)
+      ).log(`Synchronization finished.`);
     }
   }
 
   @OnQueueActive()
   async onQueueActive(job: Job<FeedQueueJobPayload>) {
-    Logger.log(`Sync ${job.data.syncId} started!`);
     await this.syncService.updateSync(job.data.syncId, {
       status: SyncStatus.IN_PROGRESS,
     });
+
+    await (
+      await this.syncLogger(job.data.syncId)
+    ).log(`Article synchronization started.`);
   }
 }

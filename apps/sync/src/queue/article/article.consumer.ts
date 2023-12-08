@@ -1,9 +1,17 @@
-import { Processor, Process, OnQueueFailed, OnQueueActive } from "@nestjs/bull";
-import { Logger } from "@nestjs/common";
+import {
+  Processor,
+  Process,
+  OnQueueFailed,
+  OnQueueActive,
+  OnQueueCompleted,
+} from "@nestjs/bull";
+import { Inject } from "@nestjs/common";
 import { SyncStatus } from "@rssmarkable/database";
 import { Job } from "bull";
 import dayjs from "dayjs";
 
+import { SYNC_LOGGER_PROVIDER_TOKEN } from "../../sync/logger/logger.constants";
+import { SyncLoggerProviderFactory } from "../../sync/logger/logger.provider";
 import { SyncService } from "../../sync/sync.service";
 
 import { ARTICLE_QUEUE_TOKEN } from "./article.constants";
@@ -16,6 +24,8 @@ export class ArticleQueueConsumer {
   constructor(
     private readonly articleQueueService: ArticleQueueService,
     private readonly syncService: SyncService,
+    @Inject(SYNC_LOGGER_PROVIDER_TOKEN)
+    private readonly syncLogger: SyncLoggerProviderFactory,
   ) {}
 
   @Process()
@@ -23,29 +33,47 @@ export class ArticleQueueConsumer {
     await this.articleQueueService.syncArticle({
       userId: data.userId,
       url: data.url,
-    });
-
-    await this.syncService.updateSync(data.syncId, {
-      finishedAt: dayjs().toISOString(),
-      status: SyncStatus.SUCCESS,
-      syncedArticlesCount: 1,
+      syncId: data.syncId,
     });
   }
 
   @OnQueueFailed()
   async onQueueFailed(job: Job<ArticleQueueJobPayload>, err: Error) {
-    Logger.error(err);
+    await (await this.syncLogger(job.data.syncId)).error(err.message);
+    if (err.stack) {
+      await (
+        await this.syncLogger(job.data.syncId)
+      ).error(`\`\`\`js
+${err.stack}`);
+    }
+
     await this.syncService.updateSync(job.data.syncId, {
       finishedAt: dayjs().toISOString(),
       status: SyncStatus.FAILED,
     });
   }
 
+  @OnQueueCompleted()
+  async onQueueCompleted(job: Job<ArticleQueueJobPayload>) {
+    await this.syncService.updateSync(job.data.syncId, {
+      finishedAt: dayjs().toISOString(),
+      status: SyncStatus.SUCCESS,
+      syncedArticlesCount: 1,
+    });
+
+    await (
+      await this.syncLogger(job.data.syncId)
+    ).log(`Synchronization finished.`);
+  }
+
   @OnQueueActive()
   async onQueueActive(job: Job<ArticleQueueJobPayload>) {
-    Logger.log(`Sync ${job.data.syncId} started!`);
     await this.syncService.updateSync(job.data.syncId, {
       status: SyncStatus.IN_PROGRESS,
     });
+
+    await (
+      await this.syncLogger(job.data.syncId)
+    ).log(`Article synchronization started.`);
   }
 }

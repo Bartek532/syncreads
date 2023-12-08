@@ -23,7 +23,6 @@ export const serviceDatabaseSchema = sharedSchema.merge(
 export const serverSchema = sharedSchema.merge(
   z.object({
     CHROME_BIN: z.string(),
-    API_KEY: z.string(),
 
     REDIS_HOST: z.string(),
     REDIS_PORT: z.coerce.number(),
