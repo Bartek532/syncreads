@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { DashboardLayout } from "../../components/dashboard/layout/Layout";
-import { supabase } from "../../utils/supabase/server";
+import { supabase } from "../../lib/supabase/server";
 
 export default async function Layout({
   children,

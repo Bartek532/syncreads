@@ -5,13 +5,13 @@ import {
   Bars3CenterLeftIcon,
   ChevronDownIcon,
 } from "@heroicons/react/20/solid";
-import { BellIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Fragment, memo } from "react";
 
+import { supabase } from "../../../../lib/supabase/client";
 import { onPromise } from "../../../../utils/functions";
-import { supabase } from "../../../../utils/supabase/client";
 // import { Avatar } from "../../../common/Avatar";
 
 import type { User } from "@rssmarkable/database";
@@ -22,6 +22,7 @@ interface HeaderProps {
 }
 
 export const Header = memo<HeaderProps>(({ user, onSidebarOpen }) => {
+  const router = useRouter();
   return (
     <div className="flex h-16 flex-shrink-0 border-b border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-slate-800 lg:border-none">
       <button
@@ -34,13 +35,13 @@ export const Header = memo<HeaderProps>(({ user, onSidebarOpen }) => {
       </button>
       <div className="flex flex-1 justify-end px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
         <div className="ml-4 flex items-center md:ml-6">
-          <button
+          {/* <button
             type="button"
             className="rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:bg-black dark:bg-transparent dark:text-gray-300"
           >
             <span className="sr-only">View notifications</span>
             <BellIcon className="h-6 w-6" aria-hidden="true" />
-          </button>
+          </button> */}
 
           <Menu as="div" className="relative ml-3">
             <div>
@@ -89,7 +90,10 @@ export const Header = memo<HeaderProps>(({ user, onSidebarOpen }) => {
                         active ? "bg-gray-100 dark:bg-gray-700" : "",
                         "block w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 dark:hover:bg-slate-800",
                       )}
-                      onClick={onPromise(() => supabase.auth.signOut())}
+                      onClick={onPromise(() => {
+                        router.push("/");
+                        return supabase.auth.signOut();
+                      })}
                     >
                       Logout
                     </button>

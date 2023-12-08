@@ -2,7 +2,7 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
-import { supabase } from "../../utils/supabase/server";
+import { supabase } from "../../lib/supabase/server";
 
 export const createTRPCContext = async (opts: { headers: Headers }) => {
   const { data, error } = await supabase.auth.getSession();

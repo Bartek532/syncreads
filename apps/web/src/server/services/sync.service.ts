@@ -16,7 +16,7 @@
 //   });
 // };
 
-import { supabase } from "../../utils/supabase/server";
+import { supabase } from "../../lib/supabase/server";
 import { getRange } from "../utils/pagination";
 
 // export const updateSync = ({

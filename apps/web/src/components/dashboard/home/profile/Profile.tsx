@@ -1,7 +1,7 @@
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/20/solid";
 import { memo } from "react";
 
-import { supabase } from "../../../../utils/supabase/server";
+import { supabase } from "../../../../lib/supabase/server";
 import { Avatar } from "../../../common/Avatar";
 
 import type { Device } from "@rssmarkable/database";

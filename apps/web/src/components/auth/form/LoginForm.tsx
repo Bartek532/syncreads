@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 
 import { loginUserSchema, type LoginData } from "../../../types/auth.types";
 import { onPromise } from "../../../utils/functions";
-import { supabase } from "../../../utils/supabase/client";
+import { supabase } from "../../../lib/supabase/client";
 import { Button } from "../../common/Button";
 import { Input } from "../../common/Input";
 
@@ -32,6 +32,7 @@ export const LoginForm = memo(() => {
     toast.dismiss(loadingToast);
     return router.replace("/dashboard");
   };
+
   return (
     <form className="space-y-6" onSubmit={onPromise(handleSubmit(onSubmit))}>
       <Input type="email" name="email" control={control}>

@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { memo } from "react";
 
 import { onPromise } from "../../../utils/functions";
-import { supabase } from "../../../utils/supabase/client";
+import { supabase } from "../../../lib/supabase/client";
 import { Button } from "../../common/Button";
 
 import type { AUTH_PROVIDER } from "../../../types/auth.types";
@@ -24,16 +24,14 @@ export const SocialProviders = memo<SocialProvidersProps>(({ providers }) => {
             key={provider}
             variant="secondary"
             className="inline-flex w-full justify-center gap-4 py-2.5"
-            onClick={onPromise(async () => {
-              const { data, error } = await supabase.auth.signInWithOAuth({
+            onClick={onPromise(() =>
+              supabase.auth.signInWithOAuth({
                 provider,
                 options: {
                   redirectTo: `${window.location.origin}/dashboard`,
                 },
-              });
-
-              console.log(data, error);
-            })}
+              }),
+            )}
           >
             <span className="sr-only">Sign in with {provider}</span>
 

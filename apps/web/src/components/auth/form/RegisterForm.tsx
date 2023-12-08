@@ -1,19 +1,19 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { SYNC_DEFAULT_FOLDER } from "@rssmarkable/shared";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-import { SYNC_DEFAULT_FOLDER_NAME } from "../../../config/sync";
+import { supabase } from "../../../lib/supabase/client";
 import {
   registerUserSchema,
   type RegisterData,
 } from "../../../types/auth.types";
 import { onPromise } from "../../../utils/functions";
-import { supabase } from "../../../utils/supabase/client";
 import { Button } from "../../common/Button";
 import { Input } from "../../common/Input";
 
@@ -31,7 +31,7 @@ export const RegisterForm = memo(() => {
       options: {
         data: {
           name: data.name,
-          folder: SYNC_DEFAULT_FOLDER_NAME,
+          folder: SYNC_DEFAULT_FOLDER,
         },
       },
     });

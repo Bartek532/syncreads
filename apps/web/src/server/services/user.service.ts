@@ -1,4 +1,4 @@
-import { supabase } from "../../utils/supabase/server";
+import { supabase } from "../../lib/supabase/server";
 
 // export const getAllUsers = () => {
 //   return prisma.user.findMany();
