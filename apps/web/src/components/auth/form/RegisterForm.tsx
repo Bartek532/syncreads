@@ -25,7 +25,7 @@ export const RegisterForm = memo(() => {
 
   const onSubmit = async (data: RegisterData) => {
     const loadingToast = toast.loading("Registering...");
-    const { error } = await supabase.auth.signUp({
+    const { error } = await supabase().auth.signUp({
       email: data.email,
       password: data.password,
       options: {

@@ -2,13 +2,13 @@ export const SITE_NAME = "RSSmarkable";
 export const GITHUB_URL = "https://github.com/Bartek532/rssmarkable";
 
 export const INDEX_NAVIGATION = [
-  { name: "Sign in", href: "/login" },
+  { name: "Sign in", href: "/auth/login" },
   { name: "Dashboard", href: "/dashboard" },
 ];
 
 export const INDEX_FOOTER_NAVIGATION = [
   { name: "Dashboard", href: "/dashboard" },
-  { name: "Sign in", href: "/login" },
+  { name: "Sign in", href: "/auth/login" },
   { name: "Github", href: GITHUB_URL },
 ];
 

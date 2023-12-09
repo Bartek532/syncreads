@@ -7,9 +7,9 @@ import { memo } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
+import { supabase } from "../../../lib/supabase/client";
 import { loginUserSchema, type LoginData } from "../../../types/auth.types";
 import { onPromise } from "../../../utils/functions";
-import { supabase } from "../../../lib/supabase/client";
 import { Button } from "../../common/Button";
 import { Input } from "../../common/Input";
 
@@ -21,7 +21,7 @@ export const LoginForm = memo(() => {
 
   const onSubmit = async (data: LoginData) => {
     const loadingToast = toast.loading("Signing in...");
-    const { error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase().auth.signInWithPassword({
       ...data,
     });
 

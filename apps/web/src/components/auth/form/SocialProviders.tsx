@@ -3,8 +3,8 @@
 import dynamic from "next/dynamic";
 import { memo } from "react";
 
-import { onPromise } from "../../../utils/functions";
 import { supabase } from "../../../lib/supabase/client";
+import { onPromise } from "../../../utils/functions";
 import { Button } from "../../common/Button";
 
 import type { AUTH_PROVIDER } from "../../../types/auth.types";
@@ -24,11 +24,11 @@ export const SocialProviders = memo<SocialProvidersProps>(({ providers }) => {
             key={provider}
             variant="secondary"
             className="inline-flex w-full justify-center gap-4 py-2.5"
-            onClick={onPromise(() =>
-              supabase.auth.signInWithOAuth({
+            onClick={onPromise(async () =>
+              supabase().auth.signInWithOAuth({
                 provider,
                 options: {
-                  redirectTo: `${window.location.origin}/dashboard`,
+                  redirectTo: `${location.origin}/auth/callback`,
                 },
               }),
             )}

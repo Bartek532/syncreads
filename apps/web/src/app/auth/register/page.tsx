@@ -1,6 +1,6 @@
-import { Auth } from "../../components/auth/Auth";
-import { Seo } from "../../components/common/Seo";
-import { AUTH_PROVIDER } from "../../types/auth.types";
+import { Auth } from "../../../components/auth/Auth";
+import { Seo } from "../../../components/common/Seo";
+import { AUTH_PROVIDER } from "../../../types/auth.types";
 
 const Register = () => {
   return (
