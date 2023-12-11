@@ -42,7 +42,7 @@ export const getUserSyncs = ({
   perPage: number;
 }) => {
   const range = getRange(page, perPage);
-  return supabase
+  return supabase()
     .from("Sync")
     .select("*", { count: "exact" })
     .eq("userId", id)

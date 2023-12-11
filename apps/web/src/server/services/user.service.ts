@@ -31,11 +31,14 @@ import { supabase } from "../../lib/supabase/server";
 // };
 
 export const getUserFeeds = ({ id }: { id: string }) => {
-  return supabase.from("UserFeed").select("*, Feed (id, url)").eq("userId", id);
+  return supabase()
+    .from("UserFeed")
+    .select("*, Feed (id, url)")
+    .eq("userId", id);
 };
 
 export const getUserDevice = ({ id }: { id: string }) => {
-  return supabase.from("Device").select("*").eq("userId", id).single();
+  return supabase().from("Device").select("*").eq("userId", id).single();
 };
 
 // export const getUserFeed = ({

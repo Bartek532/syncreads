@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge";
 
 import { THEME, useThemeContext } from "../../../providers/ThemeProvider";
 
-export const SettingsView = () => {
+export const Settings = () => {
   const { theme, changeTheme } = useThemeContext();
 
   return (

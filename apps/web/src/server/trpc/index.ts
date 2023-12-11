@@ -5,7 +5,7 @@ import { ZodError } from "zod";
 import { supabase } from "../../lib/supabase/server";
 
 export const createTRPCContext = async (opts: { headers: Headers }) => {
-  const { data, error } = await supabase.auth.getSession();
+  const { data, error } = await supabase().auth.getSession();
 
   if (error) {
     throw error;
