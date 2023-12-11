@@ -48,11 +48,11 @@ export const registerAndConnectDeviceSchema = z.object({
     .string()
     .min(8, "Enter valid one-time code.")
     .max(8, "Enter valid one-time code."),
-  id: z.number(),
+  id: z.string(),
 });
 
 export const unregisterAndDisconnectDeviceSchema = z.object({
-  id: z.number(),
+  id: z.string(),
 });
 
 export const syncArticleSchema = z.object({

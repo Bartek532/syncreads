@@ -4,8 +4,8 @@ import { memo, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
+import { api } from "../../../trpc/react";
 import { onPromise } from "../../../utils/functions";
-import { trpc } from "../../../utils/trpc";
 import { registerDeviceSchema } from "../../../utils/validation/schema";
 import { Input } from "../../common/Input";
 import { FormModal } from "../FormModal";
@@ -23,7 +23,7 @@ type AddDeviceModalProps = Omit<
 
 export const AddDeviceModal = memo<AddDeviceModalProps>(
   ({ isOpen, onClose, ...props }) => {
-    const utils = trpc.useContext();
+    const utils = api.useUtils();
     const {
       register,
       handleSubmit,
@@ -32,7 +32,7 @@ export const AddDeviceModal = memo<AddDeviceModalProps>(
     } = useForm<RegisterDeviceInput>({
       resolver: zodResolver(registerDeviceSchema),
     });
-    const registerDeviceMutation = trpc.user.registerDevice.useMutation({
+    const registerDeviceMutation = api.user.registerDevice.useMutation({
       onSuccess: () => utils.user.getUserDevice.invalidate(),
     });
 

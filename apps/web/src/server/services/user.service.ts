@@ -82,14 +82,6 @@ export const getUserDevice = ({ id }: { id: string }) => {
 //   });
 // };
 
-// export const getUserDevice = ({ id }: { id: number }) => {
-//   return prisma.device.findUnique({
-//     where: {
-//       userId: id,
-//     },
-//   });
-// };
-
 // export const getUserFeedByUrl = ({ id, url }: { id: number; url: string }) => {
 //   return prisma.feed.findFirst({
 //     where: { AND: [{ url }, { users: { some: { user: { id } } } }] },
@@ -109,22 +101,25 @@ export const getUserDevice = ({ id }: { id: string }) => {
 //   });
 // };
 
-// export const registerUserDevice = ({
-//   id,
-//   token,
-// }: {
-//   id: number;
-//   token: string;
-// }) => {
-//   return prisma.device.create({
-//     data: { token, user: { connect: { id } } },
-//   });
-// };
+export const registerUserDevice = ({
+  id,
+  token,
+}: {
+  id: string;
+  token: string;
+}) => {
+  return supabase()
+    .from("Device")
+    .insert({ userId: id, token })
+    .single()
+    .throwOnError();
+};
 
-// export const unregisterUserDevice = ({ id }: { id: number }) => {
-//   return prisma.device.delete({
-//     where: {
-//       userId: id,
-//     },
-//   });
-// };
+export const unregisterUserDevice = ({ id }: { id: string }) => {
+  return supabase()
+    .from("Device")
+    .delete()
+    .eq("userId", id)
+    .single()
+    .throwOnError();
+};

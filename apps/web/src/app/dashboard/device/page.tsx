@@ -1,18 +1,7 @@
-import { Seo } from "../../../components/common/Seo";
-import { DashboardLayout } from "../../../components/dashboard/layout/Layout";
-import { DeviceView } from "../../../views/dashboard/device/Device";
+import { Device } from "../../../components/dashboard/device/Device";
 
-import type { NextPage } from "next";
-
-const Device: NextPage = () => {
-  return (
-    <>
-      <Seo title="Dashboard - Device" />
-      <DashboardLayout>
-        <DeviceView />
-      </DashboardLayout>
-    </>
-  );
+const DevicePage = () => {
+  return <Device />;
 };
 
-export default Device;
+export default DevicePage;

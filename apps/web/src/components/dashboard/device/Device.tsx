@@ -6,18 +6,21 @@ import toast from "react-hot-toast";
 import EmptyDeviceIcon from "public/svg/empty-device.svg";
 
 import { Empty } from "../../../components/common/Empty";
+import { DeviceTile } from "../../../components/dashboard/device/tile/DeviceTile";
 import { AddDeviceModal } from "../../../components/modal/device/AddDeviceModal";
-import { DeviceTile } from "../../../components/dashboard/tile/deviceTile/DeviceTile";
 import { useGenericLoader } from "../../../hooks/useGenericLoader";
+import { api } from "../../../trpc/react";
 
-export const DeviceView = () => {
-  const utils = trpc.useContext();
+import type { TRPCError } from "@trpc/server";
+
+export const Device = () => {
+  const utils = api.useUtils();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const { data: device, isLoading: isDeviceLoading } =
-    trpc.user.getUserDevice.useQuery();
+    api.user.getUserDevice.useQuery();
 
-  const unregisterDeviceMutation = trpc.user.unregisterDevice.useMutation({
+  const unregisterDeviceMutation = api.user.unregisterDevice.useMutation({
     onSuccess: () => utils.user.getUserDevice.invalidate(),
   });
 

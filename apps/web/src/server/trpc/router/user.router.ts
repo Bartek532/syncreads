@@ -1,7 +1,10 @@
 import { router, protectedProcedure } from "..";
+import { registerDeviceSchema } from "../../../utils/validation/schema";
 import {
   getUserDeviceHandler,
   getUserFeedsHandler,
+  registerDeviceHandler,
+  unregisterDeviceHandler,
 } from "../../controllers/user.controller";
 
 export const userRouter = router({
@@ -11,12 +14,12 @@ export const userRouter = router({
   getUserDevice: protectedProcedure.query(({ ctx }) =>
     getUserDeviceHandler({ id: ctx.session.user.id }),
   ),
-  // registerDevice: protectedProcedure
-  //   .input(registerDeviceSchema)
-  //   .mutation(({ input, ctx }) =>
-  //     registerDeviceHandler({ ...input, id: ctx.session.user.id }),
-  //   ),
-  // unregisterDevice: protectedProcedure.mutation(({ ctx }) =>
-  //   unregisterDeviceHandler({ id: ctx.session.user.id }),
-  // ),
+  registerDevice: protectedProcedure
+    .input(registerDeviceSchema)
+    .mutation(({ input, ctx }) =>
+      registerDeviceHandler({ ...input, id: ctx.session.user.id }),
+    ),
+  unregisterDevice: protectedProcedure.mutation(({ ctx }) =>
+    unregisterDeviceHandler({ id: ctx.session.user.id }),
+  ),
 });
