@@ -1,3 +1,6 @@
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
 import type { SyntheticEvent } from "react";
 
 export function onPromise<T>(promise: (event: SyntheticEvent) => Promise<T>) {
@@ -54,3 +57,5 @@ export const formatTime = (miliseconds: number) => {
       : "")
   );
 };
+
+export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
