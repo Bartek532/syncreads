@@ -1,22 +1,25 @@
-import Image from "next/image";
 import { memo } from "react";
 
 import { retrieveChild } from "../../utils/retrieveChild";
 
-import { LoginForm } from "./form/LoginForm";
-import { RegisterForm } from "./form/RegisterForm";
-import { SocialProviders } from "./form/SocialProviders";
-import { AuthDivider } from "./layout/AuthDivider";
-import { AuthHeader } from "./layout/AuthHeader";
+import { LoginForm } from "./form/login-form";
+import { RegisterForm } from "./form/register-form";
+import { SocialProviders } from "./form/social-providers.";
+import { AuthDivider } from "./layout/auth-divider";
+import { AuthHeader } from "./layout/auth-header";
 
 type AuthLayoutProps = {
   readonly children: React.ReactNode;
+  readonly quote: {
+    readonly content: string;
+    readonly author: string;
+  };
 };
 
-const AuthLayout = memo<AuthLayoutProps>(({ children }) => {
+const AuthLayout = memo<AuthLayoutProps>(({ children, quote }) => {
   return (
     <div className="flex min-h-screen">
-      <div className="flex flex-1 flex-col justify-start  py-12 px-4  dark:bg-slate-900 sm:px-6 lg:flex-none lg:px-20 xl:px-28">
+      <div className="flex flex-1 flex-col justify-start py-12 px-4 dark:bg-slate-900 sm:px-6 lg:flex-none lg:px-20 xl:px-28">
         <div className="mx-auto w-full max-w-sm lg:w-96">
           {retrieveChild(children, AuthHeader.displayName)}
           <div className="mt-8 flex flex-col gap-6">
@@ -27,13 +30,13 @@ const AuthLayout = memo<AuthLayoutProps>(({ children }) => {
           </div>
         </div>
       </div>
-      <div className="relative hidden flex-1 lg:block">
-        <Image
-          src="/images/entry-page-background.jpg"
-          fill
-          alt="Background"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
+      <div className="hidden flex-1 items-end bg-primary p-16 lg:flex">
+        <div className="mt-auto max-w-2xl text-secondary">
+          <blockquote className="space-y-2">
+            <p className="text-lg">{quote.content}</p>
+            <footer className="text-sm">{quote.author}</footer>
+          </blockquote>
+        </div>
       </div>
     </div>
   );

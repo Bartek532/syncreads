@@ -16,6 +16,7 @@
     "@hookform/resolvers": "^2.9.10",
     "@radix-ui/react-alert-dialog": "1.0.5",
     "@radix-ui/react-dialog": "1.0.5",
+    "@radix-ui/react-label": "2.0.2",
     "@radix-ui/react-slot": "1.0.2",
     "@rssmarkable/database": "workspace:*",
     "@rssmarkable/shared": "workspace:*",

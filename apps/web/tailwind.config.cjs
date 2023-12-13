@@ -1,7 +1,10 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { fontFamily } = require("tailwindcss/defaultTheme");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
-  content: ["src/app/**/*.{ts,tsx}", "src/omponents/**/*.{ts,tsx}"],
+  content: ["src/app/**/*.{ts,tsx}", "src/components/**/*.{ts,tsx}"],
   theme: {
     container: {
       center: true,
@@ -45,6 +48,9 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+      },
+      fontFamily: {
+        sans: ["var(--font-sans)", ...fontFamily.sans],
       },
       borderRadius: {
         lg: "var(--radius)",
