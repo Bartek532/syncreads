@@ -1,5 +1,5 @@
 import { Seo } from "../../../components/common/Seo";
-import { DashboardLayout } from "../../../components/dashboard/layout/Layout";
+import { DashboardLayout } from "../../../components/dashboard/layout/Layoutx";
 import { FeedsView } from "../../../views/dashboard/feeds/Feeds";
 
 import type { NextPage } from "next";

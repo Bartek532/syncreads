@@ -76,7 +76,7 @@ export const RegisterForm = memo(() => {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} type="email" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -90,7 +90,7 @@ export const RegisterForm = memo(() => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} type="password" />
               </FormControl>
               <FormMessage />
             </FormItem>

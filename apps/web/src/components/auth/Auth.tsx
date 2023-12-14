@@ -30,7 +30,7 @@ const AuthLayout = memo<AuthLayoutProps>(({ children, quote }) => {
           </div>
         </div>
       </div>
-      <div className="hidden flex-1 items-end bg-primary p-16 lg:flex">
+      <div className="hidden flex-1 items-end bg-primary p-12 lg:flex">
         <div className="mt-auto max-w-2xl text-secondary">
           <blockquote className="space-y-2">
             <p className="text-lg">{quote.content}</p>

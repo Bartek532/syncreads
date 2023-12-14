@@ -1,5 +1,5 @@
 import { Seo } from "../../../components/common/Seo";
-import { DashboardLayout } from "../../../components/dashboard/layout/Layout";
+import { DashboardLayout } from "../../../components/dashboard/layout/Layoutx";
 import { SyncsView } from "../../../views/dashboard/syncs/Syncs";
 
 const Syncs = () => {
