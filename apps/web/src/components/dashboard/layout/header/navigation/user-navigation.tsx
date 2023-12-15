@@ -16,8 +16,9 @@ export const UserNavigation = () => {
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="relative hidden h-9 w-9 rounded-full md:flex"
+          className="relative hidden gap-3 rounded-md pl-4 pr-3 md:flex"
         >
+          <span className="text-xs">David</span>
           <Avatar className="h-9 w-9">
             <AvatarImage src="/avatars/01.png" alt="@shadcn" />
             <AvatarFallback>SC</AvatarFallback>
@@ -36,9 +37,7 @@ export const UserNavigation = () => {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Billing</DropdownMenuItem>
           <DropdownMenuItem>Settings</DropdownMenuItem>
-          <DropdownMenuItem>New Team</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Log out</DropdownMenuItem>

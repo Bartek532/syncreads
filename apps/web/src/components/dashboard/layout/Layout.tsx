@@ -14,13 +14,11 @@ export const DashboardLayout = memo<DashboardLayoutProps>(
   ({ children, user }) => {
     return (
       <>
-        <div className="min-h-screen">
+        <div className="min-h-screen bg-muted">
           <Header />
-
-          <div className="flex flex-1 flex-col lg:pl-64">
-            {/* <Header user={user} onSidebarOpen={() => setIsSidebarOpen(true)} /> */}
-            {/* <main className="flex-1 pb-8 ">{children}</main> */}
-          </div>
+          <main className="mx-auto max-w-7xl flex-1 px-8 pt-12 pb-8">
+            {children}
+          </main>
         </div>
       </>
     );

@@ -1,5 +1,6 @@
 import { RssIcon } from "@heroicons/react/20/solid";
 import { ArrowPathIcon, DeviceTabletIcon } from "@heroicons/react/24/outline";
+import { Hourglass, Newspaper, RefreshCw, Tablet } from "lucide-react";
 
 import type { HeroIcon } from "../types/common.types";
 
@@ -34,19 +35,25 @@ export const DASHBOARD_CARDS = [
   {
     title: "Your feeds",
     href: "/dashboard/feeds",
-    icon: RssIcon as HeroIcon,
+    icon: Newspaper,
     link: "View feeds",
   },
   {
     title: "Your device",
     href: "/dashboard/device",
-    icon: DeviceTabletIcon as HeroIcon,
+    icon: Tablet,
     link: "View details",
   },
   {
-    title: "Synced times",
+    title: "Total syncs",
     href: "/dashboard/syncs",
-    icon: ArrowPathIcon as HeroIcon,
+    icon: RefreshCw,
+    link: "View syncs",
+  },
+  {
+    title: "Saved time",
+    href: "/dashboard/syncs",
+    icon: Hourglass,
     link: "View syncs",
   },
 ];

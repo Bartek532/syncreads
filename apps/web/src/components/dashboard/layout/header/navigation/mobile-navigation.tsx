@@ -17,10 +17,7 @@ export const MobileNavigation = () => {
 
   return (
     <>
-      <button
-        className="text-muted-foreground md:hidden"
-        onClick={() => setIsNavOpen((t) => !t)}
-      >
+      <button className="md:hidden" onClick={() => setIsNavOpen((t) => !t)}>
         <span className="sr-only">{isNavOpen ? "close" : "open"} menu</span>
         {isNavOpen ? <X /> : <AlignRight />}
       </button>
