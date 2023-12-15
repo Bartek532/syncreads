@@ -13,11 +13,6 @@ body {
   font-feature-settings: "rlig" 1, "calt" 1;
 }
 
-/* html,
-body {
-  @apply h-full;
-}
-
 #__next {
   @apply flex min-h-full flex-col;
 }
@@ -36,4 +31,4 @@ body {
 
 *::-webkit-scrollbar-thumb:hover {
   @apply bg-gray-400;
-} */
+}

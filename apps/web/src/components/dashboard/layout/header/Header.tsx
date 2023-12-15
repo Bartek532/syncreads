@@ -1,19 +1,19 @@
-import { AlignRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { MobileNavigation } from "./navigation/mobile-navigation";
 import { Navigation } from "./navigation/navigation";
-import { UserNavigation } from "./user-navigation/user-navigation";
+import { UserNavigation } from "./navigation/user-navigation";
 
 export const Header = () => {
   return (
-    <header className="flex w-full items-center justify-between gap-6 border-b py-3.5 px-6">
-      <Link className="flex flex-shrink-0 items-center px-4" href="/">
+    <header className="flex h-16 w-full items-center justify-between gap-8 border-b px-8">
+      <Link className="flex flex-shrink-0 items-center" href="/">
         <Image src="/logo.png" width="28" height="36" alt="rssmarkable logo" />
       </Link>
-      <Navigation className="mr-auto hidden md:flex" />
+      <Navigation />
       <UserNavigation />
-      <AlignRight className="text-muted-foreground" />
+      <MobileNavigation />
     </header>
   );
 };

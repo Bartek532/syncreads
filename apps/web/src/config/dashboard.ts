@@ -1,41 +1,32 @@
 import { RssIcon } from "@heroicons/react/20/solid";
-import {
-  CogIcon,
-  HomeIcon,
-  QuestionMarkCircleIcon,
-  ArrowPathIcon,
-  DeviceTabletIcon,
-  SquaresPlusIcon,
-  CpuChipIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowPathIcon, DeviceTabletIcon } from "@heroicons/react/24/outline";
 
 import type { HeroIcon } from "../types/common.types";
 
 export const DASHBOARD_NAVIGATION = [
-  { name: "Home", href: "/dashboard", icon: HomeIcon as HeroIcon },
+  { name: "Home", href: "/dashboard", segment: null },
   {
     name: "Feeds",
     href: "/dashboard/feeds",
-    icon: SquaresPlusIcon as HeroIcon,
+    segment: "feeds",
   },
   {
     name: "Device",
     href: "/dashboard/device",
-    icon: CpuChipIcon as HeroIcon,
+    segment: "device",
   },
   {
     name: "Syncs",
     href: "/dashboard/syncs",
-    icon: ArrowPathIcon as HeroIcon,
+    segment: "syncs",
   },
 ];
 
 export const DASHBOARD_SECONDARY_NAVIGATION = [
-  { name: "Settings", href: "/dashboard/settings", icon: CogIcon as HeroIcon },
+  { name: "Settings", href: "/dashboard/settings" },
   {
     name: "Help",
     href: "/dashboard/help",
-    icon: QuestionMarkCircleIcon as HeroIcon,
   },
 ];
 
