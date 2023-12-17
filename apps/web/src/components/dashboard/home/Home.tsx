@@ -1,17 +1,12 @@
-import EmptySyncsIcon from "public/svg/empty-syncs.svg";
-
 import { DASHBOARD_CARDS } from "../../../config/dashboard";
 import { api } from "../../../trpc/server";
-import { Empty } from "../../common/Empty";
-import { SyncsList } from "../sync/list/SyncsList";
-import { columns } from "../sync/table/columns";
-import { DataTable } from "../sync/table/table";
+import { Syncs } from "../sync/Syncs";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/utils";
 
-export const DashboardHome = async () => {
+export const Home = async () => {
   const feeds = await api.user.getUserFeeds.query();
   const device = await api.user.getUserDevice.query();
   const syncs = await api.sync.getUserSyncs.query();
@@ -83,21 +78,7 @@ export const DashboardHome = async () => {
           <h2 className="text-lg font-medium leading-6 text-gray-900 dark:text-white sm:px-0">
             Recent syncs
           </h2>
-          {/* {syncs.count ? (
-            <div className="-mx-4 mt-4 sm:mx-0">
-              <SyncsList syncs={syncs.data} total={syncs.count} />
-            </div>
-          ) : (
-            <Empty onCreateNew={() => {}}>
-              <EmptySyncsIcon className="h-50 mx-auto w-40 text-gray-400 dark:text-gray-500" />
-              <span className="mt-6 block text-lg font-medium text-gray-900 dark:text-white">
-                You haven&apos;t synced any feeds yet!
-              </span>
-            </Empty>
-          )} */}
-          <div className="mt-4">
-            <DataTable data={syncs} columns={columns} />
-          </div>
+          <Syncs syncs={syncs} />
         </section>
       </div>
     </>

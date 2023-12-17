@@ -24,7 +24,7 @@ export const MobileNavigation = () => {
 
       <div
         className={cn(
-          "fixed top-16 left-0 z-10 -mt-1 flex w-full flex-col gap-7 bg-background px-8 pt-2 pb-4 md:hidden",
+          "fixed top-16 left-0 z-10 -mt-1 flex w-full flex-col gap-7 bg-background px-8 pt-2 pb-10 md:hidden",
           !isNavOpen && "hidden",
         )}
       >

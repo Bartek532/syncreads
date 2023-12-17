@@ -25,7 +25,9 @@ interface DataTableToolbarProps<TData> {
   table: Table<TData>;
 }
 
-export function Toolbar<TData>({ table }: DataTableToolbarProps<TData>) {
+export const SyncsTableToolbar = <TData,>({
+  table,
+}: DataTableToolbarProps<TData>) => {
   const isFiltered = table.getState().columnFilters.length > 0;
   const triggerColumn = table.getColumn("trigger");
   const statusColumn = table.getColumn("status");
@@ -88,4 +90,4 @@ export function Toolbar<TData>({ table }: DataTableToolbarProps<TData>) {
       <DataTableViewOptions table={table} />
     </div>
   );
-}
+};

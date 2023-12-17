@@ -1,16 +1,23 @@
-import { Seo } from "../../../components/common/Seo";
-import { DashboardLayout } from "../../../components/dashboard/layout/Layoutx";
-import { SyncsView } from "../../../views/dashboard/syncs/Syncs";
+import { Syncs } from "@/components/dashboard/sync/Syncs";
+import { api } from "@/trpc/server";
 
-const Syncs = () => {
+const DashboardSyncs = async () => {
+  const syncs = await api.sync.getUserSyncs.query();
+
   return (
-    <>
-      <Seo title="Dashboard - Syncs" />
-      <DashboardLayout>
-        <SyncsView />
-      </DashboardLayout>
-    </>
+    <div className="flex flex-col gap-10">
+      <div className="flex flex-col justify-start space-y-2">
+        <h1 className="text-3xl font-bold tracking-tight">
+          You synced articles <span className="text-4xl">{syncs.length}</span>{" "}
+          times!
+        </h1>
+        <p className="ml-1 text-sm text-muted-foreground">
+          Get a quick look at how much time you saved ⌛
+        </p>
+      </div>
+      <Syncs syncs={syncs} />
+    </div>
   );
 };
 
-export default Syncs;
+export default DashboardSyncs;

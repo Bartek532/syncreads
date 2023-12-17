@@ -1,5 +1,4 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,8 +13,8 @@ export const UserNavigation = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="relative hidden items-center gap-3 rounded-md md:flex">
-          <span className="text-xs">David</span>
+        <button className="relative hidden items-center gap-4 rounded-md md:flex">
+          <span className="text-sm">David</span>
           <Avatar className="h-9 w-9">
             <AvatarImage src="/avatars/01.png" alt="@shadcn" />
             <AvatarFallback>SC</AvatarFallback>

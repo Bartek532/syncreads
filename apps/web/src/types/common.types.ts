@@ -22,8 +22,3 @@ export type HeroIcon =
   | ForwardRefExoticComponent<
       SVGProps<SVGSVGElement> & { title?: string; titleId?: string }
     >;
-
-export type PaginationParams = {
-  page?: string;
-  perPage?: string;
-};
