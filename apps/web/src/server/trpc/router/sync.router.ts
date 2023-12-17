@@ -1,13 +1,10 @@
 import { protectedProcedure, router } from "..";
-import { offsetPaginationSchema } from "../../../utils/validation/schema";
 import { getUserSyncsHandler } from "../../controllers/sync.controller";
 
 export const syncRouter = router({
-  getUserSyncs: protectedProcedure
-    .input(offsetPaginationSchema)
-    .query(({ ctx, input }) =>
-      getUserSyncsHandler({ id: ctx.session.user.id, ...input }),
-    ),
+  getUserSyncs: protectedProcedure.query(({ ctx }) =>
+    getUserSyncsHandler({ id: ctx.session.user.id }),
+  ),
   // getSyncLog: protectedProcedure
   //   .input(
   //     z.object({

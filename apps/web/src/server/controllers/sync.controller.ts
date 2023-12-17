@@ -1,12 +1,6 @@
-import { ApiError } from "next/dist/server/api-utils";
-
-import {
-  SYNCS_PAGINATION_DEFAULT_PAGE,
-  SYNCS_PAGINATION_DEFAULT_PER_PAGE,
-} from "../../config/sync";
 import { getUserSyncs } from "../services/sync.service";
 
-import type { OffsetPaginationInput } from "../../utils/validation/types";
+import { ApiError } from "@/utils/exceptions";
 
 // export const createSyncLogger = async (syncId: string) => {
 //   const START_LOG = SYNC_START_LOG();
@@ -27,22 +21,16 @@ import type { OffsetPaginationInput } from "../../utils/validation/types";
 //   return logger;
 // };
 
-export const getUserSyncsHandler = async ({
-  id,
-  page,
-  perPage,
-}: OffsetPaginationInput & { id: string }) => {
-  const { data, error, count, status } = await getUserSyncs({
+export const getUserSyncsHandler = async ({ id }: { id: string }) => {
+  const { data, error, status } = await getUserSyncs({
     id,
-    page: page ?? SYNCS_PAGINATION_DEFAULT_PAGE,
-    perPage: perPage ?? SYNCS_PAGINATION_DEFAULT_PER_PAGE,
   });
 
   if (error) {
     throw new ApiError(status, error.message);
   }
 
-  return { count, data };
+  return data;
 };
 
 // export const getSyncLogHandler = async (syncId: string) => {

@@ -59,3 +59,5 @@ export const formatTime = (miliseconds: number) => {
 };
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
+export const capitalize = (text: string) =>
+  text.charAt(0).toUpperCase() + text.slice(1);

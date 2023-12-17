@@ -14,16 +14,13 @@ export const UserNavigation = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          className="relative hidden gap-3 rounded-md pl-4 pr-3 md:flex"
-        >
+        <button className="relative hidden items-center gap-3 rounded-md md:flex">
           <span className="text-xs">David</span>
           <Avatar className="h-9 w-9">
             <AvatarImage src="/avatars/01.png" alt="@shadcn" />
             <AvatarFallback>SC</AvatarFallback>
           </Avatar>
-        </Button>
+        </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">

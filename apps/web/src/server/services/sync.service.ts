@@ -32,21 +32,8 @@ import { getRange } from "../utils/pagination";
 //   });
 // };
 
-export const getUserSyncs = ({
-  id,
-  page,
-  perPage,
-}: {
-  id: string;
-  page: number;
-  perPage: number;
-}) => {
-  const range = getRange(page, perPage);
-  return supabase()
-    .from("Sync")
-    .select("*", { count: "exact" })
-    .eq("userId", id)
-    .range(range.from, range.to);
+export const getUserSyncs = ({ id }: { id: string }) => {
+  return supabase().from("Sync").select("*").eq("userId", id);
 };
 
 // export const getPage = async (passedBrowser?: Browser) => {

@@ -6,15 +6,20 @@ interface DataTablePaginationProps<TData> {
   table: Table<TData>;
 }
 
-export function DataTablePagination<TData>({
+export const DataTablePagination = <TData,>({
   table,
-}: DataTablePaginationProps<TData>) {
+}: DataTablePaginationProps<TData>) => {
+  const { pagination } = table.getState();
+  const start = pagination.pageIndex * pagination.pageSize + 1;
+  const total = table.getFilteredRowModel().rows.length;
+  const end = Math.min((pagination.pageIndex + 1) * pagination.pageSize, total);
+
   return (
     <div className="flex items-center justify-between px-2">
       <p className="flex-1 text-sm text-muted-foreground">
-        Showing <span className="font-medium">1</span> to{" "}
-        <span className="font-medium">10</span> of{" "}
-        <span className="font-medium">2137</span> results
+        Showing <span className="font-medium">{start}</span> to{" "}
+        <span className="font-medium">{end}</span> of{" "}
+        <span className="font-medium">{total}</span> results
       </p>
       <div className="flex items-center space-x-6 lg:space-x-8">
         <div className="flex items-center space-x-2">
@@ -36,4 +41,4 @@ export function DataTablePagination<TData>({
       </div>
     </div>
   );
-}
+};

@@ -11,20 +11,15 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/utils";
 
-export type DashboardHomeProps = {
-  readonly page?: number;
-  readonly perPage?: number;
-};
-
-export const DashboardHome = async ({ page, perPage }: DashboardHomeProps) => {
+export const DashboardHome = async () => {
   const feeds = await api.user.getUserFeeds.query();
   const device = await api.user.getUserDevice.query();
-  const syncs = await api.sync.getUserSyncs.query({ page, perPage });
+  const syncs = await api.sync.getUserSyncs.query();
 
   const cardsValues = [
     feeds.length,
     device ? "reMarkable 2" : "Not registered",
-    syncs.count,
+    syncs.length,
     "+20 hours",
   ];
 
@@ -35,11 +30,11 @@ export const DashboardHome = async ({ page, perPage }: DashboardHomeProps) => {
           <h1 className="text-3xl font-bold tracking-tight">
             Welcome back, guest!
           </h1>
-          <div className="flex items-center space-x-2">
+          <div className="ml-1 flex items-center space-x-2">
             <div
               className={cn(
                 "h-3 w-3 rounded-full",
-                !!device ? "bg-green-400" : "bg-destructive",
+                !!device ? "bg-success" : "bg-destructive",
               )}
             ></div>
             <span className="text-sm text-muted-foreground">
@@ -101,7 +96,7 @@ export const DashboardHome = async ({ page, perPage }: DashboardHomeProps) => {
             </Empty>
           )} */}
           <div className="mt-4">
-            <DataTable data={syncs.data} columns={columns} />
+            <DataTable data={syncs} columns={columns} />
           </div>
         </section>
       </div>

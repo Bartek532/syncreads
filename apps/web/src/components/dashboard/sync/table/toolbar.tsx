@@ -15,7 +15,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { SYNCS_PAGINATION_PER_PAGE_OPTIONS } from "@/config/sync";
+import {
+  SYNCS_PAGINATION_PER_PAGE_OPTIONS,
+  SYNC_TRIGGER_EMOJIS,
+} from "@/config/sync";
+import { capitalize } from "@/utils";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -23,26 +27,30 @@ interface DataTableToolbarProps<TData> {
 
 export function Toolbar<TData>({ table }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
+  const triggerColumn = table.getColumn("trigger");
+  const statusColumn = table.getColumn("status");
 
   return (
     <div className="flex items-center justify-between gap-2">
       <div className="flex flex-1 items-center space-x-2">
-        {table.getColumn("trigger") && (
+        {triggerColumn && (
           <DataTableFacetedFilter
-            column={table.getColumn("trigger")}
+            column={triggerColumn}
             title="Trigger"
             options={Object.values(SyncTrigger).map((status) => ({
-              label: status,
+              label: `${SYNC_TRIGGER_EMOJIS[status]} ${capitalize(
+                status.toLocaleLowerCase(),
+              )}`,
               value: status,
             }))}
           />
         )}
-        {table.getColumn("status") && (
+        {statusColumn && (
           <DataTableFacetedFilter
-            column={table.getColumn("status")}
+            column={statusColumn}
             title="Status"
             options={Object.values(SyncStatus).map((status) => ({
-              label: status,
+              label: capitalize(status.toLocaleLowerCase().replace("_", " ")),
               value: status,
             }))}
           />
