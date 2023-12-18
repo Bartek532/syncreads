@@ -1,45 +1,22 @@
 "use client";
 
-import { useState } from "react";
-import toast from "react-hot-toast";
+import { memo } from "react";
 
 import EmptyDeviceIcon from "public/svg/empty-device.svg";
 
-import { Empty } from "../../../components/common/Empty";
 import { DeviceTile } from "../../../components/dashboard/device/tile/DeviceTile";
-import { AddDeviceModal } from "../../../components/modal/device/AddDeviceModal";
-import { useGenericLoader } from "../../../hooks/useGenericLoader";
-import { api } from "../../../trpc/react";
 
-import type { TRPCError } from "@trpc/server";
+import { AddDeviceDialog } from "./dialog/add-device-dialog";
 
-export const Device = () => {
-  const utils = api.useUtils();
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+import type { Device as DeviceType } from "@rssmarkable/database";
 
-  const { data: device, isLoading: isDeviceLoading } =
-    api.user.getUserDevice.useQuery();
+type DeviceProps = {
+  readonly device: DeviceType | null;
+};
 
-  const unregisterDeviceMutation = api.user.unregisterDevice.useMutation({
-    onSuccess: () => utils.user.getUserDevice.invalidate(),
-  });
-
-  useGenericLoader(isDeviceLoading);
-
-  const handleDeleteDevice = async () => {
-    await toast.promise(unregisterDeviceMutation.mutateAsync(), {
-      loading: "Deleting device...",
-      success: ({ message }) => message,
-      error: (err: TRPCError | Error) => err.message,
-    });
-  };
-
+export const Device = memo<DeviceProps>(({ device }) => {
   return (
     <>
-      <AddDeviceModal
-        isOpen={isAddModalOpen}
-        onClose={() => setIsAddModalOpen(false)}
-      />
       <div className="flex flex-col gap-10">
         <div className="flex flex-col justify-start space-y-2">
           <h1 className="text-3xl font-bold tracking-tight">Your device</h1>
@@ -49,17 +26,22 @@ export const Device = () => {
         </div>
         {device ? (
           <div className="mt-4">
-            <DeviceTile device={device} onDelete={handleDeleteDevice} />
+            <DeviceTile device={device} />
           </div>
         ) : (
-          <Empty onCreateNew={() => setIsAddModalOpen(true)}>
-            <EmptyDeviceIcon className="h-50 mx-auto w-40 text-muted-foreground" />
-            <span className="mt-8 block text-lg font-medium">
-              You haven&apos;t registered your device yet, do it to unlock sync!
-            </span>
-          </Empty>
+          <AddDeviceDialog>
+            <button className="relative mt-6 flex w-full flex-col items-center justify-center rounded-lg border-2 border-dashed border-muted-foreground/50 p-16 py-20 text-center transition-colors hover:border-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 md:py-24">
+              <EmptyDeviceIcon className="h-50 mx-auto w-40 text-muted-foreground" />
+              <span className="mt-8 block text-lg font-medium">
+                You haven&apos;t registered your device yet, do it to unlock
+                sync!
+              </span>
+            </button>
+          </AddDeviceDialog>
         )}
       </div>
     </>
   );
-};
+});
+
+Device.displayName = "Device";

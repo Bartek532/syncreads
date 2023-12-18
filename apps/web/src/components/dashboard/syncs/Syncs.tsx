@@ -9,8 +9,6 @@ import { SyncsTable } from "./table/table";
 
 import type { Sync } from "@rssmarkable/database";
 
-import { Empty } from "@/components/common/Empty";
-
 type SyncsProps = {
   readonly syncs: Sync[];
 };
@@ -25,12 +23,12 @@ export const Syncs = memo<SyncsProps>(({ syncs }) => {
   }
 
   return (
-    <Empty onCreateNew={() => {}}>
+    <button className="relative mt-6 flex w-full flex-col items-center justify-center rounded-lg border-2 border-dashed border-muted-foreground/50 p-16 py-20 text-center transition-colors hover:border-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 md:py-24">
       <EmptySyncsIcon className="h-50 mx-auto w-40 text-muted-foreground" />
       <span className="mt-8 block text-lg font-medium">
         You haven&apos;t synced any content yet!
       </span>
-    </Empty>
+    </button>
   );
 });
 
