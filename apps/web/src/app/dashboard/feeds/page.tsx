@@ -1,19 +1,11 @@
-// import { Seo } from "../../../components/common/Seo";
-// import { DashboardLayout } from "../../../components/dashboard/layout/Layoutx";
-// import { FeedsView } from "../../../views/dashboard/feeds/Feeds";
+import { Feeds } from "../../../components/dashboard/feeds/feeds";
 
-import type { NextPage } from "next";
-
-const Feeds: NextPage = () => {
+const FeedsPage = () => {
   return (
     <>
-      {/* <Seo title="Dashboard - Feeds" />
-      <DashboardLayout>
-        <FeedsView />
-      </DashboardLayout> */}
-      <h1>feeds</h1>
+      <Feeds />
     </>
   );
 };
 
-export default Feeds;
+export default FeedsPage;
