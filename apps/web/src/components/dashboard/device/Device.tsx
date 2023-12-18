@@ -4,9 +4,8 @@ import { memo } from "react";
 
 import EmptyDeviceIcon from "public/svg/empty-device.svg";
 
-import { DeviceTile } from "../../../components/dashboard/device/tile/DeviceTile";
-
 import { AddDeviceDialog } from "./dialog/add-device-dialog";
+import { DeviceTile } from "./tile/device-tile";
 
 import type { Device as DeviceType } from "@rssmarkable/database";
 
