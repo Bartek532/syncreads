@@ -10,7 +10,7 @@ import { Button } from "../../components/common/Button";
 import { Empty } from "../../components/common/Empty";
 import { Profile } from "../../components/dashboard/profile/Profile";
 import { Tile } from "../../components/dashboard/profile/tile/Tile";
-import { SyncsList } from "../../components/dashboard/sync/SyncsList";
+import { SyncsList } from "../../components/dashboard/syncs/SyncsList";
 import { AddFeedModal } from "../../components/modal/feed/AddFeedModal";
 import { SyncArticleModal } from "../../components/modal/feed/SyncArticleModal";
 import { DASHBOARD_CARDS } from "../../config/dashboard";

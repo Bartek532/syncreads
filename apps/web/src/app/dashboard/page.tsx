@@ -1,4 +1,4 @@
-import { Home } from "../../components/dashboard/home/Home";
+import { Home } from "../../components/dashboard/home/home";
 
 const Dashboard = () => {
   return <Home />;

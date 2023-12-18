@@ -1,11 +1,12 @@
 import { router } from "..";
 
+import { feedRouter } from "./feed.router";
 import { syncRouter } from "./sync.router";
 import { userRouter } from "./user.router";
 
 export const appRouter = router({
   // auth: authRouter,
-  // feed: feedRouter,
+  feed: feedRouter,
   user: userRouter,
   sync: syncRouter,
 });

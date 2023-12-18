@@ -9,7 +9,7 @@ import EmptySyncsIcon from "public/svg/empty-syncs.svg";
 
 import { Button } from "../../../components/common/Button";
 import { Empty } from "../../../components/common/Empty";
-import { SyncsList } from "../../../components/dashboard/sync/SyncsList";
+import { SyncsList } from "../../../components/dashboard/syncs/SyncsList";
 import { PAGINATION_TYPE } from "../../../config/dashboard";
 import { useGenericLoader } from "../../../hooks/useGenericLoader";
 import { onPromise } from "../../../utils/functions";

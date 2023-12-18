@@ -1,19 +1,6 @@
 import { router, protectedProcedure } from "..";
-import {
-  createFeedSchema,
-  deleteFeedSchema,
-  getWebsiteDetailsSchema,
-  importFeedsSchema,
-  syncArticleSchema,
-} from "../../../utils/validation/schema";
-import {
-  createFeedHandler,
-  importFeedsHandler,
-  deleteFeedHandler,
-  getFeedDetailsHandler,
-  syncArticleHandler,
-  getAllFeedsHandler,
-} from "../../controllers/feed.controller";
+import { createFeedSchema } from "../../../utils/validation/schema";
+import { createFeedHandler } from "../../controllers/feed.controller";
 
 export const feedRouter = router({
   createFeed: protectedProcedure
@@ -21,23 +8,23 @@ export const feedRouter = router({
     .mutation(({ input, ctx }) =>
       createFeedHandler({ ...input, id: ctx.session.user.id }),
     ),
-  importFeeds: protectedProcedure
-    .input(importFeedsSchema)
-    .mutation(({ input, ctx }) =>
-      importFeedsHandler({ ...input, id: ctx.session.user.id }),
-    ),
-  deleteFeed: protectedProcedure
-    .input(deleteFeedSchema)
-    .mutation(({ input, ctx }) =>
-      deleteFeedHandler({ ...input, id: ctx.session.user.id }),
-    ),
-  getFeedDetails: protectedProcedure
-    .input(getWebsiteDetailsSchema)
-    .query(({ input }) => getFeedDetailsHandler(input)),
-  getAllFeeds: protectedProcedure.query(() => getAllFeedsHandler()),
-  syncArticle: protectedProcedure
-    .input(syncArticleSchema)
-    .mutation(({ input, ctx }) =>
-      syncArticleHandler({ id: ctx.session.user.id, ...input }),
-    ),
+  // importFeeds: protectedProcedure
+  //   .input(importFeedsSchema)
+  //   .mutation(({ input, ctx }) =>
+  //     importFeedsHandler({ ...input, id: ctx.session.user.id }),
+  //   ),
+  // deleteFeed: protectedProcedure
+  //   .input(deleteFeedSchema)
+  //   .mutation(({ input, ctx }) =>
+  //     deleteFeedHandler({ ...input, id: ctx.session.user.id }),
+  //   ),
+  // getFeedDetails: protectedProcedure
+  //   .input(getWebsiteDetailsSchema)
+  //   .query(({ input }) => getFeedDetailsHandler(input)),
+  // getAllFeeds: protectedProcedure.query(() => getAllFeedsHandler()),
+  // syncArticle: protectedProcedure
+  //   .input(syncArticleSchema)
+  //   .mutation(({ input, ctx }) =>
+  //     syncArticleHandler({ id: ctx.session.user.id, ...input }),
+  //   ),
 });

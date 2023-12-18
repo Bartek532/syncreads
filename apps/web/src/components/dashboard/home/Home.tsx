@@ -1,6 +1,16 @@
 import { DASHBOARD_CARDS } from "../../../config/dashboard";
 import { api } from "../../../trpc/server";
-import { Syncs } from "../sync/Syncs";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../../ui/dialog";
+import { AddFeedDialog } from "../feeds/dialog/add-feed-dialog";
+import { SyncArticleDialog } from "../feeds/dialog/sync-article-dialog";
+import { Syncs } from "../syncs/Syncs";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -40,8 +50,12 @@ export const Home = async () => {
           </div>
         </div>
         <div className="flex items-center space-x-3">
-          <Button variant="outline">Add feed</Button>
-          <Button>Sync article</Button>
+          <AddFeedDialog>
+            <Button variant="outline">Add feed</Button>
+          </AddFeedDialog>
+          <SyncArticleDialog>
+            <Button>Sync article</Button>
+          </SyncArticleDialog>
         </div>
       </div>
 

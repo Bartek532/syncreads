@@ -1,50 +1,38 @@
-import { prisma } from "@rssmarkable/database";
+import { supabase } from "../../../lib/supabase/server";
+import { ApiError } from "../../../utils/exceptions";
 
-import { getUserById } from "../user.service";
+export const createFeed = async ({ url, id }: { url: string; id: string }) => {
+  const { data, error, status } = await supabase()
+    .from("Feed")
+    .insert({ url })
+    .select()
+    .single();
 
-export const createFeed = async ({ url, id }: { url: string; id: number }) => {
-  const feed = await prisma.feed.upsert({
-    where: { url },
-    create: { url },
-    update: { url },
-  });
-
-  const user = await getUserById({ id });
-
-  if (!user) {
-    return;
+  if (error) {
+    throw new ApiError(status, error.message);
   }
 
-  await prisma.userFeed.upsert({
-    where: {
-      userId_feedId: {
-        userId: user.id,
-        feedId: feed.id,
-      },
-    },
-    create: {
-      userId: user.id,
-      feedId: feed.id,
-    },
-    update: {
-      userId: user.id,
-      feedId: feed.id,
-    },
-  });
+  const { error: userFeedError, status: userFeedStatus } = await supabase()
+    .from("UserFeed")
+    .insert({ userId: id, feedId: data.id });
 
-  return feed;
+  if (userFeedError) {
+    throw new ApiError(userFeedStatus, userFeedError.message);
+  }
+
+  return data;
 };
 
 export const getFeedByUrl = ({ url }: { url: string }) => {
-  return prisma.feed.findUnique({ where: { url }, include: { users: true } });
+  return supabase().from("Feed").select("*").eq("url", url).single();
 };
 
 export const getAllFeeds = () => {
-  return prisma.feed.findMany();
+  return supabase().from("Feed").select("*");
 };
 
 export const deleteFeed = ({ url }: { url: string }) => {
-  return prisma.feed.delete({ where: { url } });
+  return supabase().from("Feed").delete().match({ url });
 };
 
 export { importStrategies } from "./import/import.provider";

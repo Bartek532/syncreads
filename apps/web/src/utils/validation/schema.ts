@@ -9,7 +9,7 @@ export const createFeedSchema = z.object({
 
 export const createAndConnectSchema = z.object({
   url: z.string().url(),
-  id: z.number(),
+  id: z.string(),
 });
 
 export const importFeedsSchema = z.object({

@@ -1,7 +1,6 @@
 import { memo } from "react";
 
 import { Header } from "./header/header";
-import { Navigation } from "./header/navigation/navigation";
 
 import type { User } from "@rssmarkable/database";
 

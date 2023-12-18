@@ -23,11 +23,7 @@ import { supabase } from "../../lib/supabase/server";
 //   });
 // };
 
-// export const getUserById = ({ id }: { id: number }) => {
-//   return prisma.user.findUnique({
-//     where: { id },
-//     include: { device: true, feeds: true },
-//   });
+// export const getUserById = ({ id }: { id: string }) => {
 // };
 
 export const getUserFeeds = ({ id }: { id: string }) => {
@@ -39,6 +35,15 @@ export const getUserFeeds = ({ id }: { id: string }) => {
 
 export const getUserDevice = ({ id }: { id: string }) => {
   return supabase().from("Device").select("*").eq("userId", id).single();
+};
+
+export const getUserFeedByUrl = ({ id, url }: { id: string; url: string }) => {
+  return supabase()
+    .from("UserFeed")
+    .select("*, Feed (url)")
+    .eq("userId", id)
+    .eq("Feed.url", url)
+    .single();
 };
 
 // export const getUserFeed = ({
