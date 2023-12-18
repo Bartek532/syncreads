@@ -1,8 +1,4 @@
-import { RssIcon } from "@heroicons/react/20/solid";
-import { ArrowPathIcon, DeviceTabletIcon } from "@heroicons/react/24/outline";
 import { Hourglass, Newspaper, RefreshCw, Tablet } from "lucide-react";
-
-import type { HeroIcon } from "../types/common.types";
 
 export const DASHBOARD_NAVIGATION = [
   { name: "Home", href: "/dashboard", segment: null },
