@@ -30,6 +30,19 @@ export const serverSchema = sharedSchema.merge(
   }),
 );
 
+export const clientSchema = sharedSchema.merge(
+  z.object({
+    GITHUB_CLIENT_ID: z.string(),
+    GITHUB_CLIENT_SECRET: z.string(),
+    GOOGLE_CLIENT_ID: z.string(),
+    GOOGLE_CLIENT_SECRET: z.string(),
+
+    CHROME_BIN: z.string(),
+    SYNC_API_URL: z.string().url(),
+  }),
+);
+
 export type AnonDatabaseConfig = z.infer<typeof anonDatabaseSchema>;
 export type ServiceDatabaseConfig = z.infer<typeof serviceDatabaseSchema>;
 export type ServerConfig = z.infer<typeof serverSchema>;
+export type ClientConfig = z.infer<typeof clientSchema>;

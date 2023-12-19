@@ -6,6 +6,7 @@ import type {
   CreateFeedInput,
   DeleteFeedsInput,
 } from "@/utils/validation/types";
+import type { SyncArticlePayload } from "@rssmarkable/shared";
 
 import { api } from "@/trpc/server";
 
@@ -20,3 +21,6 @@ export const deleteFeeds = async (data: DeleteFeedsInput) => {
   revalidatePath("/dashboard/feeds");
   return response;
 };
+
+export const queueArticleSync = async (data: SyncArticlePayload) =>
+  api.sync.queueArticleSync.mutate(data);

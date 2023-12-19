@@ -21,7 +21,7 @@ export const importAndConnectFeedsSchema = importFeedsSchema.extend({
 });
 
 export const deleteFeedsSchema = z.object({
-  in: z.array(z.string()),
+  in: z.array(z.string().uuid()),
 });
 
 export const deleteAndDisconnectFeedsSchema = deleteFeedsSchema.extend({
@@ -45,10 +45,6 @@ export const registerAndConnectDeviceSchema = registerDeviceSchema.extend({
 
 export const unregisterAndDisconnectDeviceSchema = z.object({
   id: z.string(),
-});
-
-export const syncArticleSchema = z.object({
-  url: z.string().min(1, "Url is required.").url("Url must be a valid url."),
 });
 
 export const cursorPaginationSchema = z.object({

@@ -57,6 +57,10 @@ export const getUserFeedByUrl = ({ id, url }: { id: string; url: string }) => {
     .single();
 };
 
+export const getUserApiKey = ({ id }: { id: string }) => {
+  return supabase().from("ApiKey").select("key").eq("userId", id).single();
+};
+
 export const deleteUserFeed = ({
   id,
   userId,

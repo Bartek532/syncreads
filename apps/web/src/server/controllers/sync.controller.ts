@@ -1,25 +1,9 @@
-import { getUserSyncs } from "../services/sync.service";
+import { getUserSyncs, queueArticleSync } from "../services/sync.service";
+import { getUserApiKey } from "../services/user.service";
+
+import type { SyncArticlePayload } from "@rssmarkable/shared";
 
 import { ApiError } from "@/utils/exceptions";
-
-// export const createSyncLogger = async (syncId: string) => {
-//   const START_LOG = SYNC_START_LOG();
-
-//   const log = await createLog(syncId, [START_LOG]);
-//   await publisher.publish(`sync-${syncId}`, JSON.stringify(START_LOG));
-
-//   const logger = Object.fromEntries(
-//     Object.values(LOG_LEVEL).map((level) => {
-//       return [
-//         level,
-//         (message: string) =>
-//           updateLog(log.id, { message, date: new Date().toISOString(), level }),
-//       ] as const;
-//     }),
-//   ) as Logger;
-
-//   return logger;
-// };
 
 export const getUserSyncsHandler = async ({ id }: { id: string }) => {
   const { data, error, status } = await getUserSyncs({
@@ -33,6 +17,29 @@ export const getUserSyncsHandler = async ({ id }: { id: string }) => {
   return data;
 };
 
-// export const getSyncLogHandler = async (syncId: string) => {
-//   return getSyncLog(syncId);
-// };
+export const queueArticleSyncHandler = async ({
+  id,
+  url,
+}: { id: string } & SyncArticlePayload) => {
+  try {
+    const { data, error, status } = await getUserApiKey({ id });
+
+    if (error) {
+      throw new ApiError(status, error.message);
+    }
+
+    const sync: unknown = await queueArticleSync({
+      key: data.key,
+      url,
+    });
+
+    return {
+      status: "Success",
+      message: "Article sync succesfully queued!",
+      sync,
+    };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

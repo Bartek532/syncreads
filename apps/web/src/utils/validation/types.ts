@@ -9,7 +9,6 @@ import type {
   importFeedsSchema,
   registerAndConnectDeviceSchema,
   registerDeviceSchema,
-  syncArticleSchema,
   unregisterAndDisconnectDeviceSchema,
 } from "./schema";
 import type { TypeOf } from "zod";
@@ -27,7 +26,6 @@ export type DeleteAndDisconnectFeedsInput = TypeOf<
   typeof deleteAndDisconnectFeedsSchema
 >;
 export type GetWebsiteDetailsInput = TypeOf<typeof getWebsiteDetailsSchema>;
-export type SyncArticleInput = TypeOf<typeof syncArticleSchema>;
 export type RegisterDeviceInput = TypeOf<typeof registerDeviceSchema>;
 export type RegisterAndConnectDeviceInput = TypeOf<
   typeof registerAndConnectDeviceSchema
