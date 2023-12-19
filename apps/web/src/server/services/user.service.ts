@@ -57,6 +57,16 @@ export const getUserFeedByUrl = ({ id, url }: { id: string; url: string }) => {
     .single();
 };
 
+export const deleteUserFeed = ({
+  id,
+  userId,
+}: {
+  id: string;
+  userId: string;
+}) => {
+  return supabase().from("UserFeed").delete().match({ feedId: id, userId });
+};
+
 // export const getUserFeed = ({
 //   userId,
 //   url,

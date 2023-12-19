@@ -1,4 +1,4 @@
-import { Syncs } from "@/components/dashboard/syncs/Syncs";
+import { Syncs } from "@/components/dashboard/syncs/syncs";
 import { api } from "@/trpc/server";
 
 const DashboardSyncs = async () => {

@@ -27,12 +27,20 @@ export const getFeedByUrl = ({ url }: { url: string }) => {
   return supabase().from("Feed").select("*").eq("url", url).single();
 };
 
+export const getFeedById = ({ id }: { id: string }) => {
+  return supabase()
+    .from("Feed")
+    .select("*, UserFeed (userId)")
+    .eq("id", id)
+    .single();
+};
+
 export const getAllFeeds = () => {
   return supabase().from("Feed").select("*");
 };
 
-export const deleteFeed = ({ url }: { url: string }) => {
-  return supabase().from("Feed").delete().match({ url });
+export const deleteFeed = ({ id }: { id: string }) => {
+  return supabase().from("Feed").delete().match({ id });
 };
 
 export { importStrategies } from "./import/import.provider";

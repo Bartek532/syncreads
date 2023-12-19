@@ -1,14 +1,13 @@
 import { z } from "zod";
 
-import { FILE_TYPE } from "../../types/feed.types";
 import { FEEDS_PAGINATION_DEFAULT_PER_PAGE } from "../../config/dashboard";
+import { FILE_TYPE } from "../../types/feed.types";
 
 export const createFeedSchema = z.object({
   url: z.string().min(1, "Url is required.").url("Url must be a valid url."),
 });
 
-export const createAndConnectSchema = z.object({
-  url: z.string().url(),
+export const createAndConnectFeedSchema = createFeedSchema.extend({
   id: z.string(),
 });
 
@@ -17,19 +16,16 @@ export const importFeedsSchema = z.object({
   type: z.nativeEnum(FILE_TYPE),
 });
 
-export const importAndConnectFeedsSchema = z.object({
-  content: z.string(),
-  type: z.nativeEnum(FILE_TYPE),
-  id: z.number(),
+export const importAndConnectFeedsSchema = importFeedsSchema.extend({
+  id: z.string(),
 });
 
-export const deleteFeedSchema = z.object({
-  url: z.string().url(),
+export const deleteFeedsSchema = z.object({
+  in: z.array(z.string()),
 });
 
-export const deleteAndDisconnectFeedSchema = z.object({
-  url: z.string().url(),
-  id: z.number(),
+export const deleteAndDisconnectFeedsSchema = deleteFeedsSchema.extend({
+  id: z.string(),
 });
 
 export const getWebsiteDetailsSchema = z.object({
@@ -43,11 +39,7 @@ export const registerDeviceSchema = z.object({
     .max(8, "Enter valid one-time code."),
 });
 
-export const registerAndConnectDeviceSchema = z.object({
-  code: z
-    .string()
-    .min(8, "Enter valid one-time code.")
-    .max(8, "Enter valid one-time code."),
+export const registerAndConnectDeviceSchema = registerDeviceSchema.extend({
   id: z.string(),
 });
 

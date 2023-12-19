@@ -1,9 +1,9 @@
 import type {
-  createAndConnectSchema,
+  createAndConnectFeedSchema,
   createFeedSchema,
   cursorPaginationSchema,
-  deleteAndDisconnectFeedSchema,
-  deleteFeedSchema,
+  deleteAndDisconnectFeedsSchema,
+  deleteFeedsSchema,
   getWebsiteDetailsSchema,
   importAndConnectFeedsSchema,
   importFeedsSchema,
@@ -15,14 +15,16 @@ import type {
 import type { TypeOf } from "zod";
 
 export type CreateFeedInput = TypeOf<typeof createFeedSchema>;
-export type CreateAndConnectFeedInput = TypeOf<typeof createAndConnectSchema>;
+export type CreateAndConnectFeedInput = TypeOf<
+  typeof createAndConnectFeedSchema
+>;
 export type ImportFeedsInput = TypeOf<typeof importFeedsSchema>;
 export type ImportAndConnectFeedsInput = TypeOf<
   typeof importAndConnectFeedsSchema
 >;
-export type DeleteFeedInput = TypeOf<typeof deleteFeedSchema>;
-export type DeleteAndDisconnectFeedInput = TypeOf<
-  typeof deleteAndDisconnectFeedSchema
+export type DeleteFeedsInput = TypeOf<typeof deleteFeedsSchema>;
+export type DeleteAndDisconnectFeedsInput = TypeOf<
+  typeof deleteAndDisconnectFeedsSchema
 >;
 export type GetWebsiteDetailsInput = TypeOf<typeof getWebsiteDetailsSchema>;
 export type SyncArticleInput = TypeOf<typeof syncArticleSchema>;

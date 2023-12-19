@@ -15,7 +15,7 @@ export const DashboardLayout = memo<DashboardLayoutProps>(
       <>
         <div className="min-h-screen bg-muted">
           <Header />
-          <main className="mx-auto max-w-7xl flex-1 px-8 pt-12 pb-8">
+          <main className="mx-auto max-w-7xl flex-1 px-8 pt-12 pb-20">
             {children}
           </main>
         </div>

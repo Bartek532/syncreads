@@ -44,8 +44,8 @@ export class FeedQueueConsumer {
     ).log(`Starting synchronization of feed with url ${feed.Feed.url}...`);
 
     await this.syncLogger(data.syncId).log(
-      feed.lastSyncDate
-        ? `Syncing articles published after ${dayjs(feed.lastSyncDate).format(
+      feed.lastSyncedAt
+        ? `Syncing articles published after ${dayjs(feed.lastSyncedAt).format(
             "DD-MM-YYYY",
           )}...`
         : `Syncing last ${feed.startArticlesCount} article(s)...`,
@@ -53,8 +53,8 @@ export class FeedQueueConsumer {
 
     const items = await this.parserService.parseFeed(feed.Feed.url);
     const articles = items.filter(({ pubDate }, index) =>
-      feed.lastSyncDate
-        ? dayjs(pubDate).isAfter(feed.lastSyncDate)
+      feed.lastSyncedAt
+        ? dayjs(pubDate).isAfter(feed.lastSyncedAt)
         : index < feed.startArticlesCount,
     );
 
@@ -102,7 +102,7 @@ ${err.stack}`);
   @OnQueueCompleted()
   async onQueueCompleted({ data }: Job<FeedQueueJobPayload>) {
     await this.userService.updateUserFeed(data.userId, data.feedId, {
-      lastSyncDate: dayjs().toISOString(),
+      lastSyncedAt: dayjs().toISOString(),
     });
 
     await this.syncLogger(data.syncId).log(`Feed synchronization finished.`);

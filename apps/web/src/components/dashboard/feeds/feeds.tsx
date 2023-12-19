@@ -3,11 +3,12 @@
 import { memo, useState } from "react";
 
 import { AddFeedDialog } from "./dialog/add-feed-dialog";
+import { DeleteFeedDialog } from "./dialog/delete-feed-dialog";
 import { FeedsList } from "./list/feeds-list";
 
+import type { Feed } from "@rssmarkable/database";
+
 import { Button } from "@/components/ui/button";
-import { Feed } from "@rssmarkable/database";
-import { DeleteFeedDialog } from "./dialog/delete-feed-dialog";
 
 export const Feeds = memo(() => {
   const [checkedFeeds, setCheckedFeeds] = useState<Map<string, string>>(

@@ -1,8 +1,11 @@
+import { HTTP_STATUS_CODE } from "@rssmarkable/shared";
 import dayjs from "dayjs";
 import { register } from "rmapi-js";
 
 import { ApiError } from "../../utils/exceptions";
+import { deleteFeed, getFeedById } from "../services/feed/feed.service";
 import {
+  deleteUserFeed,
   getUserDevice,
   getUserFeeds,
   registerUserDevice,
@@ -13,6 +16,7 @@ import type {
   CursorPaginationInput,
   RegisterAndConnectDeviceInput,
   UnregisterAndDisconnectDeviceInput,
+  DeleteAndDisconnectFeedsInput,
 } from "../../utils/validation/types";
 
 export const registerDeviceHandler = async ({
@@ -69,6 +73,44 @@ export const getUserFeedsHandler = async ({
   }
 
   return { data, count };
+};
+
+export const deleteUserFeedsHandler = async ({
+  id: userId,
+  in: ids,
+}: DeleteAndDisconnectFeedsInput) => {
+  try {
+    for (const id of ids) {
+      const { data, error, status } = await getFeedById({ id });
+
+      if (error) {
+        throw new ApiError(status, error.message);
+      }
+
+      if (!data) {
+        throw new ApiError(
+          HTTP_STATUS_CODE.NOT_FOUND,
+          `Feed with id ${id} not found!`,
+        );
+      }
+
+      if (data.UserFeed.length > 1) {
+        await deleteUserFeed({ id, userId });
+      } else {
+        await deleteFeed({ id });
+      }
+    }
+
+    return {
+      status: "Success",
+      message: `Successfully deleted ${ids.length} feed${
+        ids.length > 1 && "s"
+      }!`,
+    };
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
 };
 
 export const getUserDeviceHandler = async ({ id }: { id: string }) => {
