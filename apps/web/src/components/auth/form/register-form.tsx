@@ -114,33 +114,6 @@ export const RegisterForm = memo(() => {
         </Button>
       </form>
     </Form>
-    // <form className="space-y-6" onSubmit={onPromise(handleSubmit(onSubmit))}>
-    //   <Input name="name" control={control}>
-    //     Name
-    //   </Input>
-    //   <Input type="email" control={control} name="email">
-    //     Email
-    //   </Input>
-    //   <Input type="password" control={control} name="password">
-    //     Password
-    //   </Input>
-    //   <div className="flex items-center justify-end">
-    //     <div className="text-sm dark:text-gray-400">
-    //       Already have an account?
-    //       <Link
-    //         href="/login"
-    //         className="pl-2 font-medium text-indigo-600 hover:text-indigo-500"
-    //       >
-    //         Sign in!
-    //       </Link>
-    //     </div>
-    //   </div>
-    //   <div>
-    //     <Button type="submit" className="flex w-full justify-center">
-    //       Sign up
-    //     </Button>
-    //   </div>
-    // </form>
   );
 });
 

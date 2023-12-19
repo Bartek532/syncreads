@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { register } from "rmapi-js";
 
 import { ApiError } from "../../utils/exceptions";
@@ -9,6 +10,7 @@ import {
 } from "../services/user.service";
 
 import type {
+  CursorPaginationInput,
   RegisterAndConnectDeviceInput,
   UnregisterAndDisconnectDeviceInput,
 } from "../../utils/validation/types";
@@ -49,14 +51,24 @@ export const unregisterDeviceHandler = async ({
   }
 };
 
-export const getUserFeedsHandler = async ({ id }: { id: string }) => {
-  const { data, error, status } = await getUserFeeds({ id });
+export const getUserFeedsHandler = async ({
+  id,
+  input,
+}: {
+  id: string;
+  input: CursorPaginationInput;
+}) => {
+  const { data, error, status, count } = await getUserFeeds({
+    id,
+    limit: input.limit,
+    cursor: input.cursor ?? dayjs().toISOString(),
+  });
 
   if (error) {
     throw new ApiError(status, error.message);
   }
 
-  return data;
+  return { data, count };
 };
 
 export const getUserDeviceHandler = async ({ id }: { id: string }) => {

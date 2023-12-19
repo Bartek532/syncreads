@@ -1,13 +1,6 @@
 import { DASHBOARD_CARDS } from "../../../config/dashboard";
 import { api } from "../../../trpc/server";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../../ui/dialog";
+
 import { AddFeedDialog } from "../feeds/dialog/add-feed-dialog";
 import { SyncArticleDialog } from "../feeds/dialog/sync-article-dialog";
 import { Syncs } from "../syncs/Syncs";
@@ -17,12 +10,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/utils";
 
 export const Home = async () => {
-  const feeds = await api.user.getUserFeeds.query();
+  const feeds = await api.user.getUserFeeds.query({});
   const device = await api.user.getUserDevice.query();
   const syncs = await api.sync.getUserSyncs.query();
 
   const cardsValues = [
-    feeds.length,
+    feeds.count ?? 0,
     device ? "reMarkable 2" : "Not registered",
     syncs.length,
     "+20 hours",

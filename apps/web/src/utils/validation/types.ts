@@ -1,24 +1,19 @@
 import type {
   createAndConnectSchema,
   createFeedSchema,
+  cursorPaginationSchema,
   deleteAndDisconnectFeedSchema,
   deleteFeedSchema,
   getWebsiteDetailsSchema,
   importAndConnectFeedsSchema,
   importFeedsSchema,
-  loginUserSchema,
-  logMessageSchema,
-  offsetPaginationSchema,
   registerAndConnectDeviceSchema,
   registerDeviceSchema,
-  registerUserSchema,
   syncArticleSchema,
   unregisterAndDisconnectDeviceSchema,
 } from "./schema";
 import type { TypeOf } from "zod";
 
-export type RegisterUserInput = TypeOf<typeof registerUserSchema>;
-export type LoginUserInput = TypeOf<typeof loginUserSchema>;
 export type CreateFeedInput = TypeOf<typeof createFeedSchema>;
 export type CreateAndConnectFeedInput = TypeOf<typeof createAndConnectSchema>;
 export type ImportFeedsInput = TypeOf<typeof importFeedsSchema>;
@@ -38,5 +33,4 @@ export type RegisterAndConnectDeviceInput = TypeOf<
 export type UnregisterAndDisconnectDeviceInput = TypeOf<
   typeof unregisterAndDisconnectDeviceSchema
 >;
-export type OffsetPaginationInput = TypeOf<typeof offsetPaginationSchema>;
-export type LogMessage = TypeOf<typeof logMessageSchema>;
+export type CursorPaginationInput = TypeOf<typeof cursorPaginationSchema>;

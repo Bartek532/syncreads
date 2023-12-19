@@ -147,20 +147,23 @@ export interface Database {
       }
       UserFeed: {
         Row: {
+          createdAt: string
           feedId: string
-          lastSyncDate: string | null
+          lastSyncedAt: string | null
           startArticlesCount: number
           userId: string
         }
         Insert: {
+          createdAt?: string
           feedId: string
-          lastSyncDate?: string | null
+          lastSyncedAt?: string | null
           startArticlesCount?: number
           userId: string
         }
         Update: {
+          createdAt?: string
           feedId?: string
-          lastSyncDate?: string | null
+          lastSyncedAt?: string | null
           startArticlesCount?: number
           userId?: string
         }

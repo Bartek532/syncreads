@@ -37,7 +37,7 @@ export const createFeedHandler = async ({
       );
     }
 
-    const feed = createFeed({ url, id });
+    const feed = await createFeed({ url, id });
 
     return {
       status: "Success",

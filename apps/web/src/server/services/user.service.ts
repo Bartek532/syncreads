@@ -26,11 +26,22 @@ import { supabase } from "../../lib/supabase/server";
 // export const getUserById = ({ id }: { id: string }) => {
 // };
 
-export const getUserFeeds = ({ id }: { id: string }) => {
+export const getUserFeeds = ({
+  id,
+  limit,
+  cursor,
+}: {
+  id: string;
+  limit: number;
+  cursor: string;
+}) => {
   return supabase()
     .from("UserFeed")
-    .select("*, Feed (id, url)")
-    .eq("userId", id);
+    .select("*, Feed (id, url)", { count: "exact" })
+    .lt("createdAt", [cursor])
+    .order("createdAt", { ascending: false })
+    .eq("userId", id)
+    .limit(limit);
 };
 
 export const getUserDevice = ({ id }: { id: string }) => {
@@ -40,7 +51,7 @@ export const getUserDevice = ({ id }: { id: string }) => {
 export const getUserFeedByUrl = ({ id, url }: { id: string; url: string }) => {
   return supabase()
     .from("UserFeed")
-    .select("*, Feed (url)")
+    .select("*, Feed!inner (url)")
     .eq("userId", id)
     .eq("Feed.url", url)
     .single();

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { FILE_TYPE } from "../../types/feed.types";
-import { LOG_LEVEL } from "../../types/log.types";
+import { FEEDS_PAGINATION_DEFAULT_PER_PAGE } from "../../config/dashboard";
 
 export const createFeedSchema = z.object({
   url: z.string().min(1, "Url is required.").url("Url must be a valid url."),
@@ -59,13 +59,7 @@ export const syncArticleSchema = z.object({
   url: z.string().min(1, "Url is required.").url("Url must be a valid url."),
 });
 
-export const offsetPaginationSchema = z.object({
-  perPage: z.number().min(1).max(100).nullish(),
-  page: z.number().nullish(),
-});
-
-export const logMessageSchema = z.object({
-  message: z.string(),
-  date: z.string().datetime(),
-  level: z.nativeEnum(LOG_LEVEL),
+export const cursorPaginationSchema = z.object({
+  limit: z.number().default(FEEDS_PAGINATION_DEFAULT_PER_PAGE),
+  cursor: z.string().optional(),
 });

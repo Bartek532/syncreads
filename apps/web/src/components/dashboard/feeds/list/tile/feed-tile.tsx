@@ -2,25 +2,36 @@ import { ArrowUpRightIcon } from "lucide-react";
 import { memo } from "react";
 
 import { api } from "@/trpc/react";
-import { truncateTextByWordsCount } from "@/utils";
+import { cn, truncateTextByWordsCount } from "@/utils";
+import { Skeleton } from "../../../../ui/skeleton";
 
 type FeedTileProps = {
   readonly url: string;
+  readonly className?: string;
 };
 
-export const FeedTile = memo<FeedTileProps>(({ url }) => {
+export const FeedTileSkeleton = () => (
+  <Skeleton className="min-h-[112px] w-full rounded-lg bg-background shadow-sm sm:min-h-[118px] md:min-h-[140px]" />
+);
+
+export const FeedTile = memo<FeedTileProps>(({ url, className }) => {
   const { data } = api.feed.getFeedDetails.useQuery({
     url,
   });
 
   if (!data) {
-    return null;
+    return <FeedTileSkeleton />;
   }
 
   return (
-    <div className="group relative flex min-h-[112px] w-full items-stretch gap-1 rounded-lg bg-background shadow-sm sm:min-h-[118px] md:min-h-[140px] md:gap-3">
+    <div
+      className={cn(
+        "group relative flex min-h-[112px] w-full items-stretch gap-1 rounded-lg bg-background shadow-sm sm:min-h-[118px] md:min-h-[140px] md:gap-3",
+        className,
+      )}
+    >
       <div
-        className="hidden shrink-0 grow-0 basis-1/4 rounded-l-2xl bg-cover bg-center sm:block sm:basis-1/5 md:basis-1/4"
+        className="hidden shrink-0 grow-0 basis-1/4 rounded-l-lg bg-cover bg-center sm:block sm:basis-1/5 md:basis-1/4"
         style={{ backgroundImage: `url(${data.feed.image ?? ""})` }}
       ></div>
       <div className="p-4 pr-14 md:py-8">

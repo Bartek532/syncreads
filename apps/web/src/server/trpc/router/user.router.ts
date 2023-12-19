@@ -1,5 +1,8 @@
 import { router, protectedProcedure } from "..";
-import { registerDeviceSchema } from "../../../utils/validation/schema";
+import {
+  cursorPaginationSchema,
+  registerDeviceSchema,
+} from "../../../utils/validation/schema";
 import {
   getUserDeviceHandler,
   getUserFeedsHandler,
@@ -8,9 +11,11 @@ import {
 } from "../../controllers/user.controller";
 
 export const userRouter = router({
-  getUserFeeds: protectedProcedure.query(({ ctx }) =>
-    getUserFeedsHandler({ id: ctx.session.user.id }),
-  ),
+  getUserFeeds: protectedProcedure
+    .input(cursorPaginationSchema)
+    .query(({ ctx, input }) =>
+      getUserFeedsHandler({ id: ctx.session.user.id, input }),
+    ),
   getUserDevice: protectedProcedure.query(({ ctx }) =>
     getUserDeviceHandler({ id: ctx.session.user.id }),
   ),
