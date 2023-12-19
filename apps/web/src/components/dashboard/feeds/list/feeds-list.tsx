@@ -10,6 +10,7 @@ import { FeedTile, FeedTileSkeleton } from "./tile/feed-tile";
 
 import { cn } from "@/utils";
 import { Skeleton } from "../../../ui/skeleton";
+import { Feed } from "@rssmarkable/database";
 
 const EmptyFeedsList = ({ onCreateNew }: { onCreateNew: () => void }) => {
   return (
@@ -37,8 +38,8 @@ const FeedsListSkeleton = () => (
 );
 
 type FeedsListProps = {
-  readonly checkedFeeds: Set<string>;
-  readonly onToggle: (id: string, state: boolean) => void;
+  readonly checkedFeeds: Map<string, string>;
+  readonly onToggle: (feed: Feed, state: boolean) => void;
   readonly onCreateNew: () => void;
 };
 
@@ -71,7 +72,7 @@ export const FeedsList = memo<FeedsListProps>(
               <label className="flex items-center gap-4 md:gap-6">
                 <Checkbox
                   className="h-5 w-5"
-                  onCheckedChange={(c) => onToggle(feed.feedId, !!c)}
+                  onCheckedChange={(c) => feed.Feed && onToggle(feed.Feed, !!c)}
                 />
 
                 <FeedTile

@@ -6,18 +6,22 @@ import { AddFeedDialog } from "./dialog/add-feed-dialog";
 import { FeedsList } from "./list/feeds-list";
 
 import { Button } from "@/components/ui/button";
+import { Feed } from "@rssmarkable/database";
+import { DeleteFeedDialog } from "./dialog/delete-feed-dialog";
 
 export const Feeds = memo(() => {
-  const [checkedFeeds, setCheckedFeeds] = useState<Set<string>>(new Set());
+  const [checkedFeeds, setCheckedFeeds] = useState<Map<string, string>>(
+    new Map(),
+  );
   const [open, setOpen] = useState(false);
 
-  const handleToggleFeed = (id: string, state: boolean) => {
+  const handleToggleFeed = (feed: Feed, state: boolean) => {
     setCheckedFeeds((prev) => {
-      const next = new Set(prev);
+      const next = new Map(prev);
       if (state) {
-        next.add(id);
+        next.set(feed.id, feed.url);
       } else {
-        next.delete(id);
+        next.delete(feed.id);
       }
       return next;
     });
@@ -35,9 +39,11 @@ export const Feeds = memo(() => {
         <div className="flex flex-wrap items-center gap-3">
           {checkedFeeds.size > 0 && (
             <>
-              <Button variant="destructive">
-                Delete {checkedFeeds.size} feed{checkedFeeds.size > 1 && "s"}
-              </Button>
+              <DeleteFeedDialog feeds={checkedFeeds}>
+                <Button variant="destructive">
+                  Delete {checkedFeeds.size} feed{checkedFeeds.size > 1 && "s"}
+                </Button>
+              </DeleteFeedDialog>
               <Button>
                 Sync {checkedFeeds.size} feed{checkedFeeds.size > 1 && "s"}
               </Button>
