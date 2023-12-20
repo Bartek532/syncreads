@@ -1,10 +1,11 @@
+import { NODE_ENV } from "@rssmarkable/shared";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
-
-import type { NextRequest } from "next/server";
 
 import { env } from "@/lib/env";
 import { createTRPCContext } from "@/server/trpc";
 import { appRouter } from "@/server/trpc/router";
+
+import type { NextRequest } from "next/server";
 
 const createContext = async (req: NextRequest) => {
   return createTRPCContext({
@@ -19,7 +20,7 @@ const handler = (req: NextRequest) =>
     router: appRouter,
     createContext: () => createContext(req),
     onError:
-      env.NODE_ENV === "development"
+      env.NODE_ENV === NODE_ENV.DEVELOPMENT
         ? ({ path, error }) => {
             console.error(
               `❌ tRPC failed on ${path ?? "<no-path>"}: ${error.message}`,

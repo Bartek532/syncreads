@@ -3,6 +3,8 @@
 import { memo, useState } from "react";
 import toast from "react-hot-toast";
 
+import { Button } from "@/components/ui/button";
+
 import { onPromise } from "../../../utils";
 
 import { queueFeedSync } from "./dialog/actions/actions";
@@ -12,7 +14,6 @@ import { FeedsList } from "./list/feeds-list";
 
 import type { Feed } from "@rssmarkable/database";
 
-import { Button } from "@/components/ui/button";
 
 export const Feeds = memo(() => {
   const [checkedFeeds, setCheckedFeeds] = useState<Map<string, string>>(

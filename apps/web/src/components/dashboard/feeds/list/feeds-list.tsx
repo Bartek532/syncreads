@@ -1,6 +1,8 @@
 import { Loader2 } from "lucide-react";
 import { memo } from "react";
 
+import { cn, onPromise } from "@/utils";
+
 import EmptyFeedsIcon from "public/svg/empty-feeds.svg";
 
 import { api } from "../../../../trpc/react";
@@ -12,7 +14,6 @@ import { FeedTile, FeedTileSkeleton } from "./tile/feed-tile";
 
 import type { Feed } from "@rssmarkable/database";
 
-import { cn, onPromise } from "@/utils";
 
 const EmptyFeedsList = ({ onCreateNew }: { onCreateNew: () => void }) => {
   return (

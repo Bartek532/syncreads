@@ -3,7 +3,6 @@
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { SyncStatus, SyncTrigger } from "@rssmarkable/database";
 
-import type { Table } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
 import { DataTableFacetedFilter } from "@/components/ui/data-table/data-table-faceted-filter";
@@ -20,6 +19,8 @@ import {
   SYNC_TRIGGER_EMOJIS,
 } from "@/config/sync";
 import { capitalize } from "@/utils";
+
+import type { Table } from "@tanstack/react-table";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;

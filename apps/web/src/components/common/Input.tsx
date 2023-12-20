@@ -2,7 +2,6 @@ import {
   ExclamationCircleIcon,
   CheckCircleIcon,
 } from "@heroicons/react/20/solid";
-import { useEffect, useState } from "react";
 import {
   useController,
   type Control,

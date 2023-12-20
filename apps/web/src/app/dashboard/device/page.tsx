@@ -1,6 +1,7 @@
+import { Device } from "@/components/dashboard/device/device";
+
 import { api } from "../../../trpc/server";
 
-import { Device } from "@/components/dashboard/device/device";
 
 const DevicePage = async () => {
   const device = await api.user.getUserDevice.query();

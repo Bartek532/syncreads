@@ -12,15 +12,6 @@ import {
 } from "@tanstack/react-table";
 import * as React from "react";
 
-import { SyncsTableToolbar } from "./toolbar";
-
-import type {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
-} from "@tanstack/react-table";
-
 import { DataTablePagination } from "@/components/ui/data-table/data-table-pagination";
 import {
   Table,
@@ -30,6 +21,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+
+import { SyncsTableToolbar } from "./toolbar";
+
+import type {
+  ColumnDef,
+  ColumnFiltersState,
+  SortingState,
+  VisibilityState,
+} from "@tanstack/react-table";
+
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

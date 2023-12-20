@@ -4,10 +4,7 @@ import dayjs from "dayjs";
 import Link from "next/link";
 import { memo } from "react";
 
-import {
-  SYNC_STATUS_STYLES,
-  SYNC_TRIGGER_EMOJIS,
-} from "../../../../config/sync";
+import { SYNC_TRIGGER_EMOJIS } from "../../../../config/sync";
 
 import type { Sync } from "@rssmarkable/database";
 
@@ -49,7 +46,6 @@ export const SyncItem = memo<SyncItemProps>(({ sync }) => {
       <td className="ml-12 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 sm:ml-0 sm:px-6 sm:py-4 md:block">
         <span
           className={clsx(
-            SYNC_STATUS_STYLES[sync.status],
             "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize",
           )}
         >

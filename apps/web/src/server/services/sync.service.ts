@@ -1,9 +1,10 @@
+import { env } from "@/lib/env";
+
 import { supabase } from "../../lib/supabase/server";
 import { ApiError, isSyncApiErrorResponse } from "../../utils/exceptions";
 
 import type { SyncArticlePayload, SyncFeedPayload } from "@rssmarkable/shared";
 
-import { env } from "@/lib/env";
 
 export const getUserSyncs = ({ id }: { id: string }) => {
   return supabase()

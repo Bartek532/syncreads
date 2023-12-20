@@ -1,3 +1,5 @@
+import { ApiError } from "@/utils/exceptions";
+
 import {
   getUserSyncs,
   queueArticleSync,
@@ -7,7 +9,6 @@ import { getUserApiKey } from "../services/user.service";
 
 import type { SyncArticlePayload, SyncFeedPayload } from "@rssmarkable/shared";
 
-import { ApiError } from "@/utils/exceptions";
 
 export const getUserSyncsHandler = async ({ id }: { id: string }) => {
   const { data, error, status } = await getUserSyncs({
