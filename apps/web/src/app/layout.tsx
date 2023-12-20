@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { GlobalUI } from "../components/common/GlobalUI";
 import "../styles/globals.css";
 import { TRPCReactProvider } from "../trpc/react";
+import { AppProviders } from "../providers/AppProviders";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -21,10 +22,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-sans ${poppins.variable}`}>
         <TRPCReactProvider cookies={cookies().toString()}>
-          {/* <AppProviders> */}
-          {children}
-          <GlobalUI />
-          {/* </AppProviders> */}
+          <AppProviders>
+            {children}
+            <GlobalUI />
+          </AppProviders>
         </TRPCReactProvider>
       </body>
     </html>
