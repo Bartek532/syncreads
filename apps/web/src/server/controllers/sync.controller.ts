@@ -9,7 +9,6 @@ import { getUserApiKey } from "../services/user.service";
 
 import type { SyncArticlePayload, SyncFeedPayload } from "@rssmarkable/shared";
 
-
 export const getUserSyncsHandler = async ({ id }: { id: string }) => {
   const { data, error, status } = await getUserSyncs({
     id,

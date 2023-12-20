@@ -14,7 +14,6 @@ import { FeedsList } from "./list/feeds-list";
 
 import type { Feed } from "@rssmarkable/database";
 
-
 export const Feeds = memo(() => {
   const [checkedFeeds, setCheckedFeeds] = useState<Map<string, string>>(
     new Map(),

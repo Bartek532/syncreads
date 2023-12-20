@@ -3,7 +3,6 @@
 import dynamic from "next/dynamic";
 import { memo } from "react";
 
-
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase/client";
 import type { AUTH_PROVIDER } from "@/types/auth.types";

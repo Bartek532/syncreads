@@ -14,7 +14,6 @@ import { FeedTile, FeedTileSkeleton } from "./tile/feed-tile";
 
 import type { Feed } from "@rssmarkable/database";
 
-
 const EmptyFeedsList = ({ onCreateNew }: { onCreateNew: () => void }) => {
   return (
     <button

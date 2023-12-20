@@ -5,7 +5,6 @@ import dayjs from "dayjs";
 import { RefreshCw } from "lucide-react";
 import Link from "next/link";
 
-
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header";
 import { SYNC_TRIGGER_EMOJIS } from "@/config/sync";
 import { capitalize, cn } from "@/utils";

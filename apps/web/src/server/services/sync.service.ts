@@ -5,7 +5,6 @@ import { ApiError, isSyncApiErrorResponse } from "../../utils/exceptions";
 
 import type { SyncArticlePayload, SyncFeedPayload } from "@rssmarkable/shared";
 
-
 export const getUserSyncs = ({ id }: { id: string }) => {
   return supabase()
     .from("Sync")
