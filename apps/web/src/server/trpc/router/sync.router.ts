@@ -1,9 +1,13 @@
-import { syncArticlePayloadSchema } from "@rssmarkable/shared";
+import {
+  syncArticlePayloadSchema,
+  syncFeedPayloadSchema,
+} from "@rssmarkable/shared";
 
 import { protectedProcedure, router } from "..";
 import {
   getUserSyncsHandler,
   queueArticleSyncHandler,
+  queueFeedSyncHandler,
 } from "../../controllers/sync.controller";
 
 export const syncRouter = router({
@@ -14,5 +18,10 @@ export const syncRouter = router({
     .input(syncArticlePayloadSchema)
     .mutation(({ ctx, input }) =>
       queueArticleSyncHandler({ id: ctx.session.user.id, ...input }),
+    ),
+  queueFeedSync: protectedProcedure
+    .input(syncFeedPayloadSchema)
+    .mutation(({ ctx, input }) =>
+      queueFeedSyncHandler({ id: ctx.session.user.id, ...input }),
     ),
 });

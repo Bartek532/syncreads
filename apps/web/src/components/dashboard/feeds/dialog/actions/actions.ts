@@ -2,13 +2,13 @@
 
 import { revalidatePath } from "next/cache";
 
+import { api } from "@/trpc/server";
 import type {
   CreateFeedInput,
   DeleteFeedsInput,
 } from "@/utils/validation/types";
-import type { SyncArticlePayload } from "@rssmarkable/shared";
 
-import { api } from "@/trpc/server";
+import type { SyncArticlePayload } from "@rssmarkable/shared";
 
 export const createFeed = async (data: CreateFeedInput) => {
   const response = await api.feed.createFeed.mutate(data);
@@ -24,3 +24,6 @@ export const deleteFeeds = async (data: DeleteFeedsInput) => {
 
 export const queueArticleSync = async (data: SyncArticlePayload) =>
   api.sync.queueArticleSync.mutate(data);
+
+export const queueFeedSync = async (data: { in: string[] }) =>
+  api.sync.queueFeedSync.mutate(data);

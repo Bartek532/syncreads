@@ -1,6 +1,7 @@
 import { supabase } from "../../lib/supabase/server";
+import { ApiError, isSyncApiErrorResponse } from "../../utils/exceptions";
 
-import type { SyncArticlePayload } from "@rssmarkable/shared";
+import type { SyncArticlePayload, SyncFeedPayload } from "@rssmarkable/shared";
 
 import { env } from "@/lib/env";
 
@@ -25,5 +26,41 @@ export const queueArticleSync = async ({
     body: JSON.stringify({ url }),
   });
 
-  return response.json();
+  const data: unknown = await response.json();
+
+  if (isSyncApiErrorResponse(data)) {
+    throw new ApiError(data.error.status, data.error.message);
+  }
+
+  if (!response.ok) {
+    throw new ApiError(response.status, response.statusText);
+  }
+
+  return data;
+};
+
+export const queueFeedSync = async ({
+  key,
+  in: feeds,
+}: { key: string } & SyncFeedPayload) => {
+  const response = await fetch(`${env.SYNC_API_URL}/api/sync/feed`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: key,
+    },
+    body: JSON.stringify({ in: feeds }),
+  });
+
+  const data: unknown = await response.json();
+
+  if (isSyncApiErrorResponse(data)) {
+    throw new ApiError(data.error.status, data.error.message);
+  }
+
+  if (!response.ok) {
+    throw new ApiError(response.status, response.statusText);
+  }
+
+  return data;
 };

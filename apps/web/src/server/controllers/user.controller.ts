@@ -23,36 +23,26 @@ export const registerDeviceHandler = async ({
   id,
   code,
 }: RegisterAndConnectDeviceInput) => {
-  try {
-    const token = await register(code);
-    const device = await registerUserDevice({ token, id });
+  const token = await register(code);
+  const device = await registerUserDevice({ token, id });
 
-    return {
-      status: "Success",
-      message: `Successfully registered your device!`,
-      device,
-    };
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
+  return {
+    status: "Success",
+    message: `Successfully registered your device!`,
+    device,
+  };
 };
 
 export const unregisterDeviceHandler = async ({
   id,
 }: UnregisterAndDisconnectDeviceInput) => {
-  try {
-    const device = await unregisterUserDevice({ id });
+  const device = await unregisterUserDevice({ id });
 
-    return {
-      status: "Success",
-      message: `Successfully unregistered your device!`,
-      device,
-    };
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
+  return {
+    status: "Success",
+    message: `Successfully unregistered your device!`,
+    device,
+  };
 };
 
 export const getUserFeedsHandler = async ({
@@ -79,38 +69,31 @@ export const deleteUserFeedsHandler = async ({
   id: userId,
   in: ids,
 }: DeleteAndDisconnectFeedsInput) => {
-  try {
-    for (const id of ids) {
-      const { data, error, status } = await getFeedById({ id });
+  for (const id of ids) {
+    const { data, error, status } = await getFeedById({ id });
 
-      if (error) {
-        throw new ApiError(status, error.message);
-      }
-
-      if (!data) {
-        throw new ApiError(
-          HTTP_STATUS_CODE.NOT_FOUND,
-          `Feed with id ${id} not found!`,
-        );
-      }
-
-      if (data.UserFeed.length > 1) {
-        await deleteUserFeed({ id, userId });
-      } else {
-        await deleteFeed({ id });
-      }
+    if (error) {
+      throw new ApiError(status, error.message);
     }
 
-    return {
-      status: "Success",
-      message: `Successfully deleted ${ids.length} feed${
-        ids.length > 1 && "s"
-      }!`,
-    };
-  } catch (err) {
-    console.error(err);
-    throw err;
+    if (!data) {
+      throw new ApiError(
+        HTTP_STATUS_CODE.NOT_FOUND,
+        `Feed with id ${id} not found!`,
+      );
+    }
+
+    if (data.UserFeed.length > 1) {
+      await deleteUserFeed({ id, userId });
+    } else {
+      await deleteFeed({ id });
+    }
   }
+
+  return {
+    status: "Success",
+    message: `Successfully deleted ${ids.length} feed${ids.length > 1 && "s"}!`,
+  };
 };
 
 export const getUserDeviceHandler = async ({ id }: { id: string }) => {

@@ -1,10 +1,10 @@
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
-import { env } from "../../../../env/server";
-import { createTRPCContext } from "../../../../server/trpc";
-import { appRouter } from "../../../../server/trpc/router";
-
 import type { NextRequest } from "next/server";
+
+import { env } from "@/lib/env";
+import { createTRPCContext } from "@/server/trpc";
+import { appRouter } from "@/server/trpc/router";
 
 const createContext = async (req: NextRequest) => {
   return createTRPCContext({

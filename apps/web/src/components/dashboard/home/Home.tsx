@@ -1,12 +1,12 @@
-import { DASHBOARD_CARDS } from "../../../config/dashboard";
-import { api } from "../../../trpc/server";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { DASHBOARD_CARDS } from "@/config/dashboard";
+import { api } from "@/trpc/server";
+import { cn } from "@/utils";
+
 import { AddFeedDialog } from "../feeds/dialog/add-feed-dialog";
 import { SyncArticleDialog } from "../feeds/dialog/sync-article-dialog";
 import { Syncs } from "../syncs/syncs";
-
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { cn } from "@/utils";
 
 export const Home = async () => {
   const feeds = await api.user.getUserFeeds.query({});
