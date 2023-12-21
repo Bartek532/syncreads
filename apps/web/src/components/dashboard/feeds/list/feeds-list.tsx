@@ -1,16 +1,18 @@
 import { Loader2 } from "lucide-react";
 import { memo } from "react";
+
+import { cn, onPromise } from "@/utils";
+
 import EmptyFeedsIcon from "public/svg/empty-feeds.svg";
 
 import { api } from "../../../../trpc/react";
 import { Button } from "../../../ui/button";
 import { Checkbox } from "../../../ui/checkbox";
+import { Skeleton } from "../../../ui/skeleton";
 
 import { FeedTile, FeedTileSkeleton } from "./tile/feed-tile";
 
-import { cn } from "@/utils";
-import { Skeleton } from "../../../ui/skeleton";
-import { Feed } from "@rssmarkable/database";
+import type { Feed } from "@rssmarkable/database";
 
 const EmptyFeedsList = ({ onCreateNew }: { onCreateNew: () => void }) => {
   return (
@@ -87,7 +89,10 @@ export const FeedsList = memo<FeedsListProps>(
           ))}
         </ul>
         {total > feeds.length && (
-          <Button className="mx-auto w-fit" onClick={() => fetchNextPage()}>
+          <Button
+            className="mx-auto w-fit"
+            onClick={onPromise(() => fetchNextPage())}
+          >
             {isLoading ? <Loader2 className="animate-spin" /> : "Load more"}
           </Button>
         )}

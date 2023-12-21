@@ -1,9 +1,13 @@
-import { getUserSyncs, queueArticleSync } from "../services/sync.service";
+import { ApiError } from "@/utils/exceptions";
+
+import {
+  getUserSyncs,
+  queueArticleSync,
+  queueFeedSync,
+} from "../services/sync.service";
 import { getUserApiKey } from "../services/user.service";
 
-import type { SyncArticlePayload } from "@rssmarkable/shared";
-
-import { ApiError } from "@/utils/exceptions";
+import type { SyncArticlePayload, SyncFeedPayload } from "@rssmarkable/shared";
 
 export const getUserSyncsHandler = async ({ id }: { id: string }) => {
   const { data, error, status } = await getUserSyncs({
@@ -21,25 +25,42 @@ export const queueArticleSyncHandler = async ({
   id,
   url,
 }: { id: string } & SyncArticlePayload) => {
-  try {
-    const { data, error, status } = await getUserApiKey({ id });
+  const { data, error, status } = await getUserApiKey({ id });
 
-    if (error) {
-      throw new ApiError(status, error.message);
-    }
-
-    const sync: unknown = await queueArticleSync({
-      key: data.key,
-      url,
-    });
-
-    return {
-      status: "Success",
-      message: "Article sync succesfully queued!",
-      sync,
-    };
-  } catch (error) {
-    console.log(error);
-    throw error;
+  if (error) {
+    throw new ApiError(status, error.message);
   }
+
+  const sync: unknown = await queueArticleSync({
+    key: data.key,
+    url,
+  });
+
+  return {
+    status: "Success",
+    message: "Article sync succesfully queued!",
+    sync,
+  };
+};
+
+export const queueFeedSyncHandler = async ({
+  id,
+  in: feeds,
+}: { id: string } & SyncFeedPayload) => {
+  const { data, error, status } = await getUserApiKey({ id });
+
+  if (error) {
+    throw new ApiError(status, error.message);
+  }
+
+  const sync: unknown = await queueFeedSync({
+    key: data.key,
+    in: feeds,
+  });
+
+  return {
+    status: "Success",
+    message: "Feed sync succesfully queued!",
+    sync,
+  };
 };

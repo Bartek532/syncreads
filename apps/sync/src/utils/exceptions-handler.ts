@@ -33,7 +33,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       error: {
         timestamp: new Date().toISOString(),
         path: request.url,
-        status: status,
+        status,
         message,
       },
     });

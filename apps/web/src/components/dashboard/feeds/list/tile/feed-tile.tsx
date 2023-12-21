@@ -3,6 +3,7 @@ import { memo } from "react";
 
 import { api } from "@/trpc/react";
 import { cn, truncateTextByWordsCount } from "@/utils";
+
 import { Skeleton } from "../../../../ui/skeleton";
 
 type FeedTileProps = {

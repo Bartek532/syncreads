@@ -43,6 +43,13 @@ module.exports = {
           caseInsensitive: true,
           order: "asc",
         },
+        pathGroups: [
+          {
+            pattern: "@/**",
+            group: "internal",
+            position: "before",
+          },
+        ],
         groups: [
           ["builtin", "external"],
           "internal",

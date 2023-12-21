@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { retrieveChild } from "../../utils/retrieveChild";
+import { retrieveChild } from "../../utils/retrieve-child";
 
 import { LoginForm } from "./form/login-form";
 import { RegisterForm } from "./form/register-form";

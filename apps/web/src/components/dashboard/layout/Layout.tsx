@@ -10,7 +10,7 @@ interface DashboardLayoutProps {
 }
 
 export const DashboardLayout = memo<DashboardLayoutProps>(
-  ({ children, user }) => {
+  ({ children, user: _user }) => {
     return (
       <>
         <div className="min-h-screen bg-muted">

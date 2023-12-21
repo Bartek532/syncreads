@@ -1,14 +1,18 @@
 "use client";
 
 import { memo, useState } from "react";
+import toast from "react-hot-toast";
 
+import { Button } from "@/components/ui/button";
+
+import { onPromise } from "../../../utils";
+
+import { queueFeedSync } from "./dialog/actions/actions";
 import { AddFeedDialog } from "./dialog/add-feed-dialog";
 import { DeleteFeedDialog } from "./dialog/delete-feed-dialog";
 import { FeedsList } from "./list/feeds-list";
 
 import type { Feed } from "@rssmarkable/database";
-
-import { Button } from "@/components/ui/button";
 
 export const Feeds = memo(() => {
   const [checkedFeeds, setCheckedFeeds] = useState<Map<string, string>>(
@@ -28,6 +32,17 @@ export const Feeds = memo(() => {
     });
   };
 
+  const onSync = async () => {
+    await toast.promise(
+      queueFeedSync({ in: Array.from(checkedFeeds.keys()) }),
+      {
+        loading: "Queuing feed sync...",
+        success: ({ message }) => message,
+        error: (err: Error) => err.message,
+      },
+    );
+  };
+
   return (
     <div className="flex flex-col gap-10">
       <div className="mb-4 flex flex-col justify-between gap-4 md:flex-row">
@@ -45,7 +60,7 @@ export const Feeds = memo(() => {
                   Delete {checkedFeeds.size} feed{checkedFeeds.size > 1 && "s"}
                 </Button>
               </DeleteFeedDialog>
-              <Button>
+              <Button onClick={onPromise(onSync)}>
                 Sync {checkedFeeds.size} feed{checkedFeeds.size > 1 && "s"}
               </Button>
             </>

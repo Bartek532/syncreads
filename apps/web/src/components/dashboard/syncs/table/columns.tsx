@@ -5,12 +5,12 @@ import dayjs from "dayjs";
 import { RefreshCw } from "lucide-react";
 import Link from "next/link";
 
-import type { SyncTrigger } from "@rssmarkable/database";
-import type { ColumnDef } from "@tanstack/react-table";
-
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header";
 import { SYNC_TRIGGER_EMOJIS } from "@/config/sync";
 import { capitalize, cn } from "@/utils";
+
+import type { SyncTrigger } from "@rssmarkable/database";
+import type { ColumnDef } from "@tanstack/react-table";
 
 const SYNC_STATUS_COLORS: Record<SyncStatus, string> = {
   [SyncStatus.FAILED]: "bg-destructive",
