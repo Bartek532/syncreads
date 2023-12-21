@@ -2,9 +2,9 @@ import { Poppins } from "next/font/google";
 import { cookies } from "next/headers";
 
 import { GlobalUI } from "../components/common/GlobalUI";
+import { AppProviders } from "../providers/AppProviders";
 import "../styles/globals.css";
 import { TRPCReactProvider } from "../trpc/react";
-import { AppProviders } from "../providers/AppProviders";
 
 const poppins = Poppins({
   subsets: ["latin"],
