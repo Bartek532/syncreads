@@ -18,4 +18,5 @@ runs:
         cache: "pnpm"
 
     - name: 🔌 Install
+      shell: bash
       run: pnpm install
