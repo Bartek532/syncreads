@@ -16,10 +16,10 @@ jobs:
       matrix:
         node-version: [20.x]
     env:
-      GITHUB_CLIENT_ID: ${{ secrets.SUPABASE_GITHUB_CLIENT_ID }}
-      GITHUB_CLIENT_SECRET: ${{ secrets.SUPABASE_GITHUB_CLIENT_SECRET }}
-      GOOGLE_CLIENT_ID: ${{ secrets.SUPABASE_GOOGLE_CLIENT_ID }}
-      GOOGLE_CLIENT_SECRET: ${{ secrets.SUPABASE_GOOGLE_CLIENT_SECRET }}
+      GITHUB_CLIENT_ID: "test"
+      GITHUB_CLIENT_SECRET: "test"
+      GOOGLE_CLIENT_ID: "test"
+      GOOGLE_CLIENT_SECRET: "test"
 
     steps:
       - name: ✅ Checkout code

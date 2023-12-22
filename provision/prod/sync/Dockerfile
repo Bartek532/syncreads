@@ -25,7 +25,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 COPY . .
 
-RUN pnpm run build:sync
+RUN pnpm run build:sync && pnpm prune --prod
 
 WORKDIR /app/apps/sync
 
