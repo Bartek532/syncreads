@@ -32,6 +32,9 @@
     "db:migrate:deploy": {
       "cache": false
     },
+    "db:link": {
+      "cache": false
+    },
     "clean": {
       "cache": false
     },

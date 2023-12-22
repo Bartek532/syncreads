@@ -13,7 +13,35 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy-web:
+  db:
+    name: ⚙️ Setup database
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_PRODUCTION_DB_PASSWORD }}
+      SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PRODUCTION_PROJECT_ID }}
+
+    steps:
+      - name: ✅ Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🔨 Setup
+        uses: ./.github/workflows/setup
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: ⚡ Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: 🔗 Link
+        run: pnpm run db:link -- --project-ref $SUPABASE_PROJECT_ID
+
+      - name: 📦 Migrate
+        run: pnpm run db:migrate:deploy
+
+  web:
     name: 🚀 Deploy web
     runs-on: ubuntu-latest
     env:
