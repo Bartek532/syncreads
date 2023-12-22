@@ -15,6 +15,11 @@ jobs:
     strategy:
       matrix:
         node-version: [20.x]
+    env:
+      GITHUB_CLIENT_ID: ${{ secrets.SUPABASE_GITHUB_CLIENT_ID }}
+      GITHUB_CLIENT_SECRET: ${{ secrets.SUPABASE_GITHUB_CLIENT_SECRET }}
+      GOOGLE_CLIENT_ID: ${{ secrets.SUPABASE_GOOGLE_CLIENT_ID }}
+      GOOGLE_CLIENT_SECRET: ${{ secrets.SUPABASE_GOOGLE_CLIENT_SECRET }}
 
     steps:
       - name: ✅ Checkout code
@@ -24,6 +29,21 @@ jobs:
         uses: ./.github/workflows/setup
         with:
           node-version: ${{ matrix.node-version }}
+
+      - name: ⚡ Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+
+      - name: 🎬 Start Supabase
+        run: pnpm run db:start:dev
+
+      - name: 🔄 Verify Supabase types are up to date
+        run: |
+          pnpm run db:generate
+          if ! git diff --ignore-space-at-eol --exit-code --quiet packages/database/src/types/generated/schema.ts; then
+            echo "Detected uncommitted changes after build. See status below:"
+            git diff
+            exit 1
+          fi
 
       - name: 🖌️ Format
         run: pnpm run format:check

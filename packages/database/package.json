@@ -11,14 +11,17 @@
     "build": "tsup",
     "clean": "rimraf .turbo dist",
     "dev": "tsup --watch",
-    "lint": "eslint \"src/**/*.ts\"",
+    "lint": "eslint \"src/**/*.ts\" && pnpm run db:lint",
     "db:start:dev": "supabase start",
     "db:stop:dev": "supabase stop",
     "db:setup:dev": "pnpm run db:start:dev && pnpm run db:migrate:dev",
     "db:migrate:dev": "supabase migration up && pnpm run db:generate",
     "db:migrate:deploy": "supabase db push",
     "db:generate": "supabase gen types typescript --schema public --local > src/types/generated/schema.ts",
-    "db:link": "supabase link"
+    "db:link": "supabase link",
+    "db:lint": "supabase db lint",
+    "test": "supabase test db --debug",
+    "test:ci": "supabase test db"
   },
   "dependencies": {
     "@rssmarkable/shared": "workspace:*",
