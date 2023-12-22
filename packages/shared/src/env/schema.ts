@@ -37,7 +37,6 @@ export const clientSchema = sharedSchema.merge(
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),
 
-    CHROME_BIN: z.string(),
     SYNC_API_URL: z.string().url(),
   }),
 );
