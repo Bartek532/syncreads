@@ -31,17 +31,10 @@ jobs:
       - name: ✅ Checkout code
         uses: actions/checkout@v3
 
-      - name: 🔨 Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - name: 🔨 Setup
+        uses: ./.github/workflows/setup
         with:
           node-version: ${{ matrix.node-version }}
-
-      - uses: pnpm/action-setup@v2
-        name: 🔌 Install pnpm
-        id: pnpm-install
-        with:
-          version: 8
-          run_install: true
 
       - name: ✨ Restore next build
         uses: actions/cache@v3
@@ -55,7 +48,7 @@ jobs:
       - name: 📦 Build app
         env:
           SKIP_ENV_VALIDATION: 1
-        run: cd ../.. && pnpm run build
+        run: cd ../.. && pnpm run build:web
 
       - name: 🧪 Analyze bundle
         run: npx -p nextjs-bundle-analysis report

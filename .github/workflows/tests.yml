@@ -18,27 +18,19 @@ jobs:
 
     steps:
       - name: ✅ Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: 🎬 Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
-      - name: 🔨 Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      - name: 🔨 Setup
+        uses: ./.github/workflows/setup
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "pnpm"
-
-      - name: 🔌 Install
-        run: pnpm install
 
       - name: 🖌️ Format
         run: pnpm run format:check
 
       - name: 📦 Build
-        run: pnpm run build:packages
+        # builds only sync app, because we're building web in Next.js bundle analysis
+        run: pnpm run build:sync
 
       - name: 🛻 Lint
         run: pnpm run lint
