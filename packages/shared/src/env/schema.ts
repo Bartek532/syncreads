@@ -13,7 +13,7 @@ const authDatabaseSchema = z.object({
   GOOGLE_CLIENT_SECRET: z.string(),
 });
 
-export const anonDatabaseSchema = sharedSchema.merge(authDatabaseSchema).merge(
+export const anonDatabaseSchema = sharedSchema.merge(
   z.object({
     NEXT_PUBLIC_SUPABASE_URL: z.string().url(),
     NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string(),
@@ -37,7 +37,7 @@ export const serverSchema = sharedSchema.merge(
   }),
 );
 
-export const clientSchema = sharedSchema.merge(
+export const clientSchema = sharedSchema.merge(authDatabaseSchema).merge(
   z.object({
     SYNC_API_URL: z.string().url(),
   }),

@@ -16,6 +16,8 @@ jobs:
       matrix:
         node-version: [20.x]
     env:
+      # We need to set these to something,
+      # otherwise the Supabase start will fail
       GITHUB_CLIENT_ID: "test"
       GITHUB_CLIENT_SECRET: "test"
       GOOGLE_CLIENT_ID: "test"
