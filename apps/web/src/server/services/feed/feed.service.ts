@@ -1,5 +1,5 @@
 import { supabase } from "../../../lib/supabase/server";
-import { ApiError } from "../../../utils/exceptions";
+import { ApiError } from "../../utils/exceptions";
 
 export const createFeed = async ({ url, id }: { url: string; id: string }) => {
   const { data, error, status } = await supabase()

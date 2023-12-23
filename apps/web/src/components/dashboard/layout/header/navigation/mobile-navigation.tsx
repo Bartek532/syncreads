@@ -2,7 +2,7 @@
 
 import { AlignRight, X } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { memo, useState } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -10,10 +10,18 @@ import {
   DASHBOARD_NAVIGATION,
   DASHBOARD_SECONDARY_NAVIGATION,
 } from "@/config/dashboard";
-import { cn } from "@/utils";
+import { cn, getAvatar, getName } from "@/utils";
 
-export const MobileNavigation = () => {
+import type { User } from "@rssmarkable/database";
+
+type MobileNavigationProps = {
+  readonly user: User;
+};
+
+export const MobileNavigation = memo<MobileNavigationProps>(({ user }) => {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const name = getName(user)?.split(" ");
+  const initials = name?.map((n) => n[0]).join("");
 
   return (
     <>
@@ -32,12 +40,12 @@ export const MobileNavigation = () => {
           Contact
         </Button>
         <div className="flex w-full items-center justify-between">
-          <span className="text-sm text-muted-foreground">
-            bartzagr@gmail.com
-          </span>
+          {user.email && (
+            <span className="text-sm text-muted-foreground">{user.email}</span>
+          )}
           <Avatar className="h-9 w-9">
-            <AvatarImage src="/avatars/01.png" alt="@shadcn" />
-            <AvatarFallback>SC</AvatarFallback>
+            <AvatarImage src={getAvatar(user)} alt={name?.join(" ")} />
+            <AvatarFallback>{initials ?? "👽"}</AvatarFallback>
           </Avatar>
         </div>
         <nav className="flex flex-col items-start">
@@ -70,4 +78,6 @@ export const MobileNavigation = () => {
       </div>
     </>
   );
-};
+});
+
+MobileNavigation.displayName = "MobileNavigation";

@@ -1,4 +1,4 @@
-import { ApiError } from "@/utils/exceptions";
+import { ApiError } from "@/server/utils/exceptions";
 
 import {
   getUserSyncs,

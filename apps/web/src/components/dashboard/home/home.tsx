@@ -1,14 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DASHBOARD_CARDS } from "@/config/dashboard";
+import { supabase } from "@/lib/supabase/server";
 import { api } from "@/trpc/server";
-import { cn } from "@/utils";
+import { cn, getName } from "@/utils";
 
 import { AddFeedDialog } from "../feeds/dialog/add-feed-dialog";
 import { SyncArticleDialog } from "../feeds/dialog/sync-article-dialog";
 import { Syncs } from "../syncs/syncs";
 
 export const Home = async () => {
+  const { data } = await supabase().auth.getSession();
+  const user = data.session?.user;
+
   const feeds = await api.user.getUserFeeds.query({});
   const device = await api.user.getUserDevice.query();
   const syncs = await api.sync.getUserSyncs.query();
@@ -25,7 +29,7 @@ export const Home = async () => {
       <div className="flex flex-col justify-between gap-4 space-y-2 sm:flex-row sm:gap-8">
         <div className="flex flex-col justify-start space-y-2">
           <h1 className="text-3xl font-bold tracking-tight">
-            Welcome back, guest!
+            Welcome back, {user ? getName(user)?.split(" ")[0] : "guest"}!
           </h1>
           <div className="ml-1 flex items-center space-x-2">
             <div

@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+import type { User } from "@rssmarkable/database";
 import type { SyntheticEvent } from "react";
 
 export function onPromise<T>(promise: (event: SyntheticEvent) => Promise<T>) {
@@ -61,3 +62,23 @@ export const formatTime = (miliseconds: number) => {
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 export const capitalize = (text: string) =>
   text.charAt(0).toUpperCase() + text.slice(1);
+
+export const getName = (user: User) => {
+  const identity = user.identities?.[0]?.identity_data;
+  const name: unknown =
+    identity?.name ||
+    identity?.full_name ||
+    identity?.user_name ||
+    identity?.preferred_username ||
+    user.user_metadata.name;
+
+  console.log(identity);
+  return typeof name === "string" ? name : undefined;
+};
+
+export const getAvatar = (user: User) => {
+  const identity = user.identities?.[0]?.identity_data;
+  const avatar: unknown = identity?.avatar_url || user.user_metadata.avatar_url;
+
+  return typeof avatar === "string" ? avatar : undefined;
+};

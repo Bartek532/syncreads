@@ -1,7 +1,7 @@
 import { env } from "@/lib/env";
 
 import { supabase } from "../../lib/supabase/server";
-import { ApiError, isSyncApiErrorResponse } from "../../utils/exceptions";
+import { ApiError, isSyncApiErrorResponse } from "../utils/exceptions";
 
 import type { SyncArticlePayload, SyncFeedPayload } from "@rssmarkable/shared";
 
