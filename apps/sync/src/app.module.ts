@@ -19,6 +19,12 @@ import type { ServerConfig } from "@rssmarkable/shared";
             host: config.get<string>("REDIS_HOST"),
             port: config.get<number>("REDIS_PORT"),
             password: config.get<string>("REDIS_PASSWORD"),
+            username: "default",
+            family: 6,
+            reconnectOnError: (err) => {
+              console.log(err);
+              return true;
+            },
           },
         };
       },
@@ -32,7 +38,10 @@ import type { ServerConfig } from "@rssmarkable/shared";
         allowUnknown: true,
         abortEarly: true,
       },
-      validate: (config) => validateConfig(serverSchema, config),
+      validate: (config) => {
+        console.log(config);
+        return validateConfig(serverSchema, config);
+      },
     }),
     SupabaseModule,
     DeviceModule,
