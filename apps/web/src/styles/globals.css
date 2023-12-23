@@ -22,13 +22,13 @@ body {
 }
 
 *::-webkit-scrollbar-track {
-  @apply bg-gray-100;
+  @apply bg-muted;
 }
 
 *::-webkit-scrollbar-thumb {
-  @apply rounded-lg bg-gray-300;
+  @apply rounded-lg bg-muted-foreground/50;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400;
+  @apply bg-muted-foreground;
 }

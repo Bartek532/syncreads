@@ -1,6 +1,5 @@
 import { XMLParser } from "fast-xml-parser";
-
-import { isURL } from "../../../../../utils/validation/validator";
+import { z } from "zod";
 
 export const parse = (content: string) => {
   try {
@@ -8,7 +7,7 @@ export const parse = (content: string) => {
     const parser = new XMLParser({
       ignoreAttributes: false,
       attributeValueProcessor: (name, value) => {
-        if (name === "xmlUrl" && isURL(value)) {
+        if (name === "xmlUrl" && z.string().url().safeParse(value).success) {
           urls.push(value);
         }
       },
