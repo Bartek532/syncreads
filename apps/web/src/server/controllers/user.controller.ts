@@ -2,7 +2,6 @@ import { HTTP_STATUS_CODE } from "@rssmarkable/shared";
 import dayjs from "dayjs";
 import { register } from "rmapi-js";
 
-import { ApiError } from "../utils/exceptions";
 import { deleteFeed, getFeedById } from "../services/feed/feed.service";
 import {
   deleteUserFeed,
@@ -11,6 +10,7 @@ import {
   registerUserDevice,
   unregisterUserDevice,
 } from "../services/user.service";
+import { ApiError } from "../utils/exceptions";
 
 import type {
   CursorPaginationInput,

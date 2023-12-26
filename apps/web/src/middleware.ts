@@ -7,9 +7,10 @@ export async function middleware(request: NextRequest) {
 
   const {
     data: { session },
+    error,
   } = await supabase.auth.getSession();
 
-  // console.log(session);
+  console.log(session, error);
 
   if (!session && request.nextUrl.pathname.startsWith("/dashboard")) {
     return NextResponse.redirect(new URL("/auth/login", request.url));
@@ -17,3 +18,7 @@ export async function middleware(request: NextRequest) {
 
   return response;
 }
+
+export const config = {
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+};

@@ -4,9 +4,9 @@ import { parse } from "rss-to-json";
 
 import type { FeedApi } from "@/types/feed.types";
 
-import { ApiError } from "../utils/exceptions";
 import { createFeed } from "../services/feed/feed.service";
 import { getUserFeedByUrl } from "../services/user.service";
+import { ApiError } from "../utils/exceptions";
 
 import type {
   CreateAndConnectFeedInput,
