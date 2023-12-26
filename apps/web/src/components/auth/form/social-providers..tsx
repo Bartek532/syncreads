@@ -25,16 +25,14 @@ export const SocialProviders = memo<SocialProvidersProps>(({ providers }) => {
             type="button"
             size="lg"
             className="inline-flex w-full justify-center gap-4"
-            onClick={onPromise(async () => {
-              const { data, error } = await supabase().auth.signInWithOAuth({
+            onClick={onPromise(() =>
+              supabase().auth.signInWithOAuth({
                 provider,
                 options: {
                   redirectTo: `${location.origin}/auth/callback`,
                 },
-              });
-
-              console.log({ data, error });
-            })}
+              }),
+            )}
           >
             <span className="sr-only">Sign in with {provider}</span>
 
