@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { memo } from "react";
 
-import { INDEX_HERO_SUBTITLE, SITE_NAME } from "../../config";
+import { INDEX_HERO_SUBTITLE, SITE_TITLE } from "../../config";
 
 export const Hero = memo(() => {
   return (
@@ -11,7 +11,7 @@ export const Hero = memo(() => {
       <div className="-z-1 pointer-events-none absolute h-12 w-80 scale-[2] rounded-full from-yellow-800/70 to-indigo-800/30 blur-3xl dark:bg-gradient-to-br md:translate-y-60" />
 
       <h1 className="lg:6xl z-20 bg-gradient-to-tl from-indigo-500 to-pink-500 bg-clip-text text-4xl font-extrabold leading-none tracking-wide text-transparent sm:text-5xl md:text-7xl">
-        {SITE_NAME}
+        {SITE_TITLE}
       </h1>
 
       <h2 className="z-10 mx-auto mb-4  max-w-md text-center text-lg text-slate-600 dark:text-slate-400">
