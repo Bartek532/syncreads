@@ -1,18 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
-
-import { lockScroll, unlockScroll } from "../../../utils/pageScroll";
-
 import { Spinner } from "./Spinner";
 
 export const GlobalLoader = () => {
-  useEffect(() => {
-    lockScroll();
-
-    return () => unlockScroll();
-  }, []);
-
   return (
     <div
       role="presentation"

@@ -39,6 +39,7 @@
     "dayjs": "^1.11.7",
     "fast-xml-parser": "^4.2.5",
     "framer-motion": "^10.0.0",
+    "geist": "1.2.0",
     "link-preview-js": "3.0.4",
     "lucide-react": "0.294.0",
     "marked": "4.3.0",

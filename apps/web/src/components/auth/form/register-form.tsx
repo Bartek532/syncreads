@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SYNC_DEFAULT_FOLDER } from "@rssmarkable/shared";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { memo } from "react";
@@ -62,7 +63,7 @@ export const RegisterForm = memo(() => {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} disabled={form.formState.isSubmitting} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -76,7 +77,11 @@ export const RegisterForm = memo(() => {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input {...field} type="email" />
+                <Input
+                  {...field}
+                  type="email"
+                  disabled={form.formState.isSubmitting}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -90,7 +95,11 @@ export const RegisterForm = memo(() => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input {...field} type="password" />
+                <Input
+                  {...field}
+                  type="password"
+                  disabled={form.formState.isSubmitting}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -110,7 +119,11 @@ export const RegisterForm = memo(() => {
         </div>
 
         <Button type="submit" className="w-full" size="lg">
-          Sign up
+          {form.formState.isSubmitting ? (
+            <Loader2 className="animate-spin" />
+          ) : (
+            "Sign up"
+          )}
         </Button>
       </form>
     </Form>

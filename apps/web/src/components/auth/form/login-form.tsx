@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { memo } from "react";
@@ -54,7 +55,11 @@ export const LoginForm = memo(() => {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input {...field} type="email" />
+                <Input
+                  {...field}
+                  type="email"
+                  disabled={form.formState.isSubmitting}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -68,7 +73,11 @@ export const LoginForm = memo(() => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input {...field} type="password" />
+                <Input
+                  {...field}
+                  type="password"
+                  disabled={form.formState.isSubmitting}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -88,7 +97,11 @@ export const LoginForm = memo(() => {
         </div>
 
         <Button type="submit" className="w-full" size="lg">
-          Sign in
+          {form.formState.isSubmitting ? (
+            <Loader2 className="animate-spin" />
+          ) : (
+            "Sign in"
+          )}
         </Button>
       </form>
     </Form>

@@ -5,21 +5,12 @@ import Link from "next/link";
 import { memo, useState } from "react";
 
 import { INDEX_NAVIGATION, SITE_TITLE } from "../../config";
-import { lockScroll, unlockScroll } from "../../utils/pageScroll";
 
 export const Nav = memo(() => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   const handleMobileNavOpen = () => {
     setIsMobileNavOpen((prev) => {
-      if (prev) {
-        unlockScroll();
-      }
-
-      if (!prev) {
-        lockScroll();
-      }
-
       return !prev;
     });
   };

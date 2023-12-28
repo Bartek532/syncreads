@@ -15,7 +15,7 @@ type HeaderProps = {
 export const Header = memo<HeaderProps>(({ user }) => {
   return (
     <header className="h-16 w-full border-b bg-background">
-      <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-8 px-8">
+      <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-8 px-6 sm:px-8">
         <Link className="flex flex-shrink-0 items-center" href="/">
           <Image
             src="/logo.png"

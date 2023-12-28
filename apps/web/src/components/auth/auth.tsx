@@ -19,7 +19,7 @@ type AuthLayoutProps = {
 const AuthLayout = memo<AuthLayoutProps>(({ children, quote }) => {
   return (
     <div className="flex min-h-screen">
-      <div className="flex flex-1 flex-col justify-start py-12 px-4 dark:bg-slate-900 sm:px-6 lg:flex-none lg:px-20 xl:px-28">
+      <div className="flex flex-1 flex-col justify-start py-12 px-6 sm:px-8 lg:flex-none lg:px-24 xl:px-36">
         <div className="mx-auto w-full max-w-sm lg:w-96">
           {retrieveChild(children, AuthHeader.displayName)}
           <div className="mt-8 flex flex-col gap-6">
