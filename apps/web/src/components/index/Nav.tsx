@@ -4,7 +4,7 @@ import { Bars2Icon, XMarkIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { memo, useState } from "react";
 
-import { INDEX_NAVIGATION, SITE_NAME } from "../../config";
+import { INDEX_NAVIGATION, SITE_TITLE } from "../../config";
 import { lockScroll, unlockScroll } from "../../utils/pageScroll";
 
 export const Nav = memo(() => {
@@ -29,7 +29,7 @@ export const Nav = memo(() => {
       <div className="backdrop-filter-50 sticky top-6 z-[300] flex w-full flex-wrap items-center justify-between rounded-full py-2 px-4 sm:px-8">
         <div className="flex items-center gap-3">
           <span className="text-xl font-medium tracking-tight text-black dark:text-white">
-            {SITE_NAME}
+            {SITE_TITLE}
           </span>
         </div>
 

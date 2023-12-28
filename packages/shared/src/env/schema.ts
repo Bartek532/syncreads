@@ -37,13 +37,21 @@ export const serverSchema = sharedSchema.merge(
   }),
 );
 
-export const clientSchema = sharedSchema.merge(authDatabaseSchema).merge(
+export const webServerSchema = sharedSchema.merge(authDatabaseSchema).merge(
   z.object({
     SYNC_API_URL: z.string().url(),
+  }),
+);
+
+export const webClientSchema = sharedSchema.merge(
+  z.object({
+    NEXT_PUBLIC_HOST: z.string().optional(),
+    NEXT_PUBLIC_VERCEL_URL: z.string().optional(),
   }),
 );
 
 export type AnonDatabaseConfig = z.infer<typeof anonDatabaseSchema>;
 export type ServiceDatabaseConfig = z.infer<typeof serviceDatabaseSchema>;
 export type ServerConfig = z.infer<typeof serverSchema>;
-export type ClientConfig = z.infer<typeof clientSchema>;
+export type WebServerConfig = z.infer<typeof webServerSchema>;
+export type WebClientConfig = z.infer<typeof webClientSchema>;

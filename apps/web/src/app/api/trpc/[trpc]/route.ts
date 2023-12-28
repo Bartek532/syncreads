@@ -1,7 +1,7 @@
 import { NODE_ENV } from "@rssmarkable/shared";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
-import { env } from "@/lib/env";
+import { env } from "@/lib/env/server";
 import { createTRPCContext } from "@/server/trpc";
 import { appRouter } from "@/server/trpc/router";
 

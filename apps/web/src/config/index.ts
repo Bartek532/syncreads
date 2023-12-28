@@ -1,4 +1,20 @@
-export const SITE_NAME = "RSSmarkable";
+import { NODE_ENV } from "@rssmarkable/shared";
+
+import { env } from "../lib/env/client";
+
+export const ORIGIN =
+  env.NEXT_PUBLIC_HOST ??
+  env.NEXT_PUBLIC_VERCEL_URL ??
+  ("rssmarkable.com" as const);
+export const PROTOCOL = env.NODE_ENV === NODE_ENV.PRODUCTION ? "https" : "http";
+export const HOST = `${PROTOCOL}://${ORIGIN}` as const;
+export const SITE_TITLE = "RSSmarkable";
+export const SITE_DESCRIPTION =
+  "Seamlessly sync articles and feeds from the web.";
+export const SEPARATOR = " | ";
+export const SITE_TITLE_TEMPLATE = `%s${SEPARATOR}${SITE_TITLE}`;
+export const SITE_IMAGE_URL = `/images/banner.png`;
+
 export const GITHUB_URL = "https://github.com/Bartek532/rssmarkable";
 
 export const INDEX_NAVIGATION = [
@@ -17,13 +33,13 @@ export const INDEX_HERO_SUBTITLE =
 
 export const INDEX_FEATURES_HEADING = {
   title: "Features",
-  description: `${SITE_NAME} is a free service that allows you to sync content to your reMarkable tablet.`,
+  description: `${SITE_TITLE} is a free service that allows you to sync content to your reMarkable tablet.`,
 };
 
 export const INDEX_FEATURES_CARDS = [
   {
     title: "Seamless Syncing",
-    description: `Automatically sync your favorite RSS feeds to your reMarkable tablet. Add your favorite feeds and let ${SITE_NAME} do the rest.`,
+    description: `Automatically sync your favorite RSS feeds to your reMarkable tablet. Add your favorite feeds and let ${SITE_TITLE} do the rest.`,
     className:
       "bg-gradient bg-gradient-to-bl from-indigo-400/10 to-indigo-500/30",
   },
@@ -45,7 +61,7 @@ export const INDEX_FEATURES_CARDS = [
 
 export const INDEX_GET_STARTED_HEADING = {
   title: "Get started",
-  description: `It's easy to get started with ${SITE_NAME}`,
+  description: `It's easy to get started with ${SITE_TITLE}`,
 };
 
 export const INDEX_GET_STARTED_STEPS = [
@@ -63,10 +79,6 @@ export const INDEX_OPEN_SOURCE_HEADING = {
     href: GITHUB_URL,
   },
 };
-
-export const APP_NAME = "RSSmarkable";
-export const APP_DESCRIPTION =
-  "Sync all of your favourite RSS feeds directly to your reMarkable tablet with just a few clicks.";
 
 export const TOASTER_CONFIG = {
   style: {

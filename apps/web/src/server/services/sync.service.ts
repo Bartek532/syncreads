@@ -1,4 +1,4 @@
-import { env } from "@/lib/env";
+import { env } from "@/lib/env/server";
 
 import { supabase } from "../../lib/supabase/server";
 import { ApiError, isSyncApiErrorResponse } from "../utils/exceptions";
