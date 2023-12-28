@@ -1,3 +1,7 @@
+"use client";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { memo } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -10,7 +14,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { getAvatar, getName } from "@/utils";
+import { getAvatar, getName, onPromise } from "@/utils";
+
+import { supabase } from "../../../../../lib/supabase/client";
 
 import type { User } from "@rssmarkable/database";
 
@@ -19,6 +25,7 @@ type UserNavigationProps = {
 };
 
 export const UserNavigation = memo<UserNavigationProps>(({ user }) => {
+  const router = useRouter();
   const name = getName(user)?.split(" ");
   const initials = name?.map((n) => n[0]).join("");
 
@@ -50,11 +57,25 @@ export const UserNavigation = memo<UserNavigationProps>(({ user }) => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Settings</DropdownMenuItem>
+          <DropdownMenuItem asChild className="cursor-pointer">
+            <Link href="/settings/profile">Profile</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild className="cursor-pointer">
+            <Link href="/settings">Settings</Link>
+          </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Log out</DropdownMenuItem>
+        <DropdownMenuItem asChild className="cursor-pointer">
+          <button
+            className="w-full"
+            onClick={onPromise(() => {
+              router.push("/");
+              return supabase().auth.signOut();
+            })}
+          >
+            Log out
+          </button>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

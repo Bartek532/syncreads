@@ -59,7 +59,7 @@ export const FeedsList = memo<FeedsListProps>(
       return <FeedsListSkeleton />;
     }
 
-    if (!data) {
+    if (!data?.pages[0]?.data.length) {
       return <EmptyFeedsList onCreateNew={onCreateNew} />;
     }
 
@@ -68,7 +68,7 @@ export const FeedsList = memo<FeedsListProps>(
 
     return (
       <>
-        <ul className="flex flex-col gap-5">
+        <ul className="mt-6 flex flex-col gap-5">
           {feeds.map((feed) => (
             <li key={feed.feedId}>
               <label className="flex items-center gap-4 md:gap-6">

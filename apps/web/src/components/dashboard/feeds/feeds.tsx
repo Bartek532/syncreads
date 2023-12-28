@@ -45,7 +45,7 @@ export const Feeds = memo(() => {
 
   return (
     <div className="flex flex-col gap-10">
-      <div className="mb-4 flex flex-col justify-between gap-4 md:flex-row">
+      <div className="flex flex-col justify-between gap-4 md:flex-row">
         <div className="flex flex-col justify-start space-y-2">
           <h1 className="text-3xl font-bold tracking-tight">All feeds</h1>
           <p className="text-sm text-muted-foreground">
