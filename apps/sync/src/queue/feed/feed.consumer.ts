@@ -35,7 +35,6 @@ export class FeedQueueConsumer {
 
   @Process()
   async syncFeed({ data }: Job<FeedQueueJobPayload>) {
-    let articlesCount = 0;
     const feed = await this.userService.getUserFeed(data.userId, data.feedId);
     const user = await this.userService.getUserById(data.userId);
 
@@ -70,9 +69,9 @@ export class FeedQueueConsumer {
         syncId: data.syncId,
       });
 
-      articlesCount++;
-      await this.syncService.updateSync(data.syncId, {
-        syncedArticlesCount: articlesCount,
+      await this.syncService.createSyncArticle({
+        syncId: data.syncId,
+        url: article.link,
       });
     }
 

@@ -22,6 +22,10 @@ export type Feed = Tables<"Feed">;
 export type InsertFeed = Tables<"Feed", "Insert">;
 export type UpdateFeed = Tables<"Feed", "Update">;
 
+export type Article = Tables<"Article">;
+export type InsertArticle = Tables<"Article", "Insert">;
+export type UpdateArticle = Tables<"Article", "Update">;
+
 export type Log = Tables<"Log">;
 export type InsertLog = Tables<"Log", "Insert">;
 export type UpdateLog = Tables<"Log", "Update">;

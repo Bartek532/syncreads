@@ -37,6 +37,28 @@ export interface Database {
           }
         ]
       }
+      Article: {
+        Row: {
+          syncId: string
+          url: string
+        }
+        Insert: {
+          syncId: string
+          url: string
+        }
+        Update: {
+          syncId?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "Article_syncId_fkey"
+            columns: ["syncId"]
+            referencedRelation: "Sync"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       Device: {
         Row: {
           id: string
@@ -114,7 +136,6 @@ export interface Database {
           id: string
           startedAt: string
           status: Database["public"]["Enums"]["SyncStatus"]
-          syncedArticlesCount: number
           trigger: Database["public"]["Enums"]["SyncTrigger"]
           userId: string
         }
@@ -123,7 +144,6 @@ export interface Database {
           id?: string
           startedAt?: string
           status: Database["public"]["Enums"]["SyncStatus"]
-          syncedArticlesCount?: number
           trigger: Database["public"]["Enums"]["SyncTrigger"]
           userId: string
         }
@@ -132,7 +152,6 @@ export interface Database {
           id?: string
           startedAt?: string
           status?: Database["public"]["Enums"]["SyncStatus"]
-          syncedArticlesCount?: number
           trigger?: Database["public"]["Enums"]["SyncTrigger"]
           userId?: string
         }

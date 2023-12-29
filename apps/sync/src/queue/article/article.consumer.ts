@@ -53,10 +53,14 @@ ${err.stack}`);
 
   @OnQueueCompleted()
   async onQueueCompleted(job: Job<ArticleQueueJobPayload>) {
+    await this.syncService.createSyncArticle({
+      syncId: job.data.syncId,
+      url: job.data.url,
+    });
+
     await this.syncService.updateSync(job.data.syncId, {
       finishedAt: dayjs().toISOString(),
       status: SyncStatus.SUCCESS,
-      syncedArticlesCount: 1,
     });
 
     await this.syncLogger(job.data.syncId).log(`Synchronization finished.`);
