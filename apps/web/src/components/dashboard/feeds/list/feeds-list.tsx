@@ -29,7 +29,7 @@ const EmptyFeedsList = ({ onCreateNew }: { onCreateNew: () => void }) => {
 };
 
 const FeedsListSkeleton = () => (
-  <div className="flex flex-col gap-5">
+  <div className="mt-6 flex flex-col gap-5">
     {Array.from({ length: 3 }).map((_, i) => (
       <div key={i} className="flex items-center gap-4 md:gap-6">
         <Skeleton className="h-5 w-5 bg-background" />

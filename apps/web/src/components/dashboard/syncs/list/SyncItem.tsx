@@ -1,4 +1,3 @@
-import { ArrowPathIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import dayjs from "dayjs";
 import Link from "next/link";
@@ -24,10 +23,10 @@ export const SyncItem = memo<SyncItemProps>(({ sync }) => {
             href={`/dashboard/syncs/${sync.id}`}
             className="group inline-flex space-x-2 truncate text-sm dark:hover:bg-gray-800"
           >
-            <ArrowPathIcon
+            {/* <ArrowPathIcon
               className="h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500 dark:text-gray-400 dark:group-hover:text-gray-300"
               aria-hidden="true"
-            />
+            /> */}
             <p className="truncate text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-gray-100">
               {sync.id}
             </p>
@@ -41,7 +40,7 @@ export const SyncItem = memo<SyncItemProps>(({ sync }) => {
         {SYNC_TRIGGER_EMOJIS[sync.trigger]}
       </td>
       <td className="hidden whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400 sm:px-6 sm:py-4 md:table-cell">
-        {sync.syncedArticlesCount}
+        {sync.finishedAt}
       </td>
       <td className="ml-12 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 sm:ml-0 sm:px-6 sm:py-4 md:block">
         <span
@@ -63,7 +62,7 @@ export const SyncItem = memo<SyncItemProps>(({ sync }) => {
         aria-hidden="true"
       >
         <Link href={`/dashboard/syncs/${sync.id}`}>
-          <ChevronRightIcon className="h-5 w-5 text-gray-400" />
+          {/* <ChevronRightIcon className="h-5 w-5 text-gray-400" /> */}
         </Link>
       </td>
     </tr>

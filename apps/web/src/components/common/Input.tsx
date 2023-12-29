@@ -1,7 +1,7 @@
-import {
-  ExclamationCircleIcon,
-  CheckCircleIcon,
-} from "@heroicons/react/20/solid";
+// import {
+//   ExclamationCircleIcon,
+//   CheckCircleIcon,
+// } from "@heroicons/react/20/solid";
 import {
   useController,
   type Control,
@@ -44,7 +44,7 @@ export const Input = <T extends FieldValues>({
           onChange={field.onChange}
         />
         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-          {fieldState.error ? (
+          {/* {fieldState.error ? (
             <ExclamationCircleIcon
               className="h-5 w-5 text-red-500"
               aria-hidden="true"
@@ -54,7 +54,7 @@ export const Input = <T extends FieldValues>({
               className="h-5 w-5 text-green-500"
               aria-hidden="true"
             />
-          ) : null}
+          ) : null} */}
         </div>
       </div>
       {fieldState.error && (

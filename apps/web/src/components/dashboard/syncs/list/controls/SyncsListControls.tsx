@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDownCircleIcon } from "@heroicons/react/24/outline";
+// import { ArrowDownCircleIcon } from "@heroicons/react/24/outline";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { memo } from "react";
 
@@ -79,7 +79,7 @@ export const SyncsListControlsCursor = memo(() => {
   return (
     <div className="mt-10 mb-2 flex items-center justify-center">
       <Button variant="secondary" onClick={() => setPage(page + 1)}>
-        <ArrowDownCircleIcon className="h-6 w-6" /> Load more
+        {/* <ArrowDownCircleIcon className="h-6 w-6" /> Load more */}
       </Button>
     </div>
   );

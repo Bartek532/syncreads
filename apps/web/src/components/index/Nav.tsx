@@ -1,6 +1,7 @@
 "use client";
 
-import { Bars2Icon, XMarkIcon } from "@heroicons/react/20/solid";
+import { HamburgerMenuIcon } from "@radix-ui/react-icons";
+import { X } from "lucide-react";
 import Link from "next/link";
 import { memo, useState } from "react";
 
@@ -44,9 +45,9 @@ export const Nav = memo(() => {
           onClick={handleMobileNavOpen}
         >
           {isMobileNavOpen ? (
-            <XMarkIcon className="h-6 w-6 dark:text-white" />
+            <X className="h-6 w-6 dark:text-white" />
           ) : (
-            <Bars2Icon className="h-6 w-6 dark:text-white" />
+            <HamburgerMenuIcon className="h-6 w-6 dark:text-white" />
           )}
         </button>
       </div>

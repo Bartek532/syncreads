@@ -3,6 +3,7 @@
 import { type Sync, SyncStatus } from "@rssmarkable/database";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { RefreshCw } from "lucide-react";
 import Link from "next/link";
 
@@ -14,6 +15,7 @@ import type { SyncTrigger } from "@rssmarkable/database";
 import type { ColumnDef } from "@tanstack/react-table";
 
 dayjs.extend(duration);
+dayjs.extend(relativeTime);
 
 const SYNC_STATUS_COLORS: Record<SyncStatus, string> = {
   [SyncStatus.FAILED]: "bg-destructive",
@@ -48,7 +50,7 @@ export const columns: ColumnDef<Sync>[] = [
   {
     id: "duration",
     accessorFn: ({ startedAt, finishedAt }) =>
-      dayjs(finishedAt).diff(dayjs(startedAt)),
+      finishedAt ? dayjs(finishedAt).diff(dayjs(startedAt)) : 0,
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
@@ -57,9 +59,16 @@ export const columns: ColumnDef<Sync>[] = [
       />
     ),
     cell: ({ row }) => {
+      const finishedAt = row.original.finishedAt;
+      const startedAt = row.original.startedAt;
       return (
         <span className="block w-full pr-4 text-right">
-          {dayjs(row.original.finishedAt).diff(dayjs(row.original.startedAt))}
+          {finishedAt
+            ? dayjs
+                .duration(dayjs(finishedAt).diff(dayjs(startedAt)))
+                .format("H[h] m[m] s[s]")
+                .replace(/\b0+[a-z]+\s*/gi, "")
+            : "-"}
         </span>
       );
     },
@@ -109,6 +118,7 @@ export const columns: ColumnDef<Sync>[] = [
     },
   },
   {
+    id: "date",
     accessorKey: "startedAt",
     header: ({ column }) => (
       <DataTableColumnHeader

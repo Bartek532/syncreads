@@ -15,9 +15,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { supabase } from "@/lib/supabase/client";
 import { getAvatar, getName } from "@/utils";
-
-import { supabase } from "../../../../../lib/supabase/client";
 
 import type { User } from "@rssmarkable/database";
 

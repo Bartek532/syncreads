@@ -22,8 +22,14 @@ export const deleteFeeds = async (data: DeleteFeedsInput) => {
   return response;
 };
 
-export const queueArticleSync = async (data: SyncArticlePayload) =>
-  api.sync.queueArticleSync.mutate(data);
+export const queueArticleSync = async (data: SyncArticlePayload) => {
+  const response = await api.sync.queueArticleSync.mutate(data);
+  revalidatePath("/dashboard/syncs");
+  return response;
+};
 
-export const queueFeedSync = async (data: { in: string[] }) =>
-  api.sync.queueFeedSync.mutate(data);
+export const queueFeedSync = async (data: { in: string[] }) => {
+  const response = await api.sync.queueFeedSync.mutate(data);
+  revalidatePath("/dashboard/syncs");
+  return response;
+};
