@@ -14,7 +14,7 @@ export const getUserSyncs = ({
   to,
   withArticles,
 }: GetSyncsInput & { id: string }) => {
-  const select = withArticles ? "*, Article (*)" : "*";
+  const select = withArticles ? "*, Article (syncId, url)" : "*";
   if (from && to) {
     return supabase()
       .from("Sync")

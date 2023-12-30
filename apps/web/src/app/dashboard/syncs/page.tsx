@@ -10,7 +10,7 @@ export const metadata = getMetadata({
 });
 
 const DashboardSyncs = async () => {
-  const syncs = await api.sync.getUserSyncs.query();
+  const syncs = await api.sync.getUserSyncs.query({});
 
   return (
     <div className="flex flex-col gap-10">

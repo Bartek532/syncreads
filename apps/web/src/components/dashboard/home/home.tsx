@@ -1,3 +1,6 @@
+import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
@@ -18,6 +21,9 @@ import { AddFeedDialog } from "../feeds/dialog/add-feed-dialog";
 import { SyncArticleDialog } from "../feeds/dialog/sync-article-dialog";
 import { SyncsPerDay } from "../syncs/chart/syncs-per-day";
 
+dayjs.extend(duration);
+dayjs.extend(relativeTime);
+
 export const Home = async () => {
   const { data } = await supabase().auth.getSession();
   const user = data.session?.user;
@@ -35,7 +41,15 @@ export const Home = async () => {
     feeds.count ?? 0,
     device ? "reMarkable 2" : "Not registered",
     syncsWithArticles.length,
-    syncsWithArticles.reduce((acc, { Article }) => acc + Article.length, 0),
+    `+${dayjs
+      .duration({
+        minutes:
+          syncsWithArticles.reduce(
+            (acc, { Article }) => acc + Article.length,
+            0,
+          ) * 10,
+      })
+      .humanize()}`,
   ];
 
   return (
@@ -106,7 +120,7 @@ export const Home = async () => {
 
         <div className="mx-auto mt-10 flex flex-wrap items-start justify-center gap-4 md:flex-nowrap lg:mt-12">
           <section className="flex basis-full flex-col gap-4 md:basis-3/5">
-            <h2 className="text-lg font-medium sm:px-0">Syncs stats</h2>
+            <h2 className="text-lg font-medium sm:px-0">Syncs by day</h2>
             <div className="rounded-lg bg-background p-2 pr-4 pt-6 shadow-sm">
               <SyncsPerDay range={range} syncs={syncsWithArticles} />
             </div>
