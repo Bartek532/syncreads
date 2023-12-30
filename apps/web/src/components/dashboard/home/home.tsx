@@ -1,27 +1,41 @@
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
+
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { DASHBOARD_CARDS } from "@/config/dashboard";
 import { supabase } from "@/lib/supabase/server";
 import { api } from "@/trpc/server";
-import { cn, getName } from "@/utils";
+import { cn, getLastDays, getName } from "@/utils";
 
 import { AddFeedDialog } from "../feeds/dialog/add-feed-dialog";
 import { SyncArticleDialog } from "../feeds/dialog/sync-article-dialog";
-import { Syncs } from "../syncs/syncs";
+import { SyncsPerDay } from "../syncs/chart/syncs-per-day";
 
 export const Home = async () => {
   const { data } = await supabase().auth.getSession();
   const user = data.session?.user;
+  const range = getLastDays(10);
 
   const feeds = await api.user.getUserFeeds.query({});
+  const syncsWithArticles = await api.sync.getUserSyncs.query({
+    from: range.from,
+    to: range.to,
+    withArticles: true,
+  });
   const device = await api.user.getUserDevice.query();
-  const syncs = await api.sync.getUserSyncs.query();
 
   const cardsValues = [
     feeds.count ?? 0,
     device ? "reMarkable 2" : "Not registered",
-    syncs.length,
-    "+20 hours",
+    syncsWithArticles.length,
+    syncsWithArticles.reduce((acc, { Article }) => acc + Article.length, 0),
   ];
 
   return (
@@ -73,23 +87,35 @@ export const Home = async () => {
                     <card.icon />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">{value}</div>
-                    <p className="text-xs text-muted-foreground">
-                      +180.1% from last month
-                    </p>
+                    <span className="text-2xl font-bold">{value}</span>
                   </CardContent>
+                  <CardFooter className="ml-auto -mt-5 -mb-2 justify-end text-xs">
+                    <Link
+                      href={card.href}
+                      className="group flex items-center justify-center gap-2 underline hover:no-underline"
+                    >
+                      View details
+                      <ArrowRight className="w-4 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </CardFooter>
                 </Card>
               ) : null;
             })}
           </div>
         </section>
 
-        <section className="mx-auto mt-10 lg:mt-12">
-          <h2 className="text-lg font-medium leading-6 text-gray-900 dark:text-white sm:px-0">
-            Recent syncs
-          </h2>
-          <Syncs syncs={syncs} />
-        </section>
+        <div className="mx-auto mt-10 flex flex-wrap items-start justify-center gap-4 md:flex-nowrap lg:mt-12">
+          <section className="flex basis-full flex-col gap-4 md:basis-3/5">
+            <h2 className="text-lg font-medium sm:px-0">Syncs stats</h2>
+            <div className="rounded-lg bg-background p-2 pr-4 pt-6 shadow-sm">
+              <SyncsPerDay range={range} syncs={syncsWithArticles} />
+            </div>
+          </section>
+          <section className="mt-6 flex basis-full flex-col gap-4 md:mt-0 md:basis-2/5">
+            <h2 className="text-lg font-medium sm:px-0">Recently synced</h2>
+            <div className="h-[350px] w-full rounded-lg bg-background shadow-sm"></div>
+          </section>
+        </div>
       </div>
     </>
   );

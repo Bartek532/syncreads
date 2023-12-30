@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const formatTime = (miliseconds: number) => {
   const seconds = Math.floor(miliseconds / 1000);
   const hours = Math.floor(seconds / 3600);
@@ -29,4 +31,25 @@ export const formatTime = (miliseconds: number) => {
       ? `${remainingMiliseconds}ms`
       : "")
   );
+};
+
+export type Range = {
+  from: Date;
+  to: Date;
+  days: Date[];
+};
+
+export const getLastDays = (count: number) => {
+  const today = dayjs();
+  const daysAgo = today.subtract(count - 1, "day");
+
+  const days = Array.from({ length: count }, (_, i) => i).map((d) =>
+    daysAgo.add(d, "day").toDate(),
+  );
+
+  return {
+    from: daysAgo.toDate(),
+    to: today.toDate(),
+    days,
+  };
 };

@@ -1,14 +1,33 @@
+import dayjs from "dayjs";
+
 import { env } from "@/lib/env/server";
+import type { GetSyncsInput } from "@/utils";
 
 import { supabase } from "../../lib/supabase/server";
 import { ApiError, isSyncApiErrorResponse } from "../utils/exceptions";
 
 import type { SyncArticlePayload, SyncFeedPayload } from "@rssmarkable/shared";
 
-export const getUserSyncs = ({ id }: { id: string }) => {
+export const getUserSyncs = ({
+  id,
+  from,
+  to,
+  withArticles,
+}: GetSyncsInput & { id: string }) => {
+  const select = withArticles ? "*, Article (*)" : "*";
+  if (from && to) {
+    return supabase()
+      .from("Sync")
+      .select(select)
+      .eq("userId", id)
+      .gte("startedAt", dayjs(from).toISOString())
+      .lte("startedAt", dayjs(to).toISOString())
+      .order("startedAt", { ascending: false });
+  }
+
   return supabase()
     .from("Sync")
-    .select("*")
+    .select(select)
     .eq("userId", id)
     .order("startedAt", { ascending: false });
 };

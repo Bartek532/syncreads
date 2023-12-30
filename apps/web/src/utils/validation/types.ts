@@ -4,9 +4,11 @@ import type {
   cursorPaginationSchema,
   deleteAndDisconnectFeedsSchema,
   deleteFeedsSchema,
+  getSyncsSchema,
   getWebsiteDetailsSchema,
   importAndConnectFeedsSchema,
   importFeedsSchema,
+  rangeSchema,
   registerAndConnectDeviceSchema,
   registerDeviceSchema,
   unregisterAndDisconnectDeviceSchema,
@@ -34,3 +36,5 @@ export type UnregisterAndDisconnectDeviceInput = TypeOf<
   typeof unregisterAndDisconnectDeviceSchema
 >;
 export type CursorPaginationInput = TypeOf<typeof cursorPaginationSchema>;
+export type RangeInput = TypeOf<typeof rangeSchema>;
+export type GetSyncsInput = TypeOf<typeof getSyncsSchema>;

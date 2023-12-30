@@ -51,3 +51,12 @@ export const cursorPaginationSchema = z.object({
   limit: z.number().default(FEEDS_PAGINATION_DEFAULT_PER_PAGE),
   cursor: z.string().optional(),
 });
+
+export const rangeSchema = z.object({
+  from: z.date().optional(),
+  to: z.date().optional(),
+});
+
+export const getSyncsSchema = rangeSchema.merge(
+  z.object({ withArticles: z.boolean().optional() }),
+);
