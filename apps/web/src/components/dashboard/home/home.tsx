@@ -33,7 +33,6 @@ export const Home = async () => {
   const syncsWithArticles = await api.sync.getUserSyncs.query({
     from: range.from,
     to: range.to,
-    withArticles: true,
   });
   const device = await api.user.getUserDevice.query();
 
@@ -45,7 +44,7 @@ export const Home = async () => {
       .duration({
         minutes:
           syncsWithArticles.reduce(
-            (acc, { Article }) => acc + Article.length,
+            (acc, { articles }) => acc + articles.length,
             0,
           ) * 10,
       })

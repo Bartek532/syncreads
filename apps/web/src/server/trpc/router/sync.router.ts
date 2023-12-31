@@ -3,7 +3,7 @@ import {
   syncFeedPayloadSchema,
 } from "@rssmarkable/shared";
 
-import { getSyncsSchema, rangeSchema } from "@/utils";
+import { rangeSchema } from "@/utils";
 
 import { protectedProcedure, router } from "..";
 import {
@@ -14,7 +14,7 @@ import {
 
 export const syncRouter = router({
   getUserSyncs: protectedProcedure
-    .input(getSyncsSchema)
+    .input(rangeSchema)
     .query(({ ctx, input }) =>
       getUserSyncsHandler({ id: ctx.session.user.id, ...input }),
     ),

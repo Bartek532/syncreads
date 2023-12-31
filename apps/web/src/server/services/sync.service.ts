@@ -1,35 +1,29 @@
 import dayjs from "dayjs";
 
 import { env } from "@/lib/env/server";
-import type { GetSyncsInput } from "@/utils";
+import type { RangeInput } from "@/utils";
 
 import { supabase } from "../../lib/supabase/server";
 import { ApiError, isSyncApiErrorResponse } from "../utils/exceptions";
 
+import type { Article, Sync } from "@rssmarkable/database";
 import type { SyncArticlePayload, SyncFeedPayload } from "@rssmarkable/shared";
 
-export const getUserSyncs = ({
-  id,
-  from,
-  to,
-  withArticles,
-}: GetSyncsInput & { id: string }) => {
-  const select = withArticles ? "*, Article (syncId, url)" : "*";
-  if (from && to) {
-    return supabase()
-      .from("Sync")
-      .select(select)
-      .eq("userId", id)
-      .gte("startedAt", dayjs(from).toISOString())
-      .lte("startedAt", dayjs(to).toISOString())
-      .order("startedAt", { ascending: false });
-  }
-
-  return supabase()
+export const getUserSyncs = ({ id, from, to }: RangeInput & { id: string }) => {
+  const query = supabase()
     .from("Sync")
-    .select(select)
+    .select("*, articles:Article(url)")
     .eq("userId", id)
     .order("startedAt", { ascending: false });
+
+  if (from && to) {
+    void query
+      .gte("startedAt", dayjs(from).toISOString())
+      .lte("startedAt", dayjs(to).toISOString())
+      .returns<Array<Sync & { articles: Article[] }>>();
+  }
+
+  return query;
 };
 
 export const queueArticleSync = async ({

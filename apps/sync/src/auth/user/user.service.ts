@@ -78,7 +78,7 @@ export class UserService {
   async getUserFeed(userId: string, feedId: string) {
     const { data, error, status } = await this.supabaseProvider()
       .from("UserFeed")
-      .select("*, Feed (id, url)")
+      .select("*, feed:Feed (id, url)")
       .eq("userId", userId)
       .eq("feedId", feedId)
       .single();
@@ -87,13 +87,13 @@ export class UserService {
       throw new HttpException(error.details, status);
     }
 
-    const Feed = data.Feed;
+    const feed = data.feed;
 
-    if (!Feed) {
+    if (!feed) {
       throw new NotFoundException(`Feed with id ${feedId} not found!`);
     }
 
-    return { ...data, Feed };
+    return { ...data, feed };
   }
 
   async getUserFeeds(userId: string, feedIds: string[]) {

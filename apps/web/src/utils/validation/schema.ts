@@ -56,7 +56,3 @@ export const rangeSchema = z.object({
   from: z.date().optional(),
   to: z.date().optional(),
 });
-
-export const getSyncsSchema = rangeSchema.merge(
-  z.object({ withArticles: z.boolean().optional() }),
-);

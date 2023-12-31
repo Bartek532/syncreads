@@ -40,7 +40,7 @@ export class FeedQueueConsumer {
 
     const { updatedAt: feedSyncStartDate } = await this.syncLogger(
       data.syncId,
-    ).log(`Starting synchronization of feed with url ${feed.Feed.url}...`);
+    ).log(`Starting synchronization of feed with url ${feed.feed.url}...`);
 
     await this.syncLogger(data.syncId).log(
       feed.lastSyncedAt
@@ -50,7 +50,7 @@ export class FeedQueueConsumer {
         : `Syncing last ${feed.startArticlesCount} article(s)...`,
     );
 
-    const items = await this.parserService.parseFeed(feed.Feed.url);
+    const items = await this.parserService.parseFeed(feed.feed.url);
     const articles = items.filter(({ pubDate }, index) =>
       feed.lastSyncedAt
         ? dayjs(pubDate).isAfter(feed.lastSyncedAt)
@@ -76,7 +76,7 @@ export class FeedQueueConsumer {
     }
 
     await this.syncLogger(data.syncId).verbose(
-      `Successfully synced feed ${feed.Feed.url} including **${
+      `Successfully synced feed ${feed.feed.url} including **${
         articles.length
       }** articles: ${formatTime(dayjs().diff(feedSyncStartDate, "ms"))}`,
     );

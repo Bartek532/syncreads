@@ -51,9 +51,9 @@ export const getUserDevice = ({ id }: { id: string }) => {
 export const getUserFeedByUrl = ({ id, url }: { id: string; url: string }) => {
   return supabase()
     .from("UserFeed")
-    .select("*, Feed!inner (url)")
+    .select("*, feed:Feed!inner (url)")
     .eq("userId", id)
-    .eq("Feed.url", url)
+    .eq("feed.url", url)
     .single();
 };
 

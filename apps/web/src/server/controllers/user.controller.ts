@@ -83,7 +83,7 @@ export const deleteUserFeedsHandler = async ({
       );
     }
 
-    if (data.UserFeed.length > 1) {
+    if (data.users.length > 1) {
       await deleteUserFeed({ id, userId });
     } else {
       await deleteFeed({ id });

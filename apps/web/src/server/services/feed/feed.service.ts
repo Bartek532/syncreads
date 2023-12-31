@@ -30,7 +30,7 @@ export const getFeedByUrl = ({ url }: { url: string }) => {
 export const getFeedById = ({ id }: { id: string }) => {
   return supabase()
     .from("Feed")
-    .select("*, UserFeed (userId)")
+    .select("*, users:UserFeed(userId)")
     .eq("id", id)
     .single();
 };
