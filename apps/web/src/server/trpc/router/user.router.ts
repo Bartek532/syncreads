@@ -2,12 +2,15 @@ import { router, protectedProcedure } from "..";
 import {
   cursorPaginationSchema,
   deleteFeedsSchema,
+  rangeSchema,
   registerDeviceSchema,
 } from "../../../utils/validation/schema";
 import {
   deleteUserFeedsHandler,
   getUserDeviceHandler,
   getUserFeedsHandler,
+  getUserSyncedArticlesHandler,
+  getUserSyncsHandler,
   registerDeviceHandler,
   unregisterDeviceHandler,
 } from "../../controllers/user.controller";
@@ -33,5 +36,13 @@ export const userRouter = router({
     ),
   unregisterDevice: protectedProcedure.mutation(({ ctx }) =>
     unregisterDeviceHandler({ id: ctx.session.user.id }),
+  ),
+  getUserSyncs: protectedProcedure
+    .input(rangeSchema)
+    .query(({ ctx, input }) =>
+      getUserSyncsHandler({ id: ctx.session.user.id, ...input }),
+    ),
+  getUserSyncedArticles: protectedProcedure.query(({ ctx }) =>
+    getUserSyncedArticlesHandler({ id: ctx.session.user.id }),
   ),
 });

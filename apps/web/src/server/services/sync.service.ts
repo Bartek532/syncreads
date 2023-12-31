@@ -1,30 +1,8 @@
-import dayjs from "dayjs";
-
 import { env } from "@/lib/env/server";
-import type { RangeInput } from "@/utils";
 
-import { supabase } from "../../lib/supabase/server";
 import { ApiError, isSyncApiErrorResponse } from "../utils/exceptions";
 
-import type { Article, Sync } from "@rssmarkable/database";
 import type { SyncArticlePayload, SyncFeedPayload } from "@rssmarkable/shared";
-
-export const getUserSyncs = ({ id, from, to }: RangeInput & { id: string }) => {
-  const query = supabase()
-    .from("Sync")
-    .select("*, articles:Article(url)")
-    .eq("userId", id)
-    .order("startedAt", { ascending: false });
-
-  if (from && to) {
-    void query
-      .gte("startedAt", dayjs(from).toISOString())
-      .lte("startedAt", dayjs(to).toISOString())
-      .returns<Array<Sync & { articles: Article[] }>>();
-  }
-
-  return query;
-};
 
 export const queueArticleSync = async ({
   key,

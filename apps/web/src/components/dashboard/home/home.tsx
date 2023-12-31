@@ -17,8 +17,9 @@ import { supabase } from "@/lib/supabase/server";
 import { api } from "@/trpc/server";
 import { cn, getLastDays, getName } from "@/utils";
 
+import { SyncArticleDialog } from "../feeds/articles/dialog/sync-article-dialog";
+import { ArticlesList } from "../feeds/articles/list/articles-list";
 import { AddFeedDialog } from "../feeds/dialog/add-feed-dialog";
-import { SyncArticleDialog } from "../feeds/dialog/sync-article-dialog";
 import { SyncsPerDay } from "../syncs/chart/syncs-per-day";
 
 dayjs.extend(duration);
@@ -30,23 +31,20 @@ export const Home = async () => {
   const range = getLastDays(10);
 
   const feeds = await api.user.getUserFeeds.query({});
-  const syncsWithArticles = await api.sync.getUserSyncs.query({
+  const syncs = await api.user.getUserSyncs.query({
     from: range.from,
     to: range.to,
   });
   const device = await api.user.getUserDevice.query();
+  const articles = await api.user.getUserSyncedArticles.query();
 
   const cardsValues = [
     feeds.count ?? 0,
     device ? "reMarkable 2" : "Not registered",
-    syncsWithArticles.length,
+    syncs.length,
     `+${dayjs
       .duration({
-        minutes:
-          syncsWithArticles.reduce(
-            (acc, { articles }) => acc + articles.length,
-            0,
-          ) * 10,
+        minutes: articles.length * 10,
       })
       .humanize()}`,
   ];
@@ -121,12 +119,12 @@ export const Home = async () => {
           <section className="flex basis-full flex-col gap-4 md:basis-3/5">
             <h2 className="text-lg font-medium sm:px-0">Syncs by day</h2>
             <div className="rounded-lg bg-background p-2 pr-4 pt-6 shadow-sm">
-              <SyncsPerDay range={range} syncs={syncsWithArticles} />
+              <SyncsPerDay range={range} syncs={syncs} />
             </div>
           </section>
           <section className="mt-6 flex basis-full flex-col gap-4 md:mt-0 md:basis-2/5">
             <h2 className="text-lg font-medium sm:px-0">Recently synced</h2>
-            <div className="h-[350px] w-full rounded-lg bg-background shadow-sm"></div>
+            <ArticlesList articles={articles} />
           </section>
         </div>
       </div>

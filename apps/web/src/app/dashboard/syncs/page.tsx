@@ -1,4 +1,4 @@
-import { SyncArticleDialog } from "@/components/dashboard/feeds/dialog/sync-article-dialog";
+import { SyncArticleDialog } from "@/components/dashboard/feeds/articles/dialog/sync-article-dialog";
 import { Syncs } from "@/components/dashboard/syncs/syncs";
 import { Button } from "@/components/ui/button";
 import { api } from "@/trpc/server";
@@ -10,7 +10,7 @@ export const metadata = getMetadata({
 });
 
 const DashboardSyncs = async () => {
-  const syncs = await api.sync.getUserSyncs.query({});
+  const syncs = await api.user.getUserSyncs.query({});
 
   return (
     <div className="flex flex-col gap-10">

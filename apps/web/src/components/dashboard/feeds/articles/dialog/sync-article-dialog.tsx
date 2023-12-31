@@ -5,9 +5,9 @@ import { memo } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-import { onPromise } from "../../../../utils";
-import { createFeedSchema } from "../../../../utils/validation/schema";
-import { Button } from "../../../ui/button";
+import { onPromise } from "../../../../../utils";
+import { createFeedSchema } from "../../../../../utils/validation/schema";
+import { Button } from "../../../../ui/button";
 import {
   Dialog,
   DialogContent,
@@ -16,19 +16,19 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../../../ui/dialog";
+} from "../../../../ui/dialog";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "../../../ui/form";
-import { Input } from "../../../ui/input";
+} from "../../../../ui/form";
+import { Input } from "../../../../ui/input";
 
 import { queueArticleSync } from "./actions/actions";
 
-import type { CreateFeedInput } from "../../../../utils/validation/types";
+import type { CreateFeedInput } from "../../../../../utils/validation/types";
 import type { TRPCError } from "@trpc/server";
 
 type SyncArticleDialogProps = {

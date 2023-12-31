@@ -4,7 +4,6 @@ import type {
   cursorPaginationSchema,
   deleteAndDisconnectFeedsSchema,
   deleteFeedsSchema,
-  getSyncsSchema,
   getWebsiteDetailsSchema,
   importAndConnectFeedsSchema,
   importFeedsSchema,

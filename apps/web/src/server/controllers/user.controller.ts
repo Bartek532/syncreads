@@ -7,6 +7,8 @@ import {
   deleteUserFeed,
   getUserDevice,
   getUserFeeds,
+  getUserSyncedArticles,
+  getUserSyncs,
   registerUserDevice,
   unregisterUserDevice,
 } from "../services/user.service";
@@ -17,6 +19,7 @@ import type {
   RegisterAndConnectDeviceInput,
   UnregisterAndDisconnectDeviceInput,
   DeleteAndDisconnectFeedsInput,
+  RangeInput,
 } from "../../utils/validation/types";
 
 export const registerDeviceHandler = async ({
@@ -98,6 +101,28 @@ export const deleteUserFeedsHandler = async ({
 
 export const getUserDeviceHandler = async ({ id }: { id: string }) => {
   const { data } = await getUserDevice({ id });
+
+  return data;
+};
+
+export const getUserSyncsHandler = async (
+  input: RangeInput & { id: string },
+) => {
+  const { data, error, status } = await getUserSyncs(input);
+
+  if (error) {
+    throw new ApiError(status, error.message);
+  }
+
+  return data;
+};
+
+export const getUserSyncedArticlesHandler = async (input: { id: string }) => {
+  const { data, error, status } = await getUserSyncedArticles(input);
+
+  if (error) {
+    throw new ApiError(status, error.message);
+  }
 
   return data;
 };

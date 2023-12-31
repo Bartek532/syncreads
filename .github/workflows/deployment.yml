@@ -79,7 +79,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: Production
     needs: db
-    if: ${{ false }}
 
     steps:
       - name: ✅ Checkout code

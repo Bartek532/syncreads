@@ -1,3 +1,7 @@
+import dayjs from "dayjs";
+
+import type { RangeInput } from "@/utils";
+
 import { supabase } from "../../lib/supabase/server";
 
 // export const getAllUsers = () => {
@@ -69,6 +73,29 @@ export const deleteUserFeed = ({
   userId: string;
 }) => {
   return supabase().from("UserFeed").delete().match({ feedId: id, userId });
+};
+
+export const getUserSyncs = ({ id, from, to }: RangeInput & { id: string }) => {
+  const query = supabase()
+    .from("Sync")
+    .select("*, articles:Article(url)")
+    .eq("userId", id)
+    .order("startedAt", { ascending: false });
+
+  if (from && to) {
+    void query
+      .gte("startedAt", dayjs(from).toISOString())
+      .lte("startedAt", dayjs(to).toISOString());
+  }
+
+  return query;
+};
+
+export const getUserSyncedArticles = ({ id }: { id: string }) => {
+  return supabase()
+    .from("Article")
+    .select("*, sync:Sync(userId)")
+    .eq("sync.userId", id);
 };
 
 // export const getUserFeed = ({

@@ -2,14 +2,7 @@
 
 import dayjs from "dayjs";
 import { memo } from "react";
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
 import type { Range } from "@/utils";
 
