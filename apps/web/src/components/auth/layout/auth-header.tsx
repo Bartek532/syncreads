@@ -1,5 +1,7 @@
 import { memo } from "react";
 
+import { Logo } from "../../ui/logo";
+
 type AuthHeaderProps = {
   readonly title: string;
   readonly description: string;
@@ -8,7 +10,10 @@ type AuthHeaderProps = {
 export const AuthHeader = memo<AuthHeaderProps>(({ title, description }) => {
   return (
     <div>
-      <h1 className="mt-8 text-3xl font-bold tracking-tight">{title}</h1>
+      <Logo />
+      <h1 className="mt-8 text-3xl font-bold tracking-tight sm:mt-10">
+        {title}
+      </h1>
       <p className="mt-2 text-sm text-muted-foreground">{description}</p>
     </div>
   );

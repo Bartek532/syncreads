@@ -1,6 +1,6 @@
-import Image from "next/image";
-import Link from "next/link";
 import { memo } from "react";
+
+import { Logo } from "../../../ui/logo";
 
 import { MobileNavigation } from "./navigation/mobile-navigation";
 import { Navigation } from "./navigation/navigation";
@@ -16,14 +16,7 @@ export const Header = memo<HeaderProps>(({ user }) => {
   return (
     <header className="h-16 w-full border-b bg-background">
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-8 px-6 sm:px-8">
-        <Link className="flex flex-shrink-0 items-center" href="/">
-          <Image
-            src="/logo.png"
-            width="28"
-            height="36"
-            alt="rssmarkable logo"
-          />
-        </Link>
+        <Logo withText={false} />
         <Navigation />
         <UserNavigation user={user} />
         <MobileNavigation user={user} />
