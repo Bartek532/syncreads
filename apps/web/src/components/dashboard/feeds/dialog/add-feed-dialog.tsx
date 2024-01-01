@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 import { onPromise } from "../../../../utils";
 import { createFeedSchema } from "../../../../utils/validation/schema";
@@ -41,8 +41,8 @@ export const AddFeedDialog = memo<AddFeedDialogProps>(
       resolver: zodResolver(createFeedSchema),
     });
 
-    const onSubmit = async (data: CreateFeedInput) => {
-      await toast.promise(createFeed(data), {
+    const onSubmit = (data: CreateFeedInput) => {
+      toast.promise(createFeed(data), {
         loading: "Adding feed...",
         success: ({ message }) => message,
         error: (err: TRPCError | Error) => err.message,

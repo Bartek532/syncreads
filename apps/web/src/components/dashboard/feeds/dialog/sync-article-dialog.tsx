@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 import { onPromise } from "../../../../utils";
 import { createFeedSchema } from "../../../../utils/validation/schema";
@@ -41,8 +41,8 @@ export const SyncArticleDialog = memo<SyncArticleDialogProps>(
       resolver: zodResolver(createFeedSchema),
     });
 
-    const onSubmit = async (data: CreateFeedInput) => {
-      await toast.promise(queueArticleSync(data), {
+    const onSubmit = (data: CreateFeedInput) => {
+      toast.promise(queueArticleSync(data), {
         loading: "Queuing article sync...",
         success: ({ message }) => message,
         error: (err: TRPCError | Error) => err.message,

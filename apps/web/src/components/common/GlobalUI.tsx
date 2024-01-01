@@ -1,18 +1,11 @@
 "use client";
 
-import { Toaster } from "react-hot-toast";
-
-import { TOASTER_CONFIG } from "../../config";
+import { Toaster } from "sonner";
 
 export const GlobalUI = () => {
   return (
     <>
-      <Toaster
-        position="bottom-right"
-        containerStyle={{ padding: "20px" }}
-        gutter={13}
-        toastOptions={TOASTER_CONFIG}
-      />
+      <Toaster richColors visibleToasts={6} />
     </>
   );
 };

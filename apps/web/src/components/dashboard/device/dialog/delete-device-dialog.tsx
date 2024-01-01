@@ -1,7 +1,6 @@
 import { memo } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
-import { onPromise } from "../../../../utils";
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -24,8 +23,8 @@ type DeleteDeviceDialogProps = {
 
 export const DeleteDeviceDialog = memo<DeleteDeviceDialogProps>(
   ({ children }) => {
-    const onDelete = async () => {
-      await toast.promise(deleteDevice(), {
+    const onDelete = () => {
+      toast.promise(deleteDevice(), {
         loading: "Deleting device...",
         success: ({ message }) => message,
         error: (err: TRPCError | Error) => err.message,
@@ -45,9 +44,7 @@ export const DeleteDeviceDialog = memo<DeleteDeviceDialogProps>(
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={onPromise(onDelete)}>
-              Continue
-            </AlertDialogAction>
+            <AlertDialogAction onClick={onDelete}>Continue</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
