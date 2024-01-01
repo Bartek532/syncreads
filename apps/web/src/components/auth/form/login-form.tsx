@@ -38,7 +38,7 @@ export const LoginForm = memo(() => {
       return toast.error(error.message, { id: loadingToast });
     }
 
-    toast.dismiss(loadingToast);
+    toast.success("Signed in!", { id: loadingToast });
     return router.replace("/dashboard");
   };
 

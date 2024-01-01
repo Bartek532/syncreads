@@ -22,8 +22,8 @@ export const DASHBOARD_NAVIGATION = [
 export const DASHBOARD_SECONDARY_NAVIGATION = [
   { name: "Settings", href: "/dashboard/settings" },
   {
-    name: "Help",
-    href: "/dashboard/help",
+    name: "Profile",
+    href: "/dashboard/settings/profile",
   },
 ];
 

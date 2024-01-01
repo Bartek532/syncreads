@@ -2,7 +2,7 @@ import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import { cookies } from "next/headers";
 
-import { GlobalUI } from "../components/common/GlobalUI";
+import { Toaster } from "../components/ui/sonner";
 import { DEFAULT_METADATA } from "../lib/metadata";
 import "../styles/globals.css";
 import { TRPCReactProvider } from "../trpc/react";
@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         <TRPCReactProvider cookies={cookies().toString()}>
-          <GlobalUI />
+          <Toaster />
           {children}
         </TRPCReactProvider>
       </body>

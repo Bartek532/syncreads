@@ -2,7 +2,9 @@
 
 import { AlignRight, X } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { memo, useState } from "react";
+import { toast } from "sonner";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -11,6 +13,8 @@ import {
   DASHBOARD_SECONDARY_NAVIGATION,
 } from "@/config/dashboard";
 import { cn, getAvatar, getName, lockScroll, unlockScroll } from "@/utils";
+
+import { supabase } from "../../../../../lib/supabase/client";
 
 import type { User } from "@rssmarkable/database";
 
@@ -22,6 +26,7 @@ export const MobileNavigation = memo<MobileNavigationProps>(({ user }) => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const name = getName(user)?.split(" ");
   const initials = name?.map((n) => n[0]).join("");
+  const router = useRouter();
 
   const handleToggleNavigation = () => {
     isNavOpen ? unlockScroll() : lockScroll();
@@ -37,7 +42,7 @@ export const MobileNavigation = memo<MobileNavigationProps>(({ user }) => {
 
       <div
         className={cn(
-          "fixed top-16 left-0 z-10 -mt-1 flex h-screen w-full flex-col gap-7 overflow-auto backdrop-blur-sm md:hidden",
+          "fixed top-16 left-0 z-10 -mt-1 flex h-[calc(100vh-63px+0.25rem)] w-full flex-col gap-7 overflow-auto backdrop-blur-sm md:hidden",
           !isNavOpen && "hidden",
         )}
       >
@@ -66,7 +71,19 @@ export const MobileNavigation = memo<MobileNavigationProps>(({ user }) => {
                 {link.name}
               </Link>
             ))}
-            <button className="w-full border-y py-3 text-left">Log out</button>
+            <button
+              className="w-full border-y py-3 text-left"
+              onClick={() => {
+                router.push("/");
+                toast.promise(supabase().auth.signOut(), {
+                  loading: "Logging out...",
+                  success: "Logged out successfully!",
+                  error: "Failed to log out!",
+                });
+              }}
+            >
+              Log out
+            </button>
           </nav>
           <h4 className="mt-4 text-lg font-medium">Configuration</h4>
           <nav className="-mt-2 flex flex-col items-start">

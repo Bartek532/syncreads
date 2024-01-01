@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { memo } from "react";
+import { toast } from "sonner";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -14,7 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { getAvatar, getName, onPromise } from "@/utils";
+import { getAvatar, getName } from "@/utils";
 
 import { supabase } from "../../../../../lib/supabase/client";
 
@@ -58,20 +59,24 @@ export const UserNavigation = memo<UserNavigationProps>(({ user }) => {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild className="cursor-pointer">
-            <Link href="/settings/profile">Profile</Link>
+            <Link href="/dashboard/settings/profile">Profile</Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild className="cursor-pointer">
-            <Link href="/settings">Settings</Link>
+            <Link href="/dashboard/settings">Settings</Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild className="cursor-pointer">
           <button
             className="w-full"
-            onClick={onPromise(() => {
+            onClick={() => {
               router.push("/");
-              return supabase().auth.signOut();
-            })}
+              toast.promise(supabase().auth.signOut(), {
+                loading: "Logging out...",
+                success: "Logged out successfully!",
+                error: "Failed to log out!",
+              });
+            }}
           >
             Log out
           </button>
