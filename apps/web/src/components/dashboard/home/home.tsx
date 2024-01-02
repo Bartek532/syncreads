@@ -42,11 +42,11 @@ export const Home = async () => {
     feeds.count ?? 0,
     device ? "reMarkable 2" : "Not registered",
     syncs.length,
-    `+${dayjs
+    dayjs
       .duration({
         minutes: articles.length * 10,
       })
-      .humanize()}`,
+      .humanize(),
   ];
 
   return (
@@ -106,7 +106,7 @@ export const Home = async () => {
                       className="group flex items-center justify-center gap-2 underline hover:no-underline"
                     >
                       View details
-                      <ArrowRight className="w-4 transition-transform group-hover:translate-x-1" />
+                      <ArrowRight className="w-4 text-muted-foreground transition-colors group-hover:text-primary" />
                     </Link>
                   </CardFooter>
                 </Card>
@@ -115,14 +115,14 @@ export const Home = async () => {
           </div>
         </section>
 
-        <div className="mx-auto mt-10 flex flex-wrap items-start justify-center gap-4 md:flex-nowrap lg:mt-12">
+        <div className="mx-auto mt-10 flex flex-wrap items-stretch justify-center gap-4 md:flex-nowrap lg:mt-12">
           <section className="flex basis-full flex-col gap-4 md:basis-3/5">
             <h2 className="text-lg font-medium sm:px-0">Syncs by day</h2>
-            <div className="rounded-lg bg-background p-2 pr-4 pt-6 shadow-sm">
+            <div className="h-96 rounded-lg bg-background p-2 pr-4 pt-6 shadow-sm md:flex-1">
               <SyncsPerDay range={range} syncs={syncs} />
             </div>
           </section>
-          <section className="mt-6 flex basis-full flex-col gap-4 md:mt-0 md:basis-2/5">
+          <section className="mt-6 flex h-fit basis-full flex-col gap-4 md:mt-0 md:basis-2/5">
             <h2 className="text-lg font-medium sm:px-0">Recently synced</h2>
             <ArticlesList articles={articles} />
           </section>

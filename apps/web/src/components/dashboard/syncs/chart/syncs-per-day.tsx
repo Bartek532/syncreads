@@ -18,7 +18,7 @@ type SyncsPerDayProps = {
 export const SyncsPerDay = memo<SyncsPerDayProps>(({ range, syncs }) => {
   const syncsByDay = groupSyncsByDay(range, syncs);
   return (
-    <ResponsiveContainer width="100%" height={350}>
+    <ResponsiveContainer width="100%">
       <BarChart
         data={syncsByDay.map(({ day, syncs }) => ({
           name: dayjs(day).format("ddd"),

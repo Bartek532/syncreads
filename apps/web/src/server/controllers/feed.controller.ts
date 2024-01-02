@@ -7,10 +7,11 @@ import type { FeedApi } from "@/types/feed.types";
 import { createFeed } from "../services/feed/feed.service";
 import { getUserFeedByUrl } from "../services/user.service";
 import { ApiError } from "../utils/exceptions";
+import { isFeedUrl } from "../utils/validation";
 
 import type {
   CreateAndConnectFeedInput,
-  GetWebsiteDetailsInput,
+  GetUrlDetailsInput,
 } from "../../utils/validation/types";
 
 export const createFeedHandler = async ({
@@ -25,12 +26,9 @@ export const createFeedHandler = async ({
     );
   }
 
-  const response = await fetch(url);
+  const isFeed = await isFeedUrl(url);
 
-  if (
-    response.status !== HTTP_STATUS_CODE.OK ||
-    !response.headers.get("content-type")?.includes("xml")
-  ) {
+  if (!isFeed) {
     throw new ApiError(
       HTTP_STATUS_CODE.BAD_REQUEST,
       "Error occured! Please check your provided url and try again!",
@@ -46,9 +44,26 @@ export const createFeedHandler = async ({
   };
 };
 
-export const getFeedDetailsHandler = async ({
-  url,
-}: GetWebsiteDetailsInput) => {
+export const getUrlDetailsHandler = async ({ url }: GetUrlDetailsInput) => {
+  const isFeed = await isFeedUrl(url);
+
+  if (!isFeed) {
+    const preview = await getLinkPreview(url, {
+      followRedirects: "follow",
+    });
+
+    return {
+      status: "Success",
+      data: {
+        title: "title" in preview ? preview.title : "",
+        description: "description" in preview ? preview.description : "",
+        image: "images" in preview ? preview.images[0] : "",
+        icon: preview.favicons[0],
+        url,
+      },
+    };
+  }
+
   const feed = (await parse(url)) as FeedApi;
   const link =
     typeof feed.link === "string"
@@ -65,13 +80,14 @@ export const getFeedDetailsHandler = async ({
 
   return {
     status: "Success",
-    feed: {
+    data: {
       title: typeof feed.title === "string" ? feed.title : feed.title.$text,
       description:
         "description" in preview
           ? preview.description ?? feed.description
           : feed.description,
       image: "images" in preview ? preview.images[0] : feed.image,
+      icon: preview.favicons[0],
       url: link,
     },
   };

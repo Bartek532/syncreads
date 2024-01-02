@@ -4,7 +4,7 @@ import type {
   cursorPaginationSchema,
   deleteAndDisconnectFeedsSchema,
   deleteFeedsSchema,
-  getWebsiteDetailsSchema,
+  getUrlDetailsSchema,
   importAndConnectFeedsSchema,
   importFeedsSchema,
   rangeSchema,
@@ -26,7 +26,7 @@ export type DeleteFeedsInput = TypeOf<typeof deleteFeedsSchema>;
 export type DeleteAndDisconnectFeedsInput = TypeOf<
   typeof deleteAndDisconnectFeedsSchema
 >;
-export type GetWebsiteDetailsInput = TypeOf<typeof getWebsiteDetailsSchema>;
+export type GetUrlDetailsInput = TypeOf<typeof getUrlDetailsSchema>;
 export type RegisterDeviceInput = TypeOf<typeof registerDeviceSchema>;
 export type RegisterAndConnectDeviceInput = TypeOf<
   typeof registerAndConnectDeviceSchema

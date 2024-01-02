@@ -28,7 +28,7 @@ export const deleteAndDisconnectFeedsSchema = deleteFeedsSchema.extend({
   id: z.string(),
 });
 
-export const getWebsiteDetailsSchema = z.object({
+export const getUrlDetailsSchema = z.object({
   url: z.string().url(),
 });
 

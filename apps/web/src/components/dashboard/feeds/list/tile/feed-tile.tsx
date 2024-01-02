@@ -16,7 +16,7 @@ export const FeedTileSkeleton = () => (
 );
 
 export const FeedTile = memo<FeedTileProps>(({ url, className }) => {
-  const { data } = api.feed.getFeedDetails.useQuery({
+  const { data } = api.feed.getUrlDetails.useQuery({
     url,
   });
 
@@ -33,22 +33,22 @@ export const FeedTile = memo<FeedTileProps>(({ url, className }) => {
     >
       <div
         className="hidden shrink-0 grow-0 basis-1/4 rounded-l-lg bg-cover bg-center sm:block sm:basis-1/5 md:basis-1/4"
-        style={{ backgroundImage: `url(${data.feed.image ?? ""})` }}
+        style={{ backgroundImage: `url(${data.data.image ?? ""})` }}
       ></div>
       <div className="p-4 pr-14 md:py-8">
         <h2 className="text-base font-medium sm:text-lg">
           <a
-            href={data.feed.url}
-            className="focus:outline-none"
+            href={data.data.url}
+            className="underline hover:no-underline focus:outline-none"
             target="_blank"
             rel="noreferrer"
           >
-            {data.feed.title}
+            {data.data.title}
           </a>
         </h2>
         <p className="mt-2 text-xs text-muted-foreground sm:text-sm">
           {truncateTextByWordsCount(
-            data.feed.description || "404 - description not found!",
+            data.data.description || "404 - description not found!",
             15,
           )}
         </p>
