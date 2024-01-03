@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import { memo } from "react";
 
 import { api } from "../../../../../../trpc/server";
+import { removeProtocolsFromUrl } from "../../../../../../utils";
 
 type ArticleTileProps = {
   readonly url: string;
@@ -19,6 +20,7 @@ export const ArticleTile = memo<ArticleTileProps>(async ({ url }) => {
       target="_blank"
       rel="noreferrer"
     >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={data.icon}
         alt=""
@@ -31,7 +33,7 @@ export const ArticleTile = memo<ArticleTileProps>(async ({ url }) => {
           {data.title}
         </span>
         <span className="text-xs text-muted-foreground">
-          {data.url?.replace(/^(https?:\/\/)?(www\.)?/, "")}
+          {removeProtocolsFromUrl(url)}
         </span>
       </div>
       <ArrowUpRight className="h-6 w-6 shrink-0 text-muted-foreground transition-colors group-hover:text-primary" />

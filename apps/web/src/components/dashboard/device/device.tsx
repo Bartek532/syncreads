@@ -4,6 +4,8 @@ import { memo } from "react";
 
 import EmptyDeviceIcon from "public/svg/empty-device.svg";
 
+import { Empty } from "../../ui/empty";
+
 import { AddDeviceDialog } from "./dialog/add-device-dialog";
 import { DeviceTile } from "./tile/device-tile";
 
@@ -28,12 +30,11 @@ export const Device = memo<DeviceProps>(({ device }) => {
         </div>
       ) : (
         <AddDeviceDialog>
-          <button className="relative mt-6 flex w-full flex-col items-center justify-center rounded-lg border-2 border-dashed border-muted-foreground/50 p-16 py-20 text-center transition-colors hover:border-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 md:py-24">
-            <EmptyDeviceIcon className="h-50 mx-auto w-40 text-muted-foreground" />
-            <span className="mt-8 block text-lg font-medium">
-              You haven&apos;t registered your device yet, do it to unlock sync!
-            </span>
-          </button>
+          <Empty
+            icon={<EmptyDeviceIcon />}
+            title="You haven't registered your device yet, do it to unlock sync!"
+            className="mt-6"
+          />
         </AddDeviceDialog>
       )}
     </div>

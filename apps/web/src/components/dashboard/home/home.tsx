@@ -118,9 +118,7 @@ export const Home = async () => {
         <div className="mx-auto mt-10 flex flex-wrap items-stretch justify-center gap-4 md:flex-nowrap lg:mt-12">
           <section className="flex basis-full flex-col gap-4 md:basis-3/5">
             <h2 className="text-lg font-medium sm:px-0">Syncs by day</h2>
-            <div className="h-96 rounded-lg bg-background p-2 pr-4 pt-6 shadow-sm md:flex-1">
-              <SyncsPerDay range={range} syncs={syncs} />
-            </div>
+            <SyncsPerDay range={range} syncs={syncs} />
           </section>
           <section className="mt-6 flex h-fit basis-full flex-col gap-4 md:mt-0 md:basis-2/5">
             <h2 className="text-lg font-medium sm:px-0">Recently synced</h2>

@@ -8,25 +8,12 @@ import EmptyFeedsIcon from "public/svg/empty-feeds.svg";
 import { api } from "../../../../trpc/react";
 import { Button } from "../../../ui/button";
 import { Checkbox } from "../../../ui/checkbox";
+import { Empty } from "../../../ui/empty";
 import { Skeleton } from "../../../ui/skeleton";
 
 import { FeedTile, FeedTileSkeleton } from "./tile/feed-tile";
 
 import type { Feed } from "@rssmarkable/database";
-
-const EmptyFeedsList = ({ onCreateNew }: { onCreateNew: () => void }) => {
-  return (
-    <button
-      onClick={onCreateNew}
-      className="relative mt-6 flex w-full flex-col items-center justify-center rounded-lg border-2 border-dashed border-muted-foreground/50 p-16 py-20 text-center transition-colors hover:border-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 md:py-24"
-    >
-      <EmptyFeedsIcon className="h-50 mx-auto w-40 text-muted-foreground" />
-      <span className="mt-8 block text-lg font-medium">
-        You haven&apos;t added any feed yet!
-      </span>
-    </button>
-  );
-};
 
 const FeedsListSkeleton = () => (
   <div className="mt-6 flex flex-col gap-5">
@@ -60,7 +47,14 @@ export const FeedsList = memo<FeedsListProps>(
     }
 
     if (!data?.pages[0]?.data.length) {
-      return <EmptyFeedsList onCreateNew={onCreateNew} />;
+      return (
+        <Empty
+          onCreateNew={onCreateNew}
+          icon={<EmptyFeedsIcon />}
+          title="You haven't added any feed yet!"
+          className="mt-6"
+        />
+      );
     }
 
     const feeds = data.pages.map(({ data }) => data).flat();

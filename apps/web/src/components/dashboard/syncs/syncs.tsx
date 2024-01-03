@@ -4,6 +4,8 @@ import { memo } from "react";
 
 import EmptySyncsIcon from "public/svg/empty-syncs.svg";
 
+import { Empty } from "../../ui/empty";
+
 import { columns } from "./table/columns";
 import { SyncsTable } from "./table/table";
 
@@ -23,12 +25,11 @@ export const Syncs = memo<SyncsProps>(({ syncs }) => {
   }
 
   return (
-    <button className="relative mt-6 flex w-full flex-col items-center justify-center rounded-lg border-2 border-dashed border-muted-foreground/50 p-16 py-20 text-center transition-colors hover:border-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 md:py-24">
-      <EmptySyncsIcon className="h-50 mx-auto w-40 text-muted-foreground" />
-      <span className="mt-8 block text-lg font-medium">
-        You haven&apos;t synced any content yet!
-      </span>
-    </button>
+    <Empty
+      icon={<EmptySyncsIcon />}
+      title="You haven't synced any content yet!"
+      className="mt-6"
+    />
   );
 });
 

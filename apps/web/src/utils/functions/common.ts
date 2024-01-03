@@ -39,6 +39,9 @@ export const retrieveChild = (
   );
 };
 
+export const removeProtocolsFromUrl = (url: string) =>
+  url.replace(/^(https?:\/\/)?(www\.)?/, "");
+
 const getScrollbarWidth = () =>
   window.innerWidth - document.documentElement.clientWidth;
 
