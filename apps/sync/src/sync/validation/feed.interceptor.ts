@@ -39,6 +39,8 @@ export class SyncFeedInterceptor implements NestInterceptor {
       );
     }
 
+    console.log(ids.length, payload.in.length, MAX_FEEDS_IN_ONE_SYNC);
+
     if (ids.length > MAX_FEEDS_IN_ONE_SYNC) {
       throw new BadRequestException(
         `You can only sync up to ${MAX_FEEDS_IN_ONE_SYNC} feeds at once!`,

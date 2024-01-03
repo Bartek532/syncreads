@@ -7,6 +7,7 @@ import {
 } from "@nestjs/bull";
 import { Inject } from "@nestjs/common";
 import { SyncStatus } from "@rssmarkable/database";
+import { clearUrl } from "@rssmarkable/shared";
 import { Job } from "bull";
 import dayjs from "dayjs";
 
@@ -62,16 +63,17 @@ export class FeedQueueConsumer {
     );
 
     for (const article of articles) {
+      const url = clearUrl(article.link);
       await this.feedQueueService.syncArticle({
         userId: data.userId,
-        url: article.link,
+        url,
         folder: user.user_metadata.folder,
         syncId: data.syncId,
       });
 
       await this.syncService.createSyncArticle({
         syncId: data.syncId,
-        url: article.link,
+        url,
       });
     }
 

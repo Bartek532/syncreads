@@ -1,4 +1,5 @@
 import {
+  clearUrl,
   syncArticlePayloadSchema,
   syncFeedPayloadSchema,
 } from "@rssmarkable/shared";
@@ -13,11 +14,18 @@ export const syncRouter = router({
   queueArticleSync: protectedProcedure
     .input(syncArticlePayloadSchema)
     .mutation(({ ctx, input }) =>
-      queueArticleSyncHandler({ id: ctx.session.user.id, ...input }),
+      queueArticleSyncHandler({
+        ...input,
+        id: ctx.session.user.id,
+        url: clearUrl(input.url),
+      }),
     ),
   queueFeedSync: protectedProcedure
     .input(syncFeedPayloadSchema)
     .mutation(({ ctx, input }) =>
-      queueFeedSyncHandler({ id: ctx.session.user.id, ...input }),
+      queueFeedSyncHandler({
+        ...input,
+        id: ctx.session.user.id,
+      }),
     ),
 });

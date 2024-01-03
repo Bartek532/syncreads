@@ -1,3 +1,5 @@
+import { clearUrl } from "@rssmarkable/shared";
+
 import { router, protectedProcedure } from "..";
 import {
   createFeedSchema,
@@ -12,7 +14,11 @@ export const feedRouter = router({
   createFeed: protectedProcedure
     .input(createFeedSchema)
     .mutation(({ input, ctx }) =>
-      createFeedHandler({ ...input, id: ctx.session.user.id }),
+      createFeedHandler({
+        ...input,
+        id: ctx.session.user.id,
+        url: clearUrl(input.url),
+      }),
     ),
   // importFeeds: protectedProcedure
   //   .input(importFeedsSchema)
@@ -21,5 +27,7 @@ export const feedRouter = router({
   //   ),
   getUrlDetails: protectedProcedure
     .input(getUrlDetailsSchema)
-    .query(({ input }) => getUrlDetailsHandler(input)),
+    .query(({ input }) =>
+      getUrlDetailsHandler({ ...input, url: clearUrl(input.url) }),
+    ),
 });

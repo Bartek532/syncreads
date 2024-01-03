@@ -4,11 +4,12 @@ import { cookies } from "next/headers";
 import { Toaster } from "react-hot-toast";
 
 import { TOASTER_CONFIG } from "../config";
-import { DEFAULT_METADATA } from "../lib/metadata";
+import { DEFAULT_METADATA, DEFAULT_VIEWPORT } from "../lib/metadata";
 import "../styles/globals.css";
 import { TRPCReactProvider } from "../trpc/react";
 
 export const metadata = DEFAULT_METADATA;
+export const viewport = DEFAULT_VIEWPORT;
 
 export default function RootLayout({
   children,

@@ -7,6 +7,7 @@ import {
   UseInterceptors,
 } from "@nestjs/common";
 import { SyncStatus, SyncTrigger } from "@rssmarkable/database";
+import { clearUrl } from "@rssmarkable/shared";
 import { Queue } from "bull";
 
 import { UserId } from "../auth/decorators/user-id.decorator";
@@ -47,7 +48,7 @@ export class SyncController {
 
     await this.articleQueue.add({
       userId: userId,
-      url: payload.url,
+      url: clearUrl(payload.url),
       syncId: sync.id,
     });
 

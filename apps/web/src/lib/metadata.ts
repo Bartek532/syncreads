@@ -6,7 +6,7 @@ import {
   SITE_TITLE_TEMPLATE,
 } from "../config";
 
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 interface SeoProps {
   readonly title?: string;
@@ -65,6 +65,10 @@ export const DEFAULT_METADATA: Metadata = {
       },
     ],
   },
+};
+
+export const DEFAULT_VIEWPORT: Viewport = {
+  themeColor: "#ffffff",
 };
 
 export const getMetadata = (

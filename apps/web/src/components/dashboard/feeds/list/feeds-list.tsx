@@ -34,7 +34,7 @@ type FeedsListProps = {
 
 export const FeedsList = memo<FeedsListProps>(
   ({ checkedFeeds, onToggle, onCreateNew }) => {
-    const { isLoading, data, fetchNextPage } =
+    const { isLoading, isFetchingNextPage, data, fetchNextPage } =
       api.user.getUserFeeds.useInfiniteQuery(
         {},
         {
@@ -87,7 +87,11 @@ export const FeedsList = memo<FeedsListProps>(
             className="mx-auto w-fit"
             onClick={onPromise(() => fetchNextPage())}
           >
-            {isLoading ? <Loader2 className="animate-spin" /> : "Load more"}
+            {isFetchingNextPage ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              "Load more"
+            )}
           </Button>
         )}
       </>

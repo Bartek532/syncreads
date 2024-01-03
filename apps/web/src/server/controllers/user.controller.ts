@@ -96,7 +96,9 @@ export const deleteUserFeedsHandler = async ({
 
   return {
     status: "Success",
-    message: `Successfully deleted ${ids.length} feed${ids.length > 1 && "s"}!`,
+    message: `Successfully deleted ${ids.length} feed${
+      ids.length > 1 ? "s" : ""
+    }!`,
   };
 };
 

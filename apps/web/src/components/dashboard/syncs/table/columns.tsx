@@ -130,7 +130,7 @@ export const columns: ColumnDef<Sync>[] = [
     cell: ({ row }) => {
       return (
         <time
-          dateTime={row.getValue("startedAt")}
+          dateTime={row.getValue("date")}
           className="block w-full whitespace-nowrap pr-2 text-right"
         >
           {dayjs(row.getValue("date")).format("MMMM D, HH:mm")}
