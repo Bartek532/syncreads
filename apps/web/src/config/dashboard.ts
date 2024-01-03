@@ -58,5 +58,3 @@ export enum PAGINATION_TYPE {
   OFFSET = "OFFSET",
   CURSOR = "CURSOR",
 }
-
-export const FEEDS_PAGINATION_DEFAULT_PER_PAGE = 5;

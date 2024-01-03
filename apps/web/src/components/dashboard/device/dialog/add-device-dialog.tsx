@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 
 import { capitalize, onPromise } from "../../../../utils";
 import { registerDeviceSchema } from "../../../../utils/validation/schema";
@@ -28,7 +28,6 @@ import { Input } from "../../../ui/input";
 import { registerDevice } from "./actions/actions";
 
 import type { RegisterDeviceInput } from "../../../../utils/validation/types";
-import type { TRPCError } from "@trpc/server";
 
 type AddDeviceDialog = {
   readonly children?: React.ReactNode;
@@ -39,11 +38,11 @@ export const AddDeviceDialog = memo<AddDeviceDialog>(({ children }) => {
     resolver: zodResolver(registerDeviceSchema),
   });
 
-  const onSubmit = (data: RegisterDeviceInput) => {
-    toast.promise(registerDevice(data), {
+  const onSubmit = async (data: RegisterDeviceInput) => {
+    await toast.promise(registerDevice(data), {
       loading: "Registering your device...",
       success: ({ message }) => message,
-      error: (err: TRPCError | Error) => capitalize(err.message),
+      error: (err: Error) => capitalize(err.message),
     });
   };
 

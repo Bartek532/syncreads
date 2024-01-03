@@ -133,7 +133,7 @@ export const columns: ColumnDef<Sync>[] = [
           dateTime={row.getValue("startedAt")}
           className="block w-full whitespace-nowrap pr-2 text-right"
         >
-          {dayjs(row.getValue("startedAt")).format("MMMM D, HH:mm")}
+          {dayjs(row.getValue("date")).format("MMMM D, HH:mm")}
         </time>
       );
     },

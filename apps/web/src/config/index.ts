@@ -2,6 +2,8 @@ import { NODE_ENV } from "@rssmarkable/shared";
 
 import { env } from "../lib/env/client";
 
+import type { DefaultToastOptions } from "react-hot-toast";
+
 export const ORIGIN =
   env.NEXT_PUBLIC_HOST ??
   env.NEXT_PUBLIC_VERCEL_URL ??
@@ -80,22 +82,11 @@ export const INDEX_OPEN_SOURCE_HEADING = {
   },
 };
 
-export const TOASTER_CONFIG = {
+export const TOASTER_CONFIG: DefaultToastOptions = {
   style: {
     padding: "14px 25px",
     minWidth: "250px",
     gap: "10px",
-  },
-  error: {
-    style: {
-      backgroundColor: "#fef2f2",
-      color: "#991b1b",
-    },
-  },
-  success: {
-    style: {
-      backgroundColor: "#f0fdf4",
-      color: "#15803d",
-    },
+    maxWidth: "400px",
   },
 };

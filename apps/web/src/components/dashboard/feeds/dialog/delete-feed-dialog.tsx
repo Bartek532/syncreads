@@ -1,6 +1,7 @@
 import { memo } from "react";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 
+import { onPromise } from "../../../../utils";
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -15,8 +16,6 @@ import {
 
 import { deleteFeeds } from "./actions/actions";
 
-import type { TRPCError } from "@trpc/server";
-
 type DeleteFeedDialogProps = {
   readonly children?: React.ReactNode;
   readonly feeds: Map<string, string>;
@@ -24,11 +23,11 @@ type DeleteFeedDialogProps = {
 
 export const DeleteFeedDialog = memo<DeleteFeedDialogProps>(
   ({ children, feeds }) => {
-    const onDelete = () => {
-      toast.promise(deleteFeeds({ in: Array.from(feeds.keys()) }), {
+    const onDelete = async () => {
+      await toast.promise(deleteFeeds({ in: Array.from(feeds.keys()) }), {
         loading: "Deleting feeds...",
         success: ({ message }) => message,
-        error: (err: TRPCError | Error) => err.message,
+        error: (err: Error) => err.message,
       });
     };
 
@@ -52,7 +51,9 @@ export const DeleteFeedDialog = memo<DeleteFeedDialogProps>(
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={onDelete}>Continue</AlertDialogAction>
+            <AlertDialogAction onClick={onPromise(onDelete)}>
+              Continue
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

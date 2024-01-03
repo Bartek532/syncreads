@@ -7,6 +7,7 @@ import type {
   getUrlDetailsSchema,
   importAndConnectFeedsSchema,
   importFeedsSchema,
+  limitSchema,
   rangeSchema,
   registerAndConnectDeviceSchema,
   registerDeviceSchema,
@@ -36,3 +37,4 @@ export type UnregisterAndDisconnectDeviceInput = TypeOf<
 >;
 export type CursorPaginationInput = TypeOf<typeof cursorPaginationSchema>;
 export type RangeInput = TypeOf<typeof rangeSchema>;
+export type LimitInput = TypeOf<typeof limitSchema>;

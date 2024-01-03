@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 
-import type { RangeInput } from "@/utils";
+import type { LimitInput, RangeInput } from "@/utils";
 
 import { supabase } from "../../lib/supabase/server";
 
@@ -91,72 +91,14 @@ export const getUserSyncs = ({ id, from, to }: RangeInput & { id: string }) => {
   return query;
 };
 
-export const getUserSyncedArticles = ({ id }: { id: string }) => {
+export const getUserArticles = ({ id, limit }: LimitInput & { id: string }) => {
   return supabase()
     .from("Article")
-    .select("*, sync:Sync(userId)")
-    .eq("sync.userId", id);
+    .select("*, sync:Sync(userId,startedAt)")
+    .eq("sync.userId", id)
+    .order("startedAt", { referencedTable: "Sync", ascending: false })
+    .limit(limit);
 };
-
-// export const getUserFeed = ({
-//   userId,
-//   url,
-// }: {
-//   userId: number;
-//   url: string;
-// }) => {
-//   return prisma.userFeed.findFirst({
-//     where: {
-//       AND: [
-//         {
-//           user: { id: userId },
-//         },
-//         { feed: { url } },
-//       ],
-//     },
-//   });
-// };
-
-// export const updateFeedSyncDate = ({
-//   userId,
-//   feedId,
-//   date,
-// }: {
-//   userId: number;
-//   feedId: number;
-//   date?: Date;
-// }) => {
-//   return prisma.userFeed.update({
-//     where: {
-//       userId_feedId: {
-//         userId,
-//         feedId,
-//       },
-//     },
-//     data: {
-//       lastSyncDate: date ?? new Date(),
-//     },
-//   });
-// };
-
-// export const getUserFeedByUrl = ({ id, url }: { id: number; url: string }) => {
-//   return prisma.feed.findFirst({
-//     where: { AND: [{ url }, { users: { some: { user: { id } } } }] },
-//     include: { users: true },
-//   });
-// };
-
-// export const deleteFeedFromUser = ({
-//   id,
-//   url,
-// }: {
-//   id: number;
-//   url: string;
-// }) => {
-//   return prisma.userFeed.deleteMany({
-//     where: { user: { id }, feed: { url } },
-//   });
-// };
 
 export const registerUserDevice = ({
   id,

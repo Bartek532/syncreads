@@ -7,7 +7,7 @@ import {
   deleteUserFeed,
   getUserDevice,
   getUserFeeds,
-  getUserSyncedArticles,
+  getUserArticles,
   getUserSyncs,
   registerUserDevice,
   unregisterUserDevice,
@@ -20,6 +20,7 @@ import type {
   UnregisterAndDisconnectDeviceInput,
   DeleteAndDisconnectFeedsInput,
   RangeInput,
+  LimitInput,
 } from "../../utils/validation/types";
 
 export const registerDeviceHandler = async ({
@@ -117,8 +118,10 @@ export const getUserSyncsHandler = async (
   return data;
 };
 
-export const getUserSyncedArticlesHandler = async (input: { id: string }) => {
-  const { data, error, status } = await getUserSyncedArticles(input);
+export const getUserArticlesHandler = async (
+  input: LimitInput & { id: string },
+) => {
+  const { data, error, status } = await getUserArticles(input);
 
   if (error) {
     throw new ApiError(status, error.message);

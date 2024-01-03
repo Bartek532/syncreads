@@ -36,7 +36,7 @@ export const Home = async () => {
     to: range.to,
   });
   const device = await api.user.getUserDevice.query();
-  const articles = await api.user.getUserSyncedArticles.query();
+  const articles = await api.user.getUserArticles.query({});
 
   const cardsValues = [
     feeds.count ?? 0,

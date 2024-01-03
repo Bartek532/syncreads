@@ -1,5 +1,5 @@
 import { HTTP_STATUS_CODE } from "@rssmarkable/shared";
-import { getLinkPreview } from "link-preview-js";
+import { getLinkPreview, getPreviewFromContent } from "link-preview-js";
 import { parse } from "rss-to-json";
 
 import type { FeedApi } from "@/types/feed.types";
@@ -45,11 +45,12 @@ export const createFeedHandler = async ({
 };
 
 export const getUrlDetailsHandler = async ({ url }: GetUrlDetailsInput) => {
-  const isFeed = await isFeedUrl(url);
+  const { isFeed, response } = await isFeedUrl(url);
 
   if (!isFeed) {
-    const preview = await getLinkPreview(url, {
+    const preview = await getPreviewFromContent(response, {
       followRedirects: "follow",
+      timeout: 1500,
     });
 
     return {
@@ -76,6 +77,7 @@ export const getUrlDetailsHandler = async ({ url }: GetUrlDetailsInput) => {
 
   const preview = await getLinkPreview(link ?? url, {
     followRedirects: "follow",
+    timeout: 1500,
   });
 
   return {

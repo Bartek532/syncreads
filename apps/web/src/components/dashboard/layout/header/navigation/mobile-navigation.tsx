@@ -4,7 +4,7 @@ import { AlignRight, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { memo, useState } from "react";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,14 @@ import {
   DASHBOARD_NAVIGATION,
   DASHBOARD_SECONDARY_NAVIGATION,
 } from "@/config/dashboard";
-import { cn, getAvatar, getName, lockScroll, unlockScroll } from "@/utils";
+import {
+  cn,
+  getAvatar,
+  getName,
+  lockScroll,
+  onPromise,
+  unlockScroll,
+} from "@/utils";
 
 import { supabase } from "../../../../../lib/supabase/client";
 
@@ -73,14 +80,14 @@ export const MobileNavigation = memo<MobileNavigationProps>(({ user }) => {
             ))}
             <button
               className="w-full border-y py-3 text-left"
-              onClick={() => {
+              onClick={onPromise(async () => {
                 router.push("/");
-                toast.promise(supabase().auth.signOut(), {
+                await toast.promise(supabase().auth.signOut(), {
                   loading: "Logging out...",
                   success: "Logged out successfully!",
                   error: "Failed to log out!",
                 });
-              }}
+              })}
             >
               Log out
             </button>

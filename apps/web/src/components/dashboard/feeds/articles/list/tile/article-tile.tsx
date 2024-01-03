@@ -3,6 +3,7 @@ import { memo } from "react";
 
 import { api } from "../../../../../../trpc/server";
 import { removeProtocolsFromUrl } from "../../../../../../utils";
+import { Avatar, AvatarFallback, AvatarImage } from "../../../../../ui/avatar";
 
 type ArticleTileProps = {
   readonly url: string;
@@ -20,14 +21,10 @@ export const ArticleTile = memo<ArticleTileProps>(async ({ url }) => {
       target="_blank"
       rel="noreferrer"
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={data.icon}
-        alt=""
-        width={30}
-        height={30}
-        className="mt-1 shrink-0"
-      />
+      <Avatar className="mt-1 h-8 w-8 shrink-0">
+        <AvatarImage src={data.icon} alt="" />
+        <AvatarFallback>{data.title[0]}</AvatarFallback>
+      </Avatar>
       <div className="mr-auto flex flex-col gap-1">
         <span className="text-sm font-bold underline group-hover:no-underline">
           {data.title}

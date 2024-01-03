@@ -1,9 +1,11 @@
 "use client";
 
 import { memo, useState } from "react";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 
 import { Button } from "@/components/ui/button";
+
+import { onPromise } from "../../../utils";
 
 import { queueFeedSync } from "./dialog/actions/actions";
 import { AddFeedDialog } from "./dialog/add-feed-dialog";
@@ -30,12 +32,15 @@ export const Feeds = memo(() => {
     });
   };
 
-  const onSync = () => {
-    toast.promise(queueFeedSync({ in: Array.from(checkedFeeds.keys()) }), {
-      loading: "Queuing feed sync...",
-      success: ({ message }) => message,
-      error: (err: Error) => err.message,
-    });
+  const onSync = async () => {
+    await toast.promise(
+      queueFeedSync({ in: Array.from(checkedFeeds.keys()) }),
+      {
+        loading: "Queuing feed sync...",
+        success: ({ message }) => message,
+        error: (err: Error) => err.message,
+      },
+    );
   };
 
   return (
@@ -55,7 +60,7 @@ export const Feeds = memo(() => {
                   Delete {checkedFeeds.size} feed{checkedFeeds.size > 1 && "s"}
                 </Button>
               </DeleteFeedDialog>
-              <Button onClick={onSync}>
+              <Button onClick={onPromise(onSync)}>
                 Sync {checkedFeeds.size} feed{checkedFeeds.size > 1 && "s"}
               </Button>
             </>

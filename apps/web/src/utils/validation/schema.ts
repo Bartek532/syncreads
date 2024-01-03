@@ -1,6 +1,5 @@
 import { z } from "zod";
 
-import { FEEDS_PAGINATION_DEFAULT_PER_PAGE } from "../../config/dashboard";
 import { FILE_TYPE } from "../../types/feed.types";
 
 export const createFeedSchema = z.object({
@@ -47,10 +46,15 @@ export const unregisterAndDisconnectDeviceSchema = z.object({
   id: z.string(),
 });
 
-export const cursorPaginationSchema = z.object({
-  limit: z.number().default(FEEDS_PAGINATION_DEFAULT_PER_PAGE),
-  cursor: z.string().optional(),
+export const limitSchema = z.object({
+  limit: z.number().default(5),
 });
+
+export const cursorPaginationSchema = limitSchema.merge(
+  z.object({
+    cursor: z.string().optional(),
+  }),
+);
 
 export const rangeSchema = z.object({
   from: z.date().optional(),

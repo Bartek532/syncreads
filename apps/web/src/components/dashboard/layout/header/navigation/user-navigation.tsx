@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { memo } from "react";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -16,7 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { supabase } from "@/lib/supabase/client";
-import { getAvatar, getName } from "@/utils";
+import { getAvatar, getName, onPromise } from "@/utils";
 
 import type { User } from "@rssmarkable/database";
 
@@ -68,14 +68,14 @@ export const UserNavigation = memo<UserNavigationProps>(({ user }) => {
         <DropdownMenuItem asChild className="cursor-pointer">
           <button
             className="w-full"
-            onClick={() => {
+            onClick={onPromise(async () => {
               router.push("/");
-              toast.promise(supabase().auth.signOut(), {
+              await toast.promise(supabase().auth.signOut(), {
                 loading: "Logging out...",
                 success: "Logged out successfully!",
                 error: "Failed to log out!",
               });
-            }}
+            })}
           >
             Log out
           </button>

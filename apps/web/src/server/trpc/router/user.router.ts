@@ -2,6 +2,7 @@ import { router, protectedProcedure } from "..";
 import {
   cursorPaginationSchema,
   deleteFeedsSchema,
+  limitSchema,
   rangeSchema,
   registerDeviceSchema,
 } from "../../../utils/validation/schema";
@@ -9,7 +10,7 @@ import {
   deleteUserFeedsHandler,
   getUserDeviceHandler,
   getUserFeedsHandler,
-  getUserSyncedArticlesHandler,
+  getUserArticlesHandler,
   getUserSyncsHandler,
   registerDeviceHandler,
   unregisterDeviceHandler,
@@ -42,7 +43,9 @@ export const userRouter = router({
     .query(({ ctx, input }) =>
       getUserSyncsHandler({ id: ctx.session.user.id, ...input }),
     ),
-  getUserSyncedArticles: protectedProcedure.query(({ ctx }) =>
-    getUserSyncedArticlesHandler({ id: ctx.session.user.id }),
-  ),
+  getUserArticles: protectedProcedure
+    .input(limitSchema)
+    .query(({ ctx, input }) =>
+      getUserArticlesHandler({ id: ctx.session.user.id, ...input }),
+    ),
 });
