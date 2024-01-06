@@ -1,4 +1,6 @@
 import { env } from "@/lib/env/server";
+import { supabase } from "@/lib/supabase/server";
+import type { GetSyncInput } from "@/utils";
 
 import { ApiError, isSyncApiErrorResponse } from "../utils/exceptions";
 
@@ -54,4 +56,8 @@ export const queueFeedSync = async ({
   }
 
   return data;
+};
+
+export const getSyncById = async ({ id }: GetSyncInput) => {
+  return supabase().from("Sync").select("*").eq("id", id).single();
 };

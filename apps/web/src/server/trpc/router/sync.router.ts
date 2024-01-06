@@ -4,8 +4,11 @@ import {
   syncFeedPayloadSchema,
 } from "@rssmarkable/shared";
 
+import { getSyncSchema } from "@/utils";
+
 import { protectedProcedure, router } from "..";
 import {
+  getSyncHandler,
   queueArticleSyncHandler,
   queueFeedSyncHandler,
 } from "../../controllers/sync.controller";
@@ -28,4 +31,7 @@ export const syncRouter = router({
         id: ctx.session.user.id,
       }),
     ),
+  getSync: protectedProcedure
+    .input(getSyncSchema)
+    .query(({ input }) => getSyncHandler(input)),
 });

@@ -1,6 +1,11 @@
 import { ApiError } from "@/server/utils/exceptions";
+import type { GetSyncInput } from "@/utils";
 
-import { queueArticleSync, queueFeedSync } from "../services/sync.service";
+import {
+  getSyncById,
+  queueArticleSync,
+  queueFeedSync,
+} from "../services/sync.service";
 import { getUserApiKey } from "../services/user.service";
 
 import type { SyncArticlePayload, SyncFeedPayload } from "@rssmarkable/shared";
@@ -46,5 +51,18 @@ export const queueFeedSyncHandler = async ({
     status: "Success",
     message: "Feed sync succesfully queued!",
     sync,
+  };
+};
+
+export const getSyncHandler = async ({ id }: GetSyncInput) => {
+  const { data, error, status } = await getSyncById({ id });
+
+  if (error) {
+    throw new ApiError(status, error.message);
+  }
+
+  return {
+    status: "Success",
+    data,
   };
 };

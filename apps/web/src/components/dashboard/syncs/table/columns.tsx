@@ -1,6 +1,6 @@
 "use client";
 
-import { type Sync, SyncStatus } from "@rssmarkable/database";
+import { type Sync } from "@rssmarkable/database";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -8,22 +8,14 @@ import { RefreshCw } from "lucide-react";
 import Link from "next/link";
 
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header";
-import { SYNC_TRIGGER_EMOJIS } from "@/config/sync";
+import { SYNC_STATUS_COLORS, SYNC_TRIGGER_EMOJIS } from "@/config/sync";
 import { capitalize, cn } from "@/utils";
 
-import type { SyncTrigger } from "@rssmarkable/database";
+import type { SyncTrigger, SyncStatus } from "@rssmarkable/database";
 import type { ColumnDef } from "@tanstack/react-table";
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
-
-const SYNC_STATUS_COLORS: Record<SyncStatus, string> = {
-  [SyncStatus.FAILED]: "bg-destructive",
-  [SyncStatus.SUCCESS]: "bg-success",
-  [SyncStatus.IN_PROGRESS]: "bg-warning",
-  [SyncStatus.QUEUED]: "bg-sky",
-  [SyncStatus.UNKNOWN]: "bg-muted-foreground",
-};
 
 export const columns: ColumnDef<Sync>[] = [
   {
@@ -35,9 +27,7 @@ export const columns: ColumnDef<Sync>[] = [
       <div className="flex items-center  gap-2 truncate">
         <RefreshCw className="h-4 w-4 text-muted-foreground" />
         <Link
-          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-          // href={`/dashboard/syncs/${row.getValue("id")}`}
-          href="/"
+          href={`/dashboard/syncs/${row.original.id}`}
           className="truncate text-muted-foreground transition-colors hover:text-primary"
         >
           {row.getValue("id")}

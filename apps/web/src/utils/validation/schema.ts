@@ -46,6 +46,10 @@ export const unregisterAndDisconnectDeviceSchema = z.object({
   id: z.string(),
 });
 
+export const getSyncSchema = z.object({
+  id: z.string().uuid(),
+});
+
 export const limitSchema = z.object({
   limit: z.number().default(5),
 });
