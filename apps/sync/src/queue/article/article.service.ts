@@ -58,6 +58,10 @@ export class ArticleQueueService {
       userId,
     });
 
+    await this.syncLogger(syncId).log(
+      `Article uploaded to the reMarkable cloud.`,
+    );
+
     await this.deviceStrategies.remarkable.syncEntry(userId, entry);
 
     await this.syncLogger(syncId).verbose(

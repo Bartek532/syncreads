@@ -1,3 +1,9 @@
+import {
+  HTTP_STATUS_CODE,
+  type SyncArticlePayload,
+  type SyncFeedPayload,
+} from "@rssmarkable/shared";
+
 import { ApiError } from "@/server/utils/exceptions";
 import type { GetSyncInput, GetSyncLogInput } from "@/utils";
 
@@ -8,8 +14,9 @@ import {
   queueFeedSync,
 } from "../services/sync.service";
 import { getUserApiKey } from "../services/user.service";
+import { isLogMessage } from "../utils/validation";
 
-import type { SyncArticlePayload, SyncFeedPayload } from "@rssmarkable/shared";
+import type { LogMessage } from "@rssmarkable/shared";
 
 export const queueArticleSyncHandler = async ({
   id,
@@ -75,8 +82,31 @@ export const getSyncLogHandler = async ({ syncId }: GetSyncLogInput) => {
     throw new ApiError(status, error.message);
   }
 
+  const logs = data.map((l) => l.json);
+
+  for (const log of logs) {
+    const lines: unknown = JSON.parse(log?.toString() ?? "[]");
+
+    if (!Array.isArray(lines)) {
+      throw new ApiError(
+        HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR,
+        "Failed to parse sync log.",
+      );
+    }
+
+    if (lines.some((line) => !isLogMessage(line))) {
+      throw new ApiError(
+        HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR,
+        "Failed to parse sync log.",
+      );
+    }
+  }
+
   return {
     status: "Success",
-    data,
+    data: data.map((l) => ({
+      ...l,
+      json: JSON.parse(l.json?.toString() ?? "[]") as LogMessage[],
+    })),
   };
 };

@@ -22,6 +22,46 @@ export class FeedQueueService {
     private readonly syncLogger: SyncLoggerProviderFactory,
   ) {}
 
+  private async upsertFeedFolder(
+    userId: string,
+    syncId: string,
+    name?: string,
+  ) {
+    if (!name) {
+      return;
+    }
+
+    await this.syncLogger(syncId).log(
+      `Searchig for folder with name *${name}*...`,
+    );
+
+    const folder = await this.deviceStrategies.remarkable.getFolder(
+      userId,
+      name,
+    );
+
+    if (folder) {
+      await this.syncLogger(syncId).log(
+        `Folder with name *${name}* found on the device.`,
+      );
+
+      return folder.id;
+    }
+
+    await this.syncLogger(syncId).log(`Folder not found, creating new one...`);
+
+    const newFolder = await this.deviceStrategies.remarkable.createFolder(
+      userId,
+      name,
+    );
+
+    await this.syncLogger(syncId).log(
+      `Folder named *${name}* created on the device.`,
+    );
+
+    return newFolder.id;
+  }
+
   async syncArticle({
     userId,
     url,
@@ -54,12 +94,18 @@ export class FeedQueueService {
       `Trying to push output to the reMarkable cloud...`,
     );
 
+    const folderId = await this.upsertFeedFolder(userId, syncId, folder);
+
     const entry = await this.deviceStrategies.remarkable.upload({
       title,
       pdf,
       userId,
-      ...(folder ? { folder } : {}),
+      ...(folderId ? { folder } : {}),
     });
+
+    await this.syncLogger(syncId).log(
+      `Article uploaded to the reMarkable cloud.`,
+    );
 
     await this.deviceStrategies.remarkable.syncEntry(userId, entry);
 

@@ -6,4 +6,11 @@ export enum NODE_ENV {
   PRODUCTION = "production",
 }
 
+export enum LOG_LEVEL {
+  ERROR = "error",
+  WARN = "warn",
+  LOG = "log",
+  VERBOSE = "verbose",
+}
+
 export const nodeEnvs = z.nativeEnum(NODE_ENV);

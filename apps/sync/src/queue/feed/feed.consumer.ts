@@ -80,7 +80,7 @@ export class FeedQueueConsumer {
     await this.syncLogger(data.syncId).verbose(
       `Successfully synced feed ${feed.feed.url} including **${
         articles.length
-      }** articles: ${formatTime(dayjs().diff(feedSyncStartDate, "ms"))}`,
+      }** article(s): ${formatTime(dayjs().diff(feedSyncStartDate, "ms"))}`,
     );
   }
 

@@ -12,15 +12,13 @@ import type { Log } from "@rssmarkable/database";
 import type { LogMessage } from "@rssmarkable/shared";
 
 type SyncLogProps = {
-  readonly log: Log;
+  readonly log: Log & { json: LogMessage[] };
 };
 
 export const SyncLog = memo<SyncLogProps>(({ log }) => {
   const [activeLine, setActiveLine] = useState("");
   const router = useRouter();
   const params = useParams();
-
-  const lines = JSON.parse(log.json?.toString() ?? "[]") as LogMessage[];
 
   useEffect(() => {
     const arr = window.location.hash.match(/#L\d+/g);
@@ -32,9 +30,9 @@ export const SyncLog = memo<SyncLogProps>(({ log }) => {
 
   return (
     <div className="-mx-6 overflow-hidden overflow-x-auto border bg-background py-4 shadow-sm sm:mx-0 sm:rounded-lg">
-      <table className="min-w-full divide-y divide-gray-200">
+      <table className="min-w-full">
         <tbody>
-          {lines.map(({ date, message, level }, index) => (
+          {log.json.map(({ date, message, level }, index) => (
             <tr
               key={date.toString()}
               className={cn(

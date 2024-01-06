@@ -23,7 +23,7 @@ export class RemarkableStrategy implements DeviceStrategy {
     return api.getEntriesMetadata();
   }
 
-  private async checkIfFolderExists(userId: string, name: string) {
+  async getFolder(userId: string, name: string) {
     const files = await this.getFiles(userId);
 
     return files.find(
@@ -35,7 +35,7 @@ export class RemarkableStrategy implements DeviceStrategy {
     );
   }
 
-  private async createFolder(
+  async createFolder(
     userId: string,
     name: string,
   ): Promise<CollectionMetadataEntry> {
@@ -64,31 +64,18 @@ export class RemarkableStrategy implements DeviceStrategy {
     await api.syncComplete(nextGen);
   }
 
-  // TODO: add logger
-  private async upsertFolder(userId: string, name: string) {
-    const folder = await this.checkIfFolderExists(userId, name);
-    if (!folder) {
-      return this.createFolder(userId, name);
-    }
-
-    return folder;
-  }
-
   async upload({
     userId,
-    folder,
+    folderId,
     title,
     pdf,
   }: {
     userId: string;
-    folder?: string;
     title: string;
     pdf: Buffer;
+    folderId?: string;
   }) {
     const api = await this.remarkableProvider(userId);
-    const folderId = folder
-      ? (await this.upsertFolder(userId, folder)).id
-      : undefined;
 
     return api.putPdf(title, pdf, { parent: folderId });
   }

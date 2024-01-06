@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation";
+
 import { SyncLog } from "@/components/dashboard/syncs/log/Log";
 import { SYNC_STATUS_COLORS } from "@/config/sync";
 import { api } from "@/trpc/server";
@@ -6,6 +8,10 @@ import { capitalize, cn } from "@/utils";
 const Sync = async ({ params }: { params: { id: string } }) => {
   const { data: sync } = await api.sync.getSync.query({ id: params.id });
   const { data: log } = await api.sync.getSyncLog.query({ syncId: params.id });
+
+  if (!log[0]) {
+    return redirect("/dashboard/syncs");
+  }
 
   return (
     <div className="flex flex-col gap-14">
@@ -23,7 +29,7 @@ const Sync = async ({ params }: { params: { id: string } }) => {
           </span>
         </div>
       </div>
-      {log[0] && <SyncLog log={log[0]} />}
+      <SyncLog log={log[0]} />
     </div>
   );
 };
