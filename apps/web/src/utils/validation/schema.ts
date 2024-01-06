@@ -50,6 +50,10 @@ export const getSyncSchema = z.object({
   id: z.string().uuid(),
 });
 
+export const getSyncLogSchema = z.object({
+  syncId: z.string().uuid(),
+});
+
 export const limitSchema = z.object({
   limit: z.number().default(5),
 });

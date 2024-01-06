@@ -20,8 +20,8 @@
   --accent: 220 14.3% 95.9%;
   --accent-foreground: 220.9 39.3% 11%;
 
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 20% 98%;
+  --destructive: 0 96% 89%;
+  --destructive-foreground: 0, 72%, 51%;
 
   --border: 220 13% 91%;
   --input: 220 13% 91%;
@@ -29,14 +29,17 @@
 
   --radius: 0.5rem;
 
-  --warning: 38 92% 50%;
-  --warning-foreground: 48 96% 89%;
+  --warning: 48 96% 89%;
+  --warning-foreground: 38 92% 50%;
 
-  --success: 142, 69%, 58%;
-  --success-foreground: 141, 84%, 93%;
+  --success: 141 84% 93%;
+  --success-foreground: 142 69% 58%;
 
-  --sky: 198, 93%, 60%;
-  --sky-foreground: 185, 96%, 90%;
+  --sky: 204 94% 94%;
+  --sky-foreground: 201.3 96.3% 32.2%;
+
+  --picked: 27 96% 61%;
+  --picked-foreground: 15 79% 34%;
 }
 
 .dark {
@@ -71,9 +74,12 @@
   --warning: 48 96% 89%;
   --warning-foreground: 38 92% 50%;
 
-  --success: 142, 69%, 58%;
-  --success-foreground: 141, 84%, 93%;
+  --success: 142 69% 58%;
+  --success-foreground: 141 84% 93%;
 
-  --sky: 198, 93%, 60%;
-  --sky-foreground: 185, 96%, 90%;
+  --sky: 198 93% 60%;
+  --sky-foreground: 185 96% 90%;
+
+  --picked: 27 96% 61%;
+  --picked-foreground: 15 79% 34%;
 }

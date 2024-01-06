@@ -17,18 +17,13 @@ type SyncsProps = {
 
 export const Syncs = memo<SyncsProps>(({ syncs }) => {
   if (syncs.length) {
-    return (
-      <div className="mt-4">
-        <SyncsTable data={syncs} columns={columns} />
-      </div>
-    );
+    return <SyncsTable data={syncs} columns={columns} />;
   }
 
   return (
     <Empty
       icon={<EmptySyncsIcon />}
       title="You haven't synced any content yet!"
-      className="mt-6"
     />
   );
 });

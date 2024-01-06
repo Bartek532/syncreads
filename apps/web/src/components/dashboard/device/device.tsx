@@ -17,7 +17,7 @@ type DeviceProps = {
 
 export const Device = memo<DeviceProps>(({ device }) => {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-14">
       <div className="flex flex-col justify-start space-y-2">
         <h1 className="text-3xl font-bold tracking-tight">Your device</h1>
         <p className="ml-1 text-sm text-muted-foreground">
@@ -25,15 +25,12 @@ export const Device = memo<DeviceProps>(({ device }) => {
         </p>
       </div>
       {device ? (
-        <div className="mt-4">
-          <DeviceTile device={device} />
-        </div>
+        <DeviceTile device={device} />
       ) : (
         <AddDeviceDialog>
           <Empty
             icon={<EmptyDeviceIcon />}
             title="You haven't registered your device yet, do it to unlock sync!"
-            className="mt-6"
           />
         </AddDeviceDialog>
       )}

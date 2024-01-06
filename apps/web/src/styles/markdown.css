@@ -1,5 +1,5 @@
 .markdown a {
-  @apply text-sky-500 underline hover:no-underline;
+  @apply font-bold underline hover:no-underline;
 }
 
 .markdown code {

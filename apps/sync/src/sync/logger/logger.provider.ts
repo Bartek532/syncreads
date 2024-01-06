@@ -1,8 +1,8 @@
+import { LOG_LEVEL } from "@rssmarkable/shared";
 import dayjs from "dayjs";
 
 import { SYNC_LOGGER_PROVIDER_TOKEN } from "./logger.constants";
 import { LoggerService } from "./logger.service";
-import { LOG_LEVEL } from "./types/logger.types";
 
 import type { Logger } from "./types/logger.types";
 

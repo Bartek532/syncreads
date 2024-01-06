@@ -1,6 +1,6 @@
 import { env } from "@/lib/env/server";
 import { supabase } from "@/lib/supabase/server";
-import type { GetSyncInput } from "@/utils";
+import type { GetSyncInput, GetSyncLogInput } from "@/utils";
 
 import { ApiError, isSyncApiErrorResponse } from "../utils/exceptions";
 
@@ -60,4 +60,12 @@ export const queueFeedSync = async ({
 
 export const getSyncById = async ({ id }: GetSyncInput) => {
   return supabase().from("Sync").select("*").eq("id", id).single();
+};
+
+export const getSyncLog = async ({ syncId }: GetSyncLogInput) => {
+  return supabase()
+    .from("Log")
+    .select("*")
+    .eq("syncId", syncId)
+    .order("createdAt", { ascending: false });
 };

@@ -1,8 +1,9 @@
 import { ApiError } from "@/server/utils/exceptions";
-import type { GetSyncInput } from "@/utils";
+import type { GetSyncInput, GetSyncLogInput } from "@/utils";
 
 import {
   getSyncById,
+  getSyncLog,
   queueArticleSync,
   queueFeedSync,
 } from "../services/sync.service";
@@ -56,6 +57,19 @@ export const queueFeedSyncHandler = async ({
 
 export const getSyncHandler = async ({ id }: GetSyncInput) => {
   const { data, error, status } = await getSyncById({ id });
+
+  if (error) {
+    throw new ApiError(status, error.message);
+  }
+
+  return {
+    status: "Success",
+    data,
+  };
+};
+
+export const getSyncLogHandler = async ({ syncId }: GetSyncLogInput) => {
+  const { data, error, status } = await getSyncLog({ syncId });
 
   if (error) {
     throw new ApiError(status, error.message);

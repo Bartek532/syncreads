@@ -4,7 +4,11 @@ const { fontFamily } = require("tailwindcss/defaultTheme");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
-  content: ["src/app/**/*.{ts,tsx}", "src/components/**/*.{ts,tsx}"],
+  content: [
+    "src/app/**/*.{ts,tsx}",
+    "src/components/**/*.{ts,tsx}",
+    "src/config/**/*.{ts,tsx}",
+  ],
   theme: {
     container: {
       center: true,
@@ -59,6 +63,10 @@ module.exports = {
         sky: {
           DEFAULT: "hsl(var(--sky))",
           foreground: "hsl(var(--sky-foreground))",
+        },
+        picked: {
+          DEFAULT: "hsl(var(--picked))",
+          foreground: "hsl(var(--picked-foreground))",
         },
       },
       fontFamily: {

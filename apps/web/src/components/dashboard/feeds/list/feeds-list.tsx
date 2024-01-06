@@ -52,7 +52,6 @@ export const FeedsList = memo<FeedsListProps>(
           onCreateNew={onCreateNew}
           icon={<EmptyFeedsIcon />}
           title="You haven't added any feed yet!"
-          className="mt-6"
         />
       );
     }
@@ -62,7 +61,7 @@ export const FeedsList = memo<FeedsListProps>(
 
     return (
       <>
-        <ul className="mt-6 flex flex-col gap-5">
+        <ul className="flex flex-col gap-5">
           {feeds.map((feed) => (
             <li key={feed.feedId}>
               <label className="flex items-center gap-4 md:gap-6">

@@ -3,7 +3,7 @@ import { HttpException, Inject, Logger } from "@nestjs/common";
 import { SUPABASE_CLIENT_FACTORY_TOKEN } from "../../supabase/supabase.constants";
 import { SupabaseProviderFactory } from "../../supabase/supabase.provider";
 
-import type { LogMessage } from "./types/logger.types";
+import type { LogMessage } from "@rssmarkable/shared";
 
 export class LoggerService {
   constructor(
