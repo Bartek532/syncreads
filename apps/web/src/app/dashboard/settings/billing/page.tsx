@@ -1,4 +1,8 @@
+import { Bird } from "lucide-react";
+
 import { getMetadata } from "@/lib/metadata";
+
+import { Empty } from "../../../../components/ui/empty";
 
 export const metadata = getMetadata({
   title: "Billing - Settings",
@@ -13,6 +17,12 @@ const BillingSettingsPage = () => {
           Manage your billing information.
         </p>
       </div>
+      <Empty
+        icon={
+          <Bird className="h-32 w-32 stroke-muted-foreground stroke-[0.5px] text-muted-foreground" />
+        }
+        title="Our app is completely free!"
+      />
     </div>
   );
 };

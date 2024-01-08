@@ -1,4 +1,8 @@
+import { TrafficCone } from "lucide-react";
+
 import { getMetadata } from "@/lib/metadata";
+
+import { Empty } from "../../../../components/ui/empty";
 
 export const metadata = getMetadata({
   title: "Notifications - Settings",
@@ -13,6 +17,12 @@ const NotificationsSettingsPage = () => {
           Configure how you receive notifications.
         </p>
       </div>
+      <Empty
+        icon={
+          <TrafficCone className="h-32 w-32 stroke-muted-foreground stroke-[0.5px] text-muted-foreground" />
+        }
+        title="Notifications are coming soon!"
+      />
     </div>
   );
 };

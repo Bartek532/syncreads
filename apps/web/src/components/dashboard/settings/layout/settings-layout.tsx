@@ -19,7 +19,7 @@ export const SettingsLayout = memo<SettingsLayoutProps>(({ children }) => {
         <aside className="lg:w-1/5">
           <SettingsSidebar />
         </aside>
-        <div className="flex-1 lg:max-w-2xl">{children}</div>
+        <div className="flex-1">{children}</div>
       </div>
     </div>
   );
