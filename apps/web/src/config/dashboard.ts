@@ -20,10 +20,10 @@ export const DASHBOARD_NAVIGATION = [
 ];
 
 export const DASHBOARD_SECONDARY_NAVIGATION = [
-  { name: "Settings", href: "/dashboard/settings" },
+  { name: "Profile", href: "/dashboard/settings/profile" },
   {
-    name: "Profile",
-    href: "/dashboard/settings/profile",
+    name: "Appearance",
+    href: "/dashboard/settings/appearance",
   },
 ];
 
@@ -52,6 +52,13 @@ export const DASHBOARD_CARDS = [
     icon: Hourglass,
     link: "View syncs",
   },
+];
+
+export const DASHBOARD_SETTINGS_NAVIGATION = [
+  { name: "Profile", href: "/dashboard/settings/profile" },
+  { name: "Appearance", href: "/dashboard/settings/appearance" },
+  { name: "Notifications", href: "/dashboard/settings/notifications" },
+  { name: "Billing", href: "/dashboard/settings/billing" },
 ];
 
 export enum PAGINATION_TYPE {

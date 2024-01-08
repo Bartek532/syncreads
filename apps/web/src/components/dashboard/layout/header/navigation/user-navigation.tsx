@@ -61,7 +61,7 @@ export const UserNavigation = memo<UserNavigationProps>(({ user }) => {
             <Link href="/dashboard/settings/profile">Profile</Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild className="cursor-pointer">
-            <Link href="/dashboard/settings">Settings</Link>
+            <Link href="/dashboard/settings/appearance">Appearance</Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

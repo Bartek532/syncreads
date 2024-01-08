@@ -60,9 +60,7 @@ export const Home = async () => {
             <div
               className={cn(
                 "h-3 w-3 rounded-full",
-                !!device
-                  ? "bg-success"
-                  : "bg-destructive",
+                !!device ? "bg-success" : "bg-destructive",
               )}
             ></div>
             <span className="text-sm text-muted-foreground">

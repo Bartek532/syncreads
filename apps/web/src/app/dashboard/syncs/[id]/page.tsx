@@ -16,7 +16,7 @@ const Sync = async ({ params }: { params: { id: string } }) => {
   return (
     <div className="flex flex-col gap-14">
       <div className="flex flex-col justify-start space-y-2">
-        <h1 className="text-3xl font-bold tracking-tight">{params.id}</h1>
+        <h1 className="text-3xl font-bold">{params.id}</h1>
         <div className="flex items-center space-x-2">
           <div
             className={cn(
