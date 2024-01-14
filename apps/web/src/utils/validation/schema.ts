@@ -2,6 +2,17 @@ import { z } from "zod";
 
 import { FILE_TYPE } from "../../types/feed.types";
 
+export const updateUserSchema = z.object({
+  name: z
+    .string()
+    .max(30, "Name must not be longer than 30 characters.")
+    .optional(),
+  folder: z
+    .string()
+    .max(30, "Folder name must not be longer than 30 characters.")
+    .optional(),
+});
+
 export const createFeedSchema = z.object({
   url: z.string().min(1, "Url is required.").url("Url must be a valid url."),
 });

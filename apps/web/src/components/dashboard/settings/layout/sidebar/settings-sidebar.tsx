@@ -12,7 +12,7 @@ export const SettingsSidebar = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="flex gap-2 overflow-x-auto lg:flex-col lg:gap-1">
+    <nav className="flex gap-2 overflow-x-auto pb-1 sm:pb-0 lg:flex-col lg:gap-1">
       {DASHBOARD_SETTINGS_NAVIGATION.map(({ href, name }) => (
         <Link
           key={href}

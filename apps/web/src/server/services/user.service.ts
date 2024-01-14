@@ -1,34 +1,27 @@
+import { HTTP_STATUS_CODE } from "@rssmarkable/shared";
 import dayjs from "dayjs";
 
-import type { LimitInput, RangeInput } from "@/utils";
+import type { LimitInput, RangeInput, UpdateUserInput } from "@/utils";
 
 import { supabase } from "../../lib/supabase/server";
+import { ApiError } from "../utils/exceptions";
 
-// export const getAllUsers = () => {
-//   return prisma.user.findMany();
-// };
+export const updateUser = async (input: UpdateUserInput) => {
+  const { data, error } = await supabase().auth.getUser();
 
-// export const createUser = ({
-//   email,
-//   password,
-//   name,
-// }: {
-//   email: string;
-//   password: string;
-//   name: string;
-// }) => {
-//   return prisma.user.create({ data: { email, password, name } });
-// };
-
-// export const getUserByEmail = ({ email }: { email: string }) => {
-//   return prisma.user.findUnique({
-//     where: { email },
-//     include: { device: true, feeds: true },
-//   });
-// };
-
-// export const getUserById = ({ id }: { id: string }) => {
-// };
+  if (error) {
+    throw new ApiError(
+      error.status ?? HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR,
+      error.message,
+    );
+  }
+  return supabase().auth.updateUser({
+    data: {
+      ...data.user.user_metadata,
+      ...input,
+    },
+  });
+};
 
 export const getUserFeeds = ({
   id,

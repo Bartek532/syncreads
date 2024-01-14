@@ -26,8 +26,8 @@ dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
 export const Home = async () => {
-  const { data } = await supabase().auth.getSession();
-  const user = data.session?.user;
+  const { data } = await supabase().auth.getUser();
+  const user = data.user;
   const range = getLastDays(10);
 
   const feeds = await api.user.getUserFeeds.query({});

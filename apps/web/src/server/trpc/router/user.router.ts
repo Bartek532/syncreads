@@ -5,6 +5,7 @@ import {
   limitSchema,
   rangeSchema,
   registerDeviceSchema,
+  updateUserSchema,
 } from "../../../utils/validation/schema";
 import {
   deleteUserFeedsHandler,
@@ -14,9 +15,13 @@ import {
   getUserSyncsHandler,
   registerDeviceHandler,
   unregisterDeviceHandler,
+  updateUserHandler,
 } from "../../controllers/user.controller";
 
 export const userRouter = router({
+  updateUser: protectedProcedure
+    .input(updateUserSchema)
+    .mutation(({ input }) => updateUserHandler(input)),
   getUserFeeds: protectedProcedure
     .input(cursorPaginationSchema)
     .query(({ ctx, input }) =>

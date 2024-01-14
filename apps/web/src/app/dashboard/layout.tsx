@@ -8,11 +8,11 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-  const { data } = await supabase().auth.getSession();
+  const { data } = await supabase().auth.getUser();
 
-  if (!data.session) {
+  if (!data.user) {
     return redirect("/login");
   }
 
-  return <DashboardLayout user={data.session.user}>{children}</DashboardLayout>;
+  return <DashboardLayout user={data.user}>{children}</DashboardLayout>;
 }

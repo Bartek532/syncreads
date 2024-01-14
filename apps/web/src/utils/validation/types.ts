@@ -14,9 +14,11 @@ import type {
   registerAndConnectDeviceSchema,
   registerDeviceSchema,
   unregisterAndDisconnectDeviceSchema,
+  updateUserSchema,
 } from "./schema";
 import type { TypeOf } from "zod";
 
+export type UpdateUserInput = TypeOf<typeof updateUserSchema>;
 export type CreateFeedInput = TypeOf<typeof createFeedSchema>;
 export type CreateAndConnectFeedInput = TypeOf<
   typeof createAndConnectFeedSchema

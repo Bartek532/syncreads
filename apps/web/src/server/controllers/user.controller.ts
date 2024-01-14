@@ -11,6 +11,7 @@ import {
   getUserSyncs,
   registerUserDevice,
   unregisterUserDevice,
+  updateUser,
 } from "../services/user.service";
 import { ApiError } from "../utils/exceptions";
 
@@ -21,7 +22,25 @@ import type {
   DeleteAndDisconnectFeedsInput,
   RangeInput,
   LimitInput,
+  UpdateUserInput,
 } from "../../utils/validation/types";
+
+export const updateUserHandler = async (input: UpdateUserInput) => {
+  const { data, error } = await updateUser(input);
+
+  if (error) {
+    throw new ApiError(
+      error.status ?? HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR,
+      error.message,
+    );
+  }
+
+  return {
+    status: "Success",
+    message: `Successfully updated user data!`,
+    user: data,
+  };
+};
 
 export const registerDeviceHandler = async ({
   id,

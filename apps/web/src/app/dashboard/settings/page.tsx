@@ -1,4 +1,5 @@
-import { Settings } from "../../../components/dashboard/settings/Settings";
+import { redirect } from "next/navigation";
+
 import { getMetadata } from "../../../lib/metadata";
 
 export const metadata = getMetadata({
@@ -6,7 +7,7 @@ export const metadata = getMetadata({
 });
 
 const SettingsPage = () => {
-  return <Settings />;
+  return redirect("/dashboard/settings/profile");
 };
 
 export default SettingsPage;
