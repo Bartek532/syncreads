@@ -3,6 +3,8 @@ import { GeistSans } from "geist/font/sans";
 import { cookies } from "next/headers";
 import { Toaster } from "react-hot-toast";
 
+import { ThemeProvider } from "@/components/ui/theme";
+
 import { TOASTER_CONFIG } from "../config";
 import { DEFAULT_METADATA, DEFAULT_VIEWPORT } from "../lib/metadata";
 import "../styles/globals.css";
@@ -20,13 +22,20 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         <TRPCReactProvider cookies={cookies().toString()}>
-          <Toaster
-            position="bottom-right"
-            containerStyle={{ padding: "20px" }}
-            gutter={13}
-            toastOptions={TOASTER_CONFIG}
-          />
-          {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Toaster
+              position="bottom-right"
+              containerStyle={{ padding: "20px" }}
+              gutter={13}
+              toastOptions={TOASTER_CONFIG}
+            />
+            {children}
+          </ThemeProvider>
         </TRPCReactProvider>
       </body>
     </html>

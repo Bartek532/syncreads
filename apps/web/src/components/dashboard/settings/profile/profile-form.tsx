@@ -31,7 +31,6 @@ type ProfileForm = {
 };
 
 export const ProfileForm = memo<ProfileForm>(({ user }) => {
-  console.log(user);
   const name = getName(user);
   const form = useForm<ProfileData>({
     resolver: zodResolver(profileSchema),
