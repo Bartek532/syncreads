@@ -3,10 +3,12 @@
 import dayjs from "dayjs";
 import { marked } from "marked";
 import { useParams, useRouter } from "next/navigation";
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 
 import { SYNC_LOG_LEVEL_COLORS } from "@/config/sync";
 import { cn } from "@/utils";
+
+import { supabase } from "../../../../lib/supabase/client";
 
 import type { Log } from "@rssmarkable/database";
 import type { LogMessage } from "@rssmarkable/shared";
@@ -16,7 +18,9 @@ type SyncLogProps = {
 };
 
 export const SyncLog = memo<SyncLogProps>(({ log }) => {
+  const [lines, setLines] = useState(log.json);
   const [activeLine, setActiveLine] = useState("");
+  const linesTableRef = useRef<HTMLTableElement>(null);
   const router = useRouter();
   const params = useParams();
 
@@ -28,11 +32,37 @@ export const SyncLog = memo<SyncLogProps>(({ log }) => {
     }
   }, [params]);
 
+  useEffect(() => {
+    const channel = supabase()
+      .channel("log:update")
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "Log",
+          filter: `syncId=eq.${log.syncId}`,
+        },
+        (payload) => {
+          setLines(payload.new.json as LogMessage[]);
+          linesTableRef.current?.scrollIntoView({
+            block: "end",
+          });
+        },
+      )
+      .subscribe();
+
+    return () => void channel.unsubscribe();
+  }, [log.syncId]);
+
   return (
-    <div className="-mx-6 overflow-hidden overflow-x-auto border bg-background py-4 shadow-sm sm:mx-0 sm:rounded-lg">
+    <div
+      className="-mx-6 overflow-hidden overflow-x-auto border bg-background py-4 shadow-sm sm:mx-0 sm:rounded-lg"
+      ref={linesTableRef}
+    >
       <table className="min-w-full">
         <tbody>
-          {log.json.map(({ date, message, level }, index) => (
+          {lines.map(({ date, message, level }, index) => (
             <tr
               key={date.toString()}
               className={cn(
