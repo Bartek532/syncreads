@@ -28,7 +28,7 @@ export const Hero = memo(() => {
       <div className="relative translate-y-12 sm:translate-y-16 md:translate-y-20">
         <div className="absolute inset-0 bg-gradient-to-t from-white to-black/0 dark:from-black/100" />
         <Image
-          src="/rssmarkable-hero.png"
+          src="/images/rssmarkable-hero.png"
           alt="reMarkable tablet surrounded by RSS feeds icons"
           priority={true}
           width={1200}
