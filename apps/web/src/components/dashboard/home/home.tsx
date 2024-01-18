@@ -31,20 +31,23 @@ export const Home = async () => {
   const range = getLastDays(10);
 
   const feeds = await api.user.getUserFeeds.query({});
-  const syncs = await api.user.getUserSyncs.query({
+  const { syncs, total: syncsCount } = await api.user.getUserSyncs.query({
     from: range.from,
     to: range.to,
   });
   const device = await api.user.getUserDevice.query();
-  const articles = await api.user.getUserArticles.query({});
+  const { articles, total: articlesCount } =
+    await api.user.getUserArticles.query({
+      limit: 5,
+    });
 
   const cardsValues = [
     feeds.count ?? 0,
     device ? "reMarkable 2" : "Not registered",
-    syncs.length,
+    syncsCount,
     dayjs
       .duration({
-        minutes: articles.length * 10,
+        minutes: articlesCount * 10,
       })
       .humanize(),
   ];

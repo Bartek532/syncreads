@@ -12,6 +12,7 @@ import {
   registerUserDevice,
   unregisterUserDevice,
   updateUser,
+  getUserSyncsCount,
 } from "../services/user.service";
 import { ApiError } from "../utils/exceptions";
 
@@ -130,23 +131,45 @@ export const getUserDeviceHandler = async ({ id }: { id: string }) => {
 export const getUserSyncsHandler = async (
   input: RangeInput & { id: string },
 ) => {
-  const { data, error, status } = await getUserSyncs(input);
+  const { data, error: queryError, status } = await getUserSyncs(input);
 
-  if (error) {
-    throw new ApiError(status, error.message);
+  if (queryError) {
+    throw new ApiError(status, queryError.message);
   }
 
-  return data;
+  const { count, error: countError } = await getUserSyncsCount({
+    id: input.id,
+  });
+
+  if (countError) {
+    throw new ApiError(status, countError.message);
+  }
+
+  return {
+    syncs: data,
+    total: count ?? 0,
+  };
 };
 
 export const getUserArticlesHandler = async (
   input: LimitInput & { id: string },
 ) => {
-  const { data, error, status } = await getUserArticles(input);
+  const { data, error: queryError, status } = await getUserArticles(input);
 
-  if (error) {
-    throw new ApiError(status, error.message);
+  if (queryError) {
+    throw new ApiError(status, queryError.message);
   }
 
-  return data;
+  const { count, error: countError } = await getUserSyncsCount({
+    id: input.id,
+  });
+
+  if (countError) {
+    throw new ApiError(status, countError.message);
+  }
+
+  return {
+    articles: data,
+    total: count ?? 0,
+  };
 };

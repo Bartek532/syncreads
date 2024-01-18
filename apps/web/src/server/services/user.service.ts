@@ -84,6 +84,13 @@ export const getUserSyncs = ({ id, from, to }: RangeInput & { id: string }) => {
   return query;
 };
 
+export const getUserSyncsCount = ({ id }: { id: string }) => {
+  return supabase()
+    .from("Sync")
+    .select("*", { count: "exact" })
+    .eq("userId", id);
+};
+
 export const getUserArticles = ({ id, limit }: LimitInput & { id: string }) => {
   return supabase()
     .from("Article")
@@ -91,6 +98,13 @@ export const getUserArticles = ({ id, limit }: LimitInput & { id: string }) => {
     .eq("sync.userId", id)
     .order("startedAt", { referencedTable: "Sync", ascending: false })
     .limit(limit);
+};
+
+export const getUserArticlesCount = ({ id }: { id: string }) => {
+  return supabase()
+    .from("Article")
+    .select("*, sync:Sync(userId)", { count: "exact" })
+    .eq("sync.userId", id);
 };
 
 export const registerUserDevice = ({

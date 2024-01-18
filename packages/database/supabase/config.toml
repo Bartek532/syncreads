@@ -43,7 +43,7 @@ secret = "env(GOOGLE_CLIENT_SECRET)"
 redirect_uri = "http://localhost:3000/auth/callback"
 
 [realtime]
-enabled = false
+enabled = true
 
 [inbucket]
 enabled = false
