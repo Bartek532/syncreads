@@ -9,6 +9,7 @@ import {
   HTTP_STATUS_CODE,
   isUserMetadata,
 } from "@rssmarkable/shared";
+import dayjs from "dayjs";
 
 import { SUPABASE_CLIENT_FACTORY_TOKEN } from "../../supabase/supabase.constants";
 import { SupabaseProviderFactory } from "../../supabase/supabase.provider";
@@ -117,5 +118,30 @@ export class UserService {
       .eq("userId", userId)
       .eq("feedId", feedId)
       .throwOnError();
+  }
+
+  async getUserSyncs(
+    userId: string,
+    {
+      from,
+      to,
+    }: {
+      from: Date;
+      to: Date;
+    },
+  ) {
+    const { data, error, status } = await this.supabaseProvider()
+      .from("Sync")
+      .select()
+      .eq("userId", userId)
+      .order("startedAt", { ascending: false })
+      .gte("startedAt", dayjs(from).toISOString())
+      .lte("startedAt", dayjs(to).toISOString());
+
+    if (error) {
+      throw new HttpException(error.details, status);
+    }
+
+    return data;
   }
 }

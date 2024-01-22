@@ -12,6 +12,7 @@ import {
   DASHBOARD_NAVIGATION,
   DASHBOARD_SECONDARY_NAVIGATION,
 } from "@/config/dashboard";
+import { supabase } from "@/lib/supabase/client";
 import {
   cn,
   getAvatar,
@@ -20,8 +21,6 @@ import {
   onPromise,
   unlockScroll,
 } from "@/utils";
-
-import { supabase } from "../../../../../lib/supabase/client";
 
 import type { User } from "@rssmarkable/database";
 
@@ -74,6 +73,7 @@ export const MobileNavigation = memo<MobileNavigationProps>(({ user }) => {
                 key={link.href}
                 href={link.href}
                 className="w-full border-t py-3"
+                onClick={handleToggleNavigation}
               >
                 {link.name}
               </Link>
@@ -102,6 +102,7 @@ export const MobileNavigation = memo<MobileNavigationProps>(({ user }) => {
                   "w-full border-t py-3",
                   index === arr.length - 1 && "border-b",
                 )}
+                onClick={handleToggleNavigation}
               >
                 {link.name}
               </Link>

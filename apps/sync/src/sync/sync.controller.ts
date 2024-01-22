@@ -19,6 +19,7 @@ import { SyncArticlePayloadDto, SyncFeedPayloadDto } from "./dto/sync.dto";
 import { SyncService } from "./sync.service";
 import { DeviceInterceptor } from "./validation/device.interceptor";
 import { SyncFeedInterceptor } from "./validation/feed.interceptor";
+import { LimiterInterceptor } from "./validation/limiter.interceptor";
 
 import type { ArticleQueueJobPayload } from "../queue/article/types/article.types";
 import type { FeedQueueJobPayload } from "../queue/feed/types/feed.types";
@@ -35,7 +36,7 @@ export class SyncController {
 
   @Post("article")
   @UseGuards(ApiKeyGuard)
-  @UseInterceptors(DeviceInterceptor)
+  @UseInterceptors(DeviceInterceptor, LimiterInterceptor)
   async handleSyncArticle(
     @Body() payload: SyncArticlePayloadDto,
     @UserId() userId: string,
@@ -60,7 +61,7 @@ export class SyncController {
 
   @Post("feed")
   @UseGuards(ApiKeyGuard)
-  @UseInterceptors(DeviceInterceptor, SyncFeedInterceptor)
+  @UseInterceptors(DeviceInterceptor, SyncFeedInterceptor, LimiterInterceptor)
   async handleSyncFeed(
     @Body() payload: SyncFeedPayloadDto,
     @UserId() userId: string,
