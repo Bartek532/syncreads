@@ -24,7 +24,7 @@ CREATE TABLE "UserFeed" (
     "userId" TEXT NOT NULL,
     "feedId" TEXT NOT NULL,
     "lastSyncDate" TIMESTAMP(3),
-    "startArticlesCount" INTEGER NOT NULL DEFAULT 1
+    "startArticlesCount" INTEGER NOT NULL DEFAULT 2
 );
 
 -- CreateIndex
