@@ -18,6 +18,7 @@ export const ArticlesList = memo<ArticlesListProps>(({ articles }) => {
     return (
       <SyncArticleDialog>
         <Empty
+          isTrigger
           icon={<EmptyFeedsIcon />}
           title="Nothing here - for what are you waiting?"
         />

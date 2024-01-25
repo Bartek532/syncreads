@@ -48,7 +48,7 @@ export const AddDeviceDialog = memo<AddDeviceDialog>(({ children }) => {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogTrigger>{children}</DialogTrigger>
       <DialogContent className="space-y-2 sm:max-w-[475px]">
         <DialogHeader>
           <DialogTitle>Register device to enable sync</DialogTitle>
