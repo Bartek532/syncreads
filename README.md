@@ -21,6 +21,7 @@ Please read [CONTRIBUTING.md](https://github.com/Bartek532/rssmarkable/blob/main
 | [Supabase](https://supabase.com/)              | Open source Firebase alternative                                              |
 | [PostgreSQL](https://www.postgresql.org)       | Relational database                                                           |
 | [Vitest](https://vitest.dev)                   | Testing framework                                                             |
+| [shadcn/ui](https://ui.shadcn.com/)            | Extendable component library                                                  |
 | [Tailwind](https://tailwindcss.com/)           | Utility-first CSS framework                                                   |
 | [React Hook Form](https://react-hook-form.com) | Forms with easy-to-use validation                                             |
 | [Turborepo](https://turbo.build/)              | High-performance build system for JavaScript and TypeScript codebases.        |
@@ -52,4 +53,4 @@ pnpm run dev
 
 ## Live 🎆
 
-https://rssmarkable.fly.dev
+https://rssmarkable.vercel.app

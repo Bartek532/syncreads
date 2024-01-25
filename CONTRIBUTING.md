@@ -23,6 +23,7 @@ Description of the project files and directories.
 ├── packages/                     # Packages shared across the workspace
 │    ├── database/                # Database related things (migrations, config, client)
 │    ├── eslint-preset/           # ESLint preset
+│    ├── shared/                  # Things shared across packages/apps
 │    └── tsconfig/                # TypeScript config
 ├── .dockerignore                 # Files ignored by Docker
 ├── .env.example                  # Examples of env variables
@@ -87,6 +88,7 @@ Component.displayName = "Component";
 | [Supabase](https://supabase.com/)              | Open source Firebase alternative                                              |
 | [PostgreSQL](https://www.postgresql.org)       | Relational database                                                           |
 | [Vitest](https://vitest.dev)                   | Testing framework                                                             |
+| [shadcn/ui](https://ui.shadcn.com/)            | Extendable component library                                                  |
 | [Tailwind](https://tailwindcss.com/)           | Utility-first CSS framework                                                   |
 | [React Hook Form](https://react-hook-form.com) | Forms with easy-to-use validation                                             |
 | [Turborepo](https://turbo.build/)              | High-performance build system for JavaScript and TypeScript codebases.        |
