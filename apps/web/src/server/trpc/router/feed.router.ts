@@ -4,10 +4,12 @@ import { router, protectedProcedure } from "..";
 import {
   createFeedSchema,
   getUrlDetailsSchema,
+  importFeedsSchema,
 } from "../../../utils/validation/schema";
 import {
   createFeedHandler,
   getUrlDetailsHandler,
+  importFeedsHandler,
 } from "../../controllers/feed.controller";
 
 export const feedRouter = router({
@@ -20,11 +22,11 @@ export const feedRouter = router({
         url: clearUrl(input.url),
       }),
     ),
-  // importFeeds: protectedProcedure
-  //   .input(importFeedsSchema)
-  //   .mutation(({ input, ctx }) =>
-  //     importFeedsHandler({ ...input, id: ctx.session.user.id }),
-  //   ),
+  importFeeds: protectedProcedure
+    .input(importFeedsSchema)
+    .mutation(({ input, ctx }) =>
+      importFeedsHandler({ ...input, id: ctx.session.user.id }),
+    ),
   getUrlDetails: protectedProcedure
     .input(getUrlDetailsSchema)
     .query(({ input }) =>

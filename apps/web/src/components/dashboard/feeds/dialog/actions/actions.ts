@@ -6,10 +6,17 @@ import { api } from "@/trpc/server";
 import type {
   CreateFeedInput,
   DeleteFeedsInput,
+  ImportFeedsInput,
 } from "@/utils/validation/types";
 
 export const createFeed = async (data: CreateFeedInput) => {
   const response = await api.feed.createFeed.mutate(data);
+  revalidatePath("/dashboard/feeds");
+  return response;
+};
+
+export const importFeeds = async (data: ImportFeedsInput) => {
+  const response = await api.feed.importFeeds.mutate(data);
   revalidatePath("/dashboard/feeds");
   return response;
 };

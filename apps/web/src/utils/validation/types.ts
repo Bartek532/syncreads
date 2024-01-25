@@ -1,4 +1,5 @@
 import type {
+  addFeedSchema,
   createAndConnectFeedSchema,
   createFeedSchema,
   cursorPaginationSchema,
@@ -23,6 +24,7 @@ export type CreateFeedInput = TypeOf<typeof createFeedSchema>;
 export type CreateAndConnectFeedInput = TypeOf<
   typeof createAndConnectFeedSchema
 >;
+export type AddFeedInput = TypeOf<typeof addFeedSchema>;
 export type ImportFeedsInput = TypeOf<typeof importFeedsSchema>;
 export type ImportAndConnectFeedsInput = TypeOf<
   typeof importAndConnectFeedsSchema

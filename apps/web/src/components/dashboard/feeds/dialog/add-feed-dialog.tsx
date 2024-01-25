@@ -2,12 +2,13 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
+import { FILE_TYPE } from "../../../../types/feed.types";
 import { onPromise } from "../../../../utils";
-import { createFeedSchema } from "../../../../utils/validation/schema";
+import { addFeedSchema } from "../../../../utils/validation/schema";
 import { Button } from "../../../ui/button";
 import {
   Dialog,
@@ -27,25 +28,53 @@ import {
 } from "../../../ui/form";
 import { Input } from "../../../ui/input";
 
-import { createFeed } from "./actions/actions";
+import { createFeed, importFeeds } from "./actions/actions";
 
-import type { CreateFeedInput } from "../../../../utils/validation/types";
+import type { AddFeedInput } from "../../../../utils/validation/types";
 import type { DialogProps } from "@radix-ui/react-dialog";
 
 type AddFeedDialogProps = DialogProps;
 
 export const AddFeedDialog = memo<AddFeedDialogProps>(
   ({ children, ...props }) => {
-    const form = useForm<CreateFeedInput>({
-      resolver: zodResolver(createFeedSchema),
+    const form = useForm<AddFeedInput>({
+      resolver: zodResolver(addFeedSchema),
     });
 
-    const onSubmit = async (data: CreateFeedInput) => {
-      await toast.promise(createFeed(data), {
-        loading: "Adding feed...",
-        success: ({ message }) => message,
-        error: (err: Error) => err.message,
-      });
+    const urlContent = form.watch("url");
+    const fileContent = form.watch("file");
+
+    useEffect(() => {
+      if (!urlContent && fileContent?.size) {
+        form.clearErrors("url");
+      }
+      if (!fileContent?.size && urlContent) {
+        form.clearErrors("file");
+      }
+    }, [fileContent, urlContent, form]);
+
+    const onSubmit = async (data: AddFeedInput) => {
+      const { url, file } = data;
+      if (!url && !file) {
+        return;
+      }
+
+      if (url) {
+        await toast.promise(createFeed({ url }), {
+          loading: "Adding feed...",
+          success: ({ message }) => message,
+          error: (err: Error) => err.message,
+        });
+      }
+
+      if (file) {
+        const content = await file.text();
+        await toast.promise(importFeeds({ content, type: FILE_TYPE.OPML }), {
+          loading: "Uploading feeds...",
+          success: ({ message }) => message,
+          error: (err: Error) => err.message,
+        });
+      }
     };
 
     return (
@@ -69,16 +98,42 @@ export const AddFeedDialog = memo<AddFeedDialogProps>(
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input {...field} placeholder="Pass feed url here..." />
+                      <Input
+                        {...field}
+                        placeholder="Pass feed url here..."
+                        disabled={!!fileContent?.size}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              {/* <div className="flex w-full items-center gap-3">
-              <span className="text-sm">or</span>
-              <Input type="file" className="cursor-pointer" aria-invalid />
-            </div> */}
+              <div className="flex w-full items-center gap-3">
+                <span className="text-sm">or</span>
+
+                <FormField
+                  control={form.control}
+                  name="file"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          type="file"
+                          accept=".opml"
+                          className="cursor-pointer"
+                          disabled={!!urlContent}
+                          onChange={(e) =>
+                            field.onChange(
+                              e.target.files ? e.target.files[0] : null,
+                            )
+                          }
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
               <DialogFooter className="mt-4">
                 <Button disabled={form.formState.isSubmitting}>

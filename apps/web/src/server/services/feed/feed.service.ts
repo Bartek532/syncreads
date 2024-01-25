@@ -4,7 +4,7 @@ import { ApiError } from "../../utils/exceptions";
 export const createFeed = async ({ url, id }: { url: string; id: string }) => {
   const { data, error, status } = await supabase()
     .from("Feed")
-    .insert({ url })
+    .upsert({ url })
     .select()
     .single();
 
@@ -33,10 +33,6 @@ export const getFeedById = ({ id }: { id: string }) => {
     .select("*, users:UserFeed(userId)")
     .eq("id", id)
     .single();
-};
-
-export const getAllFeeds = () => {
-  return supabase().from("Feed").select("*");
 };
 
 export const deleteFeed = ({ id }: { id: string }) => {

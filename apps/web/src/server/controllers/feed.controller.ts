@@ -4,7 +4,7 @@ import { parse } from "rss-to-json";
 
 import type { FeedApi } from "@/types/feed.types";
 
-import { createFeed } from "../services/feed/feed.service";
+import { createFeed, importStrategies } from "../services/feed/feed.service";
 import { getUserFeedByUrl } from "../services/user.service";
 import { ApiError } from "../utils/exceptions";
 import { isFeedUrl } from "../utils/validation";
@@ -12,6 +12,7 @@ import { isFeedUrl } from "../utils/validation";
 import type {
   CreateAndConnectFeedInput,
   GetUrlDetailsInput,
+  ImportAndConnectFeedsInput,
 } from "../../utils/validation/types";
 
 export const createFeedHandler = async ({
@@ -41,6 +42,32 @@ export const createFeedHandler = async ({
     status: "Success",
     message: `Successfully added feed!`,
     feed,
+  };
+};
+
+export const importFeedsHandler = async ({
+  content,
+  id,
+  type,
+}: ImportAndConnectFeedsInput) => {
+  const urls = importStrategies[type].parse(content);
+
+  const results = await Promise.allSettled(
+    urls.map((url) => createFeedHandler({ url, id })),
+  );
+
+  const addedFeeds = results.filter(({ status }) => status === "fulfilled");
+
+  if (!addedFeeds.length) {
+    throw new ApiError(
+      HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR,
+      "Feeds import failed!",
+    );
+  }
+
+  return {
+    status: "Success",
+    message: `Successfully uploaded ${addedFeeds.length}/${urls.length} feed(s)!`,
   };
 };
 
