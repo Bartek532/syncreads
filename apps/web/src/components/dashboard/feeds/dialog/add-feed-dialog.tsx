@@ -5,10 +5,10 @@ import { Loader2 } from "lucide-react";
 import { memo, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { ZodIssueCode, z } from "zod";
 
 import { FILE_TYPE } from "../../../../types/feed.types";
 import { onPromise } from "../../../../utils";
-import { addFeedSchema } from "../../../../utils/validation/schema";
 import { Button } from "../../../ui/button";
 import {
   Dialog,
@@ -30,10 +30,52 @@ import { Input } from "../../../ui/input";
 
 import { createFeed, importFeeds } from "./actions/actions";
 
-import type { AddFeedInput } from "../../../../utils/validation/types";
 import type { DialogProps } from "@radix-ui/react-dialog";
 
 type AddFeedDialogProps = DialogProps;
+
+const addFeedSchema = z
+  .object({
+    url: z
+      .union([
+        z
+          .string({ required_error: "Url is required." })
+          .min(1, "Url is required.")
+          .url("Url must be a valid url."),
+        z.literal(""),
+      ])
+      .optional(),
+    file: z
+      .instanceof(File, { message: "File is required." })
+      .refine((file) => file.size <= 200000, `Max file size is 2MB.`)
+      .refine((file) => {
+        const extension = file?.name.split(".").pop();
+        return (
+          ["opml"].includes(file.type) ||
+          (extension && ["opml"].includes(extension))
+        );
+      }, "Only .opml files are accepted.")
+      .optional(),
+  })
+  .superRefine((data, ctx) => {
+    const message = "Either url or file is required to add feeds.";
+
+    if (!data.file && !data.url) {
+      ctx.addIssue({
+        code: ZodIssueCode.custom,
+        message,
+        path: ["url"],
+      });
+
+      ctx.addIssue({
+        code: ZodIssueCode.custom,
+        message,
+        path: ["file"],
+      });
+    }
+  });
+
+type AddFeedInput = z.infer<typeof addFeedSchema>;
 
 export const AddFeedDialog = memo<AddFeedDialogProps>(
   ({ children, ...props }) => {
