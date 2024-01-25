@@ -15,24 +15,47 @@ jobs:
     strategy:
       matrix:
         node-version: [20.x]
+    env:
+      # We need to set these to something,
+      # otherwise the Supabase start will fail
+      GITHUB_CLIENT_ID: "test"
+      GITHUB_CLIENT_SECRET: "test"
+      GOOGLE_CLIENT_ID: "test"
+      GOOGLE_CLIENT_SECRET: "test"
 
     steps:
       - name: ✅ Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: 🎬 Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
-      - name: 🔨 Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      - name: 🔨 Setup
+        uses: ./.github/workflows/setup
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "pnpm"
 
-      - name: 🔌 Install
-        run: pnpm install
+      - name: ⚡ Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+
+      - name: 🎬 Start Supabase
+        run: pnpm run db:start:dev
+
+      - name: 🔄 Verify Supabase types are up to date
+        run: |
+          pnpm run db:generate
+          if ! git diff --ignore-space-at-eol --exit-code --quiet packages/database/src/types/generated/schema.ts; then
+            echo "Detected uncommitted changes after build. See status below:"
+            git diff
+            exit 1
+          fi
+
+      - name: 🖌️ Format
+        run: pnpm run format:check
+
+      - name: 📦 Build
+        # builds only sync app, because we're building web in Next.js bundle analysis
+        run: pnpm run build:sync
+
+      - name: 🛻 Lint
+        run: pnpm run lint
 
       - name: 🧪 Test
         run: pnpm run test:ci

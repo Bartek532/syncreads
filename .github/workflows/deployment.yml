@@ -3,12 +3,83 @@ name: Deployment
 on:
   push:
     branches: [main]
+    # branches: [develop]
+
+env:
+  NODE_VERSION: 20.x
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  deploy:
-    name: 🚀 Deploy
+  db:
+    name: ⚙️ Setup database
     runs-on: ubuntu-latest
     environment: Production
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
+      GITHUB_CLIENT_ID: ${{ secrets.SUPABASE_GITHUB_CLIENT_ID }}
+      GITHUB_CLIENT_SECRET: ${{ secrets.SUPABASE_GITHUB_CLIENT_SECRET }}
+      GOOGLE_CLIENT_ID: ${{ secrets.SUPABASE_GOOGLE_CLIENT_ID }}
+      GOOGLE_CLIENT_SECRET: ${{ secrets.SUPABASE_GOOGLE_CLIENT_SECRET }}
+
+    steps:
+      - name: ✅ Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🔨 Setup
+        uses: ./.github/workflows/setup
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: ⚡ Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+
+      - name: 🔗 Link
+        run: pnpm run db:link -- --project-ref $SUPABASE_PROJECT_ID
+
+      - name: 📦 Migrate
+        run: pnpm run db:migrate:deploy
+
+  web:
+    name: 🚀 Deploy web
+    runs-on: ubuntu-latest
+    environment: Production
+    needs: db
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+    steps:
+      - name: ✅ Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🔨 Setup
+        uses: ./.github/workflows/setup
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: 🔼 Install Vercel CLI
+        run: pnpm install --global vercel@latest
+
+      - name: 💪 Pull environment information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: 📦 Build
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: 💨 Deploy!
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+  sync:
+    name: 🚀 Deploy sync
+    runs-on: ubuntu-latest
+    environment: Production
+    needs: db
+
     steps:
       - name: ✅ Checkout code
         uses: actions/checkout@v3
@@ -17,6 +88,6 @@ jobs:
         uses: superfly/flyctl-actions/setup-flyctl@master
 
       - name: 💨 Fly!
-        run: flyctl deploy --remote-only --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }}
+        run: flyctl deploy --remote-only -c ./provision/prod/sync/fly.toml
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

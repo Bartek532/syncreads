@@ -1,0 +1,41 @@
+{
+  "name": "@rssmarkable/database",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "clean": "rimraf .turbo dist",
+    "dev": "tsup --watch",
+    "lint": "eslint \"src/**/*.ts\" && pnpm run db:lint",
+    "db:start:dev": "supabase start",
+    "db:stop:dev": "supabase stop",
+    "db:setup:dev": "pnpm run db:start:dev && pnpm run db:migrate:dev",
+    "db:migrate:dev": "supabase migration up && pnpm run db:generate",
+    "db:migrate:deploy": "supabase db push",
+    "db:generate": "supabase gen types typescript --schema public --local > src/types/generated/schema.ts",
+    "db:link": "supabase link",
+    "db:lint": "supabase db lint",
+    "test": "supabase test db --debug",
+    "test:ci": "supabase test db"
+  },
+  "dependencies": {
+    "@rssmarkable/shared": "workspace:*",
+    "@supabase/ssr": "0.0.10",
+    "@supabase/supabase-js": "2.39.0",
+    "zod": "^3.22.3"
+  },
+  "devDependencies": {
+    "@rssmarkable/eslint-preset": "workspace:*",
+    "@rssmarkable/tsconfig": "workspace:*",
+    "@types/node": "^18.0.0",
+    "rimraf": "3.0.2",
+    "supabase": "1.115.4",
+    "tsup": "8.0.1",
+    "tsx": "4.5.0"
+  }
+}

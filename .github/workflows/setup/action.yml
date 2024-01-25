@@ -1,0 +1,28 @@
+name: "Setup"
+
+inputs:
+  node-version:
+    description: "Node.js version"
+    required: true
+    default: "20.x"
+
+runs:
+  using: "composite"
+  steps:
+    - name: ✅ Checkout code
+      uses: actions/checkout@v4
+
+    - name: 🎬 Setup pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: 8
+
+    - name: 🔨 Setup Node.js ${{ inputs.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: "pnpm"
+
+    - name: 🔌 Install
+      shell: bash
+      run: pnpm install

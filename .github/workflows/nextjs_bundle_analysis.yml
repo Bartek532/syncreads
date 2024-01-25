@@ -13,7 +13,7 @@ concurrency:
 
 defaults:
   run:
-    working-directory: ./
+    working-directory: ./apps/web/
 
 permissions:
   contents: read
@@ -31,17 +31,10 @@ jobs:
       - name: ✅ Checkout code
         uses: actions/checkout@v3
 
-      - name: 🔨 Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - name: 🔨 Setup
+        uses: ./.github/workflows/setup
         with:
           node-version: ${{ matrix.node-version }}
-
-      - uses: pnpm/action-setup@v2
-        name: 🔌 Install pnpm
-        id: pnpm-install
-        with:
-          version: 8
-          run_install: true
 
       - name: ✨ Restore next build
         uses: actions/cache@v3
@@ -49,15 +42,13 @@ jobs:
         env:
           cache-name: cache-next-build
         with:
-          # if you use a custom build directory, replace all instances of `.next` in this file with your build directory
-          # ex: if your app builds to `dist`, replace `.next` with `dist`
-          path: .next/cache
+          path: apps/web/.next/cache
           key: ${{ runner.os }}-build-${{ env.cache-name }}
 
-      - name: 📦 Build Next.js app
+      - name: 📦 Build app
         env:
           SKIP_ENV_VALIDATION: 1
-        run: ./node_modules/.bin/next build
+        run: cd ../.. && pnpm run build:web
 
       - name: 🧪 Analyze bundle
         run: npx -p nextjs-bundle-analysis report
@@ -66,7 +57,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: bundle
-          path: .next/analyze/__bundle_analysis.json
+          path: apps/web/.next/analyze/__bundle_analysis.json
 
       - name: ⬇️ Download base branch bundle stats
         uses: dawidd6/action-download-artifact@v2
@@ -74,7 +65,7 @@ jobs:
         with:
           workflow: nextjs_bundle_analysis.yml
           branch: ${{ github.event.pull_request.base.ref }}
-          path: .next/analyze/base
+          path: apps/web/.next/analyze/base
 
       - name: 📊 Compare with base branch bundle
         if: success() && github.event.number

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "globalEnv": ["NODE_ENV"],
+  "globalDotEnv": [".env"],
+  "pipeline": {
+    "build": {
+      "dependsOn": ["clean", "^build"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+    },
+    "build:apps": {},
+    "build:packages": {},
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "db:generate": {
+      "dependsOn": ["^db:generate"],
+      "cache": false
+    },
+    "db:setup:dev": {
+      "cache": false
+    },
+    "db:start:dev": {
+      "cache": false
+    },
+    "db:stop:dev": {
+      "cache": false
+    },
+    "db:migrate:dev": {
+      "cache": false
+    },
+    "db:migrate:deploy": {
+      "cache": false
+    },
+    "db:link": {
+      "cache": false
+    },
+    "clean": {
+      "cache": false
+    },
+    "lint": {},
+    "test": {},
+    "test:ci": {}
+  }
+}

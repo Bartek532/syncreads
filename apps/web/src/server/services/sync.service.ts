@@ -1,0 +1,71 @@
+import { env } from "@/lib/env/server";
+import { supabase } from "@/lib/supabase/server";
+import type { GetSyncInput, GetSyncLogInput } from "@/utils";
+
+import { ApiError, isSyncApiErrorResponse } from "../utils/exceptions";
+
+import type { SyncArticlePayload, SyncFeedPayload } from "@rssmarkable/shared";
+
+export const queueArticleSync = async ({
+  key,
+  url,
+}: { key: string } & SyncArticlePayload) => {
+  const response = await fetch(`${env.SYNC_API_URL}/api/sync/article`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: key,
+    },
+    body: JSON.stringify({ url }),
+  });
+
+  const data: unknown = await response.json();
+
+  if (isSyncApiErrorResponse(data)) {
+    throw new ApiError(data.error.status, data.error.message);
+  }
+
+  if (!response.ok) {
+    throw new ApiError(response.status, response.statusText);
+  }
+
+  return data;
+};
+
+export const queueFeedSync = async ({
+  key,
+  in: feeds,
+}: { key: string } & SyncFeedPayload) => {
+  const response = await fetch(`${env.SYNC_API_URL}/api/sync/feed`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: key,
+    },
+    body: JSON.stringify({ in: feeds }),
+  });
+
+  const data: unknown = await response.json();
+
+  if (isSyncApiErrorResponse(data)) {
+    throw new ApiError(data.error.status, data.error.message);
+  }
+
+  if (!response.ok) {
+    throw new ApiError(response.status, response.statusText);
+  }
+
+  return data;
+};
+
+export const getSyncById = async ({ id }: GetSyncInput) => {
+  return supabase().from("Sync").select("*").eq("id", id).single();
+};
+
+export const getSyncLog = async ({ syncId }: GetSyncLogInput) => {
+  return supabase()
+    .from("Log")
+    .select("*")
+    .eq("syncId", syncId)
+    .order("createdAt", { ascending: false });
+};

@@ -1,0 +1,7 @@
+{
+  "extends": "@rssmarkable/tsconfig/base.json",
+  "compilerOptions": {
+    "lib": ["es2022", "dom"]
+  },
+  "include": ["**/*.ts", "**/*.tsx", "tsup.config.ts"]
+}

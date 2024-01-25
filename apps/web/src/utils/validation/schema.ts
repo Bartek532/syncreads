@@ -1,0 +1,125 @@
+import { ZodIssueCode, z } from "zod";
+
+import { FILE_TYPE } from "../../types/feed.types";
+
+export const updateUserSchema = z.object({
+  name: z
+    .string()
+    .max(30, "Name must not be longer than 30 characters.")
+    .optional(),
+  folder: z
+    .string()
+    .max(30, "Folder name must not be longer than 30 characters.")
+    .optional(),
+});
+
+export const createFeedSchema = z.object({
+  url: z
+    .string({ required_error: "Url is required." })
+    .min(1, "Url is required.")
+    .url("Url must be a valid url."),
+});
+
+export const createAndConnectFeedSchema = createFeedSchema.extend({
+  id: z.string(),
+});
+
+export const addFeedSchema = z
+  .object({
+    url: z
+      .union([
+        z
+          .string({ required_error: "Url is required." })
+          .min(1, "Url is required.")
+          .url("Url must be a valid url."),
+        z.literal(""),
+      ])
+      .optional(),
+    file: z
+      .instanceof(File, { message: "File is required." })
+      .refine((file) => file.size <= 200000, `Max file size is 2MB.`)
+      .refine((file) => {
+        const extension = file?.name.split(".").pop();
+        return (
+          ["opml"].includes(file.type) ||
+          (extension && ["opml"].includes(extension))
+        );
+      }, "Only .opml files are accepted.")
+      .optional(),
+  })
+  .superRefine((data, ctx) => {
+    const message = "Either url or file is required to add feeds.";
+
+    if (!data.file && !data.url) {
+      ctx.addIssue({
+        code: ZodIssueCode.custom,
+        message,
+        path: ["url"],
+      });
+
+      ctx.addIssue({
+        code: ZodIssueCode.custom,
+        message,
+        path: ["file"],
+      });
+    }
+  });
+
+export const importFeedsSchema = z.object({
+  content: z.string(),
+  type: z.nativeEnum(FILE_TYPE),
+});
+
+export const importAndConnectFeedsSchema = importFeedsSchema.extend({
+  id: z.string(),
+});
+
+export const deleteFeedsSchema = z.object({
+  in: z.array(z.string().uuid()),
+});
+
+export const deleteAndDisconnectFeedsSchema = deleteFeedsSchema.extend({
+  id: z.string(),
+});
+
+export const getUrlDetailsSchema = z.object({
+  url: z.string().url(),
+});
+
+export const registerDeviceSchema = z.object({
+  code: z
+    .string()
+    .min(8, "Enter valid one-time code.")
+    .max(8, "Enter valid one-time code."),
+});
+
+export const registerAndConnectDeviceSchema = registerDeviceSchema.extend({
+  id: z.string(),
+});
+
+export const unregisterAndDisconnectDeviceSchema = z.object({
+  id: z.string(),
+});
+
+export const getSyncSchema = z.object({
+  id: z.string().uuid(),
+});
+
+export const getSyncLogSchema = z.object({
+  syncId: z.string().uuid(),
+});
+
+export const limitSchema = z.object({
+  limit: z.number().default(5),
+});
+
+export const cursorPaginationSchema = limitSchema.merge(
+  z.object({
+    cursor: z.string().optional(),
+  }),
+);
+
+export const rangeSchema = z.object({
+  from: z.date().optional(),
+  to: z.date().optional(),
+});
