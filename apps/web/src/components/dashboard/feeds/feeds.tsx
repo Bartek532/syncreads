@@ -1,5 +1,6 @@
 "use client";
 
+import { GENERIC_ERROR_MESSAGE } from "@rssmarkable/shared";
 import { memo, useState } from "react";
 import { toast } from "react-hot-toast";
 
@@ -38,7 +39,7 @@ export const Feeds = memo(() => {
       {
         loading: "Queuing feed sync...",
         success: ({ message }) => message,
-        error: (err: Error) => err.message,
+        error: (err?: Error) => err?.message ?? GENERIC_ERROR_MESSAGE,
       },
     );
   };

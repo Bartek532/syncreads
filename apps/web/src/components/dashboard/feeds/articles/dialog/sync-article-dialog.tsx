@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { GENERIC_ERROR_MESSAGE } from "@rssmarkable/shared";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -44,7 +45,7 @@ export const SyncArticleDialog = memo<SyncArticleDialogProps>(
       await toast.promise(queueArticleSync(data), {
         loading: "Queuing article sync...",
         success: ({ message }) => message,
-        error: (err: Error) => err.message,
+        error: (err?: Error) => err?.message ?? GENERIC_ERROR_MESSAGE,
       });
     };
 

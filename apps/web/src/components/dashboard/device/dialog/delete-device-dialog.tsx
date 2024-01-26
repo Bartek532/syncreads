@@ -1,3 +1,4 @@
+import { GENERIC_ERROR_MESSAGE } from "@rssmarkable/shared";
 import { memo } from "react";
 import { toast } from "react-hot-toast";
 
@@ -26,7 +27,7 @@ export const DeleteDeviceDialog = memo<DeleteDeviceDialogProps>(
       await toast.promise(deleteDevice(), {
         loading: "Deleting device...",
         success: ({ message }) => message,
-        error: (err: Error) => err.message,
+        error: (err?: Error) => err?.message ?? GENERIC_ERROR_MESSAGE,
       });
     };
 

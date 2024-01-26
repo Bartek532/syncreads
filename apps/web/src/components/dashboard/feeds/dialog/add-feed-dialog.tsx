@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { GENERIC_ERROR_MESSAGE } from "@rssmarkable/shared";
 import { Loader2 } from "lucide-react";
 import { memo, useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -105,7 +106,7 @@ export const AddFeedDialog = memo<AddFeedDialogProps>(
         await toast.promise(createFeed({ url }), {
           loading: "Adding feed...",
           success: ({ message }) => message,
-          error: (err: Error) => err.message,
+          error: (err?: Error) => err?.message ?? GENERIC_ERROR_MESSAGE,
         });
       }
 
@@ -114,7 +115,7 @@ export const AddFeedDialog = memo<AddFeedDialogProps>(
         await toast.promise(importFeeds({ content, type: FILE_TYPE.OPML }), {
           loading: "Uploading feeds...",
           success: ({ message }) => message,
-          error: (err: Error) => err.message,
+          error: (err?: Error) => err?.message ?? GENERIC_ERROR_MESSAGE,
         });
       }
     };

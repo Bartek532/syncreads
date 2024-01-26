@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { GENERIC_ERROR_MESSAGE } from "@rssmarkable/shared";
 import { Loader2 } from "lucide-react";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
@@ -42,7 +43,8 @@ export const AddDeviceDialog = memo<AddDeviceDialog>(({ children }) => {
     await toast.promise(registerDevice(data), {
       loading: "Registering your device...",
       success: ({ message }) => message,
-      error: (err: Error) => capitalize(err.message),
+      error: (err?: Error) =>
+        err ? capitalize(err.message) : GENERIC_ERROR_MESSAGE,
     });
   };
 

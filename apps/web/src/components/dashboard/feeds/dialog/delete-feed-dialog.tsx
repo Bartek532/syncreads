@@ -1,3 +1,4 @@
+import { GENERIC_ERROR_MESSAGE } from "@rssmarkable/shared";
 import { memo } from "react";
 import { toast } from "react-hot-toast";
 
@@ -27,7 +28,7 @@ export const DeleteFeedDialog = memo<DeleteFeedDialogProps>(
       await toast.promise(deleteFeeds({ in: Array.from(feeds.keys()) }), {
         loading: "Deleting feeds...",
         success: ({ message }) => message,
-        error: (err: Error) => err.message,
+        error: (err?: Error) => err?.message ?? GENERIC_ERROR_MESSAGE,
       });
     };
 

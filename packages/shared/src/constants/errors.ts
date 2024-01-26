@@ -64,3 +64,5 @@ export const HTTP_STATUS_CODE = {
 
 export type HTTP_STATUS_CODE =
   typeof HTTP_STATUS_CODE[keyof typeof HTTP_STATUS_CODE];
+
+export const GENERIC_ERROR_MESSAGE = "Something went wrong. Please try again.";

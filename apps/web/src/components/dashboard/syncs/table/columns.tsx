@@ -51,13 +51,15 @@ export const columns: ColumnDef<Sync>[] = [
     cell: ({ row }) => {
       const finishedAt = row.original.finishedAt;
       const startedAt = row.original.startedAt;
+      const difference = dayjs.duration(
+        dayjs(finishedAt).diff(dayjs(startedAt)),
+      );
+      const format = difference.asSeconds() < 1 ? "SSS[ms]" : "H[h] m[m] s[s]";
+
       return (
         <span className="block w-full pr-4 text-right">
           {finishedAt
-            ? dayjs
-                .duration(dayjs(finishedAt).diff(dayjs(startedAt)))
-                .format("H[h] m[m] s[s]")
-                .replace(/\b0+[a-z]+\s*/gi, "")
+            ? difference.format(format).replace(/\b0+[a-z]+\s*/gi, "")
             : "-"}
         </span>
       );

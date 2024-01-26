@@ -1,7 +1,10 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SYNC_DEFAULT_FOLDER } from "@rssmarkable/shared";
+import {
+  GENERIC_ERROR_MESSAGE,
+  SYNC_DEFAULT_FOLDER,
+} from "@rssmarkable/shared";
 import { Loader2 } from "lucide-react";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
@@ -44,7 +47,7 @@ export const ProfileForm = memo<ProfileForm>(({ user }) => {
     await toast.promise(updateUser(data), {
       loading: "Updating your details...",
       success: ({ message }) => message,
-      error: (err: Error) => err.message,
+      error: (err?: Error) => err?.message ?? GENERIC_ERROR_MESSAGE,
     });
   };
 

@@ -58,7 +58,7 @@ export const AppearanceForm = memo(() => {
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className="flex gap-8 pt-2"
+                className="relative flex gap-4 overflow-x-auto pt-2"
               >
                 <FormItem>
                   <FormLabel className="[&:has([data-state=checked])>div]:border-primary">
@@ -68,10 +68,10 @@ export const AppearanceForm = memo(() => {
                         className="sr-only"
                       />
                     </FormControl>
-                    <div className="w-48 cursor-pointer items-center rounded-md border-2 border-muted p-1 hover:border-accent">
+                    <div className="w-28 cursor-pointer items-center rounded-md border-2 border-muted p-1 hover:border-accent sm:w-36 md:w-48">
                       <SystemThemeIcon />
                     </div>
-                    <span className="block w-full p-2 text-center font-normal">
+                    <span className="block  p-2 text-center font-normal">
                       Auto
                     </span>
                   </FormLabel>
@@ -81,10 +81,10 @@ export const AppearanceForm = memo(() => {
                     <FormControl>
                       <RadioGroupItem value={THEME.LIGHT} className="sr-only" />
                     </FormControl>
-                    <div className="w-48 cursor-pointer items-center rounded-md border-2 border-muted p-1 hover:border-accent">
+                    <div className="w-28 cursor-pointer items-center rounded-md border-2 border-muted p-1 hover:border-accent sm:w-36 md:w-48">
                       <LightThemeIcon />
                     </div>
-                    <span className="block w-full p-2 text-center font-normal">
+                    <span className="block  p-2 text-center font-normal">
                       Light
                     </span>
                   </FormLabel>
@@ -94,10 +94,10 @@ export const AppearanceForm = memo(() => {
                     <FormControl>
                       <RadioGroupItem value={THEME.DARK} className="sr-only" />
                     </FormControl>
-                    <div className="w-48 cursor-pointer items-center rounded-md border-2 border-muted p-1 hover:border-accent">
+                    <div className="w-28 cursor-pointer items-center rounded-md border-2 border-muted p-1 hover:border-accent sm:w-36 md:w-48">
                       <DarkThemeIcon />
                     </div>
-                    <span className="block w-full p-2 text-center font-normal">
+                    <span className="block  p-2 text-center font-normal">
                       Dark
                     </span>
                   </FormLabel>
