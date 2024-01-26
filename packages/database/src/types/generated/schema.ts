@@ -39,14 +39,17 @@ export interface Database {
       }
       Article: {
         Row: {
+          syncedAt: string
           syncId: string
           url: string
         }
         Insert: {
+          syncedAt?: string
           syncId: string
           url: string
         }
         Update: {
+          syncedAt?: string
           syncId?: string
           url?: string
         }

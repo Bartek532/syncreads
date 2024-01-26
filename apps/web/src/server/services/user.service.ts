@@ -94,9 +94,9 @@ export const getUserSyncsCount = ({ id }: { id: string }) => {
 export const getUserArticles = ({ id, limit }: LimitInput & { id: string }) => {
   return supabase()
     .from("Article")
-    .select("*, sync:Sync(userId,startedAt)")
+    .select("*, sync:Sync(userId)")
     .eq("sync.userId", id)
-    .order("startedAt", { referencedTable: "Sync", ascending: false })
+    .order("syncedAt", { ascending: false })
     .limit(limit);
 };
 
