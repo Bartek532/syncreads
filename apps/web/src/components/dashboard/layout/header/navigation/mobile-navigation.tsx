@@ -85,6 +85,7 @@ export const MobileNavigation = memo<MobileNavigationProps>(({ user }) => {
                   loading: "Logging out...",
                   success: () => {
                     router.push("/");
+                    router.refresh();
                     return "Logged out!";
                   },
                   error: "Failed to log out!",

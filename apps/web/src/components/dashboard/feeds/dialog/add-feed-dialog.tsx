@@ -3,10 +3,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GENERIC_ERROR_MESSAGE } from "@rssmarkable/shared";
 import { Loader2 } from "lucide-react";
+import { revalidatePath } from "next/cache";
 import { memo, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { ZodIssueCode, z } from "zod";
+
+import { api } from "@/trpc/react";
 
 import { FILE_TYPE } from "../../../../types/feed.types";
 import { onPromise } from "../../../../utils";
@@ -28,8 +31,6 @@ import {
   FormMessage,
 } from "../../../ui/form";
 import { Input } from "../../../ui/input";
-
-import { createFeed, importFeeds } from "./actions/actions";
 
 import type { DialogProps } from "@radix-ui/react-dialog";
 
@@ -87,6 +88,14 @@ export const AddFeedDialog = memo<AddFeedDialogProps>(
     const urlContent = form.watch("url");
     const fileContent = form.watch("file");
 
+    const { mutateAsync: createFeedAsync } = api.feed.createFeed.useMutation({
+      onSuccess: () => revalidatePath("/dashboard/feeds"),
+    });
+
+    const { mutateAsync: importFeedsAsync } = api.feed.importFeeds.useMutation({
+      onSuccess: () => revalidatePath("/dashboard/feeds"),
+    });
+
     useEffect(() => {
       if (!urlContent && fileContent?.size) {
         form.clearErrors("url");
@@ -103,7 +112,7 @@ export const AddFeedDialog = memo<AddFeedDialogProps>(
       }
 
       if (url) {
-        await toast.promise(createFeed({ url }), {
+        await toast.promise(createFeedAsync({ url }), {
           loading: "Adding feed...",
           success: ({ message }) => message,
           error: (err?: Error) => err?.message ?? GENERIC_ERROR_MESSAGE,
@@ -112,11 +121,14 @@ export const AddFeedDialog = memo<AddFeedDialogProps>(
 
       if (file) {
         const content = await file.text();
-        await toast.promise(importFeeds({ content, type: FILE_TYPE.OPML }), {
-          loading: "Uploading feeds...",
-          success: ({ message }) => message,
-          error: (err?: Error) => err?.message ?? GENERIC_ERROR_MESSAGE,
-        });
+        await toast.promise(
+          importFeedsAsync({ content, type: FILE_TYPE.OPML }),
+          {
+            loading: "Uploading feeds...",
+            success: ({ message }) => message,
+            error: (err?: Error) => err?.message ?? GENERIC_ERROR_MESSAGE,
+          },
+        );
       }
     };
 

@@ -19,7 +19,7 @@ export const Hero = memo(() => {
       </h2>
 
       <Link
-        href="/login"
+        href="/auth/login"
         className="rounded-full border-2 border-indigo-500 px-10 py-3 font-medium text-indigo-500 no-underline transition hover:bg-indigo-500 hover:text-white dark:z-10 dark:border-white dark:text-white dark:hover:border-indigo-900 dark:hover:bg-indigo-700 dark:hover:text-white"
       >
         Get started

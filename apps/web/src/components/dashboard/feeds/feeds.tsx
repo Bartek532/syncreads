@@ -1,14 +1,15 @@
 "use client";
 
 import { GENERIC_ERROR_MESSAGE } from "@rssmarkable/shared";
+import { revalidatePath } from "next/cache";
 import { memo, useState } from "react";
 import { toast } from "react-hot-toast";
 
 import { Button } from "@/components/ui/button";
+import { api } from "@/trpc/react";
 
 import { onPromise } from "../../../utils";
 
-import { queueFeedSync } from "./dialog/actions/actions";
 import { AddFeedDialog } from "./dialog/add-feed-dialog";
 import { DeleteFeedDialog } from "./dialog/delete-feed-dialog";
 import { FeedsList } from "./list/feeds-list";
@@ -33,15 +34,16 @@ export const Feeds = memo(() => {
     });
   };
 
+  const { mutateAsync } = api.sync.queueFeedSync.useMutation({
+    onSuccess: () => revalidatePath("/dashboard/syncs"),
+  });
+
   const onSync = async () => {
-    await toast.promise(
-      queueFeedSync({ in: Array.from(checkedFeeds.keys()) }),
-      {
-        loading: "Queuing feed sync...",
-        success: ({ message }) => message,
-        error: (err?: Error) => err?.message ?? GENERIC_ERROR_MESSAGE,
-      },
-    );
+    await toast.promise(mutateAsync({ in: Array.from(checkedFeeds.keys()) }), {
+      loading: "Queuing feed sync...",
+      success: ({ message }) => message,
+      error: (err?: Error) => err?.message ?? GENERIC_ERROR_MESSAGE,
+    });
   };
 
   return (

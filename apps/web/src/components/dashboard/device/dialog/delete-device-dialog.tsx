@@ -1,6 +1,9 @@
 import { GENERIC_ERROR_MESSAGE } from "@rssmarkable/shared";
+import { revalidatePath } from "next/cache";
 import { memo } from "react";
 import { toast } from "react-hot-toast";
+
+import { api } from "@/trpc/react";
 
 import { onPromise } from "../../../../utils";
 import {
@@ -15,16 +18,18 @@ import {
   AlertDialogAction,
 } from "../../../ui/alert-dialog";
 
-import { deleteDevice } from "./actions/actions";
-
 type DeleteDeviceDialogProps = {
   readonly children?: React.ReactNode;
 };
 
 export const DeleteDeviceDialog = memo<DeleteDeviceDialogProps>(
   ({ children }) => {
+    const { mutateAsync } = api.user.unregisterDevice.useMutation({
+      onSuccess: () => revalidatePath("/dashboard/device"),
+    });
+
     const onDelete = async () => {
-      await toast.promise(deleteDevice(), {
+      await toast.promise(mutateAsync(), {
         loading: "Deleting device...",
         success: ({ message }) => message,
         error: (err?: Error) => err?.message ?? GENERIC_ERROR_MESSAGE,

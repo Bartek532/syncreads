@@ -1,9 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GENERIC_ERROR_MESSAGE } from "@rssmarkable/shared";
 import { Loader2 } from "lucide-react";
+import { revalidatePath } from "next/cache";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+
+import { api } from "@/trpc/react";
 
 import { capitalize, onPromise } from "../../../../utils";
 import { registerDeviceSchema } from "../../../../utils/validation/schema";
@@ -26,8 +29,6 @@ import {
 } from "../../../ui/form";
 import { Input } from "../../../ui/input";
 
-import { registerDevice } from "./actions/actions";
-
 import type { RegisterDeviceInput } from "../../../../utils/validation/types";
 
 type AddDeviceDialog = {
@@ -39,8 +40,12 @@ export const AddDeviceDialog = memo<AddDeviceDialog>(({ children }) => {
     resolver: zodResolver(registerDeviceSchema),
   });
 
+  const { mutateAsync } = api.user.registerDevice.useMutation({
+    onSuccess: () => revalidatePath("/dashboard/device"),
+  });
+
   const onSubmit = async (data: RegisterDeviceInput) => {
-    await toast.promise(registerDevice(data), {
+    await toast.promise(mutateAsync(data), {
       loading: "Registering your device...",
       success: ({ message }) => message,
       error: (err?: Error) =>

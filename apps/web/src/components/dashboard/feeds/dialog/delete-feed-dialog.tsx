@@ -1,6 +1,9 @@
 import { GENERIC_ERROR_MESSAGE } from "@rssmarkable/shared";
+import { revalidatePath } from "next/cache";
 import { memo } from "react";
 import { toast } from "react-hot-toast";
+
+import { api } from "@/trpc/react";
 
 import { onPromise } from "../../../../utils";
 import {
@@ -15,8 +18,6 @@ import {
   AlertDialogAction,
 } from "../../../ui/alert-dialog";
 
-import { deleteFeeds } from "./actions/actions";
-
 type DeleteFeedDialogProps = {
   readonly children?: React.ReactNode;
   readonly feeds: Map<string, string>;
@@ -24,8 +25,12 @@ type DeleteFeedDialogProps = {
 
 export const DeleteFeedDialog = memo<DeleteFeedDialogProps>(
   ({ children, feeds }) => {
+    const { mutateAsync } = api.user.deleteUserFeeds.useMutation({
+      onSuccess: () => revalidatePath("/dashboard/feeds"),
+    });
+
     const onDelete = async () => {
-      await toast.promise(deleteFeeds({ in: Array.from(feeds.keys()) }), {
+      await toast.promise(mutateAsync({ in: Array.from(feeds.keys()) }), {
         loading: "Deleting feeds...",
         success: ({ message }) => message,
         error: (err?: Error) => err?.message ?? GENERIC_ERROR_MESSAGE,
