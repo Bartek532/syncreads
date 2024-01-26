@@ -80,14 +80,16 @@ export const MobileNavigation = memo<MobileNavigationProps>(({ user }) => {
             ))}
             <button
               className="w-full border-y py-3 text-left"
-              onClick={onPromise(async () => {
-                router.push("/");
-                await toast.promise(supabase().auth.signOut(), {
+              onClick={onPromise(() =>
+                toast.promise(supabase().auth.signOut(), {
                   loading: "Logging out...",
-                  success: "Logged out successfully!",
+                  success: () => {
+                    router.push("/");
+                    return "Logged out!";
+                  },
                   error: "Failed to log out!",
-                });
-              })}
+                }),
+              )}
             >
               Log out
             </button>

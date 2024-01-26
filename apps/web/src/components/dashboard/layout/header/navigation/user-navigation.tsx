@@ -68,14 +68,16 @@ export const UserNavigation = memo<UserNavigationProps>(({ user }) => {
         <DropdownMenuItem asChild className="cursor-pointer">
           <button
             className="w-full"
-            onClick={onPromise(async () => {
-              router.push("/");
-              await toast.promise(supabase().auth.signOut(), {
+            onClick={onPromise(() =>
+              toast.promise(supabase().auth.signOut(), {
                 loading: "Logging out...",
-                success: "Logged out successfully!",
+                success: () => {
+                  router.push("/");
+                  return "Logged out!";
+                },
                 error: "Failed to log out!",
-              });
-            })}
+              }),
+            )}
           >
             Log out
           </button>
