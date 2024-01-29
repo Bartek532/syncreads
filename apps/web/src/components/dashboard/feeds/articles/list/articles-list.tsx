@@ -28,7 +28,7 @@ export const ArticlesList = memo<ArticlesListProps>(({ articles }) => {
 
   return (
     <div className="w-full flex-1 rounded-lg bg-background p-6 shadow-sm">
-      <ol className="flex flex-col gap-6">
+      <ol className="flex flex-col gap-4 sm:gap-6">
         {articles.map((article) => (
           <li key={article.syncId}>
             <ArticleTile url={article.url} />

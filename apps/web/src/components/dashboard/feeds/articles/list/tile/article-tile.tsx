@@ -17,11 +17,11 @@ export const ArticleTile = memo<ArticleTileProps>(async ({ url }) => {
   return (
     <a
       href={url}
-      className="group flex w-full flex-1 items-start justify-between gap-6"
+      className="group flex w-full flex-1 items-start justify-between gap-4 sm:gap-6"
       target="_blank"
       rel="noreferrer"
     >
-      <Avatar className="mt-1 h-8 w-8 shrink-0">
+      <Avatar className="mt-1 h-7 w-7 shrink-0 sm:h-8 sm:w-8">
         <AvatarImage src={data.icon} alt="" />
         <AvatarFallback>{data.title[0]}</AvatarFallback>
       </Avatar>
@@ -33,7 +33,7 @@ export const ArticleTile = memo<ArticleTileProps>(async ({ url }) => {
           {removeProtocolsFromUrl(url)}
         </span>
       </div>
-      <ArrowUpRight className="h-6 w-6 shrink-0 text-muted-foreground transition-colors group-hover:text-primary" />
+      <ArrowUpRight className="h-5 w-5 shrink-0 text-muted-foreground transition-colors group-hover:text-primary sm:h-6 sm:w-6" />
     </a>
   );
 });

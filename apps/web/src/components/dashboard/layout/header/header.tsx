@@ -14,7 +14,7 @@ type HeaderProps = {
 
 export const Header = memo<HeaderProps>(({ user }) => {
   return (
-    <header className="h-16 w-full border-b bg-background">
+    <header className="fixed z-50 h-14 w-full border-b bg-background md:h-16">
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-8 px-6 sm:px-8">
         <Logo withText={false} />
         <Navigation />

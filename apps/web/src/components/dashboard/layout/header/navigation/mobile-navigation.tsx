@@ -48,7 +48,7 @@ export const MobileNavigation = memo<MobileNavigationProps>(({ user }) => {
 
       <div
         className={cn(
-          "fixed top-16 left-0 z-10 -mt-1 flex h-[calc(100vh-63px+0.25rem)] w-full flex-col gap-7 overflow-auto backdrop-blur-sm md:hidden",
+          "fixed top-14 left-0 z-10 -mt-1 flex h-[calc(100vh-3.25rem)] w-full flex-col gap-7 overflow-auto backdrop-blur-sm md:top-16 md:hidden md:h-[calc(100vh-3.75rem)]",
           !isNavOpen && "hidden",
         )}
       >
