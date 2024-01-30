@@ -13,7 +13,7 @@ export const LandingLayout = memo<LandingLayoutProps>(({ children, user }) => {
   return (
     <div className="flex min-h-screen flex-col">
       <Header {...(user && { user })} />
-      <main className="mx-auto w-full max-w-7xl flex-1 px-6 pt-14 sm:px-8">
+      <main className="mx-auto grid w-full flex-1 grid-cols-[1fr_min(80rem,_100%)_1fr] px-6 pt-14 sm:px-8 [&>*]:col-[2]">
         {children}
       </main>
     </div>

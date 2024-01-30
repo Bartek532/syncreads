@@ -5,7 +5,10 @@ import { buttonVariants } from "../../../ui/button";
 
 export const Hero = () => {
   return (
-    <section className="flex w-full flex-col items-center justify-center gap-4 py-12 md:gap-6 md:py-24 lg:py-32">
+    <section
+      className="flex w-full flex-col items-center justify-center gap-4 py-12 md:gap-6 md:py-24 lg:py-32"
+      id="hero"
+    >
       <h1 className="lg:leading-tighter max-w-3xl text-center text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
         {SITE_TITLE_APPENDIX}
       </h1>
