@@ -1,5 +1,11 @@
+import { Hero } from "../../components/landing/sections/hero/Hero";
+
 const Landing = () => {
-  return <h1>Loanding</h1>;
+  return (
+    <>
+      <Hero />
+    </>
+  );
 };
 
 export default Landing;

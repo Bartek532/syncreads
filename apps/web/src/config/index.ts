@@ -14,7 +14,7 @@ export const SITE_TITLE = "RSSmarkable";
 export const SITE_TITLE_APPENDIX =
   "Seamlessly sync articles and feeds from the web.";
 export const SITE_DESCRIPTION =
-  "Say goodbye to your RSS reader. Sync your favorite content to selected device with just a few clicks.";
+  "Say goodbye to your RSS reader. Sync your favorite content to selected device and read without distractions with just a few clicks.";
 export const SEPARATOR = " | ";
 export const SITE_TITLE_TEMPLATE = `%s${SEPARATOR}${SITE_TITLE}`;
 export const SITE_IMAGE_URL = `/images/banner.png`;
@@ -22,7 +22,7 @@ export const SITE_IMAGE_URL = `/images/banner.png`;
 export const GITHUB_URL = "https://github.com/Bartek532/rssmarkable";
 
 export const LANDING_HEADER_NAVIGATION = [
-  { name: "Discover", href: "#discover" },
+  { name: "About", href: "#about" },
   { name: "Reviews", href: "#reviews" },
   { name: "FAQ", href: "#faq" },
   { name: "Contact", href: "#contact" },
