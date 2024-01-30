@@ -7,7 +7,7 @@ import { memo, useState } from "react";
 import { toast } from "react-hot-toast";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   DASHBOARD_NAVIGATION,
   DASHBOARD_SECONDARY_NAVIGATION,
@@ -53,9 +53,13 @@ export const MobileNavigation = memo<MobileNavigationProps>(({ user }) => {
         )}
       >
         <div className="flex w-full flex-col gap-7 bg-background px-6 pt-2 pb-10 sm:px-8">
-          <Button variant="outline" className="w-full">
+          <Link
+            className={cn(buttonVariants({ variant: "outline" }), "w-full")}
+            href="#contact"
+            onClick={handleToggleNavigation}
+          >
             Contact
-          </Button>
+          </Link>
           <div className="flex w-full items-center justify-between">
             {user.email && (
               <span className="text-sm text-muted-foreground">

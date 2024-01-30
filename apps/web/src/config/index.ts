@@ -11,18 +11,33 @@ export const ORIGIN =
 export const PROTOCOL = env.NODE_ENV === NODE_ENV.PRODUCTION ? "https" : "http";
 export const HOST = `${PROTOCOL}://${ORIGIN}` as const;
 export const SITE_TITLE = "RSSmarkable";
-export const SITE_DESCRIPTION =
+export const SITE_TITLE_APPENDIX =
   "Seamlessly sync articles and feeds from the web.";
+export const SITE_DESCRIPTION =
+  "Say goodbye to your RSS reader. Sync your favorite content to selected device with just a few clicks.";
 export const SEPARATOR = " | ";
 export const SITE_TITLE_TEMPLATE = `%s${SEPARATOR}${SITE_TITLE}`;
 export const SITE_IMAGE_URL = `/images/banner.png`;
 
 export const GITHUB_URL = "https://github.com/Bartek532/rssmarkable";
 
-export const INDEX_NAVIGATION = [
-  { name: "Sign in", href: "/auth/login" },
-  { name: "Dashboard", href: "/dashboard" },
+export const LANDING_HEADER_NAVIGATION = [
+  { name: "Discover", href: "#discover" },
+  { name: "Reviews", href: "#reviews" },
+  { name: "FAQ", href: "#faq" },
+  { name: "Contact", href: "#contact" },
 ];
+
+export const TOASTER_CONFIG: DefaultToastOptions = {
+  style: {
+    padding: "14px 25px",
+    minWidth: "250px",
+    gap: "10px",
+    maxWidth: "400px",
+  },
+};
+
+////////////////////////////////////
 
 export const INDEX_FOOTER_NAVIGATION = [
   { name: "Dashboard", href: "/dashboard" },
@@ -79,14 +94,5 @@ export const INDEX_OPEN_SOURCE_HEADING = {
   cta: {
     text: "See on GitHub",
     href: GITHUB_URL,
-  },
-};
-
-export const TOASTER_CONFIG: DefaultToastOptions = {
-  style: {
-    padding: "14px 25px",
-    minWidth: "250px",
-    gap: "10px",
-    maxWidth: "400px",
   },
 };
