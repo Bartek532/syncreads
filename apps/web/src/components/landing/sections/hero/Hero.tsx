@@ -9,7 +9,7 @@ export const Hero = () => {
       className="flex w-full flex-col items-center justify-center gap-4 py-12 md:gap-6 md:py-24 lg:py-32"
       id="hero"
     >
-      <h1 className="lg:leading-tighter max-w-3xl text-center text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
+      <h1 className="lg:leading-tighter max-w-3xl text-center text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-6xl 2xl:text-7xl">
         {SITE_TITLE_APPENDIX}
       </h1>
       <p className="max-w-2xl text-center text-muted-foreground md:text-xl">
@@ -29,7 +29,7 @@ export const Hero = () => {
 
       <div className="mt-6 aspect-video w-full rounded-lg bg-muted sm:mt-10 sm:w-11/12"></div>
 
-      <div className="mt-12 flex flex-col items-center justify-center gap-4 text-sm sm:mt-24 md:text-lg">
+      <div className="mt-8 flex flex-col items-center justify-center gap-4 text-sm sm:mt-20 md:text-lg lg:mt-28">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-14 lg:gap-20">
           <div className="flex flex-col items-center gap-1">
             <span className="text-3xl font-bold md:text-4xl">1,000+</span>

@@ -28,6 +28,30 @@ export const LANDING_HEADER_NAVIGATION = [
   { name: "Contact", href: "#contact" },
 ];
 
+export const LANDING_FEATURES = {
+  title: "See the magic",
+  description: `Experience the features the users love.`,
+  list: [
+    {
+      title: "Simple",
+      description: `You need only 5 clicks to do full setup and sync your first article. Configure once, use forever.`,
+    },
+    {
+      title: "Fast",
+      description: `Average sync time is less than 5 seconds. We use the latest technologies to ensure your data is always up to date.`,
+    },
+    {
+      title: "Reliable",
+      description: `Downtime is not an option. It&apos;s our top priority to provide you the best possible experience.`,
+    },
+  ],
+};
+
+export const LANDING_REVIEWS = {
+  title: "What our users say",
+  description: `We are proud to have such a great community.`,
+};
+
 export const TOASTER_CONFIG: DefaultToastOptions = {
   style: {
     padding: "14px 25px",
