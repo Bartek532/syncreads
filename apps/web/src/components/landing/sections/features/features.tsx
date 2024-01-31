@@ -4,7 +4,7 @@ import { cn } from "@/utils";
 export const Features = () => {
   return (
     <section
-      className="grid-cols-subgrid !col-span-full -mx-6 grid bg-muted px-6 py-12 sm:-mx-8 sm:px-8 md:py-24 lg:py-32"
+      className="!col-span-full grid grid-cols-subgrid bg-muted py-12 md:py-24 lg:py-32"
       id="about"
     >
       <div className="col-start-2 flex flex-col items-center">
