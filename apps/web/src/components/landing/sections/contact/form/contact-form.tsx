@@ -120,7 +120,7 @@ export const ContactForm = () => {
           type="submit"
           disabled={formStatus !== "pending"}
           className={cn(
-            "sm:py-6",
+            "dark:text-primary sm:py-6",
             formStatus === "fullfilled" && "bg-success !opacity-100",
             formStatus === "rejected" && "bg-destructive !opacity-100",
           )}

@@ -5,7 +5,7 @@ import { ContactForm } from "./form/contact-form";
 export const Contact = () => {
   return (
     <section
-      className="!col-span-full grid grid-cols-subgrid justify-items-center gap-12 bg-muted py-12 md:gap-20 md:py-24 lg:py-32"
+      className="!col-span-full grid grid-cols-subgrid justify-items-center bg-muted py-12 md:py-24 lg:py-32"
       id="contact"
     >
       <div className="col-start-2 flex flex-col items-center">
@@ -17,7 +17,7 @@ export const Contact = () => {
         </p>
       </div>
 
-      <div className="col-start-2 w-full max-w-2xl">
+      <div className="col-start-2 mt-12 w-full max-w-3xl md:mt-20">
         <ContactForm />
       </div>
     </section>
