@@ -60,6 +60,28 @@ export const LANDING_REVIEWS = {
   },
 };
 
+export const LANDING_FAQ = {
+  title: "Frequently asked questions",
+  questions: [
+    {
+      question: "What is RSSmarkable?",
+      answer: `RSSmarkable is a service that allows you to sync content from the web to your favorite device.`,
+    },
+    {
+      question: "How much does it cost?",
+      answer: `It's completely free! We're thinking about adding a premium plan in the future with some extra features.`,
+    },
+    {
+      question: "What can I sync?",
+      answer: `You can sync almost any content from the web. We support also RSS feeds, which allows you to follow your favorites blogs and websites. Just drop a link and we'll do the rest.`,
+    },
+    {
+      question: "How do I get started?",
+      answer: `Create an account and connect your device. That's it!`,
+    },
+  ],
+};
+
 export const TOASTER_CONFIG: DefaultToastOptions = {
   style: {
     padding: "14px 25px",
