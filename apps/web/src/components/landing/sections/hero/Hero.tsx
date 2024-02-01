@@ -9,7 +9,7 @@ export const Hero = () => {
       className="flex w-full flex-col items-center justify-center gap-4 py-12 md:gap-6 md:py-24 lg:py-32"
       id="hero"
     >
-      <h1 className="lg:leading-tighter max-w-3xl text-center text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-6xl 2xl:text-7xl">
+      <h1 className="lg:leading-tighter max-w-4xl text-center text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-6xl 2xl:text-7xl">
         {SITE_TITLE_APPENDIX}
       </h1>
       <p className="max-w-2xl text-center text-muted-foreground md:text-xl">
@@ -19,10 +19,7 @@ export const Hero = () => {
         <Link href="/auth/login" className={buttonVariants()}>
           Get started
         </Link>
-        <Link
-          href="#discover"
-          className={buttonVariants({ variant: "outline" })}
-        >
+        <Link href="#about" className={buttonVariants({ variant: "outline" })}>
           Learn more
         </Link>
       </div>

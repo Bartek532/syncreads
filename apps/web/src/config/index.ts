@@ -50,6 +50,14 @@ export const LANDING_FEATURES = {
 export const LANDING_REVIEWS = {
   title: "What our users say",
   description: `We are proud to have such a great community.`,
+  quote: {
+    content: `I love RSSmarkable. It's so easy to use and it works flawlessly. I can finally read my favorite articles without any fluff.`,
+    author: {
+      name: "Philipp",
+      position: "Software Engineer",
+      avatar: "/images/reviews/philipp.avif",
+    },
+  },
 };
 
 export const TOASTER_CONFIG: DefaultToastOptions = {
