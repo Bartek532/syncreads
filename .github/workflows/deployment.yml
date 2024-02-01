@@ -2,8 +2,8 @@ name: Deployment
 
 on:
   push:
-    branches: [main, landing]
-    # branches: [develop]
+    # branches: [main]
+    branches: [develop]
 
 env:
   NODE_VERSION: 20.x
@@ -20,11 +20,13 @@ jobs:
     env:
       SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
       SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
       SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
       GITHUB_CLIENT_ID: ${{ secrets.SUPABASE_GITHUB_CLIENT_ID }}
       GITHUB_CLIENT_SECRET: ${{ secrets.SUPABASE_GITHUB_CLIENT_SECRET }}
       GOOGLE_CLIENT_ID: ${{ secrets.SUPABASE_GOOGLE_CLIENT_ID }}
       GOOGLE_CLIENT_SECRET: ${{ secrets.SUPABASE_GOOGLE_CLIENT_SECRET }}
+      SUPABASE_DEBUG: 1
 
     steps:
       - name: ✅ Checkout code
@@ -39,7 +41,7 @@ jobs:
         uses: supabase/setup-cli@v1
 
       - name: 🔗 Link
-        run: pnpm run db:link -- --project-ref $SUPABASE_PROJECT_ID
+        run: pnpm run db:link -- --db-url $SUPABASE_DB_URL
 
       - name: 📦 Migrate
         run: pnpm run db:migrate:deploy

@@ -54,7 +54,7 @@ export const FeedTile = memo<FeedTileProps>(({ url, className }) => {
         </p>
       </div>
       <span
-        className="pointer-events-none absolute top-6 right-6 text-muted-foreground group-hover:text-primary"
+        className="pointer-events-none absolute right-6 top-6 text-muted-foreground group-hover:text-primary"
         aria-hidden="true"
       >
         <ArrowUpRightIcon className="h-6 w-6" />

@@ -32,11 +32,11 @@ export const MobileNavigation = memo<MobileNavigationProps>(({ user }) => {
 
       <div
         className={cn(
-          "fixed top-14 left-0 z-10 -mt-1 flex h-[calc(100vh-3.25rem)] w-full flex-col gap-7 overflow-auto backdrop-blur-sm md:top-16 md:hidden md:h-[calc(100vh-3.75rem)]",
+          "fixed left-0 top-14 z-10 -mt-1 flex h-[calc(100vh-3.25rem)] w-full flex-col gap-7 overflow-auto backdrop-blur-sm md:top-16 md:hidden md:h-[calc(100vh-3.75rem)]",
           !isNavOpen && "hidden",
         )}
       >
-        <div className="flex w-full flex-col gap-7 bg-background px-6 pt-2 pb-8 sm:px-8">
+        <div className="flex w-full flex-col gap-7 bg-background px-6 pb-8 pt-2 sm:px-8">
           <nav className="flex flex-col items-start">
             {LANDING_HEADER_NAVIGATION.slice(0, -1).map((link) => (
               <Link

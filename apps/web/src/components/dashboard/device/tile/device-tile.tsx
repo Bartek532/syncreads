@@ -15,7 +15,7 @@ interface DeviceTileProps {
 
 export const DeviceTile = memo<DeviceTileProps>(({ device }) => {
   return (
-    <div className="relative flex flex-col gap-4 rounded-lg border bg-background py-6 px-8 shadow-sm lg:p-8 xl:p-10 xl:px-12">
+    <div className="relative flex flex-col gap-4 rounded-lg border bg-background px-8 py-6 shadow-sm lg:p-8 xl:p-10 xl:px-12">
       <h2 className="text-2xl font-medium sm:hidden sm:text-4xl">
         reMarkable 2
       </h2>
@@ -42,7 +42,7 @@ export const DeviceTile = memo<DeviceTileProps>(({ device }) => {
           </div>
           <DeleteDeviceDialog>
             <Button
-              className="bottom-6 right-8 mt-4 md:absolute lg:right-8 lg:bottom-8 xl:right-12 xl:bottom-10"
+              className="bottom-6 right-8 mt-4 md:absolute lg:bottom-8 lg:right-8 xl:bottom-10 xl:right-12"
               variant="destructive"
             >
               Delete device
