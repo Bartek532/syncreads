@@ -30,7 +30,7 @@ export const LANDING_HEADER_NAVIGATION = [
 
 export const LANDING_FEATURES = {
   title: "See the magic",
-  description: `Experience the features the users love.`,
+  description: `Enjoy the features which make RSSmarkable great.`,
   list: [
     {
       title: "Simple",
@@ -85,6 +85,11 @@ export const LANDING_FAQ = {
 export const LANDING_CTA = {
   title: "Experience the workflow the users love.",
   button: "Register for free",
+};
+
+export const LANDING_CONTACT = {
+  title: "Contact",
+  description: `If you have any questions or suggestions, please don't hesitate to drop us a message.`,
 };
 
 export const TOASTER_CONFIG: DefaultToastOptions = {
