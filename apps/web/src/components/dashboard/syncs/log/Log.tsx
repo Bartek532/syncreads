@@ -73,7 +73,7 @@ export const SyncLog = memo<SyncLogProps>(({ log }) => {
               )}
             >
               <td
-                className="w-0 cursor-pointer py-1 px-4 align-top sm:py-1.5 sm:px-7"
+                className="w-0 cursor-pointer px-4 py-1 align-top sm:px-7 sm:py-1.5"
                 aria-hidden="true"
                 onClick={() => router.push(`#L${index + 1}`)}
               >
