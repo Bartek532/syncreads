@@ -14,13 +14,13 @@ export const Question = memo<QuestionProps>(({ question, answer }) => {
   return (
     <div className="flex flex-col bg-background">
       <button
-        className="flex items-start justify-start gap-3"
+        className="flex items-start justify-start gap-2 md:gap-3"
         onClick={() => setOpen((o) => !o)}
       >
         {open ? (
-          <MinusIcon className="h-6 w-6 text-muted-foreground md:h-7 md:w-7" />
+          <MinusIcon className="h-6 w-6 shrink-0 text-muted-foreground md:h-7 md:w-7" />
         ) : (
-          <PlusIcon className="h-6 w-6 text-muted-foreground md:h-7 md:w-7" />
+          <PlusIcon className="h-6 w-6 shrink-0 text-muted-foreground md:h-7 md:w-7" />
         )}
         <div className="flex flex-col items-start gap-3">
           <span className="md:text-lg">{question}</span>

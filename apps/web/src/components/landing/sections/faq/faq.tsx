@@ -9,7 +9,7 @@ export const Faq = () => {
       id="faq"
     >
       <div className="col-start-2 flex flex-col items-center">
-        <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+        <h2 className="text-center text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
           {LANDING_FAQ.title}
         </h2>
       </div>

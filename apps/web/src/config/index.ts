@@ -82,6 +82,11 @@ export const LANDING_FAQ = {
   ],
 };
 
+export const LANDING_CTA = {
+  title: "Experience the workflow the users love.",
+  button: "Register for free",
+};
+
 export const TOASTER_CONFIG: DefaultToastOptions = {
   style: {
     padding: "14px 25px",
