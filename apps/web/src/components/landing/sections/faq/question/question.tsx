@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { memo, useState } from "react";
 
@@ -22,13 +23,23 @@ export const Question = memo<QuestionProps>(({ question, answer }) => {
         ) : (
           <PlusIcon className="h-6 w-6 shrink-0 text-muted-foreground md:h-7 md:w-7" />
         )}
-        <div className="flex flex-col items-start gap-3">
+
+        <div className="flex flex-col items-start gap-3 overflow-hidden">
           <span className="md:text-lg">{question}</span>
-          {open && (
-            <p className="text-left text-sm text-muted-foreground md:text-base">
-              {answer}
-            </p>
-          )}
+          <AnimatePresence>
+            {open && (
+              <motion.p
+                key={question}
+                className="text-left text-sm text-muted-foreground md:text-base"
+                initial={{ height: 0 }}
+                animate={{ height: "auto" }}
+                exit={{ height: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                {answer}
+              </motion.p>
+            )}
+          </AnimatePresence>
         </div>
       </button>
     </div>
