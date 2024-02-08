@@ -5,7 +5,7 @@ import { getMetadata } from "../../../lib/metadata";
 
 const quote = {
   content:
-    '"I seem to have been only like a boy playing on the seashore, and diverting myself in now and then finding a smoother pebble or a prettier shell than ordinary, whilst the great ocean of truth lay all undiscovered before me."',
+    "I seem to have been only like a boy playing on the seashore, and diverting myself in now and then finding a smoother pebble or a prettier shell than ordinary, whilst the great ocean of truth lay all undiscovered before me.",
   author: "Isaac Newton",
 };
 

@@ -3,7 +3,9 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-import { SITE_DESCRIPTION, SITE_TITLE_APPENDIX } from "../../../../config";
+import { Sparkles } from "@/components/ui/sparkles";
+
+import { SITE_DESCRIPTION } from "../../../../config";
 import { buttonVariants } from "../../../ui/button";
 
 export const Hero = () => {
@@ -22,7 +24,7 @@ export const Hero = () => {
         }}
         viewport={{ once: true }}
       >
-        {SITE_TITLE_APPENDIX}
+        Seamlessly <Sparkles>sync</Sparkles> articles and feeds from the web.
       </motion.h1>
       <motion.p
         className="max-w-2xl text-center text-muted-foreground md:text-xl"
@@ -67,7 +69,16 @@ export const Hero = () => {
       ></motion.div>
 
       <div className="mt-8 flex flex-col items-center justify-center gap-4 text-sm sm:mt-20 md:text-lg lg:mt-28">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-14 lg:gap-20">
+        <motion.div
+          className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-14 lg:gap-20"
+          initial={{ opacity: 0, y: -45 }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.5, ease: "easeInOut", delay: 0.6 },
+          }}
+          viewport={{ once: true }}
+        >
           <div className="flex flex-col items-center gap-1">
             <span className="text-3xl font-bold md:text-4xl">1,000+</span>
             <p className="text-muted-foreground">Daily syncs</p>
@@ -82,7 +93,7 @@ export const Hero = () => {
             <span className="text-3xl font-bold md:text-4xl">99.9%</span>
             <p className="text-muted-foreground">Uptime</p>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

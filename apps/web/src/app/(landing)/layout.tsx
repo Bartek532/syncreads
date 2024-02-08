@@ -8,6 +8,8 @@ export default async function Layout({
 }) {
   const { data } = await supabase().auth.getUser();
 
+  console.log(data);
+
   return (
     <LandingLayout {...(data.user && { user: data.user })}>
       {children}

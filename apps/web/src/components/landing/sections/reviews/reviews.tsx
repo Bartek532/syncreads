@@ -26,9 +26,8 @@ export const Reviews = () => {
               <Image
                 src={LANDING_REVIEWS.quote.author.avatar}
                 alt={`${LANDING_REVIEWS.quote.author.name}'s avatar`}
-                objectFit="cover"
-                layout="fill"
-                className="rounded-full"
+                className="rounded-full object-cover"
+                fill
               />
             </div>
 

@@ -56,3 +56,6 @@ export const unlockScroll = () => {
   document.body.style.overflow = "";
   document.body.style.paddingRight = ``;
 };
+
+export const random = (min: number, max: number) =>
+  Math.floor(Math.random() * (max - min)) + min;

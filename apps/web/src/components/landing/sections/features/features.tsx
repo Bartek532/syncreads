@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { LANDING_FEATURES } from "@/config";
 import { cn } from "@/utils";
 
@@ -27,7 +29,16 @@ export const Features = () => {
             )}
             key={feature.title}
           >
-            <div className="aspect-video w-full rounded-lg bg-background"></div>
+            <div>
+              <Image
+                src={feature.image}
+                alt=""
+                className="rounded-lg object-cover"
+                // fill
+                width={900}
+                height={600}
+              />
+            </div>
             <div className="flex shrink-0 flex-col gap-2 sm:w-1/2">
               <h3 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl">
                 {feature.title}
