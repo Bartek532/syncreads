@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import { cookies } from "next/headers";
@@ -37,6 +38,7 @@ export default function RootLayout({
             {children}
           </ThemeProvider>
         </TRPCReactProvider>
+        <Analytics />
       </body>
     </html>
   );

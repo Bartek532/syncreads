@@ -17,7 +17,7 @@ export const Header = memo<HeaderProps>(({ user }) => {
       <div className="mx-auto flex h-full max-w-[84rem] items-center justify-between gap-8 px-6 sm:px-8">
         <Logo />
         <Navigation {...(user && { user })} />
-        <MobileNavigation />
+        <MobileNavigation {...(user && { user })} />
       </div>
     </header>
   );

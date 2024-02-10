@@ -40,6 +40,8 @@ export const serverSchema = sharedSchema.merge(
 export const webServerSchema = sharedSchema.merge(authDatabaseSchema).merge(
   z.object({
     SYNC_API_URL: z.string().url(),
+    SENDGRID_API_KEY: z.string(),
+    CONTACT_EMAIL: z.string().email(),
   }),
 );
 

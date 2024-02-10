@@ -18,12 +18,11 @@ import {
 } from "../../../../ui/form";
 import { Input } from "../../../../ui/input";
 import { Textarea } from "../../../../ui/textarea";
+import { sendMail } from "../actions";
 
 import { contactSchema } from "./validation";
 
 import type { ContactInput } from "./validation";
-
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 type FormStatus = "pending" | "loading" | "fullfilled" | "rejected";
 
@@ -36,8 +35,7 @@ export const ContactForm = () => {
   const onSubmit = async (data: ContactInput) => {
     setFormStatus("loading");
     try {
-      console.log(data);
-      await sleep(1000); // TODO: server action to send emails
+      await sendMail(data);
       setFormStatus("fullfilled");
     } catch {
       setFormStatus("rejected");
