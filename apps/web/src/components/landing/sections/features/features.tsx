@@ -18,7 +18,7 @@ export const Features = () => {
         </p>
       </div>
 
-      <ul className="col-start-2 mt-14 flex flex-col gap-10 sm:gap-16 md:mt-24 md:gap-28">
+      <ul className="col-start-2 mt-14 flex flex-col gap-16 md:mt-24 md:gap-28">
         {LANDING_FEATURES.list.map((feature, index) => (
           <li
             className={cn(
@@ -33,8 +33,7 @@ export const Features = () => {
               <Image
                 src={feature.image}
                 alt=""
-                className="rounded-lg object-cover"
-                // fill
+                className="rounded-lg object-cover shadow"
                 width={900}
                 height={600}
               />

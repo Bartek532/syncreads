@@ -40,12 +40,12 @@ export const LANDING_FEATURES = {
     {
       title: "Fast",
       description: `Average sync time is less than 5 seconds. We use the latest technologies to ensure your data is always up to date.`,
-      image: "/images/landing/features/simple.png",
+      image: "/images/landing/features/fast.png",
     },
     {
       title: "Reliable",
       description: `Downtime is not an option. It's our top priority to provide you the best possible experience.`,
-      image: "/images/landing/features/simple.png",
+      image: "/images/landing/features/reliable.png",
     },
   ],
 };

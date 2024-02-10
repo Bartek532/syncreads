@@ -12,10 +12,10 @@ const generateSparkle = (color: string) => {
     id: crypto.randomUUID(),
     createdAt: Date.now(),
     color,
-    size: random(15, 35),
+    size: random(12, 30),
     style: {
-      top: `${random(0, 2) === 1 ? random(-5, 12) : random(70, 82)}%`,
-      left: `${random(-8, 93)}%`,
+      top: `${random(0, 2) === 1 ? random(-5, 12) : random(70, 80)}%`,
+      left: `${random(-8, 90)}%`,
       zIndex: random(1, 3),
     },
   };
@@ -78,14 +78,15 @@ const Sparkle = memo<SparkleProps>(({ size, color, style }) => {
   return (
     <span
       className="absolute block motion-safe:animate-come-in-out"
-      style={style}
+      style={{
+        ...style,
+        width: size + "%",
+      }}
     >
       <svg
-        width={size}
-        height={size}
         viewBox="0 0 68 68"
         fill="none"
-        className="block motion-safe:animate-half-spin"
+        className="block h-full w-full motion-safe:animate-half-spin"
       >
         <path d={path} fill={color} />
       </svg>
