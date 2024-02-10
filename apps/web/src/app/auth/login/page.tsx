@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { Auth } from "@/components/auth/auth";
-import { supabase } from "@/lib/supabase/client";
+import { supabase } from "@/lib/supabase/server";
 import { AUTH_PROVIDER } from "@/types/auth.types";
 
 import { getMetadata } from "../../../lib/metadata";
@@ -18,8 +18,6 @@ export const metadata = getMetadata({
 
 const Login = async () => {
   const { data } = await supabase().auth.getUser();
-
-  console.log("login", data);
 
   if (data.user) {
     return redirect("/dashboard");

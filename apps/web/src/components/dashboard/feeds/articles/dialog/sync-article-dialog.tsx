@@ -1,13 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { GENERIC_ERROR_MESSAGE } from "@rssmarkable/shared";
-import { revalidatePath } from "next/cache";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-
-import { api } from "@/trpc/react";
 
 import { onPromise } from "../../../../../utils";
 import { createFeedSchema } from "../../../../../utils/validation/schema";
@@ -30,6 +26,8 @@ import {
 } from "../../../../ui/form";
 import { Input } from "../../../../ui/input";
 
+import { queueArticleSync } from "./actions";
+
 import type { CreateFeedInput } from "../../../../../utils/validation/types";
 
 type SyncArticleDialogProps = {
@@ -42,16 +40,22 @@ export const SyncArticleDialog = memo<SyncArticleDialogProps>(
       resolver: zodResolver(createFeedSchema),
     });
 
-    const { mutateAsync } = api.sync.queueArticleSync.useMutation({
-      onSuccess: () => revalidatePath("/dashboard/syncs"),
-    });
-
     const onSubmit = async (data: CreateFeedInput) => {
-      await toast.promise(mutateAsync(data), {
-        loading: "Queuing article sync...",
-        success: ({ message }) => message,
-        error: (err?: Error) => err?.message ?? GENERIC_ERROR_MESSAGE,
-      });
+      // await toast.promise(mutateAsync(data), {
+      //   loading: "Queuing article sync...",
+      //   success: ({ message }) => message,
+      //   error: (err?: Error) => err?.message ?? GENERIC_ERROR_MESSAGE,
+      // });
+
+      const loadingToast = toast.loading("Queuing article sync...");
+
+      const { message, success } = await queueArticleSync(data);
+
+      if (success) {
+        toast.success(message, { id: loadingToast });
+      } else {
+        toast.error(message, { id: loadingToast });
+      }
     };
 
     return (

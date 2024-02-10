@@ -1,12 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  GENERIC_ERROR_MESSAGE,
-  SYNC_DEFAULT_FOLDER,
-} from "@rssmarkable/shared";
+import { SYNC_DEFAULT_FOLDER } from "@rssmarkable/shared";
 import { Loader2 } from "lucide-react";
-import { revalidatePath } from "next/cache";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -22,10 +18,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { api } from "@/trpc/react";
 import { profileSchema } from "@/types/settings.types";
 import type { ProfileData } from "@/types/settings.types";
 import { getName, onPromise } from "@/utils";
+
+import { updateUser } from "./actions";
 
 import type { User } from "@rssmarkable/database";
 
@@ -43,16 +40,21 @@ export const ProfileForm = memo<ProfileForm>(({ user }) => {
     },
   });
 
-  const { mutateAsync } = api.user.updateUser.useMutation({
-    onSuccess: () => revalidatePath("/dashboard/settings/profile"),
-  });
-
   const onSubmit = async (data: ProfileData) => {
-    await toast.promise(mutateAsync(data), {
-      loading: "Updating your details...",
-      success: ({ message }) => message,
-      error: (err?: Error) => err?.message ?? GENERIC_ERROR_MESSAGE,
-    });
+    // await toast.promise(mutateAsync(data), {
+    //   loading: "Updating your details...",
+    //   success: ({ message }) => message,
+    //   error: (err?: Error) => err?.message ?? GENERIC_ERROR_MESSAGE,
+    // });
+    const loadingToast = toast.loading("Updating your details...");
+
+    const { message, success } = await updateUser(data);
+
+    if (success) {
+      toast.success(message, { id: loadingToast });
+    } else {
+      toast.error(message, { id: loadingToast });
+    }
   };
 
   return (

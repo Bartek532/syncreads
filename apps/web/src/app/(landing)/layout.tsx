@@ -1,5 +1,5 @@
 import { LandingLayout } from "../../components/landing/layout/layout";
-import { supabase } from "../../lib/supabase/client";
+import { supabase } from "../../lib/supabase/server";
 
 export default async function Layout({
   children,
@@ -7,8 +7,6 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   const { data } = await supabase().auth.getUser();
-
-  console.log(data);
 
   return (
     <LandingLayout {...(data.user && { user: data.user })}>

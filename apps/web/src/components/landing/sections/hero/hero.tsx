@@ -14,7 +14,16 @@ export const Hero = () => {
       className="flex w-full flex-col items-center justify-center gap-4 py-10 md:gap-6 md:py-16 lg:py-24"
       id="hero"
     >
-      <motion.div className="mb-3 rounded-full  border-2 border-muted px-5 py-1.5 text-xs text-muted-foreground sm:mb-4 sm:text-sm">
+      <motion.div
+        className="mb-3 rounded-full  border-2 border-muted px-5 py-1.5 text-xs text-muted-foreground sm:mb-4 sm:text-sm"
+        initial={{ opacity: 0, y: -55 }}
+        whileInView={{
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.5, ease: "easeInOut" },
+        }}
+        viewport={{ once: true }}
+      >
         AI summary coming soon! 🪄
       </motion.div>
       <motion.h1
