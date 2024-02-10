@@ -25,8 +25,7 @@ import {
   FormMessage,
 } from "../../../../ui/form";
 import { Input } from "../../../../ui/input";
-
-import { queueArticleSync } from "./actions";
+import { queueArticleSync } from "../actions";
 
 import type { CreateFeedInput } from "../../../../../utils/validation/types";
 
@@ -41,12 +40,6 @@ export const SyncArticleDialog = memo<SyncArticleDialogProps>(
     });
 
     const onSubmit = async (data: CreateFeedInput) => {
-      // await toast.promise(mutateAsync(data), {
-      //   loading: "Queuing article sync...",
-      //   success: ({ message }) => message,
-      //   error: (err?: Error) => err?.message ?? GENERIC_ERROR_MESSAGE,
-      // });
-
       const loadingToast = toast.loading("Queuing article sync...");
 
       const { message, success } = await queueArticleSync(data);
