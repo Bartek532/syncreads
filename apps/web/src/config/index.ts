@@ -19,7 +19,8 @@ export const SEPARATOR = " | ";
 export const SITE_TITLE_TEMPLATE = `%s${SEPARATOR}${SITE_TITLE}`;
 export const SITE_IMAGE_URL = `/images/banner.png`;
 
-export const GITHUB_URL = "https://github.com/Bartek532/rssmarkable";
+export const REPOSITORY_URL = "https://github.com/Bartek532/rssmarkable";
+export const TWITTER_URL = "https://twitter.com/bzagrodzki";
 
 export const LANDING_HEADER_NAVIGATION = [
   { name: "About", href: "#about" },
@@ -29,7 +30,10 @@ export const LANDING_HEADER_NAVIGATION = [
 ];
 
 export const LANDING_FEATURES = {
-  title: "See the magic",
+  title: {
+    base: "See the",
+    sparkling: "magic",
+  },
   description: `Enjoy the features which make RSSmarkable great.`,
   list: [
     {
@@ -63,6 +67,15 @@ export const LANDING_REVIEWS = {
   },
 };
 
+export const LANDING_OPEN_SOURCE = {
+  title: "Create the future together!",
+  description: `We believe in transparency and the power of the community, so if you have any ideas or suggestions, feel free to contribute. We're open to any feedback!`,
+  cta: {
+    href: REPOSITORY_URL,
+    text: "See on Github",
+  },
+};
+
 export const LANDING_FAQ = {
   title: "Frequently asked questions",
   questions: [
@@ -81,6 +94,10 @@ export const LANDING_FAQ = {
     {
       question: "How do I get started?",
       answer: `Create an account and connect your device. That's it!`,
+    },
+    {
+      question: "Can I contribute?",
+      answer: `Always! As we're open source, just check out our repository on GitHub and feel free to contribute. We're open to any feedback and ideas.`,
     },
   ],
 };

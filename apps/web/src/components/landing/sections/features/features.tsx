@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { Sparkles } from "@/components/ui/sparkles";
 import { LANDING_FEATURES } from "@/config";
 import { cn } from "@/utils";
 
@@ -11,7 +12,8 @@ export const Features = () => {
     >
       <div className="col-start-2 flex flex-col items-center">
         <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-          {LANDING_FEATURES.title}
+          {LANDING_FEATURES.title.base}{" "}
+          <Sparkles>{LANDING_FEATURES.title.sparkling}</Sparkles>
         </h2>
         <p className="mt-2 max-w-2xl text-center text-muted-foreground md:text-xl">
           {LANDING_FEATURES.description}

@@ -1,21 +1,24 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
-import { Sparkles } from "@/components/ui/sparkles";
-
-import { SITE_DESCRIPTION } from "../../../../config";
+import {
+  REPOSITORY_URL,
+  SITE_DESCRIPTION,
+  SITE_TITLE_APPENDIX,
+} from "../../../../config";
 import { buttonVariants } from "../../../ui/button";
 
 export const Hero = () => {
   return (
     <section
-      className="flex w-full flex-col items-center justify-center gap-4 py-10 md:gap-6 md:py-16 lg:py-24"
+      className="flex w-full flex-col items-center justify-center gap-4 py-10 md:gap-6 md:py-16 lg:pb-32 lg:pt-20"
       id="hero"
     >
-      <motion.div
-        className="mb-3 rounded-full  border-2 border-muted px-5 py-1.5 text-xs text-muted-foreground sm:mb-4 sm:text-sm"
+      <motion.a
+        className="group mb-3 flex items-center gap-2 rounded-full border-2 border-muted-foreground/10 px-5 py-1 text-xs text-muted-foreground transition hover:contrast-125 sm:mb-4 sm:text-sm"
         initial={{ opacity: 0, y: -55 }}
         whileInView={{
           opacity: 1,
@@ -23,11 +26,15 @@ export const Hero = () => {
           transition: { duration: 0.5, ease: "easeInOut" },
         }}
         viewport={{ once: true }}
+        href={REPOSITORY_URL}
+        target="_blank"
+        rel="noreferrer"
       >
-        AI summary coming soon! 🪄
-      </motion.div>
+        100% open source!{" "}
+        <ArrowRight className="w-4 transition-transform group-hover:translate-x-1" />
+      </motion.a>
       <motion.h1
-        className="lg:leading-tighter max-w-4xl text-center text-4xl font-bold tracking-tighter md:text-5xl xl:text-6xl 2xl:text-7xl"
+        className="lg:leading-tighter max-w-4xl animate-gradient bg-gradient-to-r from-primary via-muted-foreground via-20% to-primary bg-[length:200%_auto] bg-clip-text text-center text-4xl font-bold tracking-tighter text-transparent md:text-5xl xl:text-6xl 2xl:text-7xl"
         initial={{ opacity: 0, y: -55 }}
         whileInView={{
           opacity: 1,
@@ -36,13 +43,7 @@ export const Hero = () => {
         }}
         viewport={{ once: true }}
       >
-        Seamlessly{" "}
-        <Sparkles>
-          <span className="inline-block bg-gradient-to-r from-primary to-muted-foreground bg-clip-text text-transparent">
-            sync
-          </span>
-        </Sparkles>{" "}
-        articles and feeds from the web.
+        {SITE_TITLE_APPENDIX}
       </motion.h1>
       <motion.p
         className="max-w-2xl text-center text-muted-foreground md:text-xl"

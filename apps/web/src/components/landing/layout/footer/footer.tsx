@@ -1,3 +1,5 @@
+import { REPOSITORY_URL, TWITTER_URL } from "@/config";
+
 export const Footer = () => {
   return (
     <footer className="flex justify-center bg-background">
@@ -6,9 +8,17 @@ export const Footer = () => {
           &copy; 2024 RSSmarkable. All rights reserved.
         </span>
 
-        <div>
+        <div className="flex flex-row gap-3">
           <a
-            href="https://twitter.com/bzagrodzki"
+            href={REPOSITORY_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="text-sm underline hover:no-underline"
+          >
+            Github
+          </a>
+          <a
+            href={TWITTER_URL}
             target="_blank"
             rel="noreferrer"
             className="text-sm underline hover:no-underline"

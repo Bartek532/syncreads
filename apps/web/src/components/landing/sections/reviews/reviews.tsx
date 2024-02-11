@@ -1,6 +1,32 @@
 import Image from "next/image";
 
-import { LANDING_REVIEWS } from "@/config";
+import { buttonVariants } from "@/components/ui/button";
+import { LANDING_OPEN_SOURCE, LANDING_REVIEWS } from "@/config";
+
+const OpenSource = () => {
+  return (
+    <div className="w-full animate-gradient rounded-3xl bg-gradient-to-r from-primary via-muted to-primary bg-[length:200%_auto] p-1 shadow-xl shadow-muted-foreground/60 dark:shadow-none">
+      <div className="flex flex-col items-center justify-between gap-8 rounded-[1.25rem] bg-background px-8 py-9 md:flex-row md:gap-12 md:py-12">
+        <div className="flex max-w-3xl flex-col gap-2">
+          <h3 className="text-center text-xl font-bold sm:text-2xl md:text-left md:text-3xl">
+            {LANDING_OPEN_SOURCE.title}
+          </h3>
+          <p className="md:text-md text-center text-sm text-muted-foreground md:text-left">
+            {LANDING_OPEN_SOURCE.description}
+          </p>
+        </div>
+        <a
+          className={buttonVariants({ size: "lg" })}
+          href={LANDING_OPEN_SOURCE.cta.href}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {LANDING_OPEN_SOURCE.cta.text}
+        </a>
+      </div>
+    </div>
+  );
+};
 
 export const Reviews = () => {
   return (
@@ -42,6 +68,10 @@ export const Reviews = () => {
           </div>
         </figcaption>
       </figure>
+
+      <div className="mt-14 lg:mt-20">
+        <OpenSource />
+      </div>
     </section>
   );
 };
