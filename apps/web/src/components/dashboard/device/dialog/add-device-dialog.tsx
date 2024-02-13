@@ -4,7 +4,6 @@ import { Loader2 } from "lucide-react";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { register } from "rmapi-js";
 
 import { onPromise } from "../../../../utils";
 import { registerDeviceSchema } from "../../../../utils/validation/schema";
@@ -44,7 +43,8 @@ export const AddDeviceDialog = memo<AddDeviceDialog>(({ children }) => {
     const loadingToast = toast.loading("Registering your device...");
 
     try {
-      const token = await register(data.code);
+      const response = await fetch(`/api/device/register?code=${data.code}`);
+      const token = await response.text();
       const { message, success } = await registerDevice({ token });
 
       if (success) {
