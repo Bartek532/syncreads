@@ -1,6 +1,5 @@
 import { HTTP_STATUS_CODE } from "@rssmarkable/shared";
 import dayjs from "dayjs";
-import { register } from "rmapi-js";
 
 import { deleteFeed, getFeedById } from "../services/feed/feed.service";
 import {
@@ -18,12 +17,12 @@ import { ApiError } from "../utils/exceptions";
 
 import type {
   CursorPaginationInput,
-  RegisterAndConnectDeviceInput,
   UnregisterAndDisconnectDeviceInput,
   DeleteAndDisconnectFeedsInput,
   RangeInput,
   LimitInput,
   UpdateUserInput,
+  SaveAndConnectDeviceInput,
 } from "../../utils/validation/types";
 
 export const updateUserHandler = async (input: UpdateUserInput) => {
@@ -45,9 +44,8 @@ export const updateUserHandler = async (input: UpdateUserInput) => {
 
 export const registerDeviceHandler = async ({
   id,
-  code,
-}: RegisterAndConnectDeviceInput) => {
-  const token = await register(code);
+  token,
+}: SaveAndConnectDeviceInput) => {
   const device = await registerUserDevice({ token, id });
 
   return {

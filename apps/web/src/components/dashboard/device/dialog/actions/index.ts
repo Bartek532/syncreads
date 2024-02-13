@@ -4,9 +4,9 @@ import { GENERIC_ERROR_MESSAGE } from "@rssmarkable/shared";
 import { revalidatePath } from "next/cache";
 
 import { api } from "@/trpc/server";
-import type { RegisterDeviceInput } from "@/utils";
+import type { SaveDeviceInput } from "@/utils";
 
-export const registerDevice = async (data: RegisterDeviceInput) => {
+export const registerDevice = async (data: SaveDeviceInput) => {
   try {
     const { message } = await api.user.registerDevice.mutate(data);
     revalidatePath("/dashboard/device");

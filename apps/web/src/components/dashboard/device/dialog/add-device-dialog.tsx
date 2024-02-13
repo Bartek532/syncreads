@@ -1,8 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { GENERIC_ERROR_MESSAGE } from "@rssmarkable/shared";
 import { Loader2 } from "lucide-react";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { register } from "rmapi-js";
 
 import { onPromise } from "../../../../utils";
 import { registerDeviceSchema } from "../../../../utils/validation/schema";
@@ -41,12 +43,23 @@ export const AddDeviceDialog = memo<AddDeviceDialog>(({ children }) => {
   const onSubmit = async (data: RegisterDeviceInput) => {
     const loadingToast = toast.loading("Registering your device...");
 
-    const { message, success } = await registerDevice(data);
+    try {
+      const token = await register(data.code);
+      const { message, success } = await registerDevice({ token });
 
-    if (success) {
-      toast.success(message, { id: loadingToast });
-    } else {
-      toast.error(message, { id: loadingToast });
+      if (success) {
+        toast.success(message, { id: loadingToast });
+      } else {
+        toast.error(message, { id: loadingToast });
+      }
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        toast.error(e.message, { id: loadingToast });
+      } else {
+        toast.error(GENERIC_ERROR_MESSAGE, {
+          id: loadingToast,
+        });
+      }
     }
   };
 
