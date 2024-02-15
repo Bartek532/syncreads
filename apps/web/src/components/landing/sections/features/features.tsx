@@ -33,9 +33,16 @@ export const Features = () => {
           >
             <div>
               <Image
-                src={feature.image}
+                src={feature.image.dark}
                 alt=""
-                className="rounded-lg object-cover shadow"
+                className="hidden rounded-lg object-cover shadow dark:block"
+                width={900}
+                height={600}
+              />
+              <Image
+                src={feature.image.light}
+                alt=""
+                className="block rounded-lg object-cover shadow dark:hidden"
                 width={900}
                 height={600}
               />

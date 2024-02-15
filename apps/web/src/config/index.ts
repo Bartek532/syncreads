@@ -39,17 +39,26 @@ export const LANDING_FEATURES = {
     {
       title: "Simple",
       description: `You need only 5 clicks to do full setup and sync your first article. Configure once, use forever.`,
-      image: "/images/landing/features/simple.png",
+      image: {
+        light: "/images/landing/features/light/simple.png",
+        dark: "/images/landing/features/dark/simple.png",
+      },
     },
     {
       title: "Fast",
       description: `Average sync time is less than 5 seconds. We use the latest technologies to ensure your data is always up to date.`,
-      image: "/images/landing/features/fast.png",
+      image: {
+        light: "/images/landing/features/light/fast.png",
+        dark: "/images/landing/features/dark/fast.png",
+      },
     },
     {
       title: "Reliable",
       description: `Downtime is not an option. It's our top priority to provide you the best possible experience.`,
-      image: "/images/landing/features/reliable.png",
+      image: {
+        light: "/images/landing/features/light/reliable.png",
+        dark: "/images/landing/features/dark/reliable.png",
+      },
     },
   ],
 };

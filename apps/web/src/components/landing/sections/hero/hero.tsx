@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 import {
@@ -18,8 +19,8 @@ export const Hero = () => {
       id="hero"
     >
       <motion.a
-        className="group mb-3 flex items-center gap-2 rounded-full border-2 border-muted-foreground/10 px-5 py-1 text-xs text-muted-foreground transition hover:contrast-125 sm:mb-4 sm:text-sm"
-        initial={{ opacity: 0, y: -55 }}
+        className="group mb-3 flex items-center gap-2 rounded-full border-2 border-muted-foreground/10 px-5 py-1 text-xs text-muted-foreground sm:mb-4 sm:text-sm"
+        initial={{ opacity: 0, y: -35 }}
         whileInView={{
           opacity: 1,
           y: 0,
@@ -30,7 +31,7 @@ export const Hero = () => {
         target="_blank"
         rel="noreferrer"
       >
-        100% open source!{" "}
+        100% open source!
         <ArrowRight className="w-4 transition-transform group-hover:translate-x-1" />
       </motion.a>
       <motion.h1
@@ -76,7 +77,7 @@ export const Hero = () => {
       </motion.div>
 
       <motion.div
-        className="relative mt-6 aspect-square w-full rounded-lg bg-muted sm:mt-10 sm:w-11/12"
+        className="relative mt-6 w-full rounded-lg sm:mt-10 sm:w-11/12"
         initial={{ opacity: 0, rotateX: 35, y: -20 }}
         whileInView={{
           opacity: 1,
@@ -86,12 +87,12 @@ export const Hero = () => {
         }}
         viewport={{ once: true }}
       >
-        {/* <Image
-          src="/images/landing/hero.jpg"
+        <Image
+          src="/images/landing/hero.png"
           alt=""
-          width={1600}
-          height={1600}
-        /> */}
+          width={2700}
+          height={2025}
+        />
       </motion.div>
 
       <div className="mt-8 flex flex-col items-center justify-center gap-4 text-sm sm:mt-20 md:text-lg lg:mt-28">
