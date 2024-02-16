@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 import { ThemedImage } from "@/components/ui/themed-image";
@@ -18,7 +17,7 @@ import { buttonVariants } from "../../../ui/button";
 export const Hero = () => {
   return (
     <section
-      className="flex w-full flex-col items-center justify-center gap-4 py-10 md:gap-6 md:py-16 lg:pb-32 lg:pt-20"
+      className="flex w-full !scroll-mt-20 flex-col items-center justify-center gap-4 py-10 md:gap-6 md:py-16 lg:pb-32 lg:pt-20"
       id="hero"
     >
       <motion.a
@@ -91,7 +90,7 @@ export const Hero = () => {
         viewport={{ once: true }}
       >
         <ThemedImage
-          className="relative w-full rounded-lg sm:mt-10 lg:w-11/12"
+          className="relative w-full rounded-lg sm:mt-10"
           src={SITE_IMAGE}
           defaultVariant="light"
           alt=""

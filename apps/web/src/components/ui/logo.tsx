@@ -14,9 +14,9 @@ type LogoProps = {
 };
 
 const logoSizes = {
-  sm: "w-5",
-  md: "w-7",
-  lg: "w-9",
+  sm: "w-6",
+  md: "w-8",
+  lg: "w-10",
 };
 
 const textSizes = {
