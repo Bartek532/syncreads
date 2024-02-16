@@ -35,10 +35,10 @@ export const DASHBOARD_CARDS = [
     link: "View feeds",
   },
   {
-    title: "Your device",
-    href: "/dashboard/device",
-    icon: Tablet,
-    link: "View details",
+    title: "Saved time",
+    href: "/dashboard/syncs",
+    icon: Hourglass,
+    link: "View syncs",
   },
   {
     title: "Total syncs",
@@ -47,10 +47,10 @@ export const DASHBOARD_CARDS = [
     link: "View syncs",
   },
   {
-    title: "Saved time",
-    href: "/dashboard/syncs",
-    icon: Hourglass,
-    link: "View syncs",
+    title: "Your device",
+    href: "/dashboard/device",
+    icon: Tablet,
+    link: "View details",
   },
 ];
 

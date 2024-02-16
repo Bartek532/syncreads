@@ -43,13 +43,13 @@ export const Home = async () => {
 
   const cardsValues = [
     feeds.count ?? 0,
-    device ? "reMarkable 2" : "Not registered",
-    syncsCount,
     dayjs
       .duration({
         minutes: articlesCount * 10,
       })
       .humanize(),
+    syncsCount,
+    device ? "reMarkable 2" : "Not registered",
   ];
 
   return (

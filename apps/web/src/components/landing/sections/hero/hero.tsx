@@ -77,7 +77,7 @@ export const Hero = () => {
       </motion.div>
 
       <motion.div
-        className="relative mt-6 w-full rounded-lg sm:mt-10 sm:w-11/12"
+        className="relative mt-6 w-full rounded-lg sm:mt-10 lg:w-11/12"
         initial={{ opacity: 0, rotateX: 35, y: -20 }}
         whileInView={{
           opacity: 1,
