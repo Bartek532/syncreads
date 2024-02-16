@@ -1,7 +1,7 @@
 import {
   HOST,
   SITE_DESCRIPTION,
-  SITE_IMAGE_URL,
+  SITE_IMAGE,
   SITE_TITLE,
   SITE_TITLE_TEMPLATE,
 } from "../config";
@@ -32,10 +32,10 @@ export const DEFAULT_METADATA: Metadata = {
     locale: "en_EN",
     description: SITE_DESCRIPTION,
     images: {
-      width: 1200,
-      height: 880,
+      width: 2717,
+      height: 2038,
       alt: SITE_TITLE,
-      url: `${HOST}${SITE_IMAGE_URL}`,
+      url: `${HOST}${SITE_IMAGE.light}`,
     },
     siteName: SITE_TITLE,
   },
@@ -78,7 +78,7 @@ export const getMetadata = (
   {
     title = SITE_TITLE,
     description = SITE_DESCRIPTION,
-    image = SITE_IMAGE_URL,
+    image = SITE_IMAGE.light,
   } = {} as SeoProps,
 ): Metadata => ({
   title,
@@ -88,8 +88,8 @@ export const getMetadata = (
     locale: "en_EN",
     description,
     images: {
-      width: 1200,
-      height: 880,
+      width: 2717,
+      height: 2038,
       alt: title,
       url: `${HOST}${image}`,
     },

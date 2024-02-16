@@ -17,7 +17,11 @@ export const SITE_DESCRIPTION =
   "Say goodbye to your RSS reader. Sync your favorite content to selected device and read without distractions with just a few clicks.";
 export const SEPARATOR = " | ";
 export const SITE_TITLE_TEMPLATE = `%s${SEPARATOR}${SITE_TITLE}`;
-export const SITE_IMAGE_URL = `/images/banner.png`;
+
+export const SITE_IMAGE = {
+  light: "/images/banner/light.png",
+  dark: "/images/banner/dark.png",
+};
 
 export const REPOSITORY_URL = "https://github.com/Bartek532/rssmarkable";
 export const TWITTER_URL = "https://twitter.com/bzagrodzki";

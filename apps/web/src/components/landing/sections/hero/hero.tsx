@@ -5,9 +5,12 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { ThemedImage } from "@/components/ui/themed-image";
+
 import {
   REPOSITORY_URL,
   SITE_DESCRIPTION,
+  SITE_IMAGE,
   SITE_TITLE_APPENDIX,
 } from "../../../../config";
 import { buttonVariants } from "../../../ui/button";
@@ -77,7 +80,7 @@ export const Hero = () => {
       </motion.div>
 
       <motion.div
-        className="relative mt-6 w-full rounded-lg sm:mt-10 lg:w-11/12"
+        className="mt-6 flex justify-center"
         initial={{ opacity: 0, rotateX: 35, y: -20 }}
         whileInView={{
           opacity: 1,
@@ -87,11 +90,15 @@ export const Hero = () => {
         }}
         viewport={{ once: true }}
       >
-        <Image
-          src="/images/landing/hero.png"
+        <ThemedImage
+          className="relative w-full rounded-lg sm:mt-10 lg:w-11/12"
+          src={SITE_IMAGE}
+          defaultVariant="light"
           alt=""
-          width={2700}
-          height={2025}
+          sizes="(max-width: 1023px) 100vw, 80rem"
+          width={2717}
+          height={2038}
+          priority
         />
       </motion.div>
 
@@ -102,7 +109,7 @@ export const Hero = () => {
           whileInView={{
             opacity: 1,
             y: 0,
-            transition: { duration: 0.5, ease: "easeInOut", delay: 0.6 },
+            transition: { duration: 0.5, ease: "easeInOut" },
           }}
           viewport={{ once: true }}
         >

@@ -1,6 +1,5 @@
-import Image from "next/image";
-
 import { Sparkles } from "@/components/ui/sparkles";
+import { ThemedImage } from "@/components/ui/themed-image";
 import { LANDING_FEATURES } from "@/config";
 import { cn } from "@/utils";
 
@@ -32,17 +31,11 @@ export const Features = () => {
             key={feature.title}
           >
             <div>
-              <Image
-                src={feature.image.dark}
+              <ThemedImage
+                src={feature.image}
+                defaultVariant="light"
                 alt=""
-                className="hidden rounded-lg object-cover shadow dark:block"
-                width={900}
-                height={600}
-              />
-              <Image
-                src={feature.image.light}
-                alt=""
-                className="block rounded-lg object-cover shadow dark:hidden"
+                className="rounded-lg object-cover shadow"
                 width={900}
                 height={600}
               />
