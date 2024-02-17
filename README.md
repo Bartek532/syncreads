@@ -1,12 +1,18 @@
-<h2 align="center">RSSmarkable - open source app for syncing feeds</h2>
+<a href="https://rssmarkable.vercel.app"><img src="https://rssmarkable.vercel.app/images/banner/light.png" width="100%"></a>
 
 ## Project Overview 🎨
 
-This is project is fully open source app which can be used to sync the newest articles from favourites feeds into [reMarkable](https://remarkable.com) tablet. Feel free to open an [issue](https://github.com/Bartek532/rssmarkable/issues) or directly make a [pull request](https://github.com/Bartek532/rssmarkable/pulls). Enjoy!
+RSSmarkable is a fully open source app which can be used to sync the newest articles and feeds into [reMarkable](https://remarkable.com) tablet. The focus is primarily on producing the best workflow to consume web content on your offline devices. Feel free to open an [issue](https://github.com/Bartek532/rssmarkable/issues) or directly make a [pull request](https://github.com/Bartek532/rssmarkable/pulls). Enjoy!
 
-## Contributing
+## Contributing 🤝
 
 Please read [CONTRIBUTING.md](https://github.com/Bartek532/rssmarkable/blob/main/CONTRIBUTING.md)
+
+## Architecture 📐
+
+TBD.
+
+For more details look at [Architecture details](https://github.com/Bartek532/rssmarkable/blob/main/CONTRIBUTING.md/#Architecture)
 
 ## Tech/framework used 🧰
 

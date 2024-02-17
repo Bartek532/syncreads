@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -79,7 +80,13 @@ export const SyncArticleDialog = memo<SyncArticleDialogProps>(
                 )}
               />
               <DialogFooter>
-                <Button>Sync now</Button>
+                <Button disabled={form.formState.isSubmitting}>
+                  {form.formState.isSubmitting ? (
+                    <Loader2 className="animate-spin" />
+                  ) : (
+                    "Sync now"
+                  )}
+                </Button>
               </DialogFooter>
             </form>
           </Form>

@@ -126,6 +126,7 @@ export const LANDING_CONTACT = {
 };
 
 export const TOASTER_CONFIG: DefaultToastOptions = {
+  className: "!bg-background !text-primary",
   style: {
     padding: "14px 25px",
     minWidth: "250px",

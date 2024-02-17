@@ -9,7 +9,7 @@ const Sync = async ({ params }: { params: { id: string } }) => {
   const { data: sync } = await api.sync.getSync.query({ id: params.id });
   const { data: log } = await api.sync.getSyncLog.query({ syncId: params.id });
 
-  if (!log[0]) {
+  if (!log[0] || !sync) {
     return redirect("/dashboard/syncs");
   }
 

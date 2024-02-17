@@ -27,7 +27,7 @@ export const createFeedHandler = async ({
     );
   }
 
-  const isFeed = await isFeedUrl(url);
+  const { isFeed } = await isFeedUrl(url);
 
   if (!isFeed) {
     throw new ApiError(

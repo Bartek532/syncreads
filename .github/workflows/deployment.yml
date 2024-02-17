@@ -2,8 +2,8 @@ name: Deployment
 
 on:
   push:
-    # branches: [main]
-    branches: [develop]
+    branches: [main]
+    # branches: [develop]
 
 env:
   NODE_VERSION: 20.x
@@ -26,7 +26,6 @@ jobs:
       GITHUB_CLIENT_SECRET: ${{ secrets.SUPABASE_GITHUB_CLIENT_SECRET }}
       GOOGLE_CLIENT_ID: ${{ secrets.SUPABASE_GOOGLE_CLIENT_ID }}
       GOOGLE_CLIENT_SECRET: ${{ secrets.SUPABASE_GOOGLE_CLIENT_SECRET }}
-      SUPABASE_DEBUG: 1
 
     steps:
       - name: ✅ Checkout code

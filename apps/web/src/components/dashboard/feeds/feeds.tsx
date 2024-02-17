@@ -1,5 +1,6 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
 import { memo, useState } from "react";
 import { toast } from "react-hot-toast";
 
@@ -15,6 +16,7 @@ import { FeedsList } from "./list/feeds-list";
 import type { Feed } from "@rssmarkable/database";
 
 export const Feeds = memo(() => {
+  const [syncing, setSyncing] = useState(false);
   const [checkedFeeds, setCheckedFeeds] = useState<Map<string, string>>(
     new Map(),
   );
@@ -33,6 +35,7 @@ export const Feeds = memo(() => {
   };
 
   const onSync = async () => {
+    setSyncing(true);
     const loadingToast = toast.loading("Queuing feed sync...");
     const { message, success } = await queueFeedSync({
       in: Array.from(checkedFeeds.keys()),
@@ -43,6 +46,7 @@ export const Feeds = memo(() => {
     } else {
       toast.error(message, { id: loadingToast });
     }
+    setSyncing(false);
   };
 
   return (
@@ -62,8 +66,14 @@ export const Feeds = memo(() => {
                   Delete {checkedFeeds.size} feed{checkedFeeds.size > 1 && "s"}
                 </Button>
               </DeleteFeedDialog>
-              <Button onClick={onPromise(onSync)}>
-                Sync {checkedFeeds.size} feed{checkedFeeds.size > 1 && "s"}
+              <Button onClick={onPromise(onSync)} disabled={syncing}>
+                {syncing ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  `Sync ${checkedFeeds.size} feed${
+                    checkedFeeds.size > 1 ? "s" : ""
+                  }`
+                )}
               </Button>
             </>
           )}

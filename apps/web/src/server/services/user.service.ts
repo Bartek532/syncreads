@@ -42,7 +42,7 @@ export const getUserFeeds = ({
 };
 
 export const getUserDevice = ({ id }: { id: string }) => {
-  return supabase().from("Device").select("*").eq("userId", id).single();
+  return supabase().from("Device").select("*").eq("userId", id).maybeSingle();
 };
 
 export const getUserFeedByUrl = ({ id, url }: { id: string; url: string }) => {
@@ -51,7 +51,7 @@ export const getUserFeedByUrl = ({ id, url }: { id: string; url: string }) => {
     .select("*, feed:Feed!inner (url)")
     .eq("userId", id)
     .eq("feed.url", url)
-    .single();
+    .maybeSingle();
 };
 
 export const getUserApiKey = ({ id }: { id: string }) => {

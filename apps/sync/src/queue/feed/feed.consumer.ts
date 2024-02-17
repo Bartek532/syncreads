@@ -64,6 +64,7 @@ export class FeedQueueConsumer {
 
     for (const article of articles) {
       const url = clearUrl(article.link);
+
       await this.feedQueueService.syncArticle({
         userId: data.userId,
         url,
@@ -124,8 +125,6 @@ ${err.stack}`);
       status: SyncStatus.IN_PROGRESS,
     });
 
-    await this.syncLogger(job.data.syncId).log(
-      `Article synchronization started.`,
-    );
+    await this.syncLogger(job.data.syncId).log(`Feed synchronization started.`);
   }
 }
