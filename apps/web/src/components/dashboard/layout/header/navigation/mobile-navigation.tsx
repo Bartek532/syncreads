@@ -7,7 +7,7 @@ import { memo, useState } from "react";
 import { toast } from "react-hot-toast";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   DASHBOARD_NAVIGATION,
   DASHBOARD_SECONDARY_NAVIGATION,
@@ -48,14 +48,18 @@ export const MobileNavigation = memo<MobileNavigationProps>(({ user }) => {
 
       <div
         className={cn(
-          "fixed top-14 left-0 z-10 -mt-1 flex h-[calc(100vh-3.25rem)] w-full flex-col gap-7 overflow-auto backdrop-blur-sm md:top-16 md:hidden md:h-[calc(100vh-3.75rem)]",
+          "fixed left-0 top-14 z-10 -mt-1 flex h-[calc(100vh-3.25rem)] w-full flex-col gap-7 overflow-auto backdrop-blur-sm md:top-16 md:hidden md:h-[calc(100vh-3.75rem)]",
           !isNavOpen && "hidden",
         )}
       >
-        <div className="flex w-full flex-col gap-7 bg-background px-6 pt-2 pb-10 sm:px-8">
-          <Button variant="outline" className="w-full">
+        <div className="flex w-full flex-col gap-7 bg-background px-6 pb-10 pt-2 sm:px-8">
+          <Link
+            className={cn(buttonVariants({ variant: "outline" }), "w-full")}
+            href="#contact"
+            onClick={handleToggleNavigation}
+          >
             Contact
-          </Button>
+          </Link>
           <div className="flex w-full items-center justify-between">
             {user.email && (
               <span className="text-sm text-muted-foreground">

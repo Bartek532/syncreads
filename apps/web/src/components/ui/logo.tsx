@@ -14,9 +14,9 @@ type LogoProps = {
 };
 
 const logoSizes = {
-  sm: "w-5",
-  md: "w-7",
-  lg: "w-9",
+  sm: "w-6",
+  md: "w-8",
+  lg: "w-10",
 };
 
 const textSizes = {
@@ -30,7 +30,7 @@ export const Logo = memo<LogoProps>(({ withText = true, size = "md" }) => {
   const textSize = textSizes[size];
 
   return (
-    <Link className="flex flex-shrink-0 items-center gap-5" href="/">
+    <Link className="flex flex-shrink-0 items-center gap-5" href="/#hero">
       <AppLogo className={cn(logoSize)} />
       {withText && (
         <span className={cn("font-bold", textSize)}>{SITE_TITLE}</span>

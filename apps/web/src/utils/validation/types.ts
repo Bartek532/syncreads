@@ -11,8 +11,9 @@ import type {
   importFeedsSchema,
   limitSchema,
   rangeSchema,
-  registerAndConnectDeviceSchema,
   registerDeviceSchema,
+  saveAndConnectDeviceSchema,
+  saveDeviceSchema,
   unregisterAndDisconnectDeviceSchema,
   updateUserSchema,
 } from "./schema";
@@ -33,9 +34,10 @@ export type DeleteAndDisconnectFeedsInput = TypeOf<
 >;
 export type GetUrlDetailsInput = TypeOf<typeof getUrlDetailsSchema>;
 export type RegisterDeviceInput = TypeOf<typeof registerDeviceSchema>;
-export type RegisterAndConnectDeviceInput = TypeOf<
-  typeof registerAndConnectDeviceSchema
+export type SaveAndConnectDeviceInput = TypeOf<
+  typeof saveAndConnectDeviceSchema
 >;
+export type SaveDeviceInput = TypeOf<typeof saveDeviceSchema>;
 export type UnregisterAndDisconnectDeviceInput = TypeOf<
   typeof unregisterAndDisconnectDeviceSchema
 >;

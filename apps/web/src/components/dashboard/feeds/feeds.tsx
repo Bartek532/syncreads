@@ -1,15 +1,14 @@
 "use client";
 
-import { GENERIC_ERROR_MESSAGE } from "@rssmarkable/shared";
-import { revalidatePath } from "next/cache";
+import { Loader2 } from "lucide-react";
 import { memo, useState } from "react";
 import { toast } from "react-hot-toast";
 
 import { Button } from "@/components/ui/button";
-import { api } from "@/trpc/react";
 
 import { onPromise } from "../../../utils";
 
+import { queueFeedSync } from "./articles/actions";
 import { AddFeedDialog } from "./dialog/add-feed-dialog";
 import { DeleteFeedDialog } from "./dialog/delete-feed-dialog";
 import { FeedsList } from "./list/feeds-list";
@@ -17,6 +16,7 @@ import { FeedsList } from "./list/feeds-list";
 import type { Feed } from "@rssmarkable/database";
 
 export const Feeds = memo(() => {
+  const [syncing, setSyncing] = useState(false);
   const [checkedFeeds, setCheckedFeeds] = useState<Map<string, string>>(
     new Map(),
   );
@@ -34,16 +34,19 @@ export const Feeds = memo(() => {
     });
   };
 
-  const { mutateAsync } = api.sync.queueFeedSync.useMutation({
-    onSuccess: () => revalidatePath("/dashboard/syncs"),
-  });
-
   const onSync = async () => {
-    await toast.promise(mutateAsync({ in: Array.from(checkedFeeds.keys()) }), {
-      loading: "Queuing feed sync...",
-      success: ({ message }) => message,
-      error: (err?: Error) => err?.message ?? GENERIC_ERROR_MESSAGE,
+    setSyncing(true);
+    const loadingToast = toast.loading("Queuing feed sync...");
+    const { message, success } = await queueFeedSync({
+      in: Array.from(checkedFeeds.keys()),
     });
+
+    if (success) {
+      toast.success(message, { id: loadingToast });
+    } else {
+      toast.error(message, { id: loadingToast });
+    }
+    setSyncing(false);
   };
 
   return (
@@ -63,8 +66,14 @@ export const Feeds = memo(() => {
                   Delete {checkedFeeds.size} feed{checkedFeeds.size > 1 && "s"}
                 </Button>
               </DeleteFeedDialog>
-              <Button onClick={onPromise(onSync)}>
-                Sync {checkedFeeds.size} feed{checkedFeeds.size > 1 && "s"}
+              <Button onClick={onPromise(onSync)} disabled={syncing}>
+                {syncing ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  `Sync ${checkedFeeds.size} feed${
+                    checkedFeeds.size > 1 ? "s" : ""
+                  }`
+                )}
               </Button>
             </>
           )}

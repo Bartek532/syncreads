@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import { cookies } from "next/headers";
@@ -19,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth focus:scroll-auto">
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         <TRPCReactProvider cookies={cookies().toString()}>
           <ThemeProvider
@@ -37,6 +38,7 @@ export default function RootLayout({
             {children}
           </ThemeProvider>
         </TRPCReactProvider>
+        <Analytics />
       </body>
     </html>
   );

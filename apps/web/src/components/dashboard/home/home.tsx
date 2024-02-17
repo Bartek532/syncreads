@@ -43,13 +43,13 @@ export const Home = async () => {
 
   const cardsValues = [
     feeds.count ?? 0,
-    device ? "reMarkable 2" : "Not registered",
-    syncsCount,
     dayjs
       .duration({
         minutes: articlesCount * 10,
       })
       .humanize(),
+    syncsCount,
+    device ? "reMarkable 2" : "Not registered",
   ];
 
   return (
@@ -103,7 +103,7 @@ export const Home = async () => {
                   <CardContent>
                     <span className="text-2xl font-bold">{value}</span>
                   </CardContent>
-                  <CardFooter className="ml-auto -mt-5 -mb-2 justify-end text-xs">
+                  <CardFooter className="-mb-2 -mt-5 ml-auto justify-end text-xs">
                     <Link
                       href={card.href}
                       className="group flex items-center justify-center gap-2 underline hover:no-underline"

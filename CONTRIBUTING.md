@@ -1,6 +1,6 @@
 # Contribution Guidelines
 
-RSSmarkable is an open source project, and contributions of any kind are welcome and appreciated. Open issues, bugs, and enhancements are all listed on the [issues](https://github.com/Bartek532/rssmarkable/issues) tab and labeled accordingly. Feel free to open bug tickets and make feature requests. Easy bugs and features will be tagged with the `good first issue` label.
+RSSmarkable is an open source project, and contributions of any kind are welcome and appreciated. Open issues, bugs, and enhancements are all listed on the [issues](https://github.com/Bartek532/rssmarkable/issues) tab and labeled accordingly. For more detailed and long-term roadmap you can also check [projects](https://github.com/users/Bartek532/projects/2) tab, where all the tasks and plans are located. Feel free to open bug tickets and make feature requests. Easy bugs and features will be tagged with the `good first issue` label.
 
 ## Issues
 
@@ -9,6 +9,10 @@ If you encounter a bug, please file a bug report. If you have a feature to reque
 ## Pull Requests
 
 In order to create a pull request for RSSmarkable, follow the GitHub instructions for [Creating a pull request from a fork](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork). Please link your pull request to an existing issue.
+
+## Architecture
+
+TBD
 
 ## File Structure
 
@@ -57,8 +61,8 @@ Coding conventions are enforced by [ESLint](.eslintrc.json) and [Prettier](prett
 ## Example component structure
 
 ```bash
-├── Component/
-│   ├── Component.tsx
+├── component/
+│   ├── component.tsx
 ```
 
 ```tsx

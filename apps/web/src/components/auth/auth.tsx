@@ -19,7 +19,7 @@ type AuthLayoutProps = {
 const AuthLayout = memo<AuthLayoutProps>(({ children, quote }) => {
   return (
     <div className="flex min-h-screen">
-      <div className="flex flex-1 flex-col justify-start py-8 px-6 sm:py-12 sm:px-8 lg:flex-none lg:px-24 xl:px-36">
+      <div className="flex flex-1 flex-col justify-start px-6 py-8 sm:px-8 sm:py-12 lg:flex-none lg:px-24 xl:px-36">
         <div className="mx-auto w-full max-w-sm lg:w-96">
           {retrieveChild(children, AuthHeader.displayName)}
           <div className="mt-8 flex flex-col gap-6">
@@ -30,10 +30,12 @@ const AuthLayout = memo<AuthLayoutProps>(({ children, quote }) => {
           </div>
         </div>
       </div>
-      <div className="hidden flex-1 items-end bg-primary p-12 lg:flex">
-        <div className="mt-auto max-w-2xl text-secondary">
+      <div className="hidden flex-1 items-end bg-muted p-12 lg:flex">
+        <div className="mt-auto max-w-2xl">
           <figure className="space-y-2">
-            <blockquote className="text-lg">{quote.content}</blockquote>
+            <blockquote className="text-lg before:content-['“'] after:content-['“']">
+              {quote.content}
+            </blockquote>
             <figcaption className="text-sm">{quote.author}</figcaption>
           </figure>
         </div>

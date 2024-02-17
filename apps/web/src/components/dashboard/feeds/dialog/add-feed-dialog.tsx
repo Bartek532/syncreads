@@ -1,15 +1,10 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { GENERIC_ERROR_MESSAGE } from "@rssmarkable/shared";
 import { Loader2 } from "lucide-react";
-import { revalidatePath } from "next/cache";
 import { memo, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { ZodIssueCode, z } from "zod";
-
-import { api } from "@/trpc/react";
 
 import { FILE_TYPE } from "../../../../types/feed.types";
 import { onPromise } from "../../../../utils";
@@ -32,52 +27,13 @@ import {
 } from "../../../ui/form";
 import { Input } from "../../../ui/input";
 
+import { addFeed, importFeeds } from "./actions";
+import { addFeedSchema } from "./validation";
+
+import type { AddFeedInput } from "./validation";
 import type { DialogProps } from "@radix-ui/react-dialog";
 
 type AddFeedDialogProps = DialogProps;
-
-const addFeedSchema = z
-  .object({
-    url: z
-      .union([
-        z
-          .string({ required_error: "Url is required." })
-          .min(1, "Url is required.")
-          .url("Url must be a valid url."),
-        z.literal(""),
-      ])
-      .optional(),
-    file: z
-      .instanceof(File, { message: "File is required." })
-      .refine((file) => file.size <= 200000, `Max file size is 2MB.`)
-      .refine((file) => {
-        const extension = file?.name.split(".").pop();
-        return (
-          ["opml"].includes(file.type) ||
-          (extension && ["opml"].includes(extension))
-        );
-      }, "Only .opml files are accepted.")
-      .optional(),
-  })
-  .superRefine((data, ctx) => {
-    const message = "Either url or file is required to add feeds.";
-
-    if (!data.file && !data.url) {
-      ctx.addIssue({
-        code: ZodIssueCode.custom,
-        message,
-        path: ["url"],
-      });
-
-      ctx.addIssue({
-        code: ZodIssueCode.custom,
-        message,
-        path: ["file"],
-      });
-    }
-  });
-
-type AddFeedInput = z.infer<typeof addFeedSchema>;
 
 export const AddFeedDialog = memo<AddFeedDialogProps>(
   ({ children, ...props }) => {
@@ -87,14 +43,6 @@ export const AddFeedDialog = memo<AddFeedDialogProps>(
 
     const urlContent = form.watch("url");
     const fileContent = form.watch("file");
-
-    const { mutateAsync: createFeedAsync } = api.feed.createFeed.useMutation({
-      onSuccess: () => revalidatePath("/dashboard/feeds"),
-    });
-
-    const { mutateAsync: importFeedsAsync } = api.feed.importFeeds.useMutation({
-      onSuccess: () => revalidatePath("/dashboard/feeds"),
-    });
 
     useEffect(() => {
       if (!urlContent && fileContent?.size) {
@@ -112,23 +60,29 @@ export const AddFeedDialog = memo<AddFeedDialogProps>(
       }
 
       if (url) {
-        await toast.promise(createFeedAsync({ url }), {
-          loading: "Adding feed...",
-          success: ({ message }) => message,
-          error: (err?: Error) => err?.message ?? GENERIC_ERROR_MESSAGE,
-        });
+        const loadingToast = toast.loading("Adding feed...");
+        const { message, success } = await addFeed({ url });
+
+        if (success) {
+          toast.success(message, { id: loadingToast });
+        } else {
+          toast.error(message, { id: loadingToast });
+        }
       }
 
       if (file) {
         const content = await file.text();
-        await toast.promise(
-          importFeedsAsync({ content, type: FILE_TYPE.OPML }),
-          {
-            loading: "Uploading feeds...",
-            success: ({ message }) => message,
-            error: (err?: Error) => err?.message ?? GENERIC_ERROR_MESSAGE,
-          },
-        );
+        const loadingToast = toast.loading("Uploading feed...");
+        const { message, success } = await importFeeds({
+          content,
+          type: FILE_TYPE.OPML,
+        });
+
+        if (success) {
+          toast.success(message, { id: loadingToast });
+        } else {
+          toast.error(message, { id: loadingToast });
+        }
       }
     };
 

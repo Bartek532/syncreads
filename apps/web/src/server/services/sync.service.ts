@@ -59,7 +59,7 @@ export const queueFeedSync = async ({
 };
 
 export const getSyncById = async ({ id }: GetSyncInput) => {
-  return supabase().from("Sync").select("*").eq("id", id).single();
+  return supabase().from("Sync").select("*").eq("id", id).maybeSingle();
 };
 
 export const getSyncLog = async ({ syncId }: GetSyncLogInput) => {

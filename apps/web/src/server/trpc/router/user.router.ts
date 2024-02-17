@@ -4,7 +4,7 @@ import {
   deleteFeedsSchema,
   limitSchema,
   rangeSchema,
-  registerDeviceSchema,
+  saveDeviceSchema,
   updateUserSchema,
 } from "../../../utils/validation/schema";
 import {
@@ -36,7 +36,7 @@ export const userRouter = router({
     getUserDeviceHandler({ id: ctx.session.user.id }),
   ),
   registerDevice: protectedProcedure
-    .input(registerDeviceSchema)
+    .input(saveDeviceSchema)
     .mutation(({ input, ctx }) =>
       registerDeviceHandler({ ...input, id: ctx.session.user.id }),
     ),

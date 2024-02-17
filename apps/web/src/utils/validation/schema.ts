@@ -52,7 +52,11 @@ export const registerDeviceSchema = z.object({
     .max(8, "Enter valid one-time code."),
 });
 
-export const registerAndConnectDeviceSchema = registerDeviceSchema.extend({
+export const saveDeviceSchema = z.object({
+  token: z.string(),
+});
+
+export const saveAndConnectDeviceSchema = saveDeviceSchema.extend({
   id: z.string(),
 });
 

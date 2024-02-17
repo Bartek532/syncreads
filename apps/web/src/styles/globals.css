@@ -18,6 +18,10 @@ body {
   @apply flex min-h-full flex-col;
 }
 
+*::selection {
+  @apply bg-primary text-background;
+}
+
 *::-webkit-scrollbar {
   @apply h-2 w-2.5;
 }
