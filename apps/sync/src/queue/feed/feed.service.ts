@@ -32,7 +32,7 @@ export class FeedQueueService {
     }
 
     await this.syncLogger(syncId).log(
-      `Searchig for folder with name *${name}*...`,
+      `Searching for folder with name *${name}*...`,
     );
 
     const folder = await this.deviceStrategies.remarkable.getFolder(
@@ -100,7 +100,7 @@ export class FeedQueueService {
       title,
       pdf,
       userId,
-      ...(folderId ? { folder } : {}),
+      ...(folderId ? { folderId } : {}),
     });
 
     await this.syncLogger(syncId).log(

@@ -8,11 +8,33 @@ If you encounter a bug, please file a bug report. If you have a feature to reque
 
 ## Pull Requests
 
-In order to create a pull request for RSSmarkable, follow the GitHub instructions for [Creating a pull request from a fork](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork). Please link your pull request to an existing issue.
+In order to create a pull request for RSSmarkable, follow the GitHub instructions for [creating a pull request from a fork](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork). Please link your pull request to an existing issue.
 
 ## Architecture
 
-TBD
+<img src="https://github.com/Bartek532/rssmarkable/blob/main/docs/images/architecture-details.png?raw=true" alt="RSSmarkable architecture details" width="100%">
+
+<br />
+
+1. Starting from the main setup, [Docker](https://www.docker.com) and [Turborepo](https://turbo.build) were utilized to create a perfect development environment. The separation of concerns in this monorepo helps keep the codebase clean and structured. It is also used to simplify the process of deployment and testing the app, enabling us to run multiple tasks in parallel.
+
+2. The web app is the primary interface that users see, built with [Next.js](https://nextjs.org/) App Router to harness the benefits from [RSC](https://nextjs.org/docs/app/building-your-application/rendering/server-components) and keep performance under control.
+
+3. Leveraging the full power of [Next.js](https://nextjs.org/) we employ serverless API and [Edge functions](https://vercel.com/docs/functions) 🔥 mainly for CRUD operations on the database or non-resource-intensive computations on given data. Being a built-in part of [Next.js](https://nextjs.org/) it's super easy to maintain.
+
+4. The connection between the frontend and serverless API is facilitated by [tRPC](https://trpc.io),enforcing full type-safety and conventions across different operations. Seamless validation is achieved with [Zod](https://zod.dev/), ensuring our data is in the correct shape.
+
+5. The Sync module, the main character in this theater, is a strictly separated backend built with [Nest.js](https://nestjs.com/) responsible ONLY for sync functionality. As operations here could be resource and time-intensive, we can scale and extend it independently from the main flow to ensure a good user experience while background tasks are executed.
+
+6. To initiate synchronization, a simple HTTP request is made. The goal is to make it as simple as possible for third-party tools to integrate with this part by just making a request. Communication follows a pure REST API approach using endpoints exposed by the backend, with the request requiring authorization through a special user-specific token.
+
+7. Sync performance, a potential concern, is addressed by using queues. A straightforward [Redis](https://redis.io/) instance with reasonable limits ensures smooth operation. Incoming requests are pushed to the correct queue, and when their time comes, our main service processes them.
+
+8. [BullMQ](https://docs.bullmq.io/) is used to communicate with our queues, a library dedicated to managing structures like this. Easy integration with [Nest.js](https://nestjs.com/), multiple features, and a developer-friendly API enable us to avoid complicated syntax to achieve simple goals.
+
+9. But where is the data? Short question = short answer. [Supabase](https://supabase.com). It uses [PostgreSQL](https://www.postgresql.org/) under the hood, so we won't bother about strictly db things. With a range of useful services that can be integrated in minutes (e.g., realtime, auth), it allows us to focus on business value rather than low-level implementation details.
+
+10. There are several ways to communicate with the database, but RSSmarkable places its bet on the official [JavaScript SDK](https://supabase.com/docs/reference/javascript/introduction). Simple, handy, and performant, it eliminates the need for writing tons of abstractions over the database to obtain the desired data.
 
 ## File Structure
 
@@ -24,6 +46,7 @@ Description of the project files and directories.
 ├── apps/                         # Main apps on which we are focused
 │    ├── sync/                    # Nest.js backend, used ONLY for sync functionality
 │    └── web/                     # Next.js web app with serverless CRUD (tRPC)
+├── docs/                         # Things used in any kind of documentation
 ├── packages/                     # Packages shared across the workspace
 │    ├── database/                # Database related things (migrations, config, client)
 │    ├── eslint-preset/           # ESLint preset

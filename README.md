@@ -1,4 +1,4 @@
-<a href="https://rssmarkable.vercel.app"><img src="https://rssmarkable.vercel.app/images/banner/light.png" width="100%"></a>
+<a href="https://rssmarkable.vercel.app"><img src="https://github.com/Bartek532/rssmarkable/blob/main/apps/web/public/images/banner/light.png?raw=true" width="100%"></a>
 
 ## Project Overview 🎨
 
@@ -10,7 +10,7 @@ Please read [CONTRIBUTING.md](https://github.com/Bartek532/rssmarkable/blob/main
 
 ## Architecture 📐
 
-TBD.
+<img src="https://github.com/Bartek532/rssmarkable/blob/main/docs/images/architecture-overview.png?raw=true" alt="RSSmarkable architecture overview" width="100%">
 
 For more details look at [Architecture details](https://github.com/Bartek532/rssmarkable/blob/main/CONTRIBUTING.md/#Architecture)
 
@@ -34,6 +34,10 @@ For more details look at [Architecture details](https://github.com/Bartek532/rss
 | [Husky](https://github.com/typicode/husky)     | Git hooks                                                                     |
 | [ESLint](https://eslint.org/)                  | TypeScript linting                                                            |
 | [Prettier](https://prettier.io/)               | Code formatter                                                                |
+
+## Performance 💨
+
+<img src="https://github.com/Bartek532/rssmarkable/blob/main/docs/images/performance.png?raw=true" alt="RSSmarkable performance">
 
 ## Local development 💿
 
