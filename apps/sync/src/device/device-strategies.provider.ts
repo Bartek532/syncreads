@@ -15,6 +15,7 @@ export const deviceStrategiesProvider = {
   ): Record<DEVICE_TYPE, DeviceStrategy> => {
     return {
       [DEVICE_TYPE.REMARKABLE]: remarkableStrategy,
+      [DEVICE_TYPE.KINDLE]: remarkableStrategy,
     };
   },
   inject: [RemarkableStrategy],

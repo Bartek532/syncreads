@@ -12,6 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { DEVICE_LABEL } from "@/config";
 import { DASHBOARD_CARDS } from "@/config/dashboard";
 import { supabase } from "@/lib/supabase/server";
 import { api } from "@/trpc/server";
@@ -49,7 +50,7 @@ export const Home = async () => {
       })
       .humanize(),
     syncsCount,
-    device ? "reMarkable 2" : "Not registered",
+    device ? DEVICE_LABEL[device.type] : "Not registered",
   ];
 
   return (

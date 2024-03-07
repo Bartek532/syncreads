@@ -67,18 +67,21 @@ export interface Database {
           id: string
           registeredAt: string
           token: string
+          type: Database["public"]["Enums"]["DeviceType"]
           userId: string
         }
         Insert: {
           id?: string
           registeredAt?: string
           token: string
+          type?: Database["public"]["Enums"]["DeviceType"]
           userId: string
         }
         Update: {
           id?: string
           registeredAt?: string
           token?: string
+          type?: Database["public"]["Enums"]["DeviceType"]
           userId?: string
         }
         Relationships: [
@@ -217,6 +220,7 @@ export interface Database {
       }
     }
     Enums: {
+      DeviceType: "KINDLE" | "REMARKABLE_2"
       SyncStatus: "SUCCESS" | "FAILED" | "QUEUED" | "IN_PROGRESS" | "UNKNOWN"
       SyncTrigger: "MANUAL" | "SCHEDULE"
     }

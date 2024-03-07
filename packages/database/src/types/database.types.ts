@@ -40,6 +40,7 @@ export type UpdateUserFeed = Tables<"UserFeed", "Update">;
 
 export type SyncStatus = Enums<"SyncStatus">;
 export type SyncTrigger = Enums<"SyncTrigger">;
+export type DeviceType = Enums<"DeviceType">;
 
 export const SyncStatus: { [K in SyncStatus]: K } = {
   SUCCESS: "SUCCESS",
@@ -52,6 +53,11 @@ export const SyncStatus: { [K in SyncStatus]: K } = {
 export const SyncTrigger: { [K in SyncTrigger]: K } = {
   MANUAL: "MANUAL",
   SCHEDULE: "SCHEDULE",
+} as const;
+
+export const DeviceType: { [K in DeviceType]: K } = {
+  REMARKABLE_2: "REMARKABLE_2",
+  KINDLE: "KINDLE",
 } as const;
 
 // Auth

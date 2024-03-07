@@ -1,9 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { DeviceType } from "@rssmarkable/database";
 import { GENERIC_ERROR_MESSAGE } from "@rssmarkable/shared";
 import { Loader2 } from "lucide-react";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { DEVICE_LABEL } from "@/config";
 
 import { onPromise } from "../../../../utils";
 import { registerDeviceSchema } from "../../../../utils/validation/schema";
@@ -22,6 +26,7 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "../../../ui/form";
 import { Input } from "../../../ui/input";
@@ -34,18 +39,31 @@ type AddDeviceDialog = {
   readonly children?: React.ReactNode;
 };
 
+const register = async (data: RegisterDeviceInput) => {
+  if (data.type === DeviceType.REMARKABLE_2) {
+    const response = await fetch(`/api/device/register?code=${data.code}`);
+    const token = await response.text();
+    return registerDevice({ token, type: data.type });
+  }
+
+  return registerDevice({ token: data.email, type: data.type });
+};
+
 export const AddDeviceDialog = memo<AddDeviceDialog>(({ children }) => {
   const form = useForm<RegisterDeviceInput>({
     resolver: zodResolver(registerDeviceSchema),
+    defaultValues: {
+      type: DeviceType.REMARKABLE_2,
+    },
   });
+
+  const type = form.watch("type");
 
   const onSubmit = async (data: RegisterDeviceInput) => {
     const loadingToast = toast.loading("Registering your device...");
 
     try {
-      const response = await fetch(`/api/device/register?code=${data.code}`);
-      const token = await response.text();
-      const { message, success } = await registerDevice({ token });
+      const { message, success } = await register(data);
 
       if (success) {
         toast.success(message, { id: loadingToast });
@@ -70,8 +88,8 @@ export const AddDeviceDialog = memo<AddDeviceDialog>(({ children }) => {
         <DialogHeader>
           <DialogTitle>Register device to enable sync</DialogTitle>
           <DialogDescription>
-            You&apos;re one step away from enabling sync. Just pass an one-time
-            code!
+            You&apos;re one step away from enabling sync. Just pass correct data
+            below!
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -81,30 +99,95 @@ export const AddDeviceDialog = memo<AddDeviceDialog>(({ children }) => {
           >
             <FormField
               control={form.control}
-              name="code"
+              name="type"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="mb-2 space-y-3">
                   <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Enter your one-time code..."
-                    />
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex gap-5"
+                    >
+                      {Object.keys(DeviceType).map((type) => (
+                        <FormItem
+                          key={type}
+                          className="flex items-center space-x-2 space-y-0"
+                        >
+                          <FormControl>
+                            <RadioGroupItem value={type} />
+                          </FormControl>
+                          <FormLabel className="cursor-pointer font-normal">
+                            {DEVICE_LABEL[type as DeviceType]}
+                          </FormLabel>
+                        </FormItem>
+                      ))}
+                    </RadioGroup>
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
-            <p className="text-xs text-muted-foreground">
-              You can find one-time code on{" "}
-              <a
-                href="https://my.remarkable.com/device/desktop/connect"
-                className="font-medium underline underline-offset-4 hover:text-primary"
-                target="_blank"
-                rel="noreferrer"
-              >
-                your reMarkable account.
-              </a>
-            </p>
+
+            {type === DeviceType.REMARKABLE_2 && (
+              <>
+                <FormField
+                  control={form.control}
+                  name="code"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Enter your one-time code..."
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <p className="text-xs text-muted-foreground">
+                  You can find one-time code on{" "}
+                  <a
+                    href="https://my.remarkable.com/device/desktop/connect"
+                    className="font-medium underline underline-offset-4 hover:text-primary"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    your reMarkable account.
+                  </a>
+                </p>
+              </>
+            )}
+
+            {type === DeviceType.KINDLE && (
+              <>
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Enter your email (e.g. john@kindle.com)..."
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <p className="text-xs text-muted-foreground">
+                  You can find Kindle email on{" "}
+                  <a
+                    href="https://www.amazon.com/hz/mycd/digital-console/devicedetails"
+                    className="font-medium underline underline-offset-4 hover:text-primary"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    your Amazon account.
+                  </a>
+                </p>
+              </>
+            )}
 
             <DialogFooter className="mt-4">
               <Button disabled={form.formState.isSubmitting}>
