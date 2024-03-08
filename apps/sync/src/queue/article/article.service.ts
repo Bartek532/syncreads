@@ -11,6 +11,9 @@ import { PuppeteerProviderFactory } from "../../parser/puppeteer/puppeteer.provi
 import { SYNC_LOGGER_PROVIDER_TOKEN } from "../../sync/logger/logger.constants";
 import { SyncLoggerProviderFactory } from "../../sync/logger/logger.provider";
 import { formatTime } from "../../sync/logger/utils/time";
+import { DEVICE_CLOUD_LABEL } from "../../utils/constants";
+
+import type { DeviceType } from "@rssmarkable/database";
 
 export class ArticleQueueService {
   constructor(
@@ -26,10 +29,12 @@ export class ArticleQueueService {
     userId,
     url,
     syncId,
+    device,
   }: {
     userId: string;
     url: string;
     syncId: string;
+    device: DeviceType;
   }) {
     const page = await this.puppeteerProvider;
 
@@ -49,20 +54,18 @@ export class ArticleQueueService {
     await this.syncLogger(syncId).log(`PDF file generated.`);
 
     await this.syncLogger(syncId).log(
-      `Trying to push output to the reMarkable cloud...`,
+      `Trying to push output to the ${DEVICE_CLOUD_LABEL[device]} cloud...`,
     );
 
-    const entry = await this.deviceStrategies.remarkable.upload({
+    await this.deviceStrategies[device].upload({
       title,
       pdf,
       userId,
     });
 
     await this.syncLogger(syncId).log(
-      `Article uploaded to the reMarkable cloud.`,
+      `Article uploaded to the ${DEVICE_CLOUD_LABEL[device]} cloud.`,
     );
-
-    await this.deviceStrategies.remarkable.syncEntry(userId, entry);
 
     await this.syncLogger(syncId).verbose(
       `Article successfully synced: ${formatTime(

@@ -56,7 +56,7 @@ export const SyncTrigger: { [K in SyncTrigger]: K } = {
 } as const;
 
 export const DeviceType: { [K in DeviceType]: K } = {
-  REMARKABLE_2: "REMARKABLE_2",
+  REMARKABLE: "REMARKABLE",
   KINDLE: "KINDLE",
 } as const;
 

@@ -1,0 +1,3 @@
+export const KINDLE_CLIENT_FACTORY_TOKEN = Symbol(
+  "KINDLE_CLIENT_FACTORY_TOKEN",
+);

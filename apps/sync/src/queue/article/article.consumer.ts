@@ -34,6 +34,7 @@ export class ArticleQueueConsumer {
       userId: data.userId,
       url: data.url,
       syncId: data.syncId,
+      device: data.device,
     });
   }
 

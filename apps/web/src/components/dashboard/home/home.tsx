@@ -12,12 +12,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { DEVICE_LABEL } from "@/config";
 import { DASHBOARD_CARDS } from "@/config/dashboard";
 import { supabase } from "@/lib/supabase/server";
 import { api } from "@/trpc/server";
 import { cn, getLastDays, getName } from "@/utils";
 
+import { DEVICE_LABEL } from "../../../config";
 import { SyncArticleDialog } from "../feeds/articles/dialog/sync-article-dialog";
 import { ArticlesList } from "../feeds/articles/list/articles-list";
 import { AddFeedDialog } from "../feeds/dialog/add-feed-dialog";

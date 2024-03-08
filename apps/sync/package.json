@@ -20,6 +20,7 @@
     "@nestjs/platform-express": "10.2.10",
     "@rssmarkable/database": "workspace:*",
     "@rssmarkable/shared": "workspace:*",
+    "@sendgrid/mail": "8.1.0",
     "bull": "4.11.5",
     "dayjs": "^1.11.7",
     "nestjs-zod": "3.0.0",

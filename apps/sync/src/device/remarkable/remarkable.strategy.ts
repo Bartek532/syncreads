@@ -23,6 +23,16 @@ export class RemarkableStrategy implements DeviceStrategy {
     return api.getEntriesMetadata();
   }
 
+  private async syncEntry(userId: string, entry: Entry) {
+    const api = await this.remarkableProvider(userId);
+    const [root, gen] = await api.getRootHash();
+    const rootEntries = await api.getEntries(root);
+    rootEntries.push(entry);
+    const { hash } = await api.putEntries("", rootEntries);
+    const nextGen = await api.putRootHash(hash, gen);
+    await api.syncComplete(nextGen);
+  }
+
   async getFolder(userId: string, name: string) {
     const files = await this.getFiles(userId);
 
@@ -54,16 +64,6 @@ export class RemarkableStrategy implements DeviceStrategy {
     return { ...metadata, hash: folderEntry.hash, id: documentId };
   }
 
-  async syncEntry(userId: string, entry: Entry) {
-    const api = await this.remarkableProvider(userId);
-    const [root, gen] = await api.getRootHash();
-    const rootEntries = await api.getEntries(root);
-    rootEntries.push(entry);
-    const { hash } = await api.putEntries("", rootEntries);
-    const nextGen = await api.putRootHash(hash, gen);
-    await api.syncComplete(nextGen);
-  }
-
   async upload({
     userId,
     folderId,
@@ -77,6 +77,7 @@ export class RemarkableStrategy implements DeviceStrategy {
   }) {
     const api = await this.remarkableProvider(userId);
 
-    return api.putPdf(title, pdf, { parent: folderId });
+    const entry = await api.putPdf(title, pdf, { parent: folderId });
+    await this.syncEntry(userId, entry);
   }
 }

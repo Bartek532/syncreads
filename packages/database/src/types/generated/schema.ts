@@ -220,7 +220,7 @@ export interface Database {
       }
     }
     Enums: {
-      DeviceType: "KINDLE" | "REMARKABLE_2"
+      DeviceType: "KINDLE" | "REMARKABLE"
       SyncStatus: "SUCCESS" | "FAILED" | "QUEUED" | "IN_PROGRESS" | "UNKNOWN"
       SyncTrigger: "MANUAL" | "SCHEDULE"
     }

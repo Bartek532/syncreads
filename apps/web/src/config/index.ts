@@ -138,5 +138,5 @@ export const TOASTER_CONFIG: DefaultToastOptions = {
 
 export const DEVICE_LABEL: Record<DeviceType, string> = {
   [DeviceType.KINDLE]: "Kindle",
-  [DeviceType.REMARKABLE_2]: "reMarkable 2",
-}
+  [DeviceType.REMARKABLE]: "reMarkable 2",
+};

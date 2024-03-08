@@ -34,6 +34,8 @@ export const serverSchema = sharedSchema.merge(
     REDIS_PASSWORD: z.string(),
 
     CHROME_BIN: z.string(),
+    SENDGRID_API_KEY: z.string(),
+    EMAIL: z.string().email(),
   }),
 );
 

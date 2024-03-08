@@ -7,6 +7,7 @@ import type {
   ExecutionContext,
   NestInterceptor,
 } from "@nestjs/common";
+import type { Device } from "@rssmarkable/database";
 import type { Request } from "express";
 
 @Injectable()
@@ -16,9 +17,10 @@ export class DeviceInterceptor implements NestInterceptor {
   async intercept(context: ExecutionContext, next: CallHandler) {
     const request = context
       .switchToHttp()
-      .getRequest<Request & { userId: string }>();
+      .getRequest<Request & { userId: string; device?: Device }>();
 
-    await this.userService.getUserDevice(request.userId);
+    const device = await this.userService.getUserDevice(request.userId);
+    request["device"] = device;
 
     return next.handle();
   }

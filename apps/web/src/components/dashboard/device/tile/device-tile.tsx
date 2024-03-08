@@ -3,11 +3,10 @@ import dayjs from "dayjs";
 import { CalendarDays } from "lucide-react";
 import { memo } from "react";
 
-import { DEVICE_LABEL } from "@/config";
-
 import KindleIcon from "public/svg/kindle.svg";
 import RemarkableIcon from "public/svg/remarkable.svg";
 
+import { DEVICE_LABEL } from "../../../../config";
 import { Button } from "../../../ui/button";
 import { DeleteDeviceDialog } from "../dialog/delete-device-dialog";
 

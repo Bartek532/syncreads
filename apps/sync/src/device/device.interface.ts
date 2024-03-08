@@ -1,7 +1,6 @@
-import type { CollectionMetadataEntry, Entry, MetadataEntry } from "rmapi-js";
+import type { CollectionMetadataEntry, MetadataEntry } from "rmapi-js";
 
 export interface DeviceStrategy {
-  syncEntry: (userId: string, entry: Entry) => Promise<void>;
   upload: ({
     userId,
     title,
@@ -10,14 +9,14 @@ export interface DeviceStrategy {
   }: {
     userId: string;
     title: string;
-    folderId?: string;
     pdf: Buffer;
-  }) => Promise<Entry>;
-  getFolder: (
+    folderId?: string;
+  }) => Promise<void>;
+  getFolder?: (
     userId: string,
     name: string,
   ) => Promise<MetadataEntry | undefined>;
-  createFolder: (
+  createFolder?: (
     userId: string,
     name: string,
   ) => Promise<CollectionMetadataEntry>;

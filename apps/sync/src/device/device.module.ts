@@ -1,10 +1,11 @@
 import { Module } from "@nestjs/common";
 
 import { deviceStrategiesProvider } from "./device-strategies.provider";
+import { DeviceKindleModule } from "./kindle/kindle.module";
 import { DeviceRemarkableModule } from "./remarkable/remarkable.module";
 
 @Module({
-  imports: [DeviceRemarkableModule],
+  imports: [DeviceRemarkableModule, DeviceKindleModule],
   providers: [deviceStrategiesProvider],
   exports: [deviceStrategiesProvider],
 })

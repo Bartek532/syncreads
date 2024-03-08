@@ -6,7 +6,11 @@ import {
   UseGuards,
   UseInterceptors,
 } from "@nestjs/common";
-import { SyncStatus, SyncTrigger } from "@rssmarkable/database";
+import {
+  Device as DeviceType,
+  SyncStatus,
+  SyncTrigger,
+} from "@rssmarkable/database";
 import { clearUrl } from "@rssmarkable/shared";
 import { Queue } from "bull";
 
@@ -15,6 +19,7 @@ import { ApiKeyGuard } from "../auth/guards/api-key.guard";
 import { ARTICLE_QUEUE_TOKEN } from "../queue/article/article.constants";
 import { FEED_QUEUE_TOKEN } from "../queue/feed/feed.constants";
 
+import { Device } from "./decorators/device.decorator";
 import { SyncArticlePayloadDto, SyncFeedPayloadDto } from "./dto/sync.dto";
 import { SyncService } from "./sync.service";
 import { DeviceInterceptor } from "./validation/device.interceptor";
@@ -40,6 +45,7 @@ export class SyncController {
   async handleSyncArticle(
     @Body() payload: SyncArticlePayloadDto,
     @UserId() userId: string,
+    @Device() device: DeviceType,
   ) {
     const sync = await this.syncService.createSync({
       userId: userId,
@@ -51,6 +57,7 @@ export class SyncController {
       userId: userId,
       url: clearUrl(payload.url),
       syncId: sync.id,
+      device: device.type,
     });
 
     return {
@@ -65,6 +72,7 @@ export class SyncController {
   async handleSyncFeed(
     @Body() payload: SyncFeedPayloadDto,
     @UserId() userId: string,
+    @Device() device: DeviceType,
   ) {
     const sync = await this.syncService.createSync({
       userId: userId,
@@ -78,6 +86,7 @@ export class SyncController {
           userId: userId,
           feedId,
           syncId: sync.id,
+          device: device.type,
           last: payload.in.indexOf(feedId) === payload.in.length - 1,
         },
       })),

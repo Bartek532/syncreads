@@ -7,8 +7,8 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { DEVICE_LABEL } from "@/config";
 
+import { DEVICE_LABEL } from "../../../../config";
 import { onPromise } from "../../../../utils";
 import { registerDeviceSchema } from "../../../../utils/validation/schema";
 import { Button } from "../../../ui/button";
@@ -40,7 +40,7 @@ type AddDeviceDialog = {
 };
 
 const register = async (data: RegisterDeviceInput) => {
-  if (data.type === DeviceType.REMARKABLE_2) {
+  if (data.type === DeviceType.REMARKABLE) {
     const response = await fetch(`/api/device/register?code=${data.code}`);
     const token = await response.text();
     return registerDevice({ token, type: data.type });
@@ -53,7 +53,7 @@ export const AddDeviceDialog = memo<AddDeviceDialog>(({ children }) => {
   const form = useForm<RegisterDeviceInput>({
     resolver: zodResolver(registerDeviceSchema),
     defaultValues: {
-      type: DeviceType.REMARKABLE_2,
+      type: DeviceType.REMARKABLE,
     },
   });
 
@@ -127,7 +127,7 @@ export const AddDeviceDialog = memo<AddDeviceDialog>(({ children }) => {
               )}
             />
 
-            {type === DeviceType.REMARKABLE_2 && (
+            {type === DeviceType.REMARKABLE && (
               <>
                 <FormField
                   control={form.control}
