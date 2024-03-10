@@ -19,7 +19,7 @@ export const Device = memo<DeviceProps>(({ device }) => {
   return (
     <div className="flex flex-col gap-14">
       <div className="flex flex-col justify-start space-y-2">
-        <h1 className="text-3xl font-bold tracking-tight">Your devices</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Your device</h1>
         <p className="ml-1 text-sm text-muted-foreground">
           Place where all the magic happens 🪄
         </p>

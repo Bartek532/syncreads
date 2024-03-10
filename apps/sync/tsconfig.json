@@ -1,6 +1,7 @@
 {
   "extends": "@rssmarkable/tsconfig/base.json",
   "compilerOptions": {
+    "lib": ["dom", "es2022"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "outDir": "./dist",

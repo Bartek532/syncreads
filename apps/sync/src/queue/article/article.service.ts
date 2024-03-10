@@ -3,22 +3,20 @@ import dayjs from "dayjs";
 
 import { DeviceStrategiesProviderFactory } from "../../device/device-strategies.provider";
 import { DEVICE_STRATEGIES_TOKEN } from "../../device/device.constants";
-import {
-  PDF_OPTIONS,
-  PUPPETEER_PROVIDER_FACTORY_TOKEN,
-} from "../../parser/puppeteer/puppeteer.constants";
-import { PuppeteerProviderFactory } from "../../parser/puppeteer/puppeteer.provider";
+import { GeneratorStrategiesProviderFactory } from "../../generator/generator-strategies.provider";
+import { GENERATOR_STRATEGIES_TOKEN } from "../../generator/generator.constants";
 import { SYNC_LOGGER_PROVIDER_TOKEN } from "../../sync/logger/logger.constants";
 import { SyncLoggerProviderFactory } from "../../sync/logger/logger.provider";
 import { formatTime } from "../../sync/logger/utils/time";
 import { DEVICE_CLOUD_LABEL } from "../../utils/constants";
 
 import type { DeviceType } from "@rssmarkable/database";
+import type { SyncOptionsPayload } from "@rssmarkable/shared";
 
 export class ArticleQueueService {
   constructor(
-    @Inject(PUPPETEER_PROVIDER_FACTORY_TOKEN)
-    private readonly puppeteerProvider: PuppeteerProviderFactory,
+    @Inject(GENERATOR_STRATEGIES_TOKEN)
+    private readonly generatorStrategies: GeneratorStrategiesProviderFactory,
     @Inject(DEVICE_STRATEGIES_TOKEN)
     private readonly deviceStrategies: DeviceStrategiesProviderFactory,
     @Inject(SYNC_LOGGER_PROVIDER_TOKEN)
@@ -27,39 +25,40 @@ export class ArticleQueueService {
 
   async syncArticle({
     userId,
-    url,
     syncId,
+    url,
     device,
+    options,
   }: {
     userId: string;
-    url: string;
     syncId: string;
+    url: string;
     device: DeviceType;
+    options: SyncOptionsPayload;
   }) {
-    const page = await this.puppeteerProvider;
-
-    await page.goto(url, { waitUntil: "networkidle0", timeout: 0 });
-    const title = await page.title();
-
     const { updatedAt: articleSyncStartDate } = await this.syncLogger(
       syncId,
-    ).log(`[${title}](${url}) is being synced now...`);
+    ).log(`[${url}](${url}) is being synced now...`);
 
     await this.syncLogger(syncId).log(
-      `Generating PDF file with article content...`,
+      `Generating ${options.format.toUpperCase()} file with article content...`,
     );
 
-    const pdf = await page.pdf(PDF_OPTIONS);
+    console.log(options);
 
-    await this.syncLogger(syncId).log(`PDF file generated.`);
+    const file = await this.generatorStrategies[options.format].generate(url);
+
+    await this.syncLogger(syncId).log(
+      `${options.format.toUpperCase()} file generated.`,
+    );
 
     await this.syncLogger(syncId).log(
       `Trying to push output to the ${DEVICE_CLOUD_LABEL[device]} cloud...`,
     );
 
     await this.deviceStrategies[device].upload({
-      title,
-      pdf,
+      title: "ddd",
+      file: { content: file, type: options.format },
       userId,
     });
 

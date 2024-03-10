@@ -43,7 +43,7 @@ export class SyncController {
   @UseGuards(ApiKeyGuard)
   @UseInterceptors(DeviceInterceptor, LimiterInterceptor)
   async handleSyncArticle(
-    @Body() payload: SyncArticlePayloadDto,
+    @Body() { url, options }: SyncArticlePayloadDto,
     @UserId() userId: string,
     @Device() device: DeviceType,
   ) {
@@ -55,9 +55,10 @@ export class SyncController {
 
     await this.articleQueue.add({
       userId: userId,
-      url: clearUrl(payload.url),
       syncId: sync.id,
+      url: clearUrl(url),
       device: device.type,
+      options,
     });
 
     return {
@@ -87,6 +88,7 @@ export class SyncController {
           feedId,
           syncId: sync.id,
           device: device.type,
+          options: payload.options,
           last: payload.in.indexOf(feedId) === payload.in.length - 1,
         },
       })),

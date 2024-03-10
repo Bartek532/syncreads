@@ -3,19 +3,20 @@ import dayjs from "dayjs";
 
 import { DeviceStrategiesProviderFactory } from "../../device/device-strategies.provider";
 import { DEVICE_STRATEGIES_TOKEN } from "../../device/device.constants";
-import {
-  PDF_OPTIONS,
-  PUPPETEER_PROVIDER_FACTORY_TOKEN,
-} from "../../parser/puppeteer/puppeteer.constants";
-import { PuppeteerProviderFactory } from "../../parser/puppeteer/puppeteer.provider";
+import { GeneratorStrategiesProviderFactory } from "../../generator/generator-strategies.provider";
+import { GENERATOR_STRATEGIES_TOKEN } from "../../generator/generator.constants";
 import { SYNC_LOGGER_PROVIDER_TOKEN } from "../../sync/logger/logger.constants";
 import { SyncLoggerProviderFactory } from "../../sync/logger/logger.provider";
 import { formatTime } from "../../sync/logger/utils/time";
+import { DEVICE_CLOUD_LABEL } from "../../utils/constants";
+
+import type { DeviceType } from "@rssmarkable/database";
+import type { SyncOptionsPayload } from "@rssmarkable/shared";
 
 export class FeedQueueService {
   constructor(
-    @Inject(PUPPETEER_PROVIDER_FACTORY_TOKEN)
-    private readonly puppeteerProvider: PuppeteerProviderFactory,
+    @Inject(GENERATOR_STRATEGIES_TOKEN)
+    private readonly generatorStrategies: GeneratorStrategiesProviderFactory,
     @Inject(DEVICE_STRATEGIES_TOKEN)
     private readonly deviceStrategies: DeviceStrategiesProviderFactory,
     @Inject(SYNC_LOGGER_PROVIDER_TOKEN)
@@ -25,20 +26,27 @@ export class FeedQueueService {
   private async upsertFeedFolder(
     userId: string,
     syncId: string,
+    device: DeviceType,
     name?: string,
   ) {
     if (!name) {
       return;
     }
 
+    const strategy = this.deviceStrategies[device];
+
+    if (!strategy.getFolder || !strategy.createFolder) {
+      await this.syncLogger(syncId).warn(
+        `Folders are not supported for ${DEVICE_CLOUD_LABEL[device]} cloud yet, syncing to the root folder...`,
+      );
+      return;
+    }
+
     await this.syncLogger(syncId).log(
-      `Searchig for folder with name *${name}*...`,
+      `Searching for folder with name *${name}*...`,
     );
 
-    const folder = await this.deviceStrategies.REMARKABLE.getFolder?.(
-      userId,
-      name,
-    );
+    const folder = await strategy.getFolder(userId, name);
 
     if (folder) {
       await this.syncLogger(syncId).log(
@@ -50,61 +58,67 @@ export class FeedQueueService {
 
     await this.syncLogger(syncId).log(`Folder not found, creating new one...`);
 
-    const newFolder = await this.deviceStrategies.REMARKABLE.createFolder?.(
-      userId,
-      name,
-    );
+    const newFolder = await strategy.createFolder(userId, name);
 
     await this.syncLogger(syncId).log(
       `Folder named *${name}* created on the device.`,
     );
 
-    return newFolder?.id;
+    return newFolder.id;
   }
 
   async syncArticle({
     userId,
     url,
-    folder,
     syncId,
+    device,
+    options,
   }: {
     userId: string;
-    url: string;
-    folder?: string;
     syncId: string;
+    url: string;
+    device: {
+      type: DeviceType;
+      folder?: string;
+    };
+    options: SyncOptionsPayload;
   }) {
-    const page = await this.puppeteerProvider;
-
-    await page.goto(url, { waitUntil: "networkidle0", timeout: 0 });
-    const title = await page.title();
-
     const { updatedAt: articleSyncStartDate } = await this.syncLogger(
       syncId,
-    ).log(`[${title}](${url}) is being synced now...`);
+    ).log(`[${url}](${url}) is being synced now...`);
 
     await this.syncLogger(syncId).log(
-      `Generating PDF file with article content...`,
+      `Generating ${options.format.toUpperCase()} file with article content...`,
     );
 
-    const pdf = await page.pdf(PDF_OPTIONS);
-
-    await this.syncLogger(syncId).log(`PDF file generated.`);
+    const file = await this.generatorStrategies[options.format].generate(url);
 
     await this.syncLogger(syncId).log(
-      `Trying to push output to the reMarkable cloud...`,
+      `${options.format.toUpperCase()} file generated.`,
     );
 
-    const folderId = await this.upsertFeedFolder(userId, syncId, folder);
+    await this.syncLogger(syncId).log(
+      `Trying to push output to the ${
+        DEVICE_CLOUD_LABEL[device.type]
+      } cloud...`,
+    );
 
-    await this.deviceStrategies.REMARKABLE.upload({
-      title,
-      pdf,
+    const folderId = await this.upsertFeedFolder(
       userId,
-      ...(folderId ? { folder } : {}),
+      syncId,
+      device.type,
+      device.folder,
+    );
+
+    await this.deviceStrategies[device.type].upload({
+      title: "todo",
+      file: { content: file, type: options.format },
+      userId,
+      ...(folderId ? { folder: device.folder } : {}),
     });
 
     await this.syncLogger(syncId).log(
-      `Article uploaded to the reMarkable cloud.`,
+      `Article uploaded to the ${DEVICE_CLOUD_LABEL[device.type]} cloud.`,
     );
 
     await this.syncLogger(syncId).verbose(

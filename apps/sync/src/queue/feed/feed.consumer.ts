@@ -67,9 +67,13 @@ export class FeedQueueConsumer {
 
       await this.feedQueueService.syncArticle({
         userId: data.userId,
-        url,
-        folder: user.user_metadata.folder,
         syncId: data.syncId,
+        url,
+        device: {
+          folder: user.user_metadata.folder,
+          type: data.device,
+        },
+        options: data.options,
       });
 
       await this.syncService.createSyncArticle({
@@ -92,7 +96,7 @@ export class FeedQueueConsumer {
       await this.syncLogger(job.data.syncId).error(`\`\`\`js
 ${err.stack}`);
     }
-    // TODO handle deleting other jobs from the same sync
+    // TODO handle deleting other jobs from the same sync?
     if (job.data.last) {
       await this.syncService.updateSync(job.data.syncId, {
         finishedAt: dayjs().toISOString(),

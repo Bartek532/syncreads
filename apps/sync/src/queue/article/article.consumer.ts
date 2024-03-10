@@ -30,12 +30,7 @@ export class ArticleQueueConsumer {
 
   @Process()
   async syncArticle({ data }: Job<ArticleQueueJobPayload>) {
-    await this.articleQueueService.syncArticle({
-      userId: data.userId,
-      url: data.url,
-      syncId: data.syncId,
-      device: data.device,
-    });
+    await this.articleQueueService.syncArticle(data);
   }
 
   @OnQueueFailed()

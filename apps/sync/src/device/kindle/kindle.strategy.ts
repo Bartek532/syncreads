@@ -18,11 +18,13 @@ export class KindleStrategy implements DeviceStrategy {
   async upload({
     userId,
     title,
-    pdf,
+    file,
   }: {
     userId: string;
     title: string;
-    pdf: Buffer;
+    file: {
+      content: Buffer;
+    };
   }) {
     const email = await this.kindleProvider(userId);
 
@@ -32,7 +34,7 @@ export class KindleStrategy implements DeviceStrategy {
       text: title,
       attachments: [
         {
-          content: pdf.toString("base64"),
+          content: file.content.toString("base64"),
           filename: `${title}.pdf`,
           type: "application/pdf",
           disposition: "attachment",

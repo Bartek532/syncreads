@@ -3,6 +3,7 @@ import { Module, forwardRef } from "@nestjs/common";
 
 import { UserModule } from "../../auth/user/user.module";
 import { DeviceModule } from "../../device/device.module";
+import { GeneratorModule } from "../../generator/generator.module";
 import { ParserModule } from "../../parser/parser.module";
 import { SyncModule } from "../../sync/sync.module";
 
@@ -15,8 +16,9 @@ import { FeedQueueService } from "./feed.service";
     BullModule.registerQueue({
       name: FEED_QUEUE_TOKEN,
     }),
-    ParserModule,
+    GeneratorModule,
     DeviceModule,
+    ParserModule,
     forwardRef(() => SyncModule),
     UserModule,
   ],

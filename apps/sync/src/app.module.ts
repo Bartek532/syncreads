@@ -5,6 +5,7 @@ import { serverSchema, validateConfig } from "@rssmarkable/shared";
 
 import { DeviceModule } from "./device/device.module";
 import { EmailModule } from "./email/email.module";
+import { GeneratorModule } from "./generator/generator.module";
 import { ParserModule } from "./parser/parser.module";
 import { SupabaseModule } from "./supabase/supabase.module";
 import { SyncModule } from "./sync/sync.module";
@@ -39,6 +40,7 @@ import type { ServerConfig } from "@rssmarkable/shared";
     SupabaseModule,
     DeviceModule,
     ParserModule,
+    GeneratorModule,
     SyncModule,
     EmailModule,
   ],

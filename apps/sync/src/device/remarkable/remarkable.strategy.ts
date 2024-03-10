@@ -1,4 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
+import { OUTPUT_FORMAT } from "@rssmarkable/shared";
 import uuid4 from "uuid4";
 
 import {
@@ -68,16 +69,31 @@ export class RemarkableStrategy implements DeviceStrategy {
     userId,
     folderId,
     title,
-    pdf,
+    file,
   }: {
     userId: string;
     title: string;
-    pdf: Buffer;
+    file: {
+      content: Buffer;
+      type?: OUTPUT_FORMAT;
+    };
     folderId?: string;
   }) {
     const api = await this.remarkableProvider(userId);
 
-    const entry = await api.putPdf(title, pdf, { parent: folderId });
-    await this.syncEntry(userId, entry);
+    if (!file.type || file.type === OUTPUT_FORMAT.PDF) {
+      const entry = await api.putEpub(title, file.content, {
+        parent: folderId,
+      });
+      await this.syncEntry(userId, entry);
+      return;
+    }
+
+    if (file.type === OUTPUT_FORMAT.EPUB) {
+      const entry = await api.putEpub(title, file.content, {
+        parent: folderId,
+      });
+      await this.syncEntry(userId, entry);
+    }
   }
 }
