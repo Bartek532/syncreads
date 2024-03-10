@@ -28,7 +28,7 @@ export const queueArticleSyncHandler = async ({
     throw new ApiError(status, error.message);
   }
 
-  const sync: unknown = await queueArticleSync({
+  const { sync } = await queueArticleSync({
     key: data.key,
     url,
   });
@@ -50,7 +50,7 @@ export const queueFeedSyncHandler = async ({
     throw new ApiError(status, error.message);
   }
 
-  const sync: unknown = await queueFeedSync({
+  const { sync } = await queueFeedSync({
     key: data.key,
     in: feeds,
   });

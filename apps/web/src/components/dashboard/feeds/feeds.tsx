@@ -1,6 +1,7 @@
 "use client";
 
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { memo, useState } from "react";
 import { toast } from "react-hot-toast";
 
@@ -16,6 +17,7 @@ import { FeedsList } from "./list/feeds-list";
 import type { Feed } from "@rssmarkable/database";
 
 export const Feeds = memo(() => {
+  const router = useRouter();
   const [syncing, setSyncing] = useState(false);
   const [checkedFeeds, setCheckedFeeds] = useState<Map<string, string>>(
     new Map(),
@@ -37,12 +39,13 @@ export const Feeds = memo(() => {
   const onSync = async () => {
     setSyncing(true);
     const loadingToast = toast.loading("Queuing feed sync...");
-    const { message, success } = await queueFeedSync({
+    const { message, success, sync } = await queueFeedSync({
       in: Array.from(checkedFeeds.keys()),
     });
 
     if (success) {
       toast.success(message, { id: loadingToast });
+      router.push(`/dashboard/syncs/${sync.id}`);
     } else {
       toast.error(message, { id: loadingToast });
     }

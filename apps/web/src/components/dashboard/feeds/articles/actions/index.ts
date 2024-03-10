@@ -5,32 +5,32 @@ import { revalidatePath } from "next/cache";
 
 import { api } from "@/trpc/server";
 
-import type { SyncArticlePayload, SyncFeedPayload } from "@rssmarkable/shared";
+import type { SyncArticleInput, SyncFeedInput } from "@rssmarkable/shared";
 
-export const queueArticleSync = async (data: SyncArticlePayload) => {
+export const queueArticleSync = async (data: SyncArticleInput) => {
   try {
-    const { message } = await api.sync.queueArticleSync.mutate(data);
+    const { message, sync } = await api.sync.queueArticleSync.mutate(data);
     revalidatePath("/dashboard/syncs");
-    return { message, success: true };
+    return { message, success: true, sync } as const;
   } catch (e: unknown) {
     if (e instanceof Error) {
-      return { message: e.message, success: false };
+      return { message: e.message, success: false } as const;
     }
 
-    return { message: GENERIC_ERROR_MESSAGE, success: false };
+    return { message: GENERIC_ERROR_MESSAGE, success: false } as const;
   }
 };
 
-export const queueFeedSync = async (data: SyncFeedPayload) => {
+export const queueFeedSync = async (data: SyncFeedInput) => {
   try {
-    const { message } = await api.sync.queueFeedSync.mutate(data);
+    const { message, sync } = await api.sync.queueFeedSync.mutate(data);
     revalidatePath("/dashboard/syncs");
-    return { message, success: true };
+    return { message, success: true, sync } as const;
   } catch (e: unknown) {
     if (e instanceof Error) {
-      return { message: e.message, success: false };
+      return { message: e.message, success: false } as const;
     }
 
-    return { message: GENERIC_ERROR_MESSAGE, success: false };
+    return { message: GENERIC_ERROR_MESSAGE, success: false } as const;
   }
 };

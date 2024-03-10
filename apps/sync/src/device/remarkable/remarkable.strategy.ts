@@ -82,7 +82,7 @@ export class RemarkableStrategy implements DeviceStrategy {
     const api = await this.remarkableProvider(userId);
 
     if (!file.type || file.type === OUTPUT_FORMAT.PDF) {
-      const entry = await api.putEpub(title, file.content, {
+      const entry = await api.putPdf(title, file.content, {
         parent: folderId,
       });
       await this.syncEntry(userId, entry);

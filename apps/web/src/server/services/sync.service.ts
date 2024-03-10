@@ -4,19 +4,21 @@ import type { GetSyncInput, GetSyncLogInput } from "@/utils";
 
 import { ApiError, isSyncApiErrorResponse } from "../utils/exceptions";
 
-import type { SyncArticlePayload, SyncFeedPayload } from "@rssmarkable/shared";
+import { syncApiResponseSchema } from "./validation/schema";
+
+import type { SyncArticleInput, SyncFeedInput } from "@rssmarkable/shared";
 
 export const queueArticleSync = async ({
   key,
-  url,
-}: { key: string } & SyncArticlePayload) => {
+  ...input
+}: { key: string } & SyncArticleInput) => {
   const response = await fetch(`${env.SYNC_API_URL}/api/sync/article`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: key,
     },
-    body: JSON.stringify({ url }),
+    body: JSON.stringify(input),
   });
 
   const data: unknown = await response.json();
@@ -29,20 +31,20 @@ export const queueArticleSync = async ({
     throw new ApiError(response.status, response.statusText);
   }
 
-  return data;
+  return syncApiResponseSchema.parse(data);
 };
 
 export const queueFeedSync = async ({
   key,
-  in: feeds,
-}: { key: string } & SyncFeedPayload) => {
+  ...input
+}: { key: string } & SyncFeedInput) => {
   const response = await fetch(`${env.SYNC_API_URL}/api/sync/feed`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: key,
     },
-    body: JSON.stringify({ in: feeds }),
+    body: JSON.stringify(input),
   });
 
   const data: unknown = await response.json();
@@ -55,7 +57,7 @@ export const queueFeedSync = async ({
     throw new ApiError(response.status, response.statusText);
   }
 
-  return data;
+  return syncApiResponseSchema.parse(data);
 };
 
 export const getSyncById = async ({ id }: GetSyncInput) => {
