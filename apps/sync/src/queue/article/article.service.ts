@@ -44,8 +44,6 @@ export class ArticleQueueService {
       `Generating ${options.format.toUpperCase()} file with article content...`,
     );
 
-    console.log(options);
-
     const file = await this.generatorStrategies[options.format].generate(url);
 
     await this.syncLogger(syncId).log(

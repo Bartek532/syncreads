@@ -6,6 +6,7 @@ import { KINDLE_CLIENT_FACTORY_TOKEN } from "./kindle.constants";
 import { KindleProviderFactory } from "./kindle.provider";
 
 import type { DeviceStrategy } from "../device.interface";
+import type { OUTPUT_FORMAT } from "@rssmarkable/shared";
 
 @Injectable()
 export class KindleStrategy implements DeviceStrategy {
@@ -24,6 +25,7 @@ export class KindleStrategy implements DeviceStrategy {
     title: string;
     file: {
       content: Buffer;
+      type: OUTPUT_FORMAT;
     };
   }) {
     const email = await this.kindleProvider(userId);
@@ -35,8 +37,8 @@ export class KindleStrategy implements DeviceStrategy {
       attachments: [
         {
           content: file.content.toString("base64"),
-          filename: `${title}.pdf`,
-          type: "application/pdf",
+          filename: `${title}.${file.type}`,
+          type: `application/${file.type}`,
           disposition: "attachment",
         },
       ],

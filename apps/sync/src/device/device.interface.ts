@@ -7,7 +7,7 @@ export interface DeviceStrategy {
     title: string;
     file: {
       content: Buffer;
-      type?: OUTPUT_FORMAT;
+      type: OUTPUT_FORMAT;
     };
     folderId?: string;
   }) => Promise<void>;

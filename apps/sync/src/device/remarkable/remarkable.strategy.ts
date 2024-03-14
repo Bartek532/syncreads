@@ -75,25 +75,24 @@ export class RemarkableStrategy implements DeviceStrategy {
     title: string;
     file: {
       content: Buffer;
-      type?: OUTPUT_FORMAT;
+      type: OUTPUT_FORMAT;
     };
     folderId?: string;
   }) {
     const api = await this.remarkableProvider(userId);
 
-    if (!file.type || file.type === OUTPUT_FORMAT.PDF) {
+    if (file.type === OUTPUT_FORMAT.PDF) {
       const entry = await api.putPdf(title, file.content, {
         parent: folderId,
       });
-      await this.syncEntry(userId, entry);
-      return;
+      return this.syncEntry(userId, entry);
     }
 
     if (file.type === OUTPUT_FORMAT.EPUB) {
       const entry = await api.putEpub(title, file.content, {
         parent: folderId,
       });
-      await this.syncEntry(userId, entry);
+      return this.syncEntry(userId, entry);
     }
   }
 }

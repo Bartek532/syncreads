@@ -4,5 +4,5 @@ export enum OUTPUT_FORMAT {
 }
 
 export const DEFAULT_OPTIONS = {
-  format: OUTPUT_FORMAT.PDF,
+  format: OUTPUT_FORMAT.EPUB,
 };

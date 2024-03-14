@@ -1,9 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { load } from "cheerio";
 import { render } from "teapub";
+import xmlserializer from "xmlserializer";
+
+import { css } from "./constants/css";
+import { getReadibility } from "./utils/readability";
 
 import type { GeneratorStrategy } from "../generator.interface";
-import type { Section } from "teapub";
 
 @Injectable()
 export class EpubStrategy implements GeneratorStrategy {
@@ -11,19 +13,27 @@ export class EpubStrategy implements GeneratorStrategy {
     const response = await fetch(url);
     const html = await response.text();
 
-    const $ = load(html);
+    const readability = getReadibility(url, html);
 
-    const data: Section[] = [];
-    $("h1, h2, h3, h4, h5, h6").each((_, element) => {
-      const heading = $(element).text();
-      const content = $(element).nextUntil("h1, h2, h3, h4, h5, h6").text();
-      data.push({ title: heading, content: content });
-    });
+    if (!readability) {
+      throw new Error("No content found!");
+    }
 
-    console.log(data);
+    // @ts-expect-error
+    const content = xmlserializer.serializeToString(readability.content);
+
+    console.log("ressss", content, readability);
     const buffer = await render({
-      title: "title",
-      sections: data,
+      title: readability.title,
+      author: readability.byline,
+      sections: [
+        {
+          title: readability.title,
+          content: `<a href="${url}">${url}</a><h1>${readability.title}</h1>${content}`,
+        },
+      ],
+      missingImage: "remove",
+      css,
     });
 
     return Buffer.from(buffer);
