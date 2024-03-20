@@ -1,3 +1,4 @@
+import { OUTPUT_FORMAT } from "@rssmarkable/shared";
 import { z } from "zod";
 
 export enum THEME {
@@ -17,6 +18,7 @@ export const profileSchema = z.object({
   folder: z.string({ required_error: "This field is required." }).max(30, {
     message: "Folder name must not be longer than 30 characters.",
   }),
+  format: z.nativeEnum(OUTPUT_FORMAT)
 });
 
 export type AppearanceData = z.infer<typeof appearanceSchema>;

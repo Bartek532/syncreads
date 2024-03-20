@@ -1,3 +1,9 @@
+import {
+  HTTP_STATUS_CODE,
+  type SyncArticleInput,
+  type SyncFeedInput,
+} from "@rssmarkable/shared";
+
 import { env } from "@/lib/env/server";
 import { supabase } from "@/lib/supabase/server";
 import type { GetSyncInput, GetSyncLogInput } from "@/utils";
@@ -5,8 +11,6 @@ import type { GetSyncInput, GetSyncLogInput } from "@/utils";
 import { ApiError, isSyncApiErrorResponse } from "../utils/exceptions";
 
 import { syncApiResponseSchema } from "./validation/schema";
-
-import type { SyncArticleInput, SyncFeedInput } from "@rssmarkable/shared";
 
 export const queueArticleSync = async ({
   key,
@@ -70,4 +74,17 @@ export const getSyncLog = async ({ syncId }: GetSyncLogInput) => {
     .select("*")
     .eq("syncId", syncId)
     .order("createdAt", { ascending: false });
+};
+
+export const getSyncOptions = async () => {
+  const { data, error } = await supabase().auth.getUser();
+
+  if (error) {
+    throw new ApiError(
+      error.status ?? HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR,
+      error.message,
+    );
+  }
+
+  return data.user.user_metadata;
 };

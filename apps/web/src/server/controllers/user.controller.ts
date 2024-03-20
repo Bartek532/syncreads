@@ -37,7 +37,7 @@ export const updateUserHandler = async (input: UpdateUserInput) => {
 
   return {
     status: "Success",
-    message: `Successfully updated user data!`,
+    message: `Successfully updated your settings!`,
     user: data,
   };
 };

@@ -10,6 +10,7 @@ import type { GetSyncInput, GetSyncLogInput } from "@/utils";
 import {
   getSyncById,
   getSyncLog,
+  getSyncOptions,
   queueArticleSync,
   queueFeedSync,
 } from "../services/sync.service";
@@ -23,6 +24,7 @@ export const queueArticleSyncHandler = async ({
   url,
 }: { id: string } & SyncArticlePayload) => {
   const { data, error, status } = await getUserApiKey({ id });
+  const options = await getSyncOptions();
 
   if (error) {
     throw new ApiError(status, error.message);
@@ -31,6 +33,7 @@ export const queueArticleSyncHandler = async ({
   const { sync } = await queueArticleSync({
     key: data.key,
     url,
+    options,
   });
 
   return {

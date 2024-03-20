@@ -1,4 +1,5 @@
 import { DeviceType } from "@rssmarkable/database";
+import { OUTPUT_FORMAT } from "@rssmarkable/shared";
 import { z } from "zod";
 
 import { FILE_TYPE } from "../../types/feed.types";
@@ -12,6 +13,7 @@ export const updateUserSchema = z.object({
     .string()
     .max(30, "Folder name must not be longer than 30 characters.")
     .optional(),
+  format: z.nativeEnum(OUTPUT_FORMAT),
 });
 
 export const createFeedSchema = z.object({
