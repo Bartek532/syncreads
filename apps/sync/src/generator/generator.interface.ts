@@ -1,3 +1,8 @@
 export interface GeneratorStrategy {
-  generate(url: string): Promise<Buffer>;
+  prepare(url: string): Promise<{
+    title: string;
+    generate: () => Promise<{
+      file: Buffer;
+    }>;
+  }>;
 }

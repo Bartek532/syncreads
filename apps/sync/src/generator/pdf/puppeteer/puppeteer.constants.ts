@@ -13,7 +13,7 @@ export const BROWSER_CONFIG = [
 
 export const PDF_OPTIONS = {
   format: "A4",
-  margin: { top: 20, bottom: 20, left: 20, right: 20 },
+  margin: { top: 25, bottom: 25, left: 25, right: 25 },
   printBackground: true,
   timeout: 0,
 } as const;

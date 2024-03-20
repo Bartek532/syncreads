@@ -38,13 +38,21 @@ export class ArticleQueueService {
   }) {
     const { updatedAt: articleSyncStartDate } = await this.syncLogger(
       syncId,
-    ).log(`[${url}](${url}) is being synced now...`);
+    ).log(`Preparing to sync article from ${url}...`);
+
+    const { title, generate } = await this.generatorStrategies[
+      options.format
+    ].prepare(url);
+
+    await this.syncLogger(syncId).log(
+      `[${title}](${url}) is being synced now...`,
+    );
 
     await this.syncLogger(syncId).log(
       `Generating ${options.format.toUpperCase()} file with article content...`,
     );
 
-    const file = await this.generatorStrategies[options.format].generate(url);
+    const { file } = await generate();
 
     await this.syncLogger(syncId).log(
       `${options.format.toUpperCase()} file generated.`,
@@ -55,7 +63,7 @@ export class ArticleQueueService {
     );
 
     await this.deviceStrategies[device].upload({
-      title: "ddd",
+      title,
       file: { content: file, type: options.format },
       userId,
     });

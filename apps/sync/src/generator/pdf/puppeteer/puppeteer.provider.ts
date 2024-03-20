@@ -15,8 +15,6 @@ const LISTS_TO_BLOCK_FROM = [
   "https://easylist.to/easylist/easylist.txt",
 ];
 
-// const COOKIE_BOT_URL = "https://cookiebot.com/";
-
 export type PuppeteerProviderFactory = Promise<Page>;
 
 export const puppeteerProvider = {

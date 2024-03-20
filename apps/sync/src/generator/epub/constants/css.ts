@@ -17,6 +17,10 @@ figcaption {
   font-size: 0.5rem;
   font-style: italic;
 }
+
+img {
+  border-radius: 10px;
+}
 `;
 
 export const codeEnvironmentCss = `
