@@ -29,7 +29,7 @@ const Sync = async ({ params }: { params: { id: string } }) => {
           </span>
         </div>
       </div>
-      <SyncLog log={log[0]} />
+      <SyncLog log={log[0]} sync={sync} />
     </div>
   );
 };

@@ -34,7 +34,7 @@
     "@rssmarkable/tsconfig": "workspace:*",
     "@types/node": "^18.0.0",
     "rimraf": "3.0.2",
-    "supabase": "1.115.4",
+    "supabase": "1.150.0",
     "tsup": "8.0.1",
     "tsx": "4.5.0"
   }

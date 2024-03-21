@@ -411,8 +411,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       supabase:
-        specifier: 1.115.4
-        version: 1.115.4
+        specifier: 1.150.0
+        version: 1.150.0
       tsup:
         specifier: 8.0.1
         version: 8.0.1(ts-node@10.9.1)(typescript@5.2.2)
@@ -9309,6 +9309,7 @@ packages:
       debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
+    dev: false
 
   /https-proxy-agent@7.0.4:
     resolution: {integrity: sha512-wlwpilI7YdjSkWaQ/7omYBMTliDcmCN8OLihO6I9B86g06lMyAoqgoDpV0XqoaPOKj+0DIdAvnsWfyAAhmimcg==}
@@ -9318,7 +9319,6 @@ packages:
       debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /human-signals@1.1.1:
     resolution: {integrity: sha512-SEQu7vl8KjNL2eoGBLF3+wAjpsNfA9XMlXAYj/3EdaNfAlxKthD1xjEQfGOUhllCGGJVNY34bRr6lPINhNjyZw==}
@@ -13429,14 +13429,14 @@ packages:
       pirates: 4.0.6
       ts-interface-checker: 0.1.13
 
-  /supabase@1.115.4:
-    resolution: {integrity: sha512-VXfz9riWHKEmbzv8ITJuqVCVl/92DLhKvUMiU9tVwCBylMWMqg0hOoh89VSZETektZOtxXk24jCQ9zrBqodzKQ==}
+  /supabase@1.150.0:
+    resolution: {integrity: sha512-hjyXukIww6Jc37Wq9urUldS61a7lZdw6J8Ky/TaScGFqTsO4DbPXUoOxHHaWYSM2ucV+4ejNZ5jYpAGmorApkA==}
     engines: {npm: '>=8'}
     hasBin: true
     requiresBuild: true
     dependencies:
       bin-links: 4.0.3
-      https-proxy-agent: 7.0.2
+      https-proxy-agent: 7.0.4
       node-fetch: 3.3.2
       tar: 6.2.0
     transitivePeerDependencies:

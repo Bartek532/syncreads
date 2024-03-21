@@ -1,28 +1,41 @@
 "use client";
 
+import { SyncStatus, type Log } from "@rssmarkable/database";
 import dayjs from "dayjs";
 import { marked } from "marked";
 import { useParams, useRouter } from "next/navigation";
 import { memo, useEffect, useRef, useState } from "react";
 
+import { Skeleton } from "@/components/ui/skeleton";
 import { SYNC_LOG_LEVEL_COLORS } from "@/config/sync";
+import { useRealtimeLog, useRealtimeSync } from "@/hooks/useRealtime";
 import { cn } from "@/utils";
 
-import { supabase } from "../../../../lib/supabase/client";
-
-import type { Log } from "@rssmarkable/database";
+import type { Sync } from "@rssmarkable/database";
 import type { LogMessage } from "@rssmarkable/shared";
 
 type SyncLogProps = {
   readonly log: Log & { json: LogMessage[] };
+  readonly sync: Sync;
 };
 
-export const SyncLog = memo<SyncLogProps>(({ log }) => {
-  const [lines, setLines] = useState(log.json);
+export const SyncLog = memo<SyncLogProps>(({ log, sync }) => {
   const [activeLine, setActiveLine] = useState("");
   const linesTableRef = useRef<HTMLTableElement>(null);
   const router = useRouter();
   const params = useParams();
+  const realtimeSync = useRealtimeSync({
+    id: sync.id,
+    initial: sync,
+  });
+  const realtimeLog = useRealtimeLog({
+    syncId: log.syncId,
+    initial: log,
+    onPayload: () =>
+      linesTableRef.current?.scrollIntoView({
+        block: "end",
+      }),
+  });
 
   useEffect(() => {
     const arr = window.location.hash.match(/#L\d+/g);
@@ -32,29 +45,6 @@ export const SyncLog = memo<SyncLogProps>(({ log }) => {
     }
   }, [params]);
 
-  useEffect(() => {
-    const channel = supabase()
-      .channel("log:update")
-      .on(
-        "postgres_changes",
-        {
-          event: "UPDATE",
-          schema: "public",
-          table: "Log",
-          filter: `syncId=eq.${log.syncId}`,
-        },
-        (payload) => {
-          setLines(payload.new.json as LogMessage[]);
-          linesTableRef.current?.scrollIntoView({
-            block: "end",
-          });
-        },
-      )
-      .subscribe();
-
-    return () => void channel.unsubscribe();
-  }, [log.syncId]);
-
   return (
     <div
       className="-mx-6 overflow-hidden overflow-x-auto border bg-background py-4 shadow-sm sm:mx-0 sm:rounded-lg"
@@ -62,7 +52,7 @@ export const SyncLog = memo<SyncLogProps>(({ log }) => {
     >
       <table className="min-w-full">
         <tbody>
-          {lines.map(({ date, message, level }, index) => (
+          {realtimeLog?.json.map(({ date, message, level }, index) => (
             <tr
               key={date.toString()}
               className={cn(
@@ -92,6 +82,23 @@ export const SyncLog = memo<SyncLogProps>(({ log }) => {
               </td>
             </tr>
           ))}
+
+          {realtimeSync?.status !== SyncStatus.SUCCESS &&
+            realtimeSync?.status !== SyncStatus.FAILED && (
+              <tr>
+                <td className="px-4 pt-1.5 sm:px-7 sm:pt-2">
+                  <Skeleton className="h-5 w-full bg-muted-foreground/30" />
+                </td>
+                <td>
+                  <div className="mt-2 flex w-full justify-start gap-2">
+                    <span className="sr-only">Loading...</span>
+                    <div className="h-2.5 w-2.5 animate-bounce rounded-full bg-muted-foreground/30 [animation-delay:-0.3s]"></div>
+                    <div className="h-2.5 w-2.5 animate-bounce rounded-full bg-muted-foreground/30 [animation-delay:-0.15s]"></div>
+                    <div className="h-2.5 w-2.5 animate-bounce rounded-full bg-muted-foreground/30"></div>
+                  </div>
+                </td>
+              </tr>
+            )}
         </tbody>
       </table>
     </div>
