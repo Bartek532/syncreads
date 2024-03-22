@@ -10,7 +10,6 @@ import { Walker } from "./utils/walker";
 import type { Readability } from "./utils/readability";
 import type { GeneratorStrategy } from "../generator.interface";
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 @Injectable()
 export class EpubStrategy implements GeneratorStrategy {
   async prepare(url: string) {
@@ -40,8 +39,6 @@ export class EpubStrategy implements GeneratorStrategy {
         return [image, { data: buffer, mime: type }] as const;
       }),
     );
-
-    await sleep(5000);
 
     const buffer = await render({
       title: readability.title,

@@ -1,6 +1,6 @@
 "use client";
 
-import { SyncStatus, type Log } from "@rssmarkable/database";
+import { type Log } from "@rssmarkable/database";
 import dayjs from "dayjs";
 import { marked } from "marked";
 import { useParams, useRouter } from "next/navigation";
@@ -90,22 +90,21 @@ export const SyncLog = memo<SyncLogProps>(
               </tr>
             ))}
 
-            {sync.status !== SyncStatus.SUCCESS &&
-              sync.status !== SyncStatus.FAILED && (
-                <tr>
-                  <td className="px-4 pt-1.5 sm:px-7 sm:pt-2">
-                    <Skeleton className="h-5 w-full bg-muted-foreground/30" />
-                  </td>
-                  <td>
-                    <div className="mt-2 flex w-full justify-start gap-2">
-                      <span className="sr-only">Loading...</span>
-                      <div className="h-2.5 w-2.5 animate-bounce rounded-full bg-muted-foreground/30 [animation-delay:-0.3s]"></div>
-                      <div className="h-2.5 w-2.5 animate-bounce rounded-full bg-muted-foreground/30 [animation-delay:-0.15s]"></div>
-                      <div className="h-2.5 w-2.5 animate-bounce rounded-full bg-muted-foreground/30"></div>
-                    </div>
-                  </td>
-                </tr>
-              )}
+            {!sync.finishedAt && (
+              <tr>
+                <td className="px-4 pt-1.5 sm:px-7 sm:pt-2">
+                  <Skeleton className="h-5 w-full bg-muted-foreground/30" />
+                </td>
+                <td>
+                  <div className="mt-2 flex w-full justify-start gap-2">
+                    <span className="sr-only">Loading...</span>
+                    <div className="h-2.5 w-2.5 animate-bounce rounded-full bg-muted-foreground/30 [animation-delay:-0.3s]"></div>
+                    <div className="h-2.5 w-2.5 animate-bounce rounded-full bg-muted-foreground/30 [animation-delay:-0.15s]"></div>
+                    <div className="h-2.5 w-2.5 animate-bounce rounded-full bg-muted-foreground/30"></div>
+                  </div>
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
