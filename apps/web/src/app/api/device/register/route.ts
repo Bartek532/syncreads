@@ -1,8 +1,9 @@
+import { DeviceType } from "@rssmarkable/database";
 import { type NextRequest } from "next/server";
 import { register } from "rmapi-js";
 import { ZodError } from "zod";
 
-import { registerDeviceSchema } from "@/utils";
+import { registerDeviceRemarkableSchema } from "@/utils";
 
 export const runtime = "edge";
 
@@ -11,8 +12,9 @@ export const GET = async (request: NextRequest) => {
   const param = searchParams.get("code");
 
   try {
-    const data = registerDeviceSchema.parse({
+    const data = registerDeviceRemarkableSchema.parse({
       code: param,
+      type: DeviceType.REMARKABLE,
     });
 
     const token = await register(data.code);

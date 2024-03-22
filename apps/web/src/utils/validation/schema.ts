@@ -48,21 +48,25 @@ export const getUrlDetailsSchema = z.object({
   url: z.string().url(),
 });
 
+export const registerDeviceRemarkableSchema = z.object({
+  type: z.literal(DeviceType.REMARKABLE),
+  code: z
+    .string()
+    .min(8, "Enter valid one-time code.")
+    .max(8, "Enter valid one-time code."),
+});
+
+export const registerDeviceKindleSchema = z.object({
+  type: z.literal(DeviceType.KINDLE),
+  email: z
+    .string()
+    .email("Enter valid email.")
+    .regex(/@kindle.com$/, { message: "Enter valid Kindle email." }),
+});
+
 export const registerDeviceSchema = z.discriminatedUnion("type", [
-  z.object({
-    type: z.literal(DeviceType.REMARKABLE),
-    code: z
-      .string()
-      .min(8, "Enter valid one-time code.")
-      .max(8, "Enter valid one-time code."),
-  }),
-  z.object({
-    type: z.literal(DeviceType.KINDLE),
-    email: z
-      .string()
-      .email("Enter valid email.")
-      .regex(/@kindle.com$/, { message: "Enter valid Kindle email." }),
-  }),
+  registerDeviceRemarkableSchema,
+  registerDeviceKindleSchema,
 ]);
 
 export const saveDeviceSchema = z.object({

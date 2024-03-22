@@ -26,7 +26,7 @@ export class EmailService {
   }) {
     const mail = {
       to,
-      from: this.configService.get("EMAIL"),
+      from: this.configService.get<string>("EMAIL"),
       subject,
       text,
       ...(attachments ? { attachments } : {}),
