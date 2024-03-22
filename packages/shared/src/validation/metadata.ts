@@ -5,7 +5,7 @@ import { OUTPUT_FORMAT } from "../constants";
 const userMetadataSchema = z.object({
   name: z.string(),
   folder: z.string(),
-  format: z.nativeEnum(OUTPUT_FORMAT)
+  format: z.nativeEnum(OUTPUT_FORMAT),
 });
 
 export type UserMetadata = z.infer<typeof userMetadataSchema>;
