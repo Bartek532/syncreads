@@ -122,7 +122,7 @@ export class FeedQueueService {
       title,
       file: { content: file, type: options.format },
       userId,
-      ...(folderId ? { folder: device.folder } : {}),
+      ...(folderId ? { folderId } : {}),
     });
 
     await this.syncLogger(syncId).log(
