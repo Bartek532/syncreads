@@ -1,3 +1,4 @@
+import { DeviceType } from "@rssmarkable/database";
 import { NODE_ENV } from "@rssmarkable/shared";
 
 import { env } from "../lib/env/client";
@@ -133,4 +134,9 @@ export const TOASTER_CONFIG: DefaultToastOptions = {
     gap: "10px",
     maxWidth: "400px",
   },
+};
+
+export const DEVICE_LABEL: Record<DeviceType, string> = {
+  [DeviceType.KINDLE]: "Kindle",
+  [DeviceType.REMARKABLE]: "reMarkable 2",
 };

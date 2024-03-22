@@ -1,10 +1,13 @@
-import { DEVICE_STRATEGIES_TOKEN, DEVICE_TYPE } from "./device.constants";
+import { DeviceType } from "@rssmarkable/database";
+
+import { DEVICE_STRATEGIES_TOKEN } from "./device.constants";
+import { KindleStrategy } from "./kindle/kindle.strategy";
 import { RemarkableStrategy } from "./remarkable/remarkable.strategy";
 
 import type { DeviceStrategy } from "./device.interface";
 
 export type DeviceStrategiesProviderFactory = Record<
-  DEVICE_TYPE,
+  DeviceType,
   DeviceStrategy
 >;
 
@@ -12,10 +15,12 @@ export const deviceStrategiesProvider = {
   provide: DEVICE_STRATEGIES_TOKEN,
   useFactory: (
     remarkableStrategy: RemarkableStrategy,
-  ): Record<DEVICE_TYPE, DeviceStrategy> => {
+    kindleStrategy: KindleStrategy,
+  ): Record<DeviceType, DeviceStrategy> => {
     return {
-      [DEVICE_TYPE.REMARKABLE]: remarkableStrategy,
+      [DeviceType.REMARKABLE]: remarkableStrategy,
+      [DeviceType.KINDLE]: kindleStrategy,
     };
   },
-  inject: [RemarkableStrategy],
+  inject: [RemarkableStrategy, KindleStrategy],
 };

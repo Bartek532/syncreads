@@ -1,4 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
+import { OUTPUT_FORMAT } from "@rssmarkable/shared";
 import uuid4 from "uuid4";
 
 import {
@@ -21,6 +22,16 @@ export class RemarkableStrategy implements DeviceStrategy {
   private async getFiles(userId: string) {
     const api = await this.remarkableProvider(userId);
     return api.getEntriesMetadata();
+  }
+
+  private async syncEntry(userId: string, entry: Entry) {
+    const api = await this.remarkableProvider(userId);
+    const [root, gen] = await api.getRootHash();
+    const rootEntries = await api.getEntries(root);
+    rootEntries.push(entry);
+    const { hash } = await api.putEntries("", rootEntries);
+    const nextGen = await api.putRootHash(hash, gen);
+    await api.syncComplete(nextGen);
   }
 
   async getFolder(userId: string, name: string) {
@@ -54,29 +65,34 @@ export class RemarkableStrategy implements DeviceStrategy {
     return { ...metadata, hash: folderEntry.hash, id: documentId };
   }
 
-  async syncEntry(userId: string, entry: Entry) {
-    const api = await this.remarkableProvider(userId);
-    const [root, gen] = await api.getRootHash();
-    const rootEntries = await api.getEntries(root);
-    rootEntries.push(entry);
-    const { hash } = await api.putEntries("", rootEntries);
-    const nextGen = await api.putRootHash(hash, gen);
-    await api.syncComplete(nextGen);
-  }
-
   async upload({
     userId,
     folderId,
     title,
-    pdf,
+    file,
   }: {
     userId: string;
     title: string;
-    pdf: Buffer;
+    file: {
+      content: Buffer;
+      type: OUTPUT_FORMAT;
+    };
     folderId?: string;
   }) {
     const api = await this.remarkableProvider(userId);
 
-    return api.putPdf(title, pdf, { parent: folderId });
+    if (file.type === OUTPUT_FORMAT.PDF) {
+      const entry = await api.putPdf(title, file.content, {
+        parent: folderId,
+      });
+      return this.syncEntry(userId, entry);
+    }
+
+    if (file.type === OUTPUT_FORMAT.EPUB) {
+      const entry = await api.putEpub(title, file.content, {
+        parent: folderId,
+      });
+      return this.syncEntry(userId, entry);
+    }
   }
 }

@@ -1,22 +1,28 @@
+import {
+  HTTP_STATUS_CODE,
+  type SyncArticleInput,
+  type SyncFeedInput,
+} from "@rssmarkable/shared";
+
 import { env } from "@/lib/env/server";
 import { supabase } from "@/lib/supabase/server";
 import type { GetSyncInput, GetSyncLogInput } from "@/utils";
 
 import { ApiError, isSyncApiErrorResponse } from "../utils/exceptions";
 
-import type { SyncArticlePayload, SyncFeedPayload } from "@rssmarkable/shared";
+import { syncApiResponseSchema } from "./validation/schema";
 
 export const queueArticleSync = async ({
   key,
-  url,
-}: { key: string } & SyncArticlePayload) => {
+  ...input
+}: { key: string } & SyncArticleInput) => {
   const response = await fetch(`${env.SYNC_API_URL}/api/sync/article`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: key,
     },
-    body: JSON.stringify({ url }),
+    body: JSON.stringify(input),
   });
 
   const data: unknown = await response.json();
@@ -29,20 +35,20 @@ export const queueArticleSync = async ({
     throw new ApiError(response.status, response.statusText);
   }
 
-  return data;
+  return syncApiResponseSchema.parse(data);
 };
 
 export const queueFeedSync = async ({
   key,
-  in: feeds,
-}: { key: string } & SyncFeedPayload) => {
+  ...input
+}: { key: string } & SyncFeedInput) => {
   const response = await fetch(`${env.SYNC_API_URL}/api/sync/feed`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: key,
     },
-    body: JSON.stringify({ in: feeds }),
+    body: JSON.stringify(input),
   });
 
   const data: unknown = await response.json();
@@ -55,7 +61,7 @@ export const queueFeedSync = async ({
     throw new ApiError(response.status, response.statusText);
   }
 
-  return data;
+  return syncApiResponseSchema.parse(data);
 };
 
 export const getSyncById = async ({ id }: GetSyncInput) => {
@@ -68,4 +74,17 @@ export const getSyncLog = async ({ syncId }: GetSyncLogInput) => {
     .select("*")
     .eq("syncId", syncId)
     .order("createdAt", { ascending: false });
+};
+
+export const getSyncOptions = async () => {
+  const { data, error } = await supabase().auth.getUser();
+
+  if (error) {
+    throw new ApiError(
+      error.status ?? HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR,
+      error.message,
+    );
+  }
+
+  return data.user.user_metadata;
 };

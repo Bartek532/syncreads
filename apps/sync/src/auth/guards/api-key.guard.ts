@@ -12,7 +12,9 @@ export class ApiKeyGuard implements CanActivate {
   constructor(private readonly userService: UserService) {}
 
   async canActivate(context: ExecutionContext) {
-    const request = context.switchToHttp().getRequest<Request>();
+    const request = context
+      .switchToHttp()
+      .getRequest<Request & { userId?: string }>();
 
     const token = request.get(API_TOKEN_HEADER_NAME);
 
@@ -23,8 +25,6 @@ export class ApiKeyGuard implements CanActivate {
     }
 
     const key = await this.userService.getUserByApiKey(token);
-
-    // @ts-expect-error - userId is added to request
     request["userId"] = key.userId;
 
     return true;

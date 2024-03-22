@@ -17,6 +17,7 @@ import { supabase } from "@/lib/supabase/server";
 import { api } from "@/trpc/server";
 import { cn, getLastDays, getName } from "@/utils";
 
+import { DEVICE_LABEL } from "../../../config";
 import { SyncArticleDialog } from "../feeds/articles/dialog/sync-article-dialog";
 import { ArticlesList } from "../feeds/articles/list/articles-list";
 import { AddFeedDialog } from "../feeds/dialog/add-feed-dialog";
@@ -49,7 +50,7 @@ export const Home = async () => {
       })
       .humanize(),
     syncsCount,
-    device ? "reMarkable 2" : "Not registered",
+    device ? DEVICE_LABEL[device.type] : "Not registered",
   ];
 
   return (

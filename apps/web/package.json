@@ -60,7 +60,8 @@
     "tailwind-merge": "^1.8.1",
     "tailwindcss-animate": "1.0.7",
     "webpack": "5.78.0",
-    "zod": "^3.22.3"
+    "zod": "^3.22.3",
+    "zustand": "4.5.2"
   },
   "devDependencies": {
     "@rssmarkable/eslint-preset": "workspace:*",

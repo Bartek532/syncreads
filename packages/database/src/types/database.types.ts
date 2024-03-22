@@ -40,6 +40,7 @@ export type UpdateUserFeed = Tables<"UserFeed", "Update">;
 
 export type SyncStatus = Enums<"SyncStatus">;
 export type SyncTrigger = Enums<"SyncTrigger">;
+export type DeviceType = Enums<"DeviceType">;
 
 export const SyncStatus: { [K in SyncStatus]: K } = {
   SUCCESS: "SUCCESS",
@@ -54,7 +55,15 @@ export const SyncTrigger: { [K in SyncTrigger]: K } = {
   SCHEDULE: "SCHEDULE",
 } as const;
 
+export const DeviceType: { [K in DeviceType]: K } = {
+  REMARKABLE: "REMARKABLE",
+  KINDLE: "KINDLE",
+} as const;
+
 // Auth
 export type User = UserType & { user_metadata: Partial<UserMetadata> };
 
-export type { Session } from "@supabase/supabase-js";
+export type {
+  Session,
+  RealtimePostgresUpdatePayload,
+} from "@supabase/supabase-js";

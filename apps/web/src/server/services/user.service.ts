@@ -6,6 +6,8 @@ import type { LimitInput, RangeInput, UpdateUserInput } from "@/utils";
 import { supabase } from "../../lib/supabase/server";
 import { ApiError } from "../utils/exceptions";
 
+import type { DeviceType } from "@rssmarkable/database";
+
 export const updateUser = async (input: UpdateUserInput) => {
   const { data, error } = await supabase().auth.getUser();
 
@@ -110,13 +112,15 @@ export const getUserArticlesCount = ({ id }: { id: string }) => {
 export const registerUserDevice = ({
   id,
   token,
+  type,
 }: {
   id: string;
   token: string;
+  type: DeviceType;
 }) => {
   return supabase()
     .from("Device")
-    .insert({ userId: id, token })
+    .insert({ userId: id, token, type })
     .single()
     .throwOnError();
 };

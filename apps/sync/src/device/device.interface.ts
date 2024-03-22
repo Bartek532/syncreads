@@ -1,23 +1,21 @@
-import type { CollectionMetadataEntry, Entry, MetadataEntry } from "rmapi-js";
+import type { OUTPUT_FORMAT } from "@rssmarkable/shared";
+import type { CollectionMetadataEntry, MetadataEntry } from "rmapi-js";
 
 export interface DeviceStrategy {
-  syncEntry: (userId: string, entry: Entry) => Promise<void>;
-  upload: ({
-    userId,
-    title,
-    folderId,
-    pdf,
-  }: {
+  upload: (data: {
     userId: string;
     title: string;
+    file: {
+      content: Buffer;
+      type: OUTPUT_FORMAT;
+    };
     folderId?: string;
-    pdf: Buffer;
-  }) => Promise<Entry>;
-  getFolder: (
+  }) => Promise<void>;
+  getFolder?: (
     userId: string,
     name: string,
   ) => Promise<MetadataEntry | undefined>;
-  createFolder: (
+  createFolder?: (
     userId: string,
     name: string,
   ) => Promise<CollectionMetadataEntry>;

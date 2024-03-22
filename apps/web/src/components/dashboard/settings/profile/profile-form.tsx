@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SYNC_DEFAULT_FOLDER } from "@rssmarkable/shared";
+import { DEFAULT_USER_METADATA } from "@rssmarkable/shared";
 import { Loader2 } from "lucide-react";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
@@ -22,7 +22,10 @@ import { profileSchema } from "@/types/settings.types";
 import type { ProfileData } from "@/types/settings.types";
 import { getName, onPromise } from "@/utils";
 
+import { RadioGroup, RadioGroupItem } from "../../../ui/radio-group";
+
 import { updateUser } from "./actions";
+import { formats } from "./constants";
 
 import type { User } from "@rssmarkable/database";
 
@@ -36,16 +39,12 @@ export const ProfileForm = memo<ProfileForm>(({ user }) => {
     resolver: zodResolver(profileSchema),
     defaultValues: {
       ...(name ? { name } : {}),
-      folder: user.user_metadata.folder ?? SYNC_DEFAULT_FOLDER,
+      folder: user.user_metadata.folder ?? DEFAULT_USER_METADATA.folder,
+      format: user.user_metadata.format ?? DEFAULT_USER_METADATA.format,
     },
   });
 
   const onSubmit = async (data: ProfileData) => {
-    // await toast.promise(mutateAsync(data), {
-    //   loading: "Updating your details...",
-    //   success: ({ message }) => message,
-    //   error: (err?: Error) => err?.message ?? GENERIC_ERROR_MESSAGE,
-    // });
     const loadingToast = toast.loading("Updating your details...");
 
     const { message, success } = await updateUser(data);
@@ -90,7 +89,8 @@ export const ProfileForm = memo<ProfileForm>(({ user }) => {
               <div className="space-y-1">
                 <FormLabel>Folder</FormLabel>
                 <FormDescription>
-                  Your place on the device where content will be synced.
+                  Your place on the device where content will be synced
+                  (available only on reMarkable)
                 </FormDescription>
               </div>
               <FormControl>
@@ -98,6 +98,43 @@ export const ProfileForm = memo<ProfileForm>(({ user }) => {
               </FormControl>
 
               <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="format"
+          render={({ field }) => (
+            <FormItem>
+              <div className="space-y-1">
+                <FormLabel>Format</FormLabel>
+                <FormDescription>
+                  Select output format for your synced content.
+                </FormDescription>
+              </div>
+              <FormMessage />
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                className="relative flex gap-4 overflow-x-auto pt-2"
+              >
+                {formats.map((f) => (
+                  <FormItem key={f.value}>
+                    <FormLabel className="[&:has([data-state=checked])>div]:border-primary">
+                      <FormControl>
+                        <RadioGroupItem value={f.value} className="sr-only" />
+                      </FormControl>
+                      <div className="w-36 cursor-pointer items-center rounded-lg border-2 border-muted p-1 hover:border-accent sm:w-48 md:w-64">
+                        <f.icon />
+                      </div>
+                      <span className="block  p-2 text-center font-normal">
+                        {f.label}
+                      </span>
+                    </FormLabel>
+                  </FormItem>
+                ))}
+              </RadioGroup>
             </FormItem>
           )}
         />

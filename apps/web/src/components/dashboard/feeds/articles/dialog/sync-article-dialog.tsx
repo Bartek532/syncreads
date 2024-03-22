@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -36,6 +37,7 @@ type SyncArticleDialogProps = {
 
 export const SyncArticleDialog = memo<SyncArticleDialogProps>(
   ({ children }) => {
+    const router = useRouter();
     const form = useForm<CreateFeedInput>({
       resolver: zodResolver(createFeedSchema),
     });
@@ -43,10 +45,11 @@ export const SyncArticleDialog = memo<SyncArticleDialogProps>(
     const onSubmit = async (data: CreateFeedInput) => {
       const loadingToast = toast.loading("Queuing article sync...");
 
-      const { message, success } = await queueArticleSync(data);
+      const { message, success, sync } = await queueArticleSync(data);
 
       if (success) {
         toast.success(message, { id: loadingToast });
+        router.push(`/dashboard/syncs/${sync.id}`);
       } else {
         toast.error(message, { id: loadingToast });
       }

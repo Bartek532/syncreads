@@ -1,13 +1,14 @@
+import { DeviceType, type Device } from "@rssmarkable/database";
 import dayjs from "dayjs";
 import { CalendarDays } from "lucide-react";
 import { memo } from "react";
 
+import KindleIcon from "public/svg/kindle.svg";
 import RemarkableIcon from "public/svg/remarkable.svg";
 
+import { DEVICE_LABEL } from "../../../../config";
 import { Button } from "../../../ui/button";
 import { DeleteDeviceDialog } from "../dialog/delete-device-dialog";
-
-import type { Device } from "@rssmarkable/database";
 
 interface DeviceTileProps {
   readonly device: Device;
@@ -17,14 +18,21 @@ export const DeviceTile = memo<DeviceTileProps>(({ device }) => {
   return (
     <div className="relative flex flex-col gap-4 rounded-lg border bg-background px-8 py-6 shadow-sm lg:p-8 xl:p-10 xl:px-12">
       <h2 className="text-2xl font-medium sm:hidden sm:text-4xl">
-        reMarkable 2
+        {DEVICE_LABEL[device.type]}
       </h2>
       <div className="flex gap-6">
-        <RemarkableIcon className="w-1/3 dark:text-white sm:w-1/4 lg:w-1/5" />
+        <div className="w-1/3 dark:text-white sm:w-1/4 lg:w-1/5">
+          {device.type === DeviceType.KINDLE ? (
+            <KindleIcon />
+          ) : (
+            <RemarkableIcon />
+          )}
+        </div>
+
         <div className="flex flex-col items-start justify-between pl-5 sm:p-6 md:p-10">
           <div className="flex flex-col space-y-2">
             <h2 className="hidden text-2xl font-medium sm:block sm:text-4xl md:font-bold">
-              reMarkable 2
+              {DEVICE_LABEL[device.type]}
             </h2>
             <div className="flex items-center space-x-2">
               <div className="h-3 w-3 rounded-full bg-success"></div>

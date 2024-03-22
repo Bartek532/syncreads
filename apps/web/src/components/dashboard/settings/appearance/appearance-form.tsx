@@ -21,9 +21,7 @@ import type { AppearanceData } from "@/types/settings.types";
 import { THEME, appearanceSchema } from "@/types/settings.types";
 import { onPromise } from "@/utils";
 
-import DarkThemeIcon from "public/svg/theme/dark.svg";
-import LightThemeIcon from "public/svg/theme/light.svg";
-import SystemThemeIcon from "public/svg/theme/system.svg";
+import { themes } from "./constants";
 
 export const AppearanceForm = memo(() => {
   const { theme, setTheme } = useTheme();
@@ -60,48 +58,21 @@ export const AppearanceForm = memo(() => {
                 defaultValue={field.value}
                 className="relative flex gap-4 overflow-x-auto pt-2"
               >
-                <FormItem>
-                  <FormLabel className="[&:has([data-state=checked])>div]:border-primary">
-                    <FormControl>
-                      <RadioGroupItem
-                        value={THEME.SYSTEM}
-                        className="sr-only"
-                      />
-                    </FormControl>
-                    <div className="w-28 cursor-pointer items-center rounded-md border-2 border-muted p-1 hover:border-accent sm:w-36 md:w-48">
-                      <SystemThemeIcon />
-                    </div>
-                    <span className="block  p-2 text-center font-normal">
-                      Auto
-                    </span>
-                  </FormLabel>
-                </FormItem>
-                <FormItem>
-                  <FormLabel className="[&:has([data-state=checked])>div]:border-primary">
-                    <FormControl>
-                      <RadioGroupItem value={THEME.LIGHT} className="sr-only" />
-                    </FormControl>
-                    <div className="w-28 cursor-pointer items-center rounded-md border-2 border-muted p-1 hover:border-accent sm:w-36 md:w-48">
-                      <LightThemeIcon />
-                    </div>
-                    <span className="block  p-2 text-center font-normal">
-                      Light
-                    </span>
-                  </FormLabel>
-                </FormItem>
-                <FormItem>
-                  <FormLabel className="[&:has([data-state=checked])>div]:border-primary">
-                    <FormControl>
-                      <RadioGroupItem value={THEME.DARK} className="sr-only" />
-                    </FormControl>
-                    <div className="w-28 cursor-pointer items-center rounded-md border-2 border-muted p-1 hover:border-accent sm:w-36 md:w-48">
-                      <DarkThemeIcon />
-                    </div>
-                    <span className="block  p-2 text-center font-normal">
-                      Dark
-                    </span>
-                  </FormLabel>
-                </FormItem>
+                {themes.map((t) => (
+                  <FormItem key={t.value}>
+                    <FormLabel className="[&:has([data-state=checked])>div]:border-primary">
+                      <FormControl>
+                        <RadioGroupItem value={t.value} className="sr-only" />
+                      </FormControl>
+                      <div className="w-28 cursor-pointer items-center rounded-md border-2 border-muted p-1 hover:border-accent sm:w-36 md:w-48">
+                        <t.icon />
+                      </div>
+                      <span className="block  p-2 text-center font-normal">
+                        {t.label}
+                      </span>
+                    </FormLabel>
+                  </FormItem>
+                ))}
               </RadioGroup>
             </FormItem>
           )}

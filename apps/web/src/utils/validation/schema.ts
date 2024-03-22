@@ -1,3 +1,5 @@
+import { DeviceType } from "@rssmarkable/database";
+import { OUTPUT_FORMAT } from "@rssmarkable/shared";
 import { z } from "zod";
 
 import { FILE_TYPE } from "../../types/feed.types";
@@ -11,6 +13,7 @@ export const updateUserSchema = z.object({
     .string()
     .max(30, "Folder name must not be longer than 30 characters.")
     .optional(),
+  format: z.nativeEnum(OUTPUT_FORMAT),
 });
 
 export const createFeedSchema = z.object({
@@ -45,14 +48,29 @@ export const getUrlDetailsSchema = z.object({
   url: z.string().url(),
 });
 
-export const registerDeviceSchema = z.object({
+export const registerDeviceRemarkableSchema = z.object({
+  type: z.literal(DeviceType.REMARKABLE),
   code: z
     .string()
     .min(8, "Enter valid one-time code.")
     .max(8, "Enter valid one-time code."),
 });
 
+export const registerDeviceKindleSchema = z.object({
+  type: z.literal(DeviceType.KINDLE),
+  email: z
+    .string()
+    .email("Enter valid email.")
+    .regex(/@kindle.com$/, { message: "Enter valid Kindle email." }),
+});
+
+export const registerDeviceSchema = z.discriminatedUnion("type", [
+  registerDeviceRemarkableSchema,
+  registerDeviceKindleSchema,
+]);
+
 export const saveDeviceSchema = z.object({
+  type: z.nativeEnum(DeviceType),
   token: z.string(),
 });
 

@@ -37,7 +37,7 @@ export const updateUserHandler = async (input: UpdateUserInput) => {
 
   return {
     status: "Success",
-    message: `Successfully updated user data!`,
+    message: `Successfully updated your settings!`,
     user: data,
   };
 };
@@ -45,8 +45,9 @@ export const updateUserHandler = async (input: UpdateUserInput) => {
 export const registerDeviceHandler = async ({
   id,
   token,
+  type,
 }: SaveAndConnectDeviceInput) => {
-  const device = await registerUserDevice({ token, id });
+  const device = await registerUserDevice({ token, id, type });
 
   return {
     status: "Success",
