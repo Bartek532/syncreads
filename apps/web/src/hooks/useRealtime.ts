@@ -1,19 +1,20 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { create } from "zustand";
 
 import { supabase } from "@/lib/supabase/client";
 
-import type { Log, Sync } from "@rssmarkable/database";
+import type {
+  Log,
+  RealtimePostgresUpdatePayload,
+  Sync,
+} from "@rssmarkable/database";
 import type { LogMessage } from "@rssmarkable/shared";
 
 export const useRealtimeLog = ({
   syncId,
-  initial,
   onPayload,
 }: {
   syncId: string;
-  initial?: Log & {
-    json: LogMessage[];
-  };
   onPayload?: (
     payload: Log & {
       json: LogMessage[];
@@ -25,11 +26,11 @@ export const useRealtimeLog = ({
         json: LogMessage[];
       })
     | null
-  >(initial ?? null);
+  >(null);
 
   useEffect(() => {
     const channel = supabase()
-      .channel("log:update")
+      .channel(`log:update`)
       .on<Log & { json: LogMessage[] }>(
         "postgres_changes",
         {
@@ -51,35 +52,46 @@ export const useRealtimeLog = ({
   return log;
 };
 
-export const useRealtimeSync = ({
-  id,
-  initial,
-}: {
-  id: string;
-  initial?: Sync;
-}) => {
-  const [sync, setSync] = useState<Sync | null>(initial ?? null);
+const useRealtimeSyncsStore = create<{
+  syncs: Sync[];
+  setSyncs: (syncs: Sync[]) => void;
+}>((set) => ({
+  syncs: [],
+  setSyncs: (syncs) => set({ syncs }),
+}));
+
+export const useRealtimeSyncs = (ids?: string[]) => {
+  const { syncs, setSyncs } = useRealtimeSyncsStore();
+
+  const handlePayload = useCallback(
+    (payload: RealtimePostgresUpdatePayload<Sync>) => {
+      setSyncs([
+        ...syncs.filter((sync) => sync.id !== payload.new.id),
+        payload.new,
+      ]);
+    },
+    [syncs, setSyncs],
+  );
 
   useEffect(() => {
-    const channel = supabase()
-      .channel("sync:update")
+    const subscriber = supabase()
+      .channel(`sync:update`)
       .on<Sync>(
         "postgres_changes",
         {
           event: "UPDATE",
           schema: "public",
           table: "Sync",
-          filter: `id=eq.${id}`,
+          ...(ids ? { filter: `id=in.(${ids.join(",")})` } : {}),
         },
-        (payload) => {
-          console.log(payload);
-          setSync(payload.new);
-        },
+        handlePayload,
       )
       .subscribe();
 
-    return () => void channel.unsubscribe();
-  }, [id]);
+    return () => {
+      void subscriber.unsubscribe();
+    };
+  }, [handlePayload, ids]);
 
-  return sync;
+  return syncs;
 };

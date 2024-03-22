@@ -8,10 +8,11 @@ import { RefreshCw } from "lucide-react";
 import Link from "next/link";
 
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header";
-import { SYNC_STATUS_COLORS, SYNC_TRIGGER_EMOJIS } from "@/config/sync";
-import { capitalize, cn } from "@/utils";
+import { SYNC_TRIGGER_EMOJIS } from "@/config/sync";
 
-import type { SyncTrigger, SyncStatus } from "@rssmarkable/database";
+import { RealtimeSyncStatus } from "./status/RealtimeSyncStatus";
+
+import type { SyncTrigger } from "@rssmarkable/database";
 import type { ColumnDef } from "@tanstack/react-table";
 
 dayjs.extend(duration);
@@ -92,18 +93,7 @@ export const columns: ColumnDef<Sync>[] = [
       <DataTableColumnHeader column={column} title="Status" />
     ),
     cell: ({ row }) => {
-      const status = row.getValue<SyncStatus>("status");
-
-      return (
-        <div className="'px-2 flex items-center gap-2">
-          <div
-            className={cn("h-3 w-3 rounded-full", SYNC_STATUS_COLORS[status])}
-          ></div>
-          <span className="whitespace-nowrap">
-            {capitalize(status.toLocaleLowerCase().replace("_", " "))}
-          </span>
-        </div>
-      );
+      return <RealtimeSyncStatus sync={row.original} />;
     },
     filterFn: (row, id, value: string) => {
       return value.includes(row.getValue(id));
