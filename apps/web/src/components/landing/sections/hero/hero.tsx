@@ -17,7 +17,7 @@ import { buttonVariants } from "../../../ui/button";
 export const Hero = () => {
   return (
     <section
-      className="flex w-full !scroll-mt-20 flex-col items-center justify-center gap-4 py-10 md:gap-6 md:py-16 lg:pb-32 lg:pt-20"
+      className="flex w-full !scroll-mt-36 flex-col items-center justify-center gap-4 pb-10 md:gap-6 md:pb-16 lg:pb-32"
       id="hero"
     >
       <motion.a
@@ -33,7 +33,7 @@ export const Hero = () => {
         target="_blank"
         rel="noreferrer"
       >
-        100% open source!
+        AI coming soon!
         <ArrowRight className="w-4 transition-transform group-hover:translate-x-1" />
       </motion.a>
       <motion.h1

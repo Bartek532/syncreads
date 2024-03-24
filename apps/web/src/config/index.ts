@@ -28,10 +28,9 @@ export const REPOSITORY_URL = "https://github.com/Bartek532/rssmarkable";
 export const TWITTER_URL = "https://twitter.com/bzagrodzki";
 
 export const LANDING_HEADER_NAVIGATION = [
-  { name: "About", href: "#about" },
-  { name: "Reviews", href: "#reviews" },
-  { name: "FAQ", href: "#faq" },
-  { name: "Contact", href: "#contact" },
+  { name: "Pricing", href: "/pricing" },
+  { name: "FAQ", href: "/#faq" },
+  { name: "Contact", href: "/#contact" },
 ];
 
 export const LANDING_FEATURES = {
@@ -83,7 +82,7 @@ export const LANDING_REVIEWS = {
 
 export const LANDING_OPEN_SOURCE = {
   title: "Create the future together!",
-  description: `We believe in transparency and the power of the community, so if you have any ideas or suggestions, feel free to contribute. We're open to any feedback!`,
+  description: `We believe in transparency and the power of the community, so if you have any ideas or suggestions, feel free to give us a signal. We're open to any feedback!`,
   cta: {
     href: REPOSITORY_URL,
     text: "See on Github",
@@ -111,7 +110,7 @@ export const LANDING_FAQ = {
     },
     {
       question: "Can I contribute?",
-      answer: `Always! As we're open source, just check out our repository on GitHub and feel free to contribute. We're open to any feedback and ideas.`,
+      answer: `Always! We're open to any feedback and ideas, just give us a shout and we'll figure something out.`,
     },
   ],
 };
@@ -125,6 +124,96 @@ export const LANDING_CONTACT = {
   title: "Contact",
   description: `If you have any questions or suggestions, please don't hesitate to drop us a message.`,
 };
+
+export const PRICING_PLANS = [
+  {
+    name: "Starter",
+    price: {
+      month: 0,
+      year: 0,
+    },
+    popular: true,
+    trial: false,
+    description: "Start consuming now. No credit card required",
+    features: [
+      {
+        available: true,
+        new: false,
+        title: "Seamless sync",
+      },
+      {
+        available: true,
+        new: false,
+        title: "reMarkable support",
+      },
+      {
+        available: true,
+        new: true,
+        title: "Kindle support",
+      },
+      {
+        available: true,
+        new: false,
+        title: "Multiple formats (pdf, epub)",
+      },
+      {
+        available: true,
+        new: false,
+        title: "Feeds subscriptions",
+      },
+      {
+        available: true,
+        new: false,
+        title: "Realtime tracking (logs, history)",
+      },
+      {
+        available: true,
+        new: false,
+        title: "Simple analytics",
+      },
+    ],
+    cta: {
+      title: "Get started",
+      link: "/auth/register",
+    },
+  },
+  // {
+  //   name: "Pro",
+  //   price: {
+  //     month: 15,
+  //     year: 109,
+  //   },
+  //   popular: true,
+  //   trial: true,
+  //   description: "For small teams and personal projects",
+  //   features: [
+  //     "Everything in Starter",
+  //     "Custom Domain",
+  //     "Advanced Functions",
+  //     "Advanced Database",
+  //     "Advanced Analytics",
+  //     "Priority Support",
+  //   ],
+  // },
+  // {
+  //   name: "Enterprise",
+  //   price: {
+  //     month: 29,
+  //     year: 309,
+  //   },
+  //   popular: false,
+  //   trial: false,
+  //   description: "For large teams and businesses",
+  //   features: [
+  //     "Everything in Pro",
+  //     "Enterprise Functions",
+  //     "Enterprise Database",
+  //     "Enterprise Analytics",
+  //     "SLA",
+  //     "Dedicated Support",
+  //   ],
+  // },
+];
 
 export const TOASTER_CONFIG: DefaultToastOptions = {
   className: "!bg-background !text-primary",

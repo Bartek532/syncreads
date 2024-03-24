@@ -1,4 +1,4 @@
-import { REPOSITORY_URL, TWITTER_URL } from "@/config";
+import { TWITTER_URL } from "@/config";
 
 export const Footer = () => {
   return (
@@ -9,21 +9,21 @@ export const Footer = () => {
         </span>
 
         <div className="flex flex-row gap-3">
-          <a
+          {/* <a
             href={REPOSITORY_URL}
             target="_blank"
             rel="noreferrer"
             className="text-sm underline hover:no-underline"
           >
             Github
-          </a>
+          </a> */}
           <a
             href={TWITTER_URL}
             target="_blank"
             rel="noreferrer"
             className="text-sm underline hover:no-underline"
           >
-            Twitter
+            𝕏 (Twitter)
           </a>
         </div>
       </div>

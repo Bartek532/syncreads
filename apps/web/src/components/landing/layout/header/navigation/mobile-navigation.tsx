@@ -4,10 +4,9 @@ import { AlignRight, X } from "lucide-react";
 import Link from "next/link";
 import { memo, useState } from "react";
 
+import { buttonVariants } from "@/components/ui/button";
+import { LANDING_HEADER_NAVIGATION } from "@/config";
 import { cn, lockScroll, unlockScroll } from "@/utils";
-
-import { LANDING_HEADER_NAVIGATION } from "../../../../../config";
-import { buttonVariants } from "../../../../ui/button";
 
 import type { User } from "@rssmarkable/database";
 
