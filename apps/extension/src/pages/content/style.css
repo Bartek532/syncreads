@@ -1,4 +1,4 @@
-@import "@assets/style/theme.scss";
+@import "@/assets/style/theme.css";
 
 @tailwind base;
 @tailwind components;

@@ -1,10 +1,10 @@
 import React from "react";
-import logo from "@assets/img/logo.svg";
-import "@pages/popup/Popup.css";
-import useStorage from "@src/shared/hooks/useStorage";
-import exampleThemeStorage from "@src/shared/storages/exampleThemeStorage";
-import withSuspense from "@src/shared/hoc/withSuspense";
-import withErrorBoundary from "@src/shared/hoc/withErrorBoundary";
+import logo from "@/assets/img/logo.svg";
+import "@/pages/popup/Popup.css";
+import useStorage from "@/shared/hooks/useStorage";
+import exampleThemeStorage from "@/shared/storages/exampleThemeStorage";
+import withSuspense from "@/shared/hoc/withSuspense";
+import withErrorBoundary from "@/shared/hoc/withErrorBoundary";
 
 const Popup = () => {
   const theme = useStorage(exampleThemeStorage);
@@ -21,7 +21,7 @@ const Popup = () => {
         style={{ color: theme === "light" ? "#000" : "#fff" }}
       >
         <img src={logo} className="App-logo" alt="logo" />
-        <p className="text-red-100">
+        <p className="text-blue-200">
           Edit <code>src/pages/popup/Popup.tsx</code> and save to reload. sss
         </p>
         <a
