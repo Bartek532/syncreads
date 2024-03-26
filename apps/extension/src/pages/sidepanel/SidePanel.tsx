@@ -1,10 +1,9 @@
-import React from 'react';
-import logo from '@assets/img/logo.svg';
-import '@pages/sidepanel/SidePanel.css';
-import useStorage from '@src/shared/hooks/useStorage';
-import exampleThemeStorage from '@src/shared/storages/exampleThemeStorage';
-import withSuspense from '@src/shared/hoc/withSuspense';
-import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
+import logo from '@/assets/img/logo.svg';
+import './SidePanel.css';
+import useStorage from '@/shared/hooks/useStorage';
+import exampleThemeStorage from '@/shared/storages/exampleThemeStorage';
+import withSuspense from '@/shared/hoc/withSuspense';
+import withErrorBoundary from '@/shared/hoc/withErrorBoundary';
 
 const SidePanel = () => {
   const theme = useStorage(exampleThemeStorage);

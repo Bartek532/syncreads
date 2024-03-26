@@ -14,10 +14,7 @@ const isProduction = !isDev;
 export default defineConfig({
   resolve: {
     alias: {
-      "@root": rootDir,
-      "@src": srcDir,
-      "@assets": resolve(srcDir, "assets"),
-      "@pages": pagesDir,
+      "@": srcDir,
     },
   },
   plugins: [...getPlugins(isDev), react()],
@@ -37,9 +34,8 @@ export default defineConfig({
         contentInjected: resolve(pagesDir, "content", "injected", "index.ts"),
         contentUI: resolve(pagesDir, "content", "ui", "index.ts"),
         background: resolve(pagesDir, "background", "index.ts"),
-        contentStyle: resolve(pagesDir, "content", "style.scss"),
+        contentStyle: resolve(pagesDir, "content", "style.css"),
         popup: resolve(pagesDir, "popup", "index.html"),
-        newtab: resolve(pagesDir, "newtab", "index.html"),
         options: resolve(pagesDir, "options", "index.html"),
         sidepanel: resolve(pagesDir, "sidepanel", "index.html"),
       },

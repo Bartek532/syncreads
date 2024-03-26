@@ -18,7 +18,7 @@
     "db:migrate:deploy": "turbo db:migrate:deploy",
     "db:migrate:dev": "turbo db:migrate:dev",
     "db:link": "turbo db:link",
-    "dev": "concurrently \"pnpm run docker:start:dev\" \"dotenv -- turbo dev --filter=!sync\"",
+    "dev": "concurrently \"pnpm run docker:start:dev\" \"dotenv -- turbo dev\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,md}\"",
     "format:write": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo lint",
