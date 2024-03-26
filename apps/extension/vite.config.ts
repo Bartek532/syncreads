@@ -1,6 +1,7 @@
 /// <reference types="vitest" />
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import tailwindcss from 'tailwindcss';
 import path, { resolve } from "path";
 import { getCacheInvalidationKey, getPlugins } from "./utils/vite";
 
@@ -17,7 +18,7 @@ export default defineConfig({
       "@": srcDir,
     },
   },
-  plugins: [...getPlugins(isDev), react()],
+  plugins: [...getPlugins(isDev), react(), tailwindcss()],
   publicDir: resolve(rootDir, "public"),
   build: {
     outDir: resolve(rootDir, "dist"),
@@ -58,6 +59,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom",
+    passWithNoTests: true,
     include: ["**/*.test.ts", "**/*.test.tsx"],
     setupFiles: "./test-utils/vitest.setup.js",
   },

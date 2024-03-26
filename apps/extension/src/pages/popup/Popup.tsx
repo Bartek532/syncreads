@@ -21,8 +21,8 @@ const Popup = () => {
         style={{ color: theme === "light" ? "#000" : "#fff" }}
       >
         <img src={logo} className="App-logo" alt="logo" />
-        <p className="text-blue-200">
-          Edit <code>src/pages/popup/Popup.tsx</code> and save to reload. sss
+        <p className="text-accent">
+          Edit <code>src/pages/popup/Popup.tsx</code> and save to reload.eess
         </p>
         <a
           className="App-link"
