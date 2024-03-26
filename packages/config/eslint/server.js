@@ -2,7 +2,7 @@ module.exports = {
   parser: "@typescript-eslint/parser",
   parserOptions: {
     project: [
-      "../../apps/sync/tsconfig.json",
+      "../../../apps/sync/tsconfig.json",
       "../../packages/database/tsconfig.json",
       "../../packages/shared/tsconfig.json",
     ],
