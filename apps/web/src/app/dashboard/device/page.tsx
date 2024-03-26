@@ -4,7 +4,7 @@ import { getMetadata } from "../../../lib/metadata";
 import { api } from "../../../trpc/server";
 
 export const metadata = getMetadata({
-  title: "Devices",
+  title: "Device",
 });
 
 const DevicePage = async () => {

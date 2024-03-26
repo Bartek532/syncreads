@@ -17,10 +17,10 @@ export const Pricing = () => {
 
   return (
     <div className="flex w-full flex-col items-center justify-start gap-14 pb-16 lg:gap-24 lg:pb-28">
-      <h1 className="lg:leading-tighter max-w-4xl text-center text-4xl font-bold tracking-tighter md:text-5xl xl:text-6xl 2xl:text-7xl">
+      <h1 className="lg:leading-tighter max-w-4xl text-center text-4xl font-bold tracking-tighter md:text-5xl xl:text-6xl">
         What works for you?
       </h1>
-      <div className="-mt-6 flex items-center justify-center gap-3 lg:-mt-12">
+      <div className="-mt-6 mr-4 flex items-center justify-center gap-3 lg:-mt-12">
         <span>Monthly</span>
         <Switch
           checked={billing === "year"}

@@ -101,7 +101,6 @@ export const getUrlDetailsHandler = async ({ url }: GetUrlDetailsInput) => {
         ? feed.link.find(({ rel }) => rel === "alternate")?.href
         : feed.link[0]?.href
       : url;
-
   const preview = await getLinkPreview(link ?? url, {
     followRedirects: "follow",
     timeout: 1500,
