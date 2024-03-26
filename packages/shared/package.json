@@ -17,8 +17,7 @@
     "zod": "^3.22.3"
   },
   "devDependencies": {
-    "@rssmarkable/eslint-preset": "workspace:*",
-    "@rssmarkable/tsconfig": "workspace:*",
+    "@rssmarkable/config": "workspace:*",
     "@types/node": "^18.0.0",
     "rimraf": "3.0.2",
     "tsup": "8.0.1",
