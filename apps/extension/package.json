@@ -32,7 +32,6 @@
     "@rollup/plugin-sucrase": "^5.0.2",
     "@rollup/plugin-typescript": "11.1.6",
     "@rssmarkable/config": "workspace:*",
-    "@testing-library/react": "14.0.0",
     "@types/chrome": "0.0.263",
     "@types/node": "20.8.10",
     "@types/prettier": "^2.7.2",
