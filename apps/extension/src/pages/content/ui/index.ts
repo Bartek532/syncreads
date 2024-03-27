@@ -7,4 +7,4 @@
  * If you want to use other modules in content scripts, you need to import them via these files.
  *
  */
-import('@/pages/content/ui/root');
+import("@/pages/content/ui/root");

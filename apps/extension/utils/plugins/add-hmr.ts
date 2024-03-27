@@ -1,11 +1,15 @@
-import * as path from 'path';
-import { readFileSync } from 'fs';
-import type { PluginOption } from 'vite';
+import { readFileSync } from "fs";
+import * as path from "path";
+
+import type { PluginOption } from "vite";
 
 const DUMMY_CODE = `export default function(){};`;
 
 function getInjectionCode(fileName: string): string {
-  return readFileSync(path.resolve(__dirname, '..', 'reload', 'injections', fileName), { encoding: 'utf8' });
+  return readFileSync(
+    path.resolve(__dirname, "..", "reload", "injections", fileName),
+    { encoding: "utf8" },
+  );
 }
 
 type Config = {
@@ -16,18 +20,20 @@ type Config = {
 
 export default function addHmr(config: Config): PluginOption {
   const { background, view, isDev } = config;
-  const idInBackgroundScript = 'virtual:reload-on-update-in-background-script';
-  const idInView = 'virtual:reload-on-update-in-view';
+  const idInBackgroundScript = "virtual:reload-on-update-in-background-script";
+  const idInView = "virtual:reload-on-update-in-view";
 
-  const scriptHmrCode = isDev ? getInjectionCode('script.js') : DUMMY_CODE;
-  const viewHmrCode = isDev ? getInjectionCode('view.js') : DUMMY_CODE;
+  const scriptHmrCode = isDev ? getInjectionCode("script.js") : DUMMY_CODE;
+  const viewHmrCode = isDev ? getInjectionCode("view.js") : DUMMY_CODE;
 
   return {
-    name: 'add-hmr',
+    name: "add-hmr",
     resolveId(id) {
       if (id === idInBackgroundScript || id === idInView) {
         return getResolvedId(id);
       }
+
+      return;
     },
     load(id) {
       if (id === getResolvedId(idInBackgroundScript)) {
@@ -37,10 +43,12 @@ export default function addHmr(config: Config): PluginOption {
       if (id === getResolvedId(idInView)) {
         return view ? viewHmrCode : DUMMY_CODE;
       }
+
+      return;
     },
   };
 }
 
 function getResolvedId(id: string) {
-  return '\0' + id;
+  return "\0" + id;
 }

@@ -1,14 +1,19 @@
-import { useSyncExternalStore } from 'react';
-import { BaseStorage } from '@/shared/storages/base';
+import { useSyncExternalStore } from "react";
+
+import type { BaseStorage } from "@/shared/storages/base";
 
 type WrappedPromise = ReturnType<typeof wrapPromise>;
-const storageMap: Map<BaseStorage<unknown>, WrappedPromise> = new Map();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const storageMap: Map<BaseStorage<any>, WrappedPromise> = new Map();
 
 export default function useStorage<
   Storage extends BaseStorage<Data>,
   Data = Storage extends BaseStorage<infer Data> ? Data : unknown,
 >(storage: Storage) {
-  const _data = useSyncExternalStore<Data | null>(storage.subscribe, storage.getSnapshot);
+  const _data = useSyncExternalStore<Data | null>(
+    storage.subscribe,
+    storage.getSnapshot,
+  );
 
   if (!storageMap.has(storage)) {
     storageMap.set(storage, wrapPromise(storage.get()));
@@ -17,32 +22,34 @@ export default function useStorage<
     storageMap.set(storage, { read: () => _data });
   }
 
-  return _data ?? (storageMap.get(storage)!.read() as Data);
+  return _data ?? (storageMap.get(storage)?.read() as Data);
 }
 
 function wrapPromise<R>(promise: Promise<R>) {
-  let status = 'pending';
+  let status = "pending";
   let result: R;
   const suspender = promise.then(
-    r => {
-      status = 'success';
+    (r) => {
+      status = "success";
       result = r;
     },
-    e => {
-      status = 'error';
-      result = e;
+    (e) => {
+      status = "error";
+      result = e as R;
     },
   );
 
   return {
     read() {
-      if (status === 'pending') {
+      if (status === "pending") {
         throw suspender;
-      } else if (status === 'error') {
+      } else if (status === "error") {
         throw result;
-      } else if (status === 'success') {
+      } else if (status === "success") {
         return result;
       }
+
+      return;
     },
   };
 }

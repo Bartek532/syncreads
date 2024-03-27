@@ -1,24 +1,20 @@
 module.exports = {
   parserOptions: {
-    project: ["../../../apps/web/tsconfig.json"],
+    project: ["../../../apps/extension/tsconfig.json"],
     tsconfigRootDir: __dirname,
   },
-  env: {
-    browser: true,
-    node: true,
-  },
   globals: {
-    React: true,
-    JSX: true,
+    chrome: true,
   },
   extends: [
-    "next/core-web-vitals",
+    "plugin:import/errors",
+    "plugin:import/warnings",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:@typescript-eslint/strict",
   ],
   parser: "@typescript-eslint/parser",
-  plugins: ["@typescript-eslint"],
+  plugins: ["@typescript-eslint", "import"],
   ignorePatterns: [".*.js", "*.cjs", "node_modules/"],
   settings: {
     "import/parsers": {

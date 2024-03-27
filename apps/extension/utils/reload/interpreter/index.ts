@@ -1,13 +1,13 @@
-import type { WebSocketMessage, SerializedMessage } from './types';
+import type { WebSocketMessage, SerializedMessage } from "./types";
 
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export default class MessageInterpreter {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
 
   static send(message: WebSocketMessage): SerializedMessage {
     return JSON.stringify(message);
   }
   static receive(serializedMessage: SerializedMessage): WebSocketMessage {
-    return JSON.parse(serializedMessage);
+    return JSON.parse(serializedMessage) as WebSocketMessage;
   }
 }

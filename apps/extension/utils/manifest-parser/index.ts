@@ -1,5 +1,6 @@
 type Manifest = chrome.runtime.ManifestV3;
 
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 class ManifestParser {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
@@ -18,7 +19,7 @@ class ManifestParser {
 
     manifestCopy.background = {
       scripts: [manifest.background?.service_worker],
-      type: 'module',
+      type: "module",
     };
     manifestCopy.options_ui = {
       page: manifest.options_page,

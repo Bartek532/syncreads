@@ -1,5 +1,3 @@
-const { fontFamily } = require("tailwindcss/defaultTheme");
-
 module.exports = {
   darkMode: ["class"],
   theme: {
@@ -61,10 +59,6 @@ module.exports = {
           DEFAULT: "hsl(var(--picked))",
           foreground: "hsl(var(--picked-foreground))",
         },
-      },
-      fontFamily: {
-        sans: ["var(--font-geist-sans)", ...fontFamily.sans],
-        mono: ["var(--font-geist-mono)", ...fontFamily.mono],
       },
       borderRadius: {
         lg: "var(--radius)",

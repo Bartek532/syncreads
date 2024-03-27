@@ -1,13 +1,14 @@
-import { BaseStorage, createStorage, StorageType } from '@/shared/storages/base';
+import type { BaseStorage } from "@/shared/storages/base";
+import { createStorage, STORAGE_TYPE } from "@/shared/storages/base";
 
-type Theme = 'light' | 'dark';
+type Theme = "light" | "dark";
 
 type ThemeStorage = BaseStorage<Theme> & {
   toggle: () => Promise<void>;
 };
 
-const storage = createStorage<Theme>('theme-storage-key', 'light', {
-  storageType: StorageType.Local,
+const storage = createStorage<Theme>("theme-storage-key", "light", {
+  storageType: STORAGE_TYPE.LOCAL,
   liveUpdate: true,
 });
 
@@ -15,8 +16,8 @@ const exampleThemeStorage: ThemeStorage = {
   ...storage,
   // TODO: extends your own methods
   toggle: async () => {
-    await storage.set(currentTheme => {
-      return currentTheme === 'light' ? 'dark' : 'light';
+    await storage.set((currentTheme) => {
+      return currentTheme === "light" ? "dark" : "light";
     });
   },
 };

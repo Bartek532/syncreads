@@ -1,8 +1,8 @@
 /// <reference types="vitest" />
-import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import tailwindcss from 'tailwindcss';
 import path, { resolve } from "path";
+import { defineConfig } from "vite";
+
 import { getCacheInvalidationKey, getPlugins } from "./utils/vite";
 
 const rootDir = resolve(__dirname);
@@ -18,7 +18,7 @@ export default defineConfig({
       "@": srcDir,
     },
   },
-  plugins: [...getPlugins(isDev), react(), tailwindcss()],
+  plugins: [...getPlugins(isDev), react()],
   publicDir: resolve(rootDir, "public"),
   build: {
     outDir: resolve(rootDir, "dist"),
@@ -46,7 +46,7 @@ export default defineConfig({
           ? "assets/js/[name].js"
           : "assets/js/[name].[hash].js",
         assetFileNames: (assetInfo) => {
-          const { name } = path.parse(assetInfo.name);
+          const { name } = path.parse(assetInfo.name ?? "");
           const assetFileName =
             name === "contentStyle"
               ? `${name}${getCacheInvalidationKey()}`
@@ -59,10 +59,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom",
-<<<<<<< HEAD
     passWithNoTests: true,
-=======
->>>>>>> 8e169c3dac1c5f23dbb1b5cab48357241a2e4a8a
     include: ["**/*.test.ts", "**/*.test.tsx"],
     setupFiles: "./test-utils/vitest.setup.js",
   },

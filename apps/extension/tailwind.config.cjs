@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx,html}"],
-  preset: [require("@rssmarkable/config/ui/tailwind")],
+  presets: [require("@rssmarkable/config/ui/tailwind")]
 };

@@ -2,43 +2,43 @@
  * Storage area type for persisting and exchanging data.
  * @see https://developer.chrome.com/docs/extensions/reference/storage/#overview
  */
-export enum StorageType {
+export enum STORAGE_TYPE {
   /**
    * Persist data locally against browser restarts. Will be deleted by uninstalling the extension.
    * @default
    */
-  Local = 'local',
+  LOCAL = "local",
   /**
    * Uploads data to the users account in the cloud and syncs to the users browsers on other devices. Limits apply.
    */
-  Sync = 'sync',
+  SYNC = "sync",
   /**
    * Requires an [enterprise policy](https://www.chromium.org/administrators/configuring-policy-for-extensions) with a
    * json schema for company wide config.
    */
-  Managed = 'managed',
+  MANAGED = "managed",
   /**
    * Only persist data until the browser is closed. Recommended for service workers which can shutdown anytime and
    * therefore need to restore their state. Set {@link SessionAccessLevel} for permitting content scripts access.
    * @implements Chromes [Session Storage](https://developer.chrome.com/docs/extensions/reference/storage/#property-session)
    */
-  Session = 'session',
+  SESSION = "session",
 }
 
 /**
  * Global access level requirement for the {@link StorageType.Session} Storage Area.
  * @implements Chromes [Session Access Level](https://developer.chrome.com/docs/extensions/reference/storage/#method-StorageArea-setAccessLevel)
  */
-export enum SessionAccessLevel {
+export enum SESSION_ACCESS_LEVEL {
   /**
    * Storage can only be accessed by Extension pages (not Content scripts).
    * @default
    */
-  ExtensionPagesOnly = 'TRUSTED_CONTEXTS',
+  EXTENSION_PAGES_ONLY = "TRUSTED_CONTEXTS",
   /**
    * Storage can be accessed by both Extension pages and Content scripts.
    */
-  ExtensionPagesAndContentScripts = 'TRUSTED_AND_UNTRUSTED_CONTEXTS',
+  EXTENSION_PAGES_AND_CONTENT_SCRIPTS = "TRUSTED_AND_UNTRUSTED_CONTEXTS",
 }
 
 type ValueOrUpdate<D> = D | ((prev: D) => Promise<D> | D);
@@ -55,7 +55,7 @@ type StorageConfig<D = string> = {
    * Assign the {@link StorageType} to use.
    * @default Local
    */
-  storageType?: StorageType;
+  storageType?: STORAGE_TYPE;
   /**
    * Only for {@link StorageType.Session}: Grant Content scripts access to storage area?
    * @default false
@@ -88,14 +88,21 @@ type StorageConfig<D = string> = {
 /**
  * Sets or updates an arbitrary cache with a new value or the result of an update function.
  */
-async function updateCache<D>(valueOrUpdate: ValueOrUpdate<D>, cache: D | null): Promise<D> {
+async function updateCache<D>(
+  valueOrUpdate: ValueOrUpdate<D>,
+  cache: D | null,
+): Promise<D> {
   // Type guard to check if our value or update is a function
-  function isFunction<D>(value: ValueOrUpdate<D>): value is (prev: D) => D | Promise<D> {
-    return typeof value === 'function';
+  function isFunction<D>(
+    value: ValueOrUpdate<D>,
+  ): value is (prev: D) => D | Promise<D> {
+    return typeof value === "function";
   }
 
   // Type guard to check in case of a function, if its a Promise
-  function returnsPromise<D>(func: (prev: D) => D | Promise<D>): func is (prev: D) => Promise<D> {
+  function returnsPromise<D>(
+    func: (prev: D) => D | Promise<D>,
+  ): func is (prev: D) => Promise<D> {
     // Use ReturnType to infer the return type of the function and check if it's a Promise
     return (func as (prev: D) => Promise<D>) instanceof Promise;
   }
@@ -103,9 +110,9 @@ async function updateCache<D>(valueOrUpdate: ValueOrUpdate<D>, cache: D | null):
   if (isFunction(valueOrUpdate)) {
     // Check if the function returns a Promise
     if (returnsPromise(valueOrUpdate)) {
-      return await valueOrUpdate(cache);
+      return await valueOrUpdate(cache as D);
     } else {
-      return valueOrUpdate(cache);
+      return valueOrUpdate(cache as D);
     }
   } else {
     return valueOrUpdate;
@@ -116,37 +123,44 @@ async function updateCache<D>(valueOrUpdate: ValueOrUpdate<D>, cache: D | null):
  * If one session storage needs access from content scripts, we need to enable it globally.
  * @default false
  */
-let globalSessionAccessLevelFlag: StorageConfig['sessionAccessForContentScripts'] = false;
+let globalSessionAccessLevelFlag: StorageConfig["sessionAccessForContentScripts"] =
+  false;
 
 /**
  * Checks if the storage permission is granted in the manifest.json.
  */
-function checkStoragePermission(storageType: StorageType): void {
+function checkStoragePermission(storageType: STORAGE_TYPE): void {
   if (chrome.storage[storageType] === undefined) {
-    throw new Error(`Check your storage permission in manifest.json: ${storageType} is not defined`);
+    throw new Error(
+      `Check your storage permission in manifest.json: ${storageType} is not defined`,
+    );
   }
 }
 
 /**
  * Creates a storage area for persisting and exchanging data.
  */
-export function createStorage<D = string>(key: string, fallback: D, config?: StorageConfig<D>): BaseStorage<D> {
+export function createStorage<D = string>(
+  key: string,
+  fallback: D,
+  config?: StorageConfig<D>,
+): BaseStorage<D> {
   let cache: D | null = null;
   let listeners: Array<() => void> = [];
-  const storageType = config?.storageType ?? StorageType.Local;
+  const storageType = config?.storageType ?? STORAGE_TYPE.LOCAL;
   const liveUpdate = config?.liveUpdate ?? false;
   const serialize = config?.serialization?.serialize ?? ((v: D) => v);
-  const deserialize = config?.serialization?.deserialize ?? (v => v as D);
+  const deserialize = config?.serialization?.deserialize ?? ((v) => v as D);
 
   // Set global session storage access level for StoryType.Session, only when not already done but needed.
   if (
     globalSessionAccessLevelFlag === false &&
-    storageType === StorageType.Session &&
+    storageType === STORAGE_TYPE.SESSION &&
     config?.sessionAccessForContentScripts === true
   ) {
     checkStoragePermission(storageType);
-    chrome.storage[storageType].setAccessLevel({
-      accessLevel: SessionAccessLevel.ExtensionPagesAndContentScripts,
+    void chrome.storage[storageType].setAccessLevel({
+      accessLevel: SESSION_ACCESS_LEVEL.EXTENSION_PAGES_AND_CONTENT_SCRIPTS,
     });
     globalSessionAccessLevelFlag = true;
   }
@@ -155,11 +169,11 @@ export function createStorage<D = string>(key: string, fallback: D, config?: Sto
   const _getDataFromStorage = async (): Promise<D> => {
     checkStoragePermission(storageType);
     const value = await chrome.storage[storageType].get([key]);
-    return deserialize(value[key]) ?? fallback;
+    return deserialize(value[key] as string) ?? fallback;
   };
 
   const _emitChange = () => {
-    listeners.forEach(listener => listener());
+    listeners.forEach((listener) => listener());
   };
 
   const set = async (valueOrUpdate: ValueOrUpdate<D>) => {
@@ -172,7 +186,7 @@ export function createStorage<D = string>(key: string, fallback: D, config?: Sto
   const subscribe = (listener: () => void) => {
     listeners = [...listeners, listener];
     return () => {
-      listeners = listeners.filter(l => l !== listener);
+      listeners = listeners.filter((l) => l !== listener);
     };
   };
 
@@ -180,19 +194,27 @@ export function createStorage<D = string>(key: string, fallback: D, config?: Sto
     return cache;
   };
 
-  _getDataFromStorage().then(data => {
+  void _getDataFromStorage().then((data) => {
     cache = data;
     _emitChange();
   });
 
   // Listener for live updates from the browser
-  async function _updateFromStorageOnChanged(changes: { [key: string]: chrome.storage.StorageChange }) {
+  async function _updateFromStorageOnChanged(changes: {
+    [key: string]: chrome.storage.StorageChange;
+  }) {
     // Check if the key we are listening for is in the changes object
-    if (changes[key] === undefined) return;
+    if (changes[key] === undefined) {
+      return;
+    }
 
-    const valueOrUpdate: ValueOrUpdate<D> = deserialize(changes[key].newValue);
+    const valueOrUpdate: ValueOrUpdate<D> = deserialize(
+      (changes[key]?.newValue as string) ?? "",
+    );
 
-    if (cache === valueOrUpdate) return;
+    if (cache === valueOrUpdate) {
+      return;
+    }
 
     cache = await updateCache(valueOrUpdate, cache);
 
@@ -201,7 +223,10 @@ export function createStorage<D = string>(key: string, fallback: D, config?: Sto
 
   // Register listener for live updates for our storage area
   if (liveUpdate) {
-    chrome.storage[storageType].onChanged.addListener(_updateFromStorageOnChanged);
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    chrome.storage[storageType].onChanged.addListener(
+      _updateFromStorageOnChanged,
+    );
   }
 
   return {
