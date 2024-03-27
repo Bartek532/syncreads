@@ -17,10 +17,7 @@ const manifest = {
   name: "__MSG_extensionName__",
   version: packageJson.version,
   description: "__MSG_extensionDescription__",
-  permissions: ["storage", "sidePanel"],
-  side_panel: {
-    default_path: "src/pages/sidepanel/index.html",
-  },
+  permissions: ["storage", "activeTab"],
   options_page: "src/pages/options/index.html",
   background: {
     service_worker: "src/pages/background/index.js",
@@ -45,7 +42,6 @@ const manifest = {
       js: ["src/pages/contentUI/index.js"],
     },
   ],
-  devtools_page: "src/pages/devtools/index.html",
   web_accessible_resources: [
     {
       resources: [

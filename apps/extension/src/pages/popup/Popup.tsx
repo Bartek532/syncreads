@@ -1,4 +1,5 @@
 import logo from "@/assets/img/logo.svg";
+import { Button } from "@/components/ui/button";
 import "@/pages/popup/Popup.css";
 import withErrorBoundary from "@/shared/hoc/withErrorBoundary";
 import withSuspense from "@/shared/hoc/withSuspense";
@@ -7,6 +8,10 @@ import exampleThemeStorage from "@/shared/storages/exampleThemeStorage";
 
 const Popup = () => {
   const theme = useStorage(exampleThemeStorage);
+
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    console.log(tabs);
+  });
 
   return (
     <div
@@ -20,9 +25,10 @@ const Popup = () => {
         style={{ color: theme === "light" ? "#000" : "#fff" }}
       >
         <img src={logo} className="App-logo" alt="logo" />
-        <p className="text-destructive">
+        <p className="py-10 text-primary-foreground">
           Edit <code>src/pages/popup/Popup.tsx</code> and save to reloadfsfd.sss
         </p>
+        <Button>This is a shadcn button</Button>
         <a
           className="App-link"
           href="https://reactjs.org"
