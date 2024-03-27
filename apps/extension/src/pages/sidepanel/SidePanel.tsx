@@ -20,9 +20,7 @@ const SidePanel = () => {
         className="App-header"
         style={{ color: theme === "light" ? "#000" : "#fff" }}
       >
-        <img src={logo} className="App-logo" alt="logo"
-        
-        />
+        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/pages/sidepanel/SidePanel.tsx</code> and save to
           reload.
@@ -33,7 +31,7 @@ const SidePanel = () => {
           target="_blank"
           rel="noopener noreferrer"
           style={{
-            color: theme === "light" && "#0281dc",
+            color: theme === "light" ? "#0281dc" : "red",
             marginBottom: "10px",
           }}
         >
@@ -44,6 +42,7 @@ const SidePanel = () => {
             backgroundColor: theme === "light" ? "#fff" : "#000",
             color: theme === "light" ? "#000" : "#fff",
           }}
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={exampleThemeStorage.toggle}
         >
           Toggle theme

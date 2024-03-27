@@ -1,10 +1,9 @@
-import React from "react";
 import logo from "@/assets/img/logo.svg";
 import "@/pages/popup/Popup.css";
+import withErrorBoundary from "@/shared/hoc/withErrorBoundary";
+import withSuspense from "@/shared/hoc/withSuspense";
 import useStorage from "@/shared/hooks/useStorage";
 import exampleThemeStorage from "@/shared/storages/exampleThemeStorage";
-import withSuspense from "@/shared/hoc/withSuspense";
-import withErrorBoundary from "@/shared/hoc/withErrorBoundary";
 
 const Popup = () => {
   const theme = useStorage(exampleThemeStorage);
@@ -30,7 +29,7 @@ const Popup = () => {
           target="_blank"
           rel="noopener noreferrer"
           style={{
-            color: theme === "light" && "#0281dc",
+            color: theme === "light" ? "#0281dc" : "red",
             marginBottom: "10px",
           }}
         >
@@ -41,6 +40,7 @@ const Popup = () => {
             backgroundColor: theme === "light" ? "#fff" : "#000",
             color: theme === "light" ? "#000" : "#fff",
           }}
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={exampleThemeStorage.toggle}
         >
           Toggle theme
