@@ -3,8 +3,8 @@ module.exports = {
   parserOptions: {
     project: [
       "../../../apps/sync/tsconfig.json",
-      "../../packages/database/tsconfig.json",
-      "../../packages/shared/tsconfig.json",
+      "../../../packages/database/tsconfig.json",
+      "../../../packages/shared/tsconfig.json",
     ],
     tsconfigRootDir: __dirname,
     sourceType: "module",

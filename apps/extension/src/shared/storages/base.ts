@@ -223,8 +223,8 @@ export function createStorage<D = string>(
 
   // Register listener for live updates for our storage area
   if (liveUpdate) {
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     chrome.storage[storageType].onChanged.addListener(
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       _updateFromStorageOnChanged,
     );
   }

@@ -1,5 +1,6 @@
-import type { PluginOption } from "vite";
 import MagicString from "magic-string";
+
+import type { PluginOption } from "vite";
 
 /**
  * solution for multiple content scripts
@@ -9,7 +10,7 @@ export default function inlineVitePreloadScript(): PluginOption {
   let __vitePreload = "";
   return {
     name: "replace-vite-preload-script-plugin",
-    async renderChunk(code, chunk, _, meta) {
+    renderChunk(code, chunk, _, meta) {
       if (!/content/.test(chunk.fileName)) {
         return null;
       }
