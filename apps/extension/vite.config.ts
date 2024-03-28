@@ -35,7 +35,6 @@ export default defineConfig({
         contentStyle: resolve(pagesDir, "content", "style.css"),
         background: resolve(pagesDir, "background", "index.ts"),
         popup: resolve(pagesDir, "popup", "index.html"),
-        options: resolve(pagesDir, "options", "index.html"),
       },
       output: {
         entryFileNames: "src/pages/[name]/index.js",
@@ -58,6 +57,5 @@ export default defineConfig({
     environment: "jsdom",
     passWithNoTests: true,
     include: ["**/*.test.ts", "**/*.test.tsx"],
-    setupFiles: "./test-utils/vitest.setup.js",
   },
 });

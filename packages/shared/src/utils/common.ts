@@ -2,7 +2,7 @@ export const clearUrl = (url: string) => {
   const parsed = new URL(url);
   parsed.search = "";
   parsed.hash = "";
-  return parsed.toString();
+  return parsed.toString().trim();
 };
 
 export const removeProtocolsFromUrl = (url: string) =>

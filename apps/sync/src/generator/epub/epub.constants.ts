@@ -37,3 +37,5 @@ pre {
 `;
 
 export const css = globalCss + codeEnvironmentCss;
+
+export const IMAGE_SUPPORTED_FORMATS = ["image/png", "image/jpeg", "image/gif"];
