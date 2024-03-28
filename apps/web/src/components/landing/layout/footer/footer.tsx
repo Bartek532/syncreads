@@ -21,7 +21,7 @@ export const Footer = () => {
             href={TWITTER_URL}
             target="_blank"
             rel="noreferrer"
-            className="text-sm underline hover:no-underline"
+            className="shrink-0 text-sm underline hover:no-underline"
           >
             𝕏 (Twitter)
           </a>

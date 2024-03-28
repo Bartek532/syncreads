@@ -7,3 +7,5 @@ export enum ENTRY_TYPE {
   DOC = "DocumentType",
   TRASH = "trash",
 }
+
+export const ROOT_STATE_SYNC_RETRIES = 2;

@@ -59,7 +59,7 @@ export const MobileNavigation = memo<MobileNavigationProps>(({ user }) => {
             </Link>
             <Link
               className={cn(buttonVariants(), "mt-3 w-full")}
-              href="#contact"
+              href={user ? "/dashboard" : "/auth/login"}
               onClick={handleToggleNavigation}
             >
               {user ? "Dashboard" : "Sync now!"}

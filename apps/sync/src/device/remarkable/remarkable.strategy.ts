@@ -1,16 +1,21 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { OUTPUT_FORMAT } from "@rssmarkable/shared";
+import {
+  GenerationError,
+  type CollectionMetadataEntry,
+  type Entry,
+} from "rmapi-js";
 import uuid4 from "uuid4";
 
 import {
   ENTRY_TYPE,
   REMARKABLE_CLIENT_FACTORY_TOKEN,
+  ROOT_STATE_SYNC_RETRIES,
 } from "./remarkable.constants";
 import { RemarkableProviderFactory } from "./remarkable.provider";
 import { generateFolderMetadata } from "./utils/generate-folder-metadata";
 
 import type { DeviceStrategy } from "../device.interface";
-import type { CollectionMetadataEntry, Entry } from "rmapi-js";
 
 @Injectable()
 export class RemarkableStrategy implements DeviceStrategy {
@@ -19,6 +24,8 @@ export class RemarkableStrategy implements DeviceStrategy {
     private readonly remarkableProvider: RemarkableProviderFactory,
   ) {}
 
+  private rootState: [Entry[], string, bigint] | undefined;
+
   private async getFiles(userId: string) {
     const api = await this.remarkableProvider(userId);
     return api.getEntriesMetadata();
@@ -26,12 +33,29 @@ export class RemarkableStrategy implements DeviceStrategy {
 
   private async syncEntry(userId: string, entry: Entry) {
     const api = await this.remarkableProvider(userId);
-    const [root, gen] = await api.getRootHash();
-    const rootEntries = await api.getEntries(root);
-    rootEntries.push(entry);
-    const { hash } = await api.putEntries("", rootEntries);
-    const nextGen = await api.putRootHash(hash, gen);
-    await api.syncComplete(nextGen);
+    for (let retries = ROOT_STATE_SYNC_RETRIES; retries > 0; --retries) {
+      try {
+        let entries, rootHash, generation;
+        if (this.rootState) {
+          [entries, rootHash, generation] = this.rootState;
+        } else {
+          [rootHash, generation] = await api.getRootHash();
+          entries = await api.getEntries(rootHash);
+        }
+        entries.push(entry);
+        const { hash } = await api.putEntries("", entries);
+        const nextGen = await api.putRootHash(hash, generation);
+        this.rootState = [entries, rootHash, nextGen];
+        await api.syncComplete(nextGen);
+        return;
+      } catch (err) {
+        if (err instanceof GenerationError) {
+          this.rootState = undefined;
+        } else {
+          throw err;
+        }
+      }
+    }
   }
 
   async getFolder(userId: string, name: string) {

@@ -31,9 +31,10 @@ export class Walker {
       throw new Error("Should never get a doctype element!");
     } else if (isTextNode(node)) {
       content.push(node);
-    } else if (!isElementNode(node)) {
-      throw new Error("Unknown node type!");
-    } else if (ELEMENTS_TO_SKIP.includes(node.nodeName)) {
+    } else if (
+      !isElementNode(node) ||
+      ELEMENTS_TO_SKIP.includes(node.nodeName)
+    ) {
       // skip these
     } else if (isImageNode(node)) {
       const [href] = getSources([node]);
