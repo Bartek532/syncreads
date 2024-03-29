@@ -20,7 +20,7 @@ export const DASHBOARD_NAVIGATION = [
 ];
 
 export const DASHBOARD_SECONDARY_NAVIGATION = [
-  { name: "Profile", href: "/dashboard/settings/profile" },
+  { name: "Settings", href: "/dashboard/settings/profile" },
   {
     name: "Appearance",
     href: "/dashboard/settings/appearance",

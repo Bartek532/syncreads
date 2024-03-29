@@ -108,9 +108,9 @@ export const ProfileForm = memo<ProfileForm>(({ user }) => {
           render={({ field }) => (
             <FormItem>
               <div className="space-y-1">
-                <FormLabel>Format</FormLabel>
+                <FormLabel>Default format</FormLabel>
                 <FormDescription>
-                  Select output format for your synced content.
+                  Select default output format for your synced content.
                 </FormDescription>
               </div>
               <FormMessage />
@@ -147,7 +147,7 @@ export const ProfileForm = memo<ProfileForm>(({ user }) => {
           {form.formState.isSubmitting ? (
             <Loader2 className="animate-spin" />
           ) : (
-            "Update profile"
+            "Update settings"
           )}
         </Button>
       </form>

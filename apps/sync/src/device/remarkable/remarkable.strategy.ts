@@ -28,6 +28,7 @@ export class RemarkableStrategy implements DeviceStrategy {
 
   private async getFiles(userId: string) {
     const api = await this.remarkableProvider(userId);
+
     return api.getEntriesMetadata();
   }
 

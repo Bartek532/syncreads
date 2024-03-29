@@ -78,7 +78,7 @@ export const Home = async () => {
           <AddFeedDialog>
             <Button variant="outline">Add feed</Button>
           </AddFeedDialog>
-          <SyncArticleDialog>
+          <SyncArticleDialog user={user}>
             <Button>Sync article</Button>
           </SyncArticleDialog>
         </div>
