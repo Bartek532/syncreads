@@ -46,7 +46,6 @@ type SyncArticleDialogProps = {
 export const SyncArticleDialog = memo<SyncArticleDialogProps>(
   ({ children, user }) => {
     const router = useRouter();
-    console.log(user?.user_metadata);
     const form = useForm<SyncArticleInput>({
       resolver: zodResolver(syncArticlePayloadSchema),
       defaultValues: {
@@ -67,14 +66,14 @@ export const SyncArticleDialog = memo<SyncArticleDialogProps>(
 
       console.log(data);
 
-      // const { message, success, sync } = await queueArticleSync(data);
+      const { message, success, sync } = await queueArticleSync(data);
 
-      // if (success) {
-      //   toast.success(message, { id: loadingToast });
-      //   router.push(`/dashboard/syncs/${sync.id}`);
-      // } else {
-      //   toast.error(message, { id: loadingToast });
-      // }
+      if (success) {
+        toast.success(message, { id: loadingToast });
+        router.push(`/dashboard/syncs/${sync.id}`);
+      } else {
+        toast.error(message, { id: loadingToast });
+      }
     };
 
     return (

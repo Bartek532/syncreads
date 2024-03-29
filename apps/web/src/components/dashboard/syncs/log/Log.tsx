@@ -28,10 +28,7 @@ export const SyncLog = memo<SyncLogProps>(
     const realtimeSyncs = useRealtimeSyncs();
     const realtimeLog = useRealtimeLog({
       syncId: initialSync.id,
-      onPayload: () =>
-        linesTableRef.current?.scrollIntoView({
-          block: "end",
-        }),
+      onPayload: () => linesTableRef.current?.scrollIntoView(false),
     });
 
     const log = {
@@ -53,60 +50,61 @@ export const SyncLog = memo<SyncLogProps>(
     }, [params]);
 
     return (
-      <div
-        className="-mx-6 overflow-hidden overflow-x-auto border bg-background py-4 shadow-sm sm:mx-0 sm:rounded-lg"
-        ref={linesTableRef}
-      >
-        <table className="min-w-full">
-          <tbody>
-            {log.json.map(({ date, message, level }, index) => (
-              <tr
-                key={date.toString()}
-                className={cn(
-                  "text-sm sm:text-base",
-                  SYNC_LOG_LEVEL_COLORS[level],
-                  activeLine === `#L${index + 1}` &&
-                    "bg-picked text-picked-foreground hover:bg-picked/60",
-                )}
-              >
-                <td
-                  className="w-0 cursor-pointer px-4 py-1 align-top sm:px-7 sm:py-1.5"
-                  aria-hidden="true"
-                  onClick={() => router.push(`#L${index + 1}`)}
+      <div className="-mx-6 -mb-16 pb-16 sm:mx-0" ref={linesTableRef}>
+        <div className="w-full overflow-hidden overflow-x-auto border bg-background py-4 shadow-sm sm:rounded-lg">
+          <table className="min-w-full">
+            <tbody>
+              {log.json.map(({ date, message, level }, index) => (
+                <tr
+                  key={date.toString()}
+                  className={cn(
+                    "text-sm sm:text-base",
+                    SYNC_LOG_LEVEL_COLORS[level],
+                    activeLine === `#L${index + 1}` &&
+                      "bg-picked text-picked-foreground hover:bg-picked/60",
+                  )}
                 >
-                  <span className="hidden sm:inline">
-                    {dayjs(date).format("HH:mm:ss.SSS")}
-                  </span>
-                  <span className="inline sm:hidden">
-                    {dayjs(date).format("HH:mm:ss")}
-                  </span>
-                </td>
-                <td className="py-1 pr-4 sm:py-1.5 sm:pr-6">
-                  <span
-                    dangerouslySetInnerHTML={{ __html: marked.parse(message) }}
-                    className="markdown"
-                  ></span>
-                </td>
-              </tr>
-            ))}
+                  <td
+                    className="w-0 cursor-pointer px-4 py-1 align-top sm:px-7 sm:py-1.5"
+                    aria-hidden="true"
+                    onClick={() => router.push(`#L${index + 1}`)}
+                  >
+                    <span className="hidden sm:inline">
+                      {dayjs(date).format("HH:mm:ss.SSS")}
+                    </span>
+                    <span className="inline sm:hidden">
+                      {dayjs(date).format("HH:mm:ss")}
+                    </span>
+                  </td>
+                  <td className="py-1 pr-4 sm:py-1.5 sm:pr-6">
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: marked.parse(message),
+                      }}
+                      className="markdown"
+                    ></span>
+                  </td>
+                </tr>
+              ))}
 
-            {!sync.finishedAt && (
-              <tr>
-                <td className="px-4 pt-1.5 sm:px-7 sm:pt-2">
-                  <Skeleton className="h-5 w-full bg-muted-foreground/30" />
-                </td>
-                <td>
-                  <div className="mt-2 flex w-full justify-start gap-2">
-                    <span className="sr-only">Loading...</span>
-                    <div className="h-2.5 w-2.5 animate-bounce rounded-full bg-muted-foreground/30 [animation-delay:-0.3s]"></div>
-                    <div className="h-2.5 w-2.5 animate-bounce rounded-full bg-muted-foreground/30 [animation-delay:-0.15s]"></div>
-                    <div className="h-2.5 w-2.5 animate-bounce rounded-full bg-muted-foreground/30"></div>
-                  </div>
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              {!sync.finishedAt && (
+                <tr>
+                  <td className="px-4 pt-1.5 sm:px-7 sm:pt-2">
+                    <Skeleton className="h-5 w-full bg-muted-foreground/30" />
+                  </td>
+                  <td>
+                    <div className="mt-2 flex w-full justify-start gap-2">
+                      <span className="sr-only">Loading...</span>
+                      <div className="h-2.5 w-2.5 animate-bounce rounded-full bg-muted-foreground/30 [animation-delay:-0.3s]"></div>
+                      <div className="h-2.5 w-2.5 animate-bounce rounded-full bg-muted-foreground/30 [animation-delay:-0.15s]"></div>
+                      <div className="h-2.5 w-2.5 animate-bounce rounded-full bg-muted-foreground/30"></div>
+                    </div>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   },
