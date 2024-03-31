@@ -1,23 +1,49 @@
 import { removeProtocolsFromUrl } from "@rssmarkable/shared";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import withErrorBoundary from "@/shared/hoc/withErrorBoundary";
-import withSuspense from "@/shared/hoc/withSuspense";
+import { queryClient } from "@/lib/api";
+import withErrorBoundary from "@/lib/hoc/withErrorBoundary";
+import withSuspense from "@/lib/hoc/withSuspense";
+import { useSession } from "@/lib/hooks/useSession";
 
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Footer } from "../ui/footer";
 import { Skeleton } from "../ui/skeleton";
 
+import { Error } from "./layout/error";
+import { PopupLayout } from "./layout/layout";
+import { Loading } from "./layout/loading";
+import { Unauthorized } from "./layout/unauthorized";
+
 const Component = () => {
+  const { session, isLoading: isSessionLoading } = useSession();
   const [activeTab, setActiveTab] = useState<chrome.tabs.Tab | null>(null);
+
+  // const { data, mutate, isLoading } = useMutation({
+  //   mutationFn: () => {
+  //     console.log("fetching active tab", session.session.data.user.id);
+  //     return chrome.runtime.sendMessage({
+  //       type: "GET_ACTIVE_TAB",
+  //       payload: { userId: session.session.data.user.id },
+  //     });
+  //   },
+  // });
+
+  if (isSessionLoading) {
+    return <Loading />;
+  }
+
+  if (!session) {
+    return <Unauthorized />;
+  }
 
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     setActiveTab(tabs[0] ?? null);
   });
 
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-3 p-4 pb-2">
+    <>
       <div className="mb-2 flex w-full items-start justify-start gap-3">
         {activeTab ? (
           <>
@@ -38,13 +64,24 @@ const Component = () => {
           <Skeleton className="h-20 w-full" />
         )}
       </div>
-      <Button className="h-8.5 w-full text-[0.8rem]">Sync now!</Button>
-      <Footer />
-    </div>
+
+      <div className="mb-1.5 w-full">
+        <Button className="h-8.5  w-full text-[0.8rem]">Sync now!</Button>
+      </div>
+    </>
   );
 };
 
 export const Popup = withErrorBoundary(
-  withSuspense(Component, <div> Loading... </div>),
-  <div> Error occured! </div>,
+  withSuspense(
+    () => (
+      <QueryClientProvider client={queryClient}>
+        <PopupLayout>
+          <Component />
+        </PopupLayout>
+      </QueryClientProvider>
+    ),
+    <Loading />,
+  ),
+  <Error />,
 );

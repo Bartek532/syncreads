@@ -17,7 +17,7 @@ const manifest = {
   name: "__MSG_extensionName__",
   version: packageJson.version,
   description: "__MSG_extensionDescription__",
-  permissions: ["activeTab"],
+  permissions: ["storage", "tabs", "activeTab", "cookies"],
   background: {
     service_worker: "src/pages/background/index.js",
     type: "module",
@@ -29,24 +29,28 @@ const manifest = {
   icons: {
     128: "icon-128.png",
   },
-  content_scripts: [
-    {
-      matches: ["http://*/*", "https://*/*", "<all_urls>"],
-      js: ["src/pages/contentInjected/index.js"],
-      // KEY for cache invalidation
-      // css: ["assets/css/contentStyle<KEY>.chunk.css"],
-    },
-    {
-      matches: ["http://*/*", "https://*/*", "<all_urls>"],
-      js: ["src/pages/contentUI/index.js"],
-    },
-  ],
+  // content_scripts: [
+  //   {
+  //     matches: ["http://*/*", "https://*/*", "<all_urls>"],
+  //     js: ["src/pages/contentInjected/index.js"],
+  //     // KEY for cache invalidation
+  //     // css: ["assets/css/contentStyle<KEY>.chunk.css"],
+  //   },
+  //   {
+  //     matches: ["http://*/*", "https://*/*", "<all_urls>"],
+  //     js: ["src/pages/contentUI/index.js"],
+  //   },
+  // ],
   web_accessible_resources: [
     {
       resources: ["icon-128.png", "icon-34.png"],
       matches: ["*://*/*"],
     },
   ],
+  host_permissions: ["<all_urls>"],
+  externally_connectable: {
+    matches: ["*://localhost/*"],
+  },
 };
 
 export default manifest;

@@ -20,6 +20,13 @@ export const anonDatabaseSchema = sharedSchema.merge(
   }),
 );
 
+export const clientDatabaseSchema = sharedSchema.merge(
+  z.object({
+    VITE_SUPABASE_URL: z.string().url(),
+    VITE_SUPABASE_ANON_KEY: z.string(),
+  }),
+);
+
 export const serviceDatabaseSchema = sharedSchema.merge(
   z.object({
     SUPABASE_URL: z.string().url(),
@@ -55,6 +62,7 @@ export const webClientSchema = sharedSchema.merge(
 );
 
 export type AnonDatabaseConfig = z.infer<typeof anonDatabaseSchema>;
+export type ClientDatabaseConfig = z.infer<typeof clientDatabaseSchema>;
 export type ServiceDatabaseConfig = z.infer<typeof serviceDatabaseSchema>;
 export type ServerConfig = z.infer<typeof serverSchema>;
 export type WebServerConfig = z.infer<typeof webServerSchema>;

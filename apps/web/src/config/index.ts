@@ -1,25 +1,22 @@
 import { DeviceType } from "@rssmarkable/database";
-import { NODE_ENV } from "@rssmarkable/shared";
+import {
+  APP_NAME,
+  APP_NAME_SEPARATOR,
+  APP_ORIGIN,
+  NODE_ENV,
+} from "@rssmarkable/shared";
 
 import { env } from "../lib/env/client";
 
 import type { DefaultToastOptions } from "react-hot-toast";
 
 export const ORIGIN =
-  env.NEXT_PUBLIC_HOST ??
-  env.NEXT_PUBLIC_VERCEL_URL ??
-  ("rssmarkable.com" as const);
+  env.NEXT_PUBLIC_HOST ?? env.NEXT_PUBLIC_VERCEL_URL ?? APP_ORIGIN;
 export const PROTOCOL = env.NODE_ENV === NODE_ENV.PRODUCTION ? "https" : "http";
-export const HOST = `${PROTOCOL}://${ORIGIN}` as const;
-export const SITE_TITLE = "RSSmarkable";
-export const SITE_TITLE_APPENDIX =
-  "Seamlessly sync articles and feeds from the web.";
-export const SITE_DESCRIPTION =
-  "Say goodbye to your RSS reader. Sync your favorite content to selected device and read without distractions with just a few clicks.";
-export const SEPARATOR = " | ";
-export const SITE_TITLE_TEMPLATE = `%s${SEPARATOR}${SITE_TITLE}`;
+export const LINK = `${PROTOCOL}://${ORIGIN}` as const;
+export const APP_NAME_TEMPLATE = `%s${APP_NAME_SEPARATOR}${APP_NAME}`;
 
-export const SITE_IMAGE = {
+export const APP_IMAGE = {
   light: "/images/banner/light.png",
   dark: "/images/banner/dark.png",
 };

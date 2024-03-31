@@ -19,10 +19,13 @@
   "dependencies": {
     "@radix-ui/react-avatar": "1.0.4",
     "@radix-ui/react-slot": "1.0.2",
+    "@rssmarkable/database": "workspace:*",
     "@rssmarkable/shared": "workspace:*",
+    "@tanstack/react-query": "4.29.1",
     "class-variance-authority": "0.7.0",
     "clsx": "^1.2.1",
     "construct-style-sheets-polyfill": "3.1.0",
+    "lucide-react": "0.294.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "tailwind-merge": "^1.8.1",

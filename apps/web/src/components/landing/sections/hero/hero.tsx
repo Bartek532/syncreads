@@ -1,17 +1,13 @@
 "use client";
 
+import { APP_DESCRIPTION, APP_NAME_APPENDIX } from "@rssmarkable/shared";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 import { ThemedImage } from "@/components/ui/themed-image";
 
-import {
-  REPOSITORY_URL,
-  SITE_DESCRIPTION,
-  SITE_IMAGE,
-  SITE_TITLE_APPENDIX,
-} from "../../../../config";
+import { APP_IMAGE, REPOSITORY_URL } from "../../../../config";
 import { buttonVariants } from "../../../ui/button";
 
 export const Hero = () => {
@@ -46,7 +42,7 @@ export const Hero = () => {
         }}
         viewport={{ once: true }}
       >
-        {SITE_TITLE_APPENDIX}
+        {APP_NAME_APPENDIX}
       </motion.h1>
       <motion.p
         className="max-w-2xl text-center text-muted-foreground md:text-xl"
@@ -58,7 +54,7 @@ export const Hero = () => {
         }}
         viewport={{ once: true }}
       >
-        {SITE_DESCRIPTION}
+        {APP_DESCRIPTION}
       </motion.p>
       <motion.div
         className="mt-2 flex gap-4 sm:mt-4"
@@ -91,7 +87,7 @@ export const Hero = () => {
       >
         <ThemedImage
           className="relative w-full rounded-lg sm:mt-10"
-          src={SITE_IMAGE}
+          src={APP_IMAGE}
           defaultVariant="light"
           alt=""
           sizes="(max-width: 1023px) 100vw, 80rem"

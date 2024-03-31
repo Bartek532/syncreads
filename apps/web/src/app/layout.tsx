@@ -12,6 +12,8 @@ import { DEFAULT_METADATA, DEFAULT_VIEWPORT } from "../lib/metadata";
 import "../styles/globals.css";
 import { TRPCReactProvider } from "../trpc/react";
 
+import { XD } from "./xd";
+
 export const metadata = DEFAULT_METADATA;
 export const viewport = DEFAULT_VIEWPORT;
 
@@ -36,6 +38,7 @@ export default function RootLayout({
               gutter={13}
               toastOptions={TOASTER_CONFIG}
             />
+            <XD />
             {children}
           </ThemeProvider>
         </TRPCReactProvider>

@@ -2,8 +2,8 @@ name: Deployment
 
 on:
   push:
-    # branches: [main]
-    branches: [develop]
+    branches: [main]
+    # branches: [develop]
 
 env:
   NODE_VERSION: 20.x
@@ -99,7 +99,7 @@ jobs:
     name: 🚀 Deploy extension
     runs-on: ubuntu-latest
     environment: Production
-    # needs: db
+    needs: [web, sync]
     env:
       EXTENSION_ID: ${{ secrets.EXTENSION_ID }}
       CLIENT_ID: ${{ secrets.EXTENSION_GOOGLE_CLIENT_ID }}
@@ -127,8 +127,8 @@ jobs:
           name: syncreads-extension-${{ github.sha }}
           path: syncreads-extension-${{ github.sha }}.zip
 
-      - name: Install webstore CLI
+      - name: 🔌 Install CLI
         run: pnpm install --global chrome-webstore-upload-cli
 
-      - name: Deploy extension
+      - name: 💨 Deploy!
         run: chrome-webstore-upload upload --source syncreads-extension-${{ github.sha }}.zip
