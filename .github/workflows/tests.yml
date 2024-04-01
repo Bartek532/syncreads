@@ -50,10 +50,6 @@ jobs:
       - name: 🖌️ Format
         run: pnpm run format:check
 
-      - name: 📦 Build
-        # builds only sync app, because we're building web in Next.js bundle analysis
-        run: pnpm run build:sync
-
       - name: 🛻 Lint
         run: pnpm run lint
 

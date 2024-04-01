@@ -7,8 +7,7 @@ export const getSession = async () => {
   const { data } = await supabase.auth.getSession();
 
   const cookie = await chrome.cookies.get({
-    // TODO: Change this to the production URL
-    url: "",
+    url: env.VITE_WEB_APP_URL,
     name: env.VITE_AUTH_COOKIE_NAME,
   });
 

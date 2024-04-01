@@ -1,0 +1,55 @@
+name: Extension publish
+
+on:
+  push:
+    branches: [develop]
+
+env:
+  NODE_VERSION: 20.x
+  VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+  VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+  VITE_SYNC_API_URL: ${{ secrets.SYNC_API_URL }}
+  VITE_WEB_APP_URL: ${{ secrets.WEB_APP_URL }}
+  VITE_AUTH_COOKIE_NAME: ${{ secrets.SUPABASE_AUTH_COOKIE_NAME }}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  chrome:
+    name: 🌐 Chrome
+    runs-on: ubuntu-latest
+    environment: Production
+    env:
+      EXTENSION_ID: ${{ secrets.EXTENSION_ID }}
+      CLIENT_ID: ${{ secrets.EXTENSION_GOOGLE_CLIENT_ID }}
+      CLIENT_SECRET: ${{ secrets.EXTENSION_GOOGLE_CLIENT_SECRET }}
+      REFRESH_TOKEN: ${{ secrets.EXTENSION_GOOGLE_REFRESH_TOKEN }}
+
+    steps:
+      - name: ✅ Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔨 Setup
+        uses: ./.github/workflows/setup
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: 📦 Build
+        run: pnpm run build:extension
+
+      - name: 🗜️ Zip
+        run: (cd apps/extension/dist && zip -r "$OLDPWD/syncreads-extension-${{ github.sha }}.zip" .)
+
+      - name: 🗃️ Archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: syncreads-extension-${{ github.sha }}
+          path: syncreads-extension-${{ github.sha }}.zip
+
+      - name: 🔌 Install CLI
+        run: pnpm install --global chrome-webstore-upload-cli
+
+      - name: 💨 Publish!
+        run: chrome-webstore-upload upload --source syncreads-extension-${{ github.sha }}.zip

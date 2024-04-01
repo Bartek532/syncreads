@@ -17,7 +17,6 @@ jobs:
     name: ⚙️ Setup database
     runs-on: ubuntu-latest
     environment: Production
-    if: ${{false}}
     env:
       SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
       SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
@@ -51,7 +50,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: Production
     needs: db
-    if: ${{ false  }}
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
