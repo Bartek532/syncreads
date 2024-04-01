@@ -1,10 +1,9 @@
-import { HTTP_STATUS_CODE } from "@rssmarkable/shared";
+import { HTTP_STATUS_CODE, ApiError } from "@rssmarkable/shared";
 import dayjs from "dayjs";
 
 import type { LimitInput, RangeInput, UpdateUserInput } from "@/utils";
 
 import { supabase } from "../../lib/supabase/server";
-import { ApiError } from "../utils/exceptions";
 
 import type { DeviceType } from "@rssmarkable/database";
 

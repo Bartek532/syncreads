@@ -13,7 +13,7 @@ import type { DefaultToastOptions } from "react-hot-toast";
 export const ORIGIN =
   env.NEXT_PUBLIC_HOST ?? env.NEXT_PUBLIC_VERCEL_URL ?? APP_ORIGIN;
 export const PROTOCOL = env.NODE_ENV === NODE_ENV.PRODUCTION ? "https" : "http";
-export const LINK = `${PROTOCOL}://${ORIGIN}` as const;
+export const URL = `${PROTOCOL}://${ORIGIN}` as const;
 export const APP_NAME_TEMPLATE = `%s${APP_NAME_SEPARATOR}${APP_NAME}`;
 
 export const APP_IMAGE = {

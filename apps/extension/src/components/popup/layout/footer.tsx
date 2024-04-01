@@ -1,6 +1,7 @@
-import { APP_NAME, APP_LINK } from "@rssmarkable/shared";
+import { APP_NAME } from "@rssmarkable/shared";
 
 import logo from "@/assets/svg/logo.svg";
+import { env } from "@/lib/env";
 
 export const Footer = () => {
   return (
@@ -14,7 +15,7 @@ export const Footer = () => {
         <span className="text-[0.65rem] text-muted-foreground">
           Powered by{" "}
           <a
-            href={APP_LINK}
+            href={env.VITE_WEB_APP_URL}
             target="_blank"
             className="underline hover:no-underline"
           >

@@ -33,5 +33,8 @@ export type Response<
   T extends OPERATION_TYPE,
   K extends OperationName<T>,
   F = typeof operations[T][K],
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-> = F extends (...args: any) => any ? ReturnType<F> : never;
+> = {
+  error: string | null;
+  data: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (F extends (...args: any) => any ? Awaited<ReturnType<F>> : never) | null;
+};

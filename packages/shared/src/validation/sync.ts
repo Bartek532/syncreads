@@ -25,6 +25,13 @@ export const syncLogMessageSchema = z.object({
   date: z.string(),
 });
 
+export const syncApiResponseSchema = z.object({
+  message: z.string(),
+  sync: z.object({
+    id: z.string().uuid(),
+  }),
+});
+
 export type SyncFeedPayload = z.infer<typeof syncFeedPayloadSchema>;
 export type SyncArticlePayload = z.infer<typeof syncArticlePayloadSchema>;
 export type SyncOptionsPayload = z.infer<typeof syncOptionsPayloadSchema>;
@@ -34,3 +41,5 @@ export type SyncArticleInput = z.input<typeof syncArticlePayloadSchema>;
 export type SyncOptionsInput = z.input<typeof syncOptionsPayloadSchema>;
 
 export type LogMessage = z.infer<typeof syncLogMessageSchema>;
+
+export type SyncApiResponse = z.infer<typeof syncApiResponseSchema>;

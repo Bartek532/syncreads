@@ -1,6 +1,6 @@
 import { APP_DESCRIPTION, APP_NAME } from "@rssmarkable/shared";
 
-import { LINK, APP_IMAGE, APP_NAME_TEMPLATE } from "../config";
+import { URL, APP_IMAGE, APP_NAME_TEMPLATE } from "../config";
 
 import type { Metadata, Viewport } from "next";
 
@@ -31,7 +31,7 @@ export const DEFAULT_METADATA: Metadata = {
       width: 2717,
       height: 2038,
       alt: APP_NAME,
-      url: `${LINK}${APP_IMAGE.light}`,
+      url: `${URL}${APP_IMAGE.light}`,
     },
     siteName: APP_NAME,
   },
@@ -87,7 +87,7 @@ export const getMetadata = (
       width: 2717,
       height: 2038,
       alt: title,
-      url: `${LINK}${image}`,
+      url: `${URL}${image}`,
     },
     siteName: APP_NAME,
   },

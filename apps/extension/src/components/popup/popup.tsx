@@ -1,12 +1,16 @@
 import { removeProtocolsFromUrl } from "@rssmarkable/shared";
 import { QueryClientProvider } from "@tanstack/react-query";
+import { ArrowRight, Loader2 } from "lucide-react";
 import { useState } from "react";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { queryClient } from "@/lib/api";
+import { env } from "@/lib/env";
 import withErrorBoundary from "@/lib/hoc/withErrorBoundary";
 import withSuspense from "@/lib/hoc/withSuspense";
 import { useSession } from "@/lib/hooks/useSession";
+import { useSync } from "@/lib/hooks/useSync";
+import { cn } from "@/utils";
 
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Skeleton } from "../ui/skeleton";
@@ -17,18 +21,14 @@ import { Loading } from "./layout/loading";
 import { Unauthorized } from "./layout/unauthorized";
 
 const Component = () => {
-  const { session, isLoading: isSessionLoading } = useSession();
+  const { data: session, isLoading: isSessionLoading } = useSession();
+  const {
+    mutate: queueArticleSync,
+    data: syncData,
+    error: syncError,
+    isLoading: isArticleSyncLoading,
+  } = useSync();
   const [activeTab, setActiveTab] = useState<chrome.tabs.Tab | null>(null);
-
-  // const { data, mutate, isLoading } = useMutation({
-  //   mutationFn: () => {
-  //     console.log("fetching active tab", session.session.data.user.id);
-  //     return chrome.runtime.sendMessage({
-  //       type: "GET_ACTIVE_TAB",
-  //       payload: { userId: session.session.data.user.id },
-  //     });
-  //   },
-  // });
 
   if (isSessionLoading) {
     return <Loading />;
@@ -66,7 +66,47 @@ const Component = () => {
       </div>
 
       <div className="mb-1.5 w-full">
-        <Button className="h-8.5  w-full text-[0.8rem]">Sync now!</Button>
+        {syncData ? (
+          <a
+            href={`${env.VITE_WEB_APP_URL}/dashboard/syncs/${syncData.id}`}
+            target="_blank"
+            className={cn(
+              buttonVariants(),
+              "flex h-9 w-full cursor-pointer items-center justify-center gap-1.5 bg-success text-[0.8rem] hover:bg-success/90",
+            )}
+          >
+            Success! Track it <ArrowRight className="w-3.5" />
+          </a>
+        ) : (
+          <Button
+            className={cn(
+              "h-9 w-full text-[0.8rem]",
+              !!syncError &&
+                "bg-destructive text-destructive-foreground hover:bg-destructive disabled:opacity-100",
+            )}
+            disabled={isArticleSyncLoading || !!syncError}
+            onClick={() =>
+              queueArticleSync({
+                userId: session.user.id,
+                input: {
+                  url: activeTab?.url ?? "",
+                },
+              })
+            }
+          >
+            {isArticleSyncLoading ? (
+              <Loader2 className="h-[1.12rem] w-[1.12rem] animate-spin" />
+            ) : !!syncError ? (
+              typeof syncError === "string" ? (
+                syncError
+              ) : (
+                "Something went wrong! Try again later."
+              )
+            ) : (
+              "Sync now!"
+            )}
+          </Button>
+        )}
       </div>
     </>
   );

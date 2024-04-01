@@ -1,3 +1,9 @@
+import { syncArticle } from "./sync";
+
+export enum MUTATIONS {
+  SYNC_ARTICLE = "sync-article",
+}
+
 export const mutations = {
-  XD: () => {},
+  [MUTATIONS.SYNC_ARTICLE]: syncArticle,
 };

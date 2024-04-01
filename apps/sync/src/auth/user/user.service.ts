@@ -66,7 +66,7 @@ export class UserService {
       .single();
 
     if (status === HTTP_STATUS_CODE.NOT_ACCEPTABLE) {
-      throw new NotFoundException("Device not found!");
+      throw new NotFoundException("Register your device first!");
     }
 
     if (error) {

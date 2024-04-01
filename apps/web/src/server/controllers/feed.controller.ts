@@ -1,4 +1,4 @@
-import { HTTP_STATUS_CODE } from "@rssmarkable/shared";
+import { HTTP_STATUS_CODE, ApiError } from "@rssmarkable/shared";
 import { getLinkPreview, getPreviewFromContent } from "link-preview-js";
 import { parse } from "rss-to-json";
 
@@ -6,7 +6,6 @@ import type { FeedApi } from "@/types/feed.types";
 
 import { createFeed, importStrategies } from "../services/feed/feed.service";
 import { getUserFeedByUrl } from "../services/user.service";
-import { ApiError } from "../utils/exceptions";
 import { isFeedUrl } from "../utils/validation";
 
 import type {

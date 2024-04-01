@@ -1,4 +1,4 @@
-import { HTTP_STATUS_CODE } from "@rssmarkable/shared";
+import { HTTP_STATUS_CODE, ApiError } from "@rssmarkable/shared";
 import dayjs from "dayjs";
 
 import { deleteFeed, getFeedById } from "../services/feed/feed.service";
@@ -13,7 +13,6 @@ import {
   updateUser,
   getUserSyncsCount,
 } from "../services/user.service";
-import { ApiError } from "../utils/exceptions";
 
 import type {
   CursorPaginationInput,

@@ -1,5 +1,6 @@
-import { HTTP_STATUS_CODE } from "@rssmarkable/shared";
 import { z } from "zod";
+
+import { HTTP_STATUS_CODE } from "../constants";
 
 const isHttpStatus = (status: number): status is HTTP_STATUS_CODE =>
   Object.values<number>(HTTP_STATUS_CODE).includes(status);

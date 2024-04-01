@@ -1,10 +1,10 @@
 import {
   HTTP_STATUS_CODE,
+  ApiError,
   type SyncArticlePayload,
   type SyncFeedPayload,
 } from "@rssmarkable/shared";
 
-import { ApiError } from "@/server/utils/exceptions";
 import type { GetSyncInput, GetSyncLogInput } from "@/utils";
 
 import {

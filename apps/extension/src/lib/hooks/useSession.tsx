@@ -5,21 +5,23 @@ import { QUERIES } from "../api/queries";
 
 import type { Message, Response } from "../api";
 
-export const useSession = () => {
-  const { data, isLoading } = useQuery({
+export const useSession = () =>
+  useQuery({
     queryKey: [QUERIES.SESSION],
-    queryFn: async () =>
-      chrome.runtime.sendMessage<
+    queryFn: async () => {
+      const response = await chrome.runtime.sendMessage<
         Message<OPERATION_TYPE.QUERY, QUERIES.SESSION>,
         Response<OPERATION_TYPE.QUERY, QUERIES.SESSION>
       >({
         type: OPERATION_TYPE.QUERY,
         name: QUERIES.SESSION,
-      }),
-  });
+        payload: undefined,
+      });
 
-  return {
-    session: data,
-    isLoading,
-  };
-};
+      if (response.error) {
+        return Promise.reject(response.error);
+      }
+
+      return response.data;
+    },
+  });
