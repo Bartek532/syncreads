@@ -1,10 +1,4 @@
 import {
-  anonDatabaseSchema,
-  clientDatabaseSchema,
-  serviceDatabaseSchema,
-  validateConfig,
-} from "@syncreads/shared";
-import {
   createBrowserClient as createBrowserSupabaseClient,
   createServerClient as createServerSupabaseClient,
 } from "@supabase/ssr";
@@ -13,6 +7,12 @@ import {
   type SupabaseClientOptions as SupabaseClientOptionsType,
   type SupabaseClient as SupabaseClientType,
 } from "@supabase/supabase-js";
+import {
+  anonDatabaseSchema,
+  clientDatabaseSchema,
+  serviceDatabaseSchema,
+  validateConfig,
+} from "@syncreads/shared";
 
 import { anonEnv, serviceEnv } from "./env";
 
