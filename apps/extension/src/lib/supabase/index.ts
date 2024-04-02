@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { createExtensionClient } from "@rssmarkable/database";
+import { createExtensionClient } from "@syncreads/database";
 
 const env = {
   VITE_SUPABASE_URL: import.meta.env.VITE_SUPABASE_URL,

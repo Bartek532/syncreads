@@ -1,5 +1,5 @@
 import { HttpException, Injectable } from "@nestjs/common";
-import { HTTP_STATUS_CODE } from "@rssmarkable/shared";
+import { HTTP_STATUS_CODE } from "@syncreads/shared";
 import dayjs from "dayjs";
 
 import { UserService } from "../../auth/user/user.service";

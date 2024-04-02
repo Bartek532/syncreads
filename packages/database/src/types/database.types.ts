@@ -1,5 +1,5 @@
 import type { Database } from "./generated/schema";
-import type { UserMetadata } from "@rssmarkable/shared";
+import type { UserMetadata } from "@syncreads/shared";
 import type { AuthSession, User as UserType } from "@supabase/supabase-js";
 
 // Generics

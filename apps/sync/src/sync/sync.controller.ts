@@ -10,8 +10,8 @@ import {
   Device as DeviceType,
   SyncStatus,
   SyncTrigger,
-} from "@rssmarkable/database";
-import { clearUrl } from "@rssmarkable/shared";
+} from "@syncreads/database";
+import { clearUrl } from "@syncreads/shared";
 import { Queue } from "bull";
 
 import { UserId } from "../auth/decorators/user-id.decorator";

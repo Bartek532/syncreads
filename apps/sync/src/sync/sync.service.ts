@@ -10,7 +10,7 @@ import type {
   InsertArticle,
   InsertSync,
   UpdateSync,
-} from "@rssmarkable/database";
+} from "@syncreads/database";
 
 @Injectable()
 export class SyncService {

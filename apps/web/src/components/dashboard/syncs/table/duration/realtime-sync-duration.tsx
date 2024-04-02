@@ -8,7 +8,7 @@ import { memo, useEffect, useState } from "react";
 import { useRealtimeSyncs } from "@/hooks/useRealtime";
 import { cn } from "@/utils";
 
-import type { Sync } from "@rssmarkable/database";
+import type { Sync } from "@syncreads/database";
 
 dayjs.extend(duration);
 

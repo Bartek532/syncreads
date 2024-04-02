@@ -1,4 +1,4 @@
-import { APP_NAME } from "@rssmarkable/shared";
+import { APP_NAME } from "@syncreads/shared";
 
 import logo from "@/assets/svg/logo.svg";
 import { env } from "@/lib/env";
@@ -9,7 +9,7 @@ export const Footer = () => {
       <div className="flex items-center justify-center gap-2">
         <img
           src={logo}
-          alt="RSSmarkable logo"
+          alt="SyncReads logo"
           className="w-3.5 select-none opacity-70"
         />
         <span className="text-[0.65rem] text-muted-foreground">

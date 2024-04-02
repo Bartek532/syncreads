@@ -1,4 +1,4 @@
-import { removeProtocolsFromUrl } from "@rssmarkable/shared";
+import { removeProtocolsFromUrl } from "@syncreads/shared";
 import { ArrowUpRight } from "lucide-react";
 import { memo } from "react";
 

@@ -19,7 +19,7 @@ import { DASHBOARD_SECONDARY_NAVIGATION } from "@/config/dashboard";
 import { supabase } from "@/lib/supabase/client";
 import { getAvatar, getName, onPromise } from "@/utils";
 
-import type { User } from "@rssmarkable/database";
+import type { User } from "@syncreads/database";
 
 type UserNavigationProps = {
   readonly user: User;

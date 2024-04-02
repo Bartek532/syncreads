@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { DeviceType } from "@rssmarkable/database";
-import { GENERIC_ERROR_MESSAGE } from "@rssmarkable/shared";
+import { DeviceType } from "@syncreads/database";
+import { GENERIC_ERROR_MESSAGE } from "@syncreads/shared";
 import { Loader2 } from "lucide-react";
 import { memo } from "react";
 import { useForm } from "react-hook-form";

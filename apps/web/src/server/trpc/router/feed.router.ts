@@ -1,4 +1,4 @@
-import { clearUrl } from "@rssmarkable/shared";
+import { clearUrl } from "@syncreads/shared";
 
 import { router, protectedProcedure } from "..";
 import {

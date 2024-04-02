@@ -2,7 +2,7 @@ const { fontFamily } = require("tailwindcss/defaultTheme");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  presets: [require("@rssmarkable/config/ui/tailwind")],
+  presets: [require("@syncreads/config/ui/tailwind")],
   content: [
     "src/app/**/*.{ts,tsx}",
     "src/components/**/*.{ts,tsx}",

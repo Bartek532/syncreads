@@ -1,5 +1,5 @@
 {
-  "name": "@rssmarkable/shared",
+  "name": "@syncreads/shared",
   "version": "1.0.0",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -19,7 +19,7 @@
     "zod": "^3.22.3"
   },
   "devDependencies": {
-    "@rssmarkable/config": "workspace:*",
+    "@syncreads/config": "workspace:*",
     "@types/node": "^18.0.0",
     "rimraf": "3.0.2",
     "tsup": "8.0.1",

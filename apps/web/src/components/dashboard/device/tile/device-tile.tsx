@@ -1,4 +1,4 @@
-import { DeviceType, type Device } from "@rssmarkable/database";
+import { DeviceType, type Device } from "@syncreads/database";
 import dayjs from "dayjs";
 import { CalendarDays } from "lucide-react";
 import { memo } from "react";

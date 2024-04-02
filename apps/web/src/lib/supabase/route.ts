@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { createServerClient } from "@rssmarkable/database";
+import { createServerClient } from "@syncreads/database";
 import { cookies } from "next/headers";
 
-import type { CookieOptions } from "@rssmarkable/database";
+import type { CookieOptions } from "@syncreads/database";
 
 export const supabase = () => {
   const cookieStore = cookies();

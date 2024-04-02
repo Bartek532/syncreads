@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { OUTPUT_FORMAT } from "@rssmarkable/shared";
+import { OUTPUT_FORMAT } from "@syncreads/shared";
 import {
   GenerationError,
   type CollectionMetadataEntry,

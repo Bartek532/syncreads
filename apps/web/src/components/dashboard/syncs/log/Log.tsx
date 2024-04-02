@@ -1,6 +1,6 @@
 "use client";
 
-import { type Log } from "@rssmarkable/database";
+import { type Log } from "@syncreads/database";
 import dayjs from "dayjs";
 import { marked } from "marked";
 import { useParams, useRouter } from "next/navigation";
@@ -11,8 +11,8 @@ import { SYNC_LOG_LEVEL_COLORS } from "@/config/sync";
 import { useRealtimeLog, useRealtimeSyncs } from "@/hooks/useRealtime";
 import { cn } from "@/utils";
 
-import type { Sync } from "@rssmarkable/database";
-import type { LogMessage } from "@rssmarkable/shared";
+import type { Sync } from "@syncreads/database";
+import type { LogMessage } from "@syncreads/shared";
 
 type SyncLogProps = {
   readonly log: Log & { json: LogMessage[] };

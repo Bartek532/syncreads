@@ -1,11 +1,11 @@
-import { HTTP_STATUS_CODE, ApiError } from "@rssmarkable/shared";
+import { HTTP_STATUS_CODE, ApiError } from "@syncreads/shared";
 import dayjs from "dayjs";
 
 import type { LimitInput, RangeInput, UpdateUserInput } from "@/utils";
 
 import { supabase } from "../../lib/supabase/server";
 
-import type { DeviceType } from "@rssmarkable/database";
+import type { DeviceType } from "@syncreads/database";
 
 export const updateUser = async (input: UpdateUserInput) => {
   const { data, error } = await supabase().auth.getUser();

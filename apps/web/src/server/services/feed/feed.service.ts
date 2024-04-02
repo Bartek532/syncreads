@@ -1,4 +1,4 @@
-import { ApiError } from "@rssmarkable/shared";
+import { ApiError } from "@syncreads/shared";
 
 import { supabase } from "../../../lib/supabase/server";
 

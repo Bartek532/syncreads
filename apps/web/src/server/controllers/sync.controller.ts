@@ -3,7 +3,7 @@ import {
   ApiError,
   type SyncArticlePayload,
   type SyncFeedPayload,
-} from "@rssmarkable/shared";
+} from "@syncreads/shared";
 
 import type { GetSyncInput, GetSyncLogInput } from "@/utils";
 
@@ -17,7 +17,7 @@ import {
 import { getUserApiKey } from "../services/user.service";
 import { isLogMessage } from "../utils/validation";
 
-import type { LogMessage } from "@rssmarkable/shared";
+import type { LogMessage } from "@syncreads/shared";
 
 export const queueArticleSyncHandler = async ({
   id,

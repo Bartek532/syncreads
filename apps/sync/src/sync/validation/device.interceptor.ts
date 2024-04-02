@@ -7,7 +7,7 @@ import type {
   ExecutionContext,
   NestInterceptor,
 } from "@nestjs/common";
-import type { Device } from "@rssmarkable/database";
+import type { Device } from "@syncreads/database";
 import type { Request } from "express";
 
 @Injectable()

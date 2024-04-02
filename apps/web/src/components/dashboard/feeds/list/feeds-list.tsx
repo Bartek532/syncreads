@@ -13,7 +13,7 @@ import { Skeleton } from "../../../ui/skeleton";
 
 import { FeedTile, FeedTileSkeleton } from "./tile/feed-tile";
 
-import type { Feed } from "@rssmarkable/database";
+import type { Feed } from "@syncreads/database";
 
 const FeedsListSkeleton = () => (
   <div className="mt-6 flex flex-col gap-5">

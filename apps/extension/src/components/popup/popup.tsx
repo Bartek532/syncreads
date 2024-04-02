@@ -1,4 +1,4 @@
-import { removeProtocolsFromUrl } from "@rssmarkable/shared";
+import { removeProtocolsFromUrl } from "@syncreads/shared";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { useState } from "react";

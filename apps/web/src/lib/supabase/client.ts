@@ -1,6 +1,6 @@
-import { createBrowserClient } from "@rssmarkable/database";
+import { createBrowserClient } from "@syncreads/database";
 
-import type { SupabaseClient } from "@rssmarkable/database";
+import type { SupabaseClient } from "@syncreads/database";
 
 let client: SupabaseClient | null = null;
 

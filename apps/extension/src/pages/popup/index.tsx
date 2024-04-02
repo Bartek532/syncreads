@@ -1,4 +1,4 @@
-import "@rssmarkable/config/ui/css/globals.css";
+import "@syncreads/config/ui/css/globals.css";
 import { createRoot } from "react-dom/client";
 
 import { Popup } from "@/components/popup/popup";

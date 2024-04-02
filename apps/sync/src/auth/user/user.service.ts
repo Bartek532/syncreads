@@ -8,13 +8,13 @@ import {
   DEFAULT_USER_METADATA,
   HTTP_STATUS_CODE,
   isUserMetadata,
-} from "@rssmarkable/shared";
+} from "@syncreads/shared";
 import dayjs from "dayjs";
 
 import { SUPABASE_CLIENT_FACTORY_TOKEN } from "../../supabase/supabase.constants";
 import { SupabaseProviderFactory } from "../../supabase/supabase.provider";
 
-import type { UpdateUserFeed } from "@rssmarkable/database";
+import type { UpdateUserFeed } from "@syncreads/database";
 
 export class UserService {
   constructor(

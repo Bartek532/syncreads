@@ -5,7 +5,7 @@ import {
   DEFAULT_OPTIONS,
   OUTPUT_FORMAT,
   syncArticlePayloadSchema,
-} from "@rssmarkable/shared";
+} from "@syncreads/shared";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { memo } from "react";
@@ -35,8 +35,8 @@ import { Input } from "../../../../ui/input";
 import { RadioGroup, RadioGroupItem } from "../../../../ui/radio-group";
 import { queueArticleSync } from "../actions";
 
-import type { User } from "@rssmarkable/database";
-import type { SyncArticleInput } from "@rssmarkable/shared";
+import type { User } from "@syncreads/database";
+import type { SyncArticleInput } from "@syncreads/shared";
 
 type SyncArticleDialogProps = {
   readonly children?: React.ReactNode;

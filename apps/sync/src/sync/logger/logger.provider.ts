@@ -1,4 +1,4 @@
-import { LOG_LEVEL } from "@rssmarkable/shared";
+import { LOG_LEVEL } from "@syncreads/shared";
 import dayjs from "dayjs";
 
 import { SYNC_LOGGER_PROVIDER_TOKEN } from "./logger.constants";

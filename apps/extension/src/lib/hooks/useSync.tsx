@@ -4,7 +4,7 @@ import { OPERATION_TYPE } from "../api";
 import { MUTATIONS } from "../api/mutations";
 
 import type { Message, Response } from "../api";
-import type { SyncArticleInput } from "@rssmarkable/shared";
+import type { SyncArticleInput } from "@syncreads/shared";
 
 export const useSync = () =>
   useMutation({

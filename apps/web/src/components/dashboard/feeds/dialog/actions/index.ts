@@ -1,6 +1,6 @@
 "use server";
 
-import { GENERIC_ERROR_MESSAGE } from "@rssmarkable/shared";
+import { GENERIC_ERROR_MESSAGE } from "@syncreads/shared";
 import { revalidatePath } from "next/cache";
 
 import { api } from "@/trpc/server";

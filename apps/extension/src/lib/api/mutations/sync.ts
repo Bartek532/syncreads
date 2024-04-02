@@ -3,7 +3,7 @@ import {
   isSyncApiErrorResponse,
   syncApiResponseSchema,
   type SyncArticleInput,
-} from "@rssmarkable/shared";
+} from "@syncreads/shared";
 
 import { env } from "@/lib/env";
 import { supabase } from "@/lib/supabase";

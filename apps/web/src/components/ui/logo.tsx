@@ -1,4 +1,4 @@
-import { APP_NAME } from "@rssmarkable/shared";
+import { APP_NAME } from "@syncreads/shared";
 import Link from "next/link";
 import { memo } from "react";
 

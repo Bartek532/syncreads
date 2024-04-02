@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { DEFAULT_USER_METADATA } from "@rssmarkable/shared";
+import { DEFAULT_USER_METADATA } from "@syncreads/shared";
 import { Loader2 } from "lucide-react";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
@@ -27,7 +27,7 @@ import { RadioGroup, RadioGroupItem } from "../../../ui/radio-group";
 import { updateUser } from "./actions";
 import { formats } from "./constants";
 
-import type { User } from "@rssmarkable/database";
+import type { User } from "@syncreads/database";
 
 type ProfileForm = {
   readonly user: User;

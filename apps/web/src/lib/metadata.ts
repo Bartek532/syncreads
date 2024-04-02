@@ -1,4 +1,4 @@
-import { APP_DESCRIPTION, APP_NAME } from "@rssmarkable/shared";
+import { APP_DESCRIPTION, APP_NAME } from "@syncreads/shared";
 
 import { URL, APP_IMAGE, APP_NAME_TEMPLATE } from "../config";
 

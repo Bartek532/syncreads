@@ -1,4 +1,4 @@
-import { HTTP_STATUS_CODE, ApiError } from "@rssmarkable/shared";
+import { HTTP_STATUS_CODE, ApiError } from "@syncreads/shared";
 import dayjs from "dayjs";
 
 import { deleteFeed, getFeedById } from "../services/feed/feed.service";

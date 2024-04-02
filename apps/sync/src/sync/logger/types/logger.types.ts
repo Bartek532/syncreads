@@ -1,4 +1,4 @@
-import type { Log } from "@rssmarkable/database";
-import type { LOG_LEVEL } from "@rssmarkable/shared";
+import type { Log } from "@syncreads/database";
+import type { LOG_LEVEL } from "@syncreads/shared";
 
 export type Logger = Record<LOG_LEVEL, (message: string) => Promise<Log>>;

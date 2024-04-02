@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import Sendgrid from "@sendgrid/mail";
 
-import type { ServerConfig } from "@rssmarkable/shared";
+import type { ServerConfig } from "@syncreads/shared";
 import type { MailDataRequired } from "@sendgrid/mail";
 
 @Injectable()

@@ -6,7 +6,7 @@ import { KINDLE_CLIENT_FACTORY_TOKEN } from "./kindle.constants";
 import { KindleProviderFactory } from "./kindle.provider";
 
 import type { DeviceStrategy } from "../device.interface";
-import type { OUTPUT_FORMAT } from "@rssmarkable/shared";
+import type { OUTPUT_FORMAT } from "@syncreads/shared";
 
 @Injectable()
 export class KindleStrategy implements DeviceStrategy {

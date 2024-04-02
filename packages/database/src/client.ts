@@ -3,7 +3,7 @@ import {
   clientDatabaseSchema,
   serviceDatabaseSchema,
   validateConfig,
-} from "@rssmarkable/shared";
+} from "@syncreads/shared";
 import {
   createBrowserClient as createBrowserSupabaseClient,
   createServerClient as createServerSupabaseClient,

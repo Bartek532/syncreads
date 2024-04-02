@@ -5,7 +5,7 @@ import {
   syncApiResponseSchema,
   type SyncArticleInput,
   type SyncFeedInput,
-} from "@rssmarkable/shared";
+} from "@syncreads/shared";
 
 import { env } from "@/lib/env/server";
 import { supabase } from "@/lib/supabase/server";

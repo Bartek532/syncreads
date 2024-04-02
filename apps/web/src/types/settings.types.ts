@@ -1,4 +1,4 @@
-import { OUTPUT_FORMAT } from "@rssmarkable/shared";
+import { OUTPUT_FORMAT } from "@syncreads/shared";
 import { z } from "zod";
 
 export enum THEME {

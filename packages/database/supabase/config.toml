@@ -1,4 +1,4 @@
-project_id = "rssmarkable"
+project_id = "syncreads"
 
 [api]
 port = 54321

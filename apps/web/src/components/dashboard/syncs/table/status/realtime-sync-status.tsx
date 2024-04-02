@@ -6,7 +6,7 @@ import { SYNC_STATUS_COLORS } from "@/config/sync";
 import { useRealtimeSyncs } from "@/hooks/useRealtime";
 import { capitalize, cn } from "@/utils";
 
-import type { Sync } from "@rssmarkable/database";
+import type { Sync } from "@syncreads/database";
 
 type RealtimeSyncStatusProps = {
   readonly sync: Sync;

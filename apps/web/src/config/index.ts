@@ -1,10 +1,10 @@
-import { DeviceType } from "@rssmarkable/database";
+import { DeviceType } from "@syncreads/database";
 import {
   APP_NAME,
   APP_NAME_SEPARATOR,
   APP_ORIGIN,
   NODE_ENV,
-} from "@rssmarkable/shared";
+} from "@syncreads/shared";
 
 import { env } from "../lib/env/client";
 
@@ -21,7 +21,7 @@ export const APP_IMAGE = {
   dark: "/images/banner/dark.png",
 };
 
-export const REPOSITORY_URL = "https://github.com/Bartek532/rssmarkable";
+export const REPOSITORY_URL = "https://github.com/Bartek532/syncreads";
 export const TWITTER_URL = "https://twitter.com/bzagrodzki";
 
 export const LANDING_HEADER_NAVIGATION = [
@@ -35,7 +35,7 @@ export const LANDING_FEATURES = {
     base: "See the",
     sparkling: "magic",
   },
-  description: `Enjoy the features which make RSSmarkable great.`,
+  description: `Enjoy the features which make SyncReads great.`,
   list: [
     {
       title: "Simple",
@@ -68,7 +68,7 @@ export const LANDING_REVIEWS = {
   title: "What our users say",
   description: `We are proud to have such a great community.`,
   quote: {
-    content: `I love RSSmarkable. It's so easy to use and it works flawlessly. I can finally read my favorite articles without any fluff.`,
+    content: `I love SyncReads. It's so easy to use and it works flawlessly. I can finally read my favorite articles without any fluff.`,
     author: {
       name: "Philipp",
       position: "Software Engineer",
@@ -90,8 +90,8 @@ export const LANDING_FAQ = {
   title: "Frequently asked questions",
   questions: [
     {
-      question: "What is RSSmarkable?",
-      answer: `RSSmarkable is a service that allows you to sync content from the web to your favorite device.`,
+      question: "What is SyncReads?",
+      answer: `SyncReads is a service that allows you to sync content from the web to your favorite device.`,
     },
     {
       question: "How much does it cost?",

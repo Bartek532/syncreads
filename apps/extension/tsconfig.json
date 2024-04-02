@@ -1,5 +1,5 @@
 {
-  "extends": "@rssmarkable/config/tsconfig/base.json",
+  "extends": "@syncreads/config/tsconfig/base.json",
   "compilerOptions": {
     "baseUrl": ".",
     "noEmit": true,

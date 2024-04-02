@@ -1,7 +1,7 @@
-import { createServerClient } from "@rssmarkable/database";
+import { createServerClient } from "@syncreads/database";
 import { cookies } from "next/headers";
 
-import type { SupabaseClient } from "@rssmarkable/database";
+import type { SupabaseClient } from "@syncreads/database";
 
 let client: SupabaseClient | null = null;
 

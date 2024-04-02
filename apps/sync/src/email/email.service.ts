@@ -4,7 +4,7 @@ import { ConfigService } from "@nestjs/config";
 import { SendgridClient } from "./api/sendgrid.client";
 
 import type { Attachment } from "./types/email.types";
-import type { ServerConfig } from "@rssmarkable/shared";
+import type { ServerConfig } from "@syncreads/shared";
 
 @Injectable()
 export class EmailService {

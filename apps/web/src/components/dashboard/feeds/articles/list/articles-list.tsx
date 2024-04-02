@@ -9,7 +9,7 @@ import { SyncArticleDialog } from "../dialog/sync-article-dialog";
 
 import { ArticleTile } from "./tile/article-tile";
 
-import type { Article } from "@rssmarkable/database";
+import type { Article } from "@syncreads/database";
 
 type ArticlesListProps = {
   readonly articles: Article[];

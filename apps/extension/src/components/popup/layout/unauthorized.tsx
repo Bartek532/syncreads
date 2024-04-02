@@ -1,4 +1,4 @@
-import { APP_NAME } from "@rssmarkable/shared";
+import { APP_NAME } from "@syncreads/shared";
 
 import { buttonVariants } from "@/components/ui/button";
 import { env } from "@/lib/env";
@@ -12,7 +12,7 @@ export const Unauthorized = () => {
       </p>
       <a
         className={buttonVariants()}
-        href={env.VITE_WEB_APP_URL}
+        href={`${env.VITE_WEB_APP_URL}/auth/login`}
         target="_blank"
       >
         Log in

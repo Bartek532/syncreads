@@ -1,3 +1,3 @@
-import { extensionSchema, validateConfig } from "@rssmarkable/shared";
+import { extensionSchema, validateConfig } from "@syncreads/shared";
 
 export const env = validateConfig(extensionSchema, import.meta.env);

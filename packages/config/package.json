@@ -1,5 +1,5 @@
 {
-  "name": "@rssmarkable/config",
+  "name": "@syncreads/config",
   "files": [
     "ui",
     "eslint",

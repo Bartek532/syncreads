@@ -9,7 +9,7 @@ import { Empty } from "../../ui/empty";
 import { AddDeviceDialog } from "./dialog/add-device-dialog";
 import { DeviceTile } from "./tile/device-tile";
 
-import type { Device as DeviceType } from "@rssmarkable/database";
+import type { Device as DeviceType } from "@syncreads/database";
 
 type DeviceProps = {
   readonly device: DeviceType | null;

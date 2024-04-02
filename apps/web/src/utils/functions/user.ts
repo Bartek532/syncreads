@@ -1,4 +1,4 @@
-import type { User } from "@rssmarkable/database";
+import type { User } from "@syncreads/database";
 
 export const getName = (user: User) => {
   const identity = user.identities?.[0]?.identity_data;

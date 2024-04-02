@@ -14,7 +14,7 @@ import { AddFeedDialog } from "./dialog/add-feed-dialog";
 import { DeleteFeedDialog } from "./dialog/delete-feed-dialog";
 import { FeedsList } from "./list/feeds-list";
 
-import type { Feed } from "@rssmarkable/database";
+import type { Feed } from "@syncreads/database";
 
 export const Feeds = memo(() => {
   const router = useRouter();

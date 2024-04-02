@@ -1,5 +1,5 @@
-import { SyncStatus, SyncTrigger } from "@rssmarkable/database";
-import { LOG_LEVEL } from "@rssmarkable/shared";
+import { SyncStatus, SyncTrigger } from "@syncreads/database";
+import { LOG_LEVEL } from "@syncreads/shared";
 
 export const SYNCS_PAGINATION_DEFAULT_PAGE = 1;
 export const SYNCS_PAGINATION_DEFAULT_PER_PAGE = 10;

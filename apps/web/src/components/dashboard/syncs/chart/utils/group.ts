@@ -4,7 +4,7 @@ import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 
 import type { Range } from "@/utils";
 
-import type { Sync } from "@rssmarkable/database";
+import type { Sync } from "@syncreads/database";
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);

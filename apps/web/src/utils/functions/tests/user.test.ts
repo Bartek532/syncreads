@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 
 import { getAvatar, getName } from "../user";
 
-import type { User } from "@rssmarkable/database";
+import type { User } from "@syncreads/database";
 
 describe("getName", () => {
   it("should return the name from user_metadata if it exists", () => {

@@ -7,8 +7,8 @@ import type {
   Log,
   RealtimePostgresUpdatePayload,
   Sync,
-} from "@rssmarkable/database";
-import type { LogMessage } from "@rssmarkable/shared";
+} from "@syncreads/database";
+import type { LogMessage } from "@syncreads/shared";
 
 export const useRealtimeLog = ({
   syncId,

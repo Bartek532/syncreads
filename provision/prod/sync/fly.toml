@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for rssmarkable on 2023-05-31T19:16:54+02:00
+# fly.toml app configuration file generated for syncreads on 2023-05-31T19:16:54+02:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "rssmarkable"
+app = "syncreads"
 primary_region = "iad"
 
 [build]

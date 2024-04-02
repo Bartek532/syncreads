@@ -1,4 +1,4 @@
-import { HTTP_STATUS_CODE, ApiError } from "@rssmarkable/shared";
+import { HTTP_STATUS_CODE, ApiError } from "@syncreads/shared";
 import { getLinkPreview, getPreviewFromContent } from "link-preview-js";
 import { parse } from "rss-to-json";
 

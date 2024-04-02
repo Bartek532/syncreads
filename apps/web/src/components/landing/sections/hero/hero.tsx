@@ -1,6 +1,6 @@
 "use client";
 
-import { APP_DESCRIPTION, APP_NAME_APPENDIX } from "@rssmarkable/shared";
+import { APP_DESCRIPTION, APP_NAME_APPENDIX } from "@syncreads/shared";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";

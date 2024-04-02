@@ -10,8 +10,8 @@ import { SyncLoggerProviderFactory } from "../../sync/logger/logger.provider";
 import { formatTime } from "../../sync/logger/utils/time";
 import { DEVICE_CLOUD_LABEL } from "../../utils/constants";
 
-import type { DeviceType } from "@rssmarkable/database";
-import type { SyncOptionsPayload } from "@rssmarkable/shared";
+import type { DeviceType } from "@syncreads/database";
+import type { SyncOptionsPayload } from "@syncreads/shared";
 
 export class FeedQueueService {
   constructor(

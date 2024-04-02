@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { OUTPUT_FORMAT } from "@rssmarkable/shared";
+import { OUTPUT_FORMAT } from "@syncreads/shared";
 
 import EpubFormatIcon from "../../../../../public/svg/format/epub.svg";
 import PdfFormatIcon from "../../../../../public/svg/format/pdf.svg";

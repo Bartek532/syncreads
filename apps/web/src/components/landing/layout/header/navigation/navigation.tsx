@@ -9,7 +9,7 @@ import { cn } from "@/utils";
 import { LANDING_HEADER_NAVIGATION } from "../../../../../config";
 import { buttonVariants } from "../../../../ui/button";
 
-import type { User } from "@rssmarkable/database";
+import type { User } from "@syncreads/database";
 
 type NavigationProps = {
   readonly user?: User;

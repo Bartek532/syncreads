@@ -1,5 +1,5 @@
-import { DeviceType } from "@rssmarkable/database";
-import { OUTPUT_FORMAT } from "@rssmarkable/shared";
+import { DeviceType } from "@syncreads/database";
+import { OUTPUT_FORMAT } from "@syncreads/shared";
 import { z } from "zod";
 
 import { FILE_TYPE } from "../../types/feed.types";
