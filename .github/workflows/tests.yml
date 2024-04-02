@@ -50,6 +50,9 @@ jobs:
       - name: 🖌️ Format
         run: pnpm run format:check
 
+      - name: 📦 Build packages
+        run: pnpm run build:packages
+
       - name: 🛻 Lint
         run: pnpm run lint
 

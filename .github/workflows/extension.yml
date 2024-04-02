@@ -1,8 +1,7 @@
 name: Extension publish
 
 on:
-  push:
-    branches: [develop]
+  workflow_dispatch:
 
 env:
   NODE_VERSION: 20.x
