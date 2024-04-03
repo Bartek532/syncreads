@@ -5,10 +5,9 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
+import { buttonVariants } from "@/components/ui/button";
 import { ThemedImage } from "@/components/ui/themed-image";
-
-import { APP_IMAGE, REPOSITORY_URL } from "../../../../config";
-import { buttonVariants } from "../../../ui/button";
+import { APP_IMAGE } from "@/config";
 
 export const Hero = () => {
   return (
@@ -25,7 +24,7 @@ export const Hero = () => {
           transition: { duration: 0.5, ease: "easeInOut" },
         }}
         viewport={{ once: true }}
-        href={REPOSITORY_URL}
+        href="/auth/login"
         target="_blank"
         rel="noreferrer"
       >
@@ -33,7 +32,7 @@ export const Hero = () => {
         <ArrowRight className="w-4 transition-transform group-hover:translate-x-1" />
       </motion.a>
       <motion.h1
-        className="lg:leading-tighter max-w-4xl animate-gradient bg-gradient-to-r from-primary via-muted-foreground via-20% to-primary bg-[length:200%_auto] bg-clip-text text-center text-4xl font-bold tracking-tighter text-transparent md:text-5xl xl:text-6xl 2xl:text-7xl"
+        className="lg:leading-tighter max-w-4xl animate-gradient bg-gradient-to-r from-primary via-muted-foreground via-20% to-primary bg-[length:200%_auto] bg-clip-text text-center text-5xl font-bold tracking-tighter text-transparent md:text-6xl xl:text-7xl 2xl:text-8xl"
         initial={{ opacity: 0, y: -55 }}
         whileInView={{
           opacity: 1,

@@ -30,7 +30,7 @@ export const Device = memo<DeviceProps>(({ device }) => {
         <AddDeviceDialog>
           <Empty
             icon={<EmptyDeviceIcon />}
-            title="You haven't registered your device yet, do it to unlock sync!"
+            title="Register your device now and unlock sync!"
             isTrigger
           />
         </AddDeviceDialog>

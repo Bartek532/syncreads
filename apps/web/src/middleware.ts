@@ -6,10 +6,10 @@ export async function middleware(request: NextRequest) {
   const { supabase, response } = createClient(request);
 
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  if (!session && request.nextUrl.pathname.startsWith("/dashboard")) {
+  if (!user && request.nextUrl.pathname.startsWith("/dashboard")) {
     return NextResponse.redirect(new URL("/auth/login", request.url));
   }
 
