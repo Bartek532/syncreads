@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 
 import { Auth } from "@/components/auth/auth";
 import { supabase } from "@/lib/supabase/server";
-import { AUTH_PROVIDER } from "@/types/auth.types";
+import { SOCIAL_PROVIDER } from "@/types/auth.types";
 
 import { getMetadata } from "../../../lib/metadata";
 
@@ -30,7 +30,7 @@ const Login = async () => {
           title="Log in to your account"
           description="to begin your journey 🚀"
         />
-        <Auth.Providers providers={Object.values(AUTH_PROVIDER)} />
+        <Auth.Providers providers={Object.values(SOCIAL_PROVIDER)} />
         <Auth.Divider />
         <Auth.Login />
       </Auth.Layout>

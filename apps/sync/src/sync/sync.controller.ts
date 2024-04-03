@@ -2,6 +2,7 @@ import { InjectQueue } from "@nestjs/bull";
 import {
   Body,
   Controller,
+  Logger,
   Post,
   UseGuards,
   UseInterceptors,
@@ -47,11 +48,14 @@ export class SyncController {
     @UserId() userId: string,
     @Device() device: DeviceType,
   ) {
+    Logger.log(`Syncing article for user ${userId}...`);
     const sync = await this.syncService.createSync({
       userId: userId,
       status: SyncStatus.QUEUED,
       trigger: SyncTrigger.MANUAL,
     });
+
+    Logger.log(`Queueuing article for user ${userId}...`);
 
     await this.articleQueue.add({
       userId: userId,
@@ -60,6 +64,8 @@ export class SyncController {
       device: device.type,
       options,
     });
+
+    Logger.log(`Article successfully queued for user ${userId}!`);
 
     return {
       sync,

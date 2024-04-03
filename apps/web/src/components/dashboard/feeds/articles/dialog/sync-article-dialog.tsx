@@ -59,8 +59,6 @@ export const SyncArticleDialog = memo<SyncArticleDialogProps>(
       },
     });
 
-    console.log(form.getValues());
-
     const onSubmit = async (data: SyncArticleInput) => {
       const loadingToast = toast.loading("Queuing article sync...");
 

@@ -21,7 +21,7 @@ export const DEFAULT_METADATA: Metadata = {
     "max-image-preview": "large",
     "max-video-preview": -1,
   },
-  manifest: "/APP.webmanifest",
+  manifest: "/site.webmanifest",
   openGraph: {
     type: "website",
     title: APP_NAME,

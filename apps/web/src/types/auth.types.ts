@@ -31,7 +31,17 @@ export const loginUserSchema = z.object({
 export type LoginData = z.infer<typeof loginUserSchema>;
 export type RegisterData = z.infer<typeof registerUserSchema>;
 
-export enum AUTH_PROVIDER {
-  GITHUB = "github",
-  GOOGLE = "google",
-}
+export const SOCIAL_PROVIDER = {
+  GITHUB: "github",
+  GOOGLE: "google",
+} as const;
+
+export type SOCIAL_PROVIDER =
+  typeof SOCIAL_PROVIDER[keyof typeof SOCIAL_PROVIDER];
+
+export const AUTH_PROVIDER = {
+  ...SOCIAL_PROVIDER,
+  PASSWORD: "password",
+} as const;
+
+export type AUTH_PROVIDER = typeof AUTH_PROVIDER[keyof typeof AUTH_PROVIDER];

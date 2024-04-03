@@ -18,8 +18,6 @@ chrome.runtime.onMessage.addListener(
     sender: chrome.runtime.MessageSender,
     sendResponse: (response: Response<T, K> | null) => void,
   ) => {
-    console.log("Received message in background script", request, sender);
-
     void (async () => {
       try {
         const operation = operations[request.type][request.name];

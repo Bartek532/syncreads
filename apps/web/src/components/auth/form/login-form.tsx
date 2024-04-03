@@ -18,27 +18,37 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { supabase } from "@/lib/supabase/client";
-import { loginUserSchema, type LoginData } from "@/types/auth.types";
+import {
+  loginUserSchema,
+  type LoginData,
+  AUTH_PROVIDER,
+} from "@/types/auth.types";
 import { onPromise } from "@/utils";
 
+import { login } from "./actions";
+import { useAuthFormStore } from "./store";
+
 export const LoginForm = memo(() => {
+  const { provider, setProvider, isSubmitting, setIsSubmitting } =
+    useAuthFormStore();
   const router = useRouter();
   const form = useForm<LoginData>({
     resolver: zodResolver(loginUserSchema),
   });
 
   const onSubmit = async (data: LoginData) => {
+    setProvider(AUTH_PROVIDER.PASSWORD);
+    setIsSubmitting(true);
+
     const loadingToast = toast.loading("Signing in...");
-    const { error } = await supabase().auth.signInWithPassword({
-      ...data,
-    });
+    const { error } = await login(data);
 
     if (error) {
       return toast.error(error.message, { id: loadingToast });
     }
 
     toast.success("Signed in!", { id: loadingToast });
+    setIsSubmitting(false);
     return router.replace("/dashboard");
   };
 
@@ -96,8 +106,13 @@ export const LoginForm = memo(() => {
           </div>
         </div>
 
-        <Button type="submit" className="w-full" size="lg">
-          {form.formState.isSubmitting ? (
+        <Button
+          type="submit"
+          className="w-full"
+          size="lg"
+          disabled={isSubmitting}
+        >
+          {isSubmitting && provider === AUTH_PROVIDER.PASSWORD ? (
             <Loader2 className="animate-spin" />
           ) : (
             "Sign in"
