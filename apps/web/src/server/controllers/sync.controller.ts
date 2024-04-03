@@ -22,9 +22,10 @@ import type { LogMessage } from "@syncreads/shared";
 export const queueArticleSyncHandler = async ({
   id,
   url,
+  options,
 }: { id: string } & SyncArticlePayload) => {
   const { data, error, status } = await getUserApiKey({ id });
-  const options = await getSyncOptions();
+  const defaultOptions = await getSyncOptions();
 
   if (error) {
     throw new ApiError(status, error.message);
@@ -33,7 +34,10 @@ export const queueArticleSyncHandler = async ({
   const { sync } = await queueArticleSync({
     key: data.key,
     url,
-    options,
+    options: {
+      ...defaultOptions,
+      ...options,
+    },
   });
 
   return {

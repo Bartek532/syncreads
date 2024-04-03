@@ -11,7 +11,6 @@ export const login = async (data: LoginData) => {
     ...data,
   });
 
-  revalidatePath("/", "layout");
   return { error };
 };
 
@@ -28,6 +27,5 @@ export const register = async (data: RegisterData) => {
     },
   });
 
-  revalidatePath("/", "layout");
   return { error };
 };
