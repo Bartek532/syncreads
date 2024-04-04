@@ -76,7 +76,7 @@ export const deleteUserFeed = ({
 export const getUserSyncs = ({ id, from, to }: RangeInput & { id: string }) => {
   const query = supabase()
     .from("Sync")
-    .select("*, articles:Article(url)")
+    .select("*, articles:SyncArticle(url)")
     .eq("userId", id)
     .order("startedAt", { ascending: false });
 

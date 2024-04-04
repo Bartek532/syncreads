@@ -35,7 +35,7 @@ const manifest = {
       matches: ["*://*/*"],
     },
   ],
-  host_permissions: ["*://localhost/*", "https://*.syncreads.com/*"],
+  host_permissions: ["https://*.syncreads.com/*"],
 };
 
 export default manifest;
