@@ -1,7 +1,6 @@
 "use server";
 
 import { DEFAULT_USER_METADATA } from "@syncreads/shared";
-import { revalidatePath } from "next/cache";
 
 import { supabase } from "@/lib/supabase/route";
 import type { LoginData, RegisterData } from "@/types/auth.types";
