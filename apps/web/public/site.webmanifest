@@ -1,7 +1,7 @@
 {
-  "name": "SyncReads",
+  "name": "SyncReads - consume the web easier",
   "short_name": "SyncReads",
-  "description": "Seamlessly sync articles and feeds from the web.",
+  "description": "Seamlessly sync articles and feeds for distraction-free reading, customized to your preferences, anytime, anywhere.",
   "start_url": "/?source=pwa",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
