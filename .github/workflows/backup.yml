@@ -1,9 +1,8 @@
-name: Backup database
+name: Backup
 
 on:
   push:
-    # branches: [main]
-    branches: [develop]
+    branches: [main]
   workflow_dispatch:
 
 concurrency:
@@ -32,7 +31,7 @@ jobs:
         run: supabase db dump --db-url "$SUPABASE_DB_URL" -f data.sql --data-only --use-copy
 
       - name: 📦 Upload backup
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: backup-${{ github.sha }}
           path: "*.sql"

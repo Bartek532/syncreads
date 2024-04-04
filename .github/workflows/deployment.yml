@@ -31,6 +31,14 @@ jobs:
       - name: ✅ Checkout code
         uses: actions/checkout@v4
 
+      - name: 💾 Wait for backup to succeed
+        uses: lewagon/wait-on-check-action@v1.3.4
+        with:
+          ref: ${{ github.ref }}
+          check-name: "Backup"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
+
       - name: 🔨 Setup
         uses: ./.github/workflows/setup
         with:
