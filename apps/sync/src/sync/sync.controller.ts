@@ -7,11 +7,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from "@nestjs/common";
-import {
-  Device as DeviceType,
-  SyncStatus,
-  SyncTrigger,
-} from "@syncreads/database";
+import { UserDevice, SyncStatus, SyncTrigger } from "@syncreads/database";
 import { clearUrl } from "@syncreads/shared";
 import { Queue } from "bull";
 
@@ -46,7 +42,7 @@ export class SyncController {
   async handleSyncArticle(
     @Body() { url, options }: SyncArticlePayloadDto,
     @UserId() userId: string,
-    @Device() device: DeviceType,
+    @Device() device: UserDevice,
   ) {
     Logger.log(`Syncing article for user ${userId}...`);
     const sync = await this.syncService.createSync({
@@ -79,7 +75,7 @@ export class SyncController {
   async handleSyncFeed(
     @Body() payload: SyncFeedPayloadDto,
     @UserId() userId: string,
-    @Device() device: DeviceType,
+    @Device() device: UserDevice,
   ) {
     const sync = await this.syncService.createSync({
       userId: userId,

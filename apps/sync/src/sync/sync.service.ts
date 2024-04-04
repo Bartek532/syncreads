@@ -38,7 +38,7 @@ export class SyncService {
 
   async createSyncArticle(payload: InsertArticle) {
     const { data, error, status } = await this.supabaseProvider()
-      .from("Article")
+      .from("SyncArticle")
       .insert(payload)
       .select()
       .single();

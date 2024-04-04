@@ -13,7 +13,7 @@ export class LoggerService {
 
   async createLog(syncId: string, json: LogMessage[]) {
     const { data, error, status } = await this.supabaseProvider()
-      .from("Log")
+      .from("SyncLog")
       .insert({ syncId, json: JSON.stringify(json) })
       .select()
       .single();
@@ -31,7 +31,7 @@ export class LoggerService {
     const previousLogJson = JSON.parse(log.json as string) as LogMessage[];
 
     const { data, error, status } = await this.supabaseProvider()
-      .from("Log")
+      .from("SyncLog")
       .update({ json: JSON.stringify([...previousLogJson, json]) })
       .match({ syncId })
       .select()
@@ -48,7 +48,7 @@ export class LoggerService {
 
   async getLogById(syncId: string) {
     const { data, error, status } = await this.supabaseProvider()
-      .from("Log")
+      .from("SyncLog")
       .select()
       .match({ syncId })
       .single();
