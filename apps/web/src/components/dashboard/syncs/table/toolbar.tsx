@@ -1,7 +1,7 @@
 "use client";
 
 import { Cross2Icon } from "@radix-ui/react-icons";
-import { SyncStatus, SyncTrigger } from "@rssmarkable/database";
+import { SyncStatus, SyncTrigger } from "@syncreads/database";
 
 import { Button } from "@/components/ui/button";
 import { DataTableFacetedFilter } from "@/components/ui/data-table/data-table-faceted-filter";

@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SYNC_DEFAULT_FOLDER } from "@rssmarkable/shared";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -19,35 +18,37 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { supabase } from "@/lib/supabase/client";
-import { registerUserSchema, type RegisterData } from "@/types/auth.types";
+import {
+  registerUserSchema,
+  type RegisterData,
+  AUTH_PROVIDER,
+} from "@/types/auth.types";
 import { onPromise } from "@/utils/functions";
 
+import { register } from "./actions";
+import { useAuthFormStore } from "./store";
+
 export const RegisterForm = memo(() => {
+  const { provider, setProvider, isSubmitting, setIsSubmitting } =
+    useAuthFormStore();
   const router = useRouter();
   const form = useForm<RegisterData>({
     resolver: zodResolver(registerUserSchema),
   });
 
   const onSubmit = async (data: RegisterData) => {
+    setProvider(AUTH_PROVIDER.PASSWORD);
+    setIsSubmitting(true);
     const loadingToast = toast.loading("Registering...");
-    const { error } = await supabase().auth.signUp({
-      email: data.email,
-      password: data.password,
-      options: {
-        data: {
-          name: data.name,
-          folder: SYNC_DEFAULT_FOLDER,
-        },
-      },
-    });
+    const { error } = await register(data);
 
     if (error) {
       return toast.error(error.message, { id: loadingToast });
     }
 
     toast.success("Successfully registered!", { id: loadingToast });
-    return router.push("/dashboard");
+    setIsSubmitting(false);
+    return router.replace("/dashboard");
   };
 
   return (
@@ -118,8 +119,13 @@ export const RegisterForm = memo(() => {
           </div>
         </div>
 
-        <Button type="submit" className="w-full" size="lg">
-          {form.formState.isSubmitting ? (
+        <Button
+          type="submit"
+          className="w-full"
+          size="lg"
+          disabled={isSubmitting}
+        >
+          {isSubmitting && provider === AUTH_PROVIDER.PASSWORD ? (
             <Loader2 className="animate-spin" />
           ) : (
             "Sign up"

@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from "@nestjs/common";
-import { syncFeedPayloadSchema } from "@rssmarkable/shared";
+import { syncFeedPayloadSchema } from "@syncreads/shared";
 
 import { UserService } from "../../auth/user/user.service";
 import { MAX_FEEDS_IN_ONE_SYNC } from "../../queue/feed/feed.constants";

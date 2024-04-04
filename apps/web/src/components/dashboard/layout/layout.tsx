@@ -2,7 +2,7 @@ import { memo } from "react";
 
 import { Header } from "./header/header";
 
-import type { User } from "@rssmarkable/database";
+import type { User } from "@syncreads/database";
 
 interface DashboardLayoutProps {
   readonly children: React.ReactNode;

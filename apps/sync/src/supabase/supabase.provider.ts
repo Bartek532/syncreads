@@ -2,7 +2,7 @@ import {
   type SupabaseClientOptions,
   type SupabaseClient,
   createServiceClient,
-} from "@rssmarkable/database";
+} from "@syncreads/database";
 
 import { SUPABASE_CLIENT_FACTORY_TOKEN } from "./supabase.constants";
 

@@ -2,7 +2,7 @@ import {
   clearUrl,
   syncArticlePayloadSchema,
   syncFeedPayloadSchema,
-} from "@rssmarkable/shared";
+} from "@syncreads/shared";
 
 import { getSyncLogSchema, getSyncSchema } from "@/utils";
 

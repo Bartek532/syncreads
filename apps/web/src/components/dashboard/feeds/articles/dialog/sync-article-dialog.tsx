@@ -1,6 +1,11 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  DEFAULT_OPTIONS,
+  OUTPUT_FORMAT,
+  syncArticlePayloadSchema,
+} from "@syncreads/shared";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { memo } from "react";
@@ -8,7 +13,6 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
 import { onPromise } from "../../../../../utils";
-import { createFeedSchema } from "../../../../../utils/validation/schema";
 import { Button } from "../../../../ui/button";
 import {
   Dialog,
@@ -24,25 +28,38 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "../../../../ui/form";
 import { Input } from "../../../../ui/input";
+import { RadioGroup, RadioGroupItem } from "../../../../ui/radio-group";
 import { queueArticleSync } from "../actions";
 
-import type { CreateFeedInput } from "../../../../../utils/validation/types";
+import type { User } from "@syncreads/database";
+import type { SyncArticleInput } from "@syncreads/shared";
 
 type SyncArticleDialogProps = {
   readonly children?: React.ReactNode;
+  readonly user?: User | null;
 };
 
 export const SyncArticleDialog = memo<SyncArticleDialogProps>(
-  ({ children }) => {
+  ({ children, user }) => {
     const router = useRouter();
-    const form = useForm<CreateFeedInput>({
-      resolver: zodResolver(createFeedSchema),
+    const form = useForm<SyncArticleInput>({
+      resolver: zodResolver(syncArticlePayloadSchema),
+      defaultValues: {
+        ...(user
+          ? {
+              options: {
+                format: user.user_metadata.format ?? DEFAULT_OPTIONS.format,
+              },
+            }
+          : {}),
+      },
     });
 
-    const onSubmit = async (data: CreateFeedInput) => {
+    const onSubmit = async (data: SyncArticleInput) => {
       const loadingToast = toast.loading("Queuing article sync...");
 
       const { message, success, sync } = await queueArticleSync(data);
@@ -67,14 +84,14 @@ export const SyncArticleDialog = memo<SyncArticleDialogProps>(
           </DialogHeader>
           <Form {...form}>
             <form
-              className="space-y-4"
+              className="flex flex-col items-end gap-4"
               onSubmit={onPromise(form.handleSubmit(onSubmit))}
             >
               <FormField
                 control={form.control}
                 name="url"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="w-full">
                     <FormControl>
                       <Input {...field} placeholder="Pass url here..." />
                     </FormControl>
@@ -82,14 +99,49 @@ export const SyncArticleDialog = memo<SyncArticleDialogProps>(
                   </FormItem>
                 )}
               />
-              <DialogFooter>
-                <Button disabled={form.formState.isSubmitting}>
-                  {form.formState.isSubmitting ? (
-                    <Loader2 className="animate-spin" />
-                  ) : (
-                    "Sync now"
+              <Button disabled={form.formState.isSubmitting}>
+                {form.formState.isSubmitting ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  "Sync now"
+                )}
+              </Button>
+              <DialogFooter className="w-full">
+                <FormField
+                  control={form.control}
+                  name="options.format"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <RadioGroup
+                          onValueChange={field.onChange}
+                          defaultValue={field.value ?? DEFAULT_OPTIONS.format}
+                          className="flex gap-5"
+                        >
+                          {Object.keys(OUTPUT_FORMAT).map((type) => (
+                            <FormItem
+                              key={type}
+                              className="flex items-center space-x-2 space-y-0"
+                            >
+                              <FormControl>
+                                <RadioGroupItem
+                                  value={
+                                    OUTPUT_FORMAT[
+                                      type as keyof typeof OUTPUT_FORMAT
+                                    ]
+                                  }
+                                />
+                              </FormControl>
+                              <FormLabel className="cursor-pointer font-normal">
+                                {type}
+                              </FormLabel>
+                            </FormItem>
+                          ))}
+                        </RadioGroup>
+                      </FormControl>
+                    </FormItem>
                   )}
-                </Button>
+                />
               </DialogFooter>
             </form>
           </Form>

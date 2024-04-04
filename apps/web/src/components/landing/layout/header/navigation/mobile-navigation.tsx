@@ -8,7 +8,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { LANDING_HEADER_NAVIGATION } from "@/config";
 import { cn, lockScroll, unlockScroll } from "@/utils";
 
-import type { User } from "@rssmarkable/database";
+import type { User } from "@syncreads/database";
 
 type MobileNavigationProps = {
   readonly user?: User;

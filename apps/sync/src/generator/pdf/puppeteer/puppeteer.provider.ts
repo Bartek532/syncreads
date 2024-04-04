@@ -7,7 +7,7 @@ import {
   PUPPETEER_PROVIDER_FACTORY_TOKEN,
 } from "./puppeteer.constants";
 
-import type { ServerConfig } from "@rssmarkable/shared";
+import type { ServerConfig } from "@syncreads/shared";
 import type { Page } from "puppeteer-core";
 
 const LISTS_TO_BLOCK_FROM = [

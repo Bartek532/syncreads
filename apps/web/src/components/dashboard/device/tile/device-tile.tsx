@@ -1,4 +1,4 @@
-import { DeviceType, type Device } from "@rssmarkable/database";
+import { DeviceType, type UserDevice } from "@syncreads/database";
 import dayjs from "dayjs";
 import { CalendarDays } from "lucide-react";
 import { memo } from "react";
@@ -11,7 +11,7 @@ import { Button } from "../../../ui/button";
 import { DeleteDeviceDialog } from "../dialog/delete-device-dialog";
 
 interface DeviceTileProps {
-  readonly device: Device;
+  readonly device: UserDevice;
 }
 
 export const DeviceTile = memo<DeviceTileProps>(({ device }) => {

@@ -6,8 +6,8 @@ import {
   Processor,
 } from "@nestjs/bull";
 import { Inject } from "@nestjs/common";
-import { SyncStatus } from "@rssmarkable/database";
-import { clearUrl } from "@rssmarkable/shared";
+import { SyncStatus } from "@syncreads/database";
+import { clearUrl } from "@syncreads/shared";
 import { Job } from "bull";
 import dayjs from "dayjs";
 

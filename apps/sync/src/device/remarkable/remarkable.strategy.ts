@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { OUTPUT_FORMAT } from "@rssmarkable/shared";
+import { OUTPUT_FORMAT } from "@syncreads/shared";
 import {
   GenerationError,
   type CollectionMetadataEntry,
@@ -28,6 +28,7 @@ export class RemarkableStrategy implements DeviceStrategy {
 
   private async getFiles(userId: string) {
     const api = await this.remarkableProvider(userId);
+
     return api.getEntriesMetadata();
   }
 

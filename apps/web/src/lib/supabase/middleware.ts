@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { createServerClient, type CookieOptions } from "@rssmarkable/database";
+import { createServerClient, type CookieOptions } from "@syncreads/database";
 import { type NextRequest, NextResponse } from "next/server";
 
 export const createClient = (request: NextRequest) => {

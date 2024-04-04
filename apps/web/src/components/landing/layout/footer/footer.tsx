@@ -5,7 +5,7 @@ export const Footer = () => {
     <footer className="flex justify-center bg-background">
       <div className="flex w-full max-w-[84rem] items-center justify-between gap-10 px-6 py-4 sm:px-8 md:py-7">
         <span className="text-sm">
-          &copy; 2024 RSSmarkable. All rights reserved.
+          &copy; 2024 SyncReads. All rights reserved.
         </span>
 
         <div className="flex flex-row gap-3">

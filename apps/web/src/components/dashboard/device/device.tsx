@@ -9,10 +9,10 @@ import { Empty } from "../../ui/empty";
 import { AddDeviceDialog } from "./dialog/add-device-dialog";
 import { DeviceTile } from "./tile/device-tile";
 
-import type { Device as DeviceType } from "@rssmarkable/database";
+import type { UserDevice } from "@syncreads/database";
 
 type DeviceProps = {
-  readonly device: DeviceType | null;
+  readonly device: UserDevice | null;
 };
 
 export const Device = memo<DeviceProps>(({ device }) => {
@@ -30,7 +30,7 @@ export const Device = memo<DeviceProps>(({ device }) => {
         <AddDeviceDialog>
           <Empty
             icon={<EmptyDeviceIcon />}
-            title="You haven't registered your device yet, do it to unlock sync!"
+            title="Register your device now and unlock sync!"
             isTrigger
           />
         </AddDeviceDialog>

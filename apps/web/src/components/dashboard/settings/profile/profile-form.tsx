@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { DEFAULT_USER_METADATA } from "@rssmarkable/shared";
+import { DEFAULT_USER_METADATA } from "@syncreads/shared";
 import { Loader2 } from "lucide-react";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
@@ -27,7 +27,7 @@ import { RadioGroup, RadioGroupItem } from "../../../ui/radio-group";
 import { updateUser } from "./actions";
 import { formats } from "./constants";
 
-import type { User } from "@rssmarkable/database";
+import type { User } from "@syncreads/database";
 
 type ProfileForm = {
   readonly user: User;
@@ -108,9 +108,9 @@ export const ProfileForm = memo<ProfileForm>(({ user }) => {
           render={({ field }) => (
             <FormItem>
               <div className="space-y-1">
-                <FormLabel>Format</FormLabel>
+                <FormLabel>Default format</FormLabel>
                 <FormDescription>
-                  Select output format for your synced content.
+                  Select default output format for your synced content.
                 </FormDescription>
               </div>
               <FormMessage />
@@ -147,7 +147,7 @@ export const ProfileForm = memo<ProfileForm>(({ user }) => {
           {form.formState.isSubmitting ? (
             <Loader2 className="animate-spin" />
           ) : (
-            "Update profile"
+            "Update settings"
           )}
         </Button>
       </form>

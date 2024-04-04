@@ -2,16 +2,13 @@ import { InjectQueue } from "@nestjs/bull";
 import {
   Body,
   Controller,
+  Logger,
   Post,
   UseGuards,
   UseInterceptors,
 } from "@nestjs/common";
-import {
-  Device as DeviceType,
-  SyncStatus,
-  SyncTrigger,
-} from "@rssmarkable/database";
-import { clearUrl } from "@rssmarkable/shared";
+import { UserDevice, SyncStatus, SyncTrigger } from "@syncreads/database";
+import { clearUrl } from "@syncreads/shared";
 import { Queue } from "bull";
 
 import { UserId } from "../auth/decorators/user-id.decorator";
@@ -45,13 +42,16 @@ export class SyncController {
   async handleSyncArticle(
     @Body() { url, options }: SyncArticlePayloadDto,
     @UserId() userId: string,
-    @Device() device: DeviceType,
+    @Device() device: UserDevice,
   ) {
+    Logger.log(`Syncing article for user ${userId}...`);
     const sync = await this.syncService.createSync({
       userId: userId,
       status: SyncStatus.QUEUED,
       trigger: SyncTrigger.MANUAL,
     });
+
+    Logger.log(`Queueuing article for user ${userId}...`);
 
     await this.articleQueue.add({
       userId: userId,
@@ -60,6 +60,8 @@ export class SyncController {
       device: device.type,
       options,
     });
+
+    Logger.log(`Article successfully queued for user ${userId}!`);
 
     return {
       sync,
@@ -73,7 +75,7 @@ export class SyncController {
   async handleSyncFeed(
     @Body() payload: SyncFeedPayloadDto,
     @UserId() userId: string,
-    @Device() device: DeviceType,
+    @Device() device: UserDevice,
   ) {
     const sync = await this.syncService.createSync({
       userId: userId,

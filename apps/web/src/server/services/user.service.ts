@@ -1,12 +1,11 @@
-import { HTTP_STATUS_CODE } from "@rssmarkable/shared";
+import { HTTP_STATUS_CODE, ApiError } from "@syncreads/shared";
 import dayjs from "dayjs";
 
 import type { LimitInput, RangeInput, UpdateUserInput } from "@/utils";
 
 import { supabase } from "../../lib/supabase/server";
-import { ApiError } from "../utils/exceptions";
 
-import type { DeviceType } from "@rssmarkable/database";
+import type { DeviceType } from "@syncreads/database";
 
 export const updateUser = async (input: UpdateUserInput) => {
   const { data, error } = await supabase().auth.getUser();
@@ -44,7 +43,11 @@ export const getUserFeeds = ({
 };
 
 export const getUserDevice = ({ id }: { id: string }) => {
-  return supabase().from("Device").select("*").eq("userId", id).maybeSingle();
+  return supabase()
+    .from("UserDevice")
+    .select("*")
+    .eq("userId", id)
+    .maybeSingle();
 };
 
 export const getUserFeedByUrl = ({ id, url }: { id: string; url: string }) => {
@@ -57,7 +60,7 @@ export const getUserFeedByUrl = ({ id, url }: { id: string; url: string }) => {
 };
 
 export const getUserApiKey = ({ id }: { id: string }) => {
-  return supabase().from("ApiKey").select("key").eq("userId", id).single();
+  return supabase().from("UserApiKey").select("key").eq("userId", id).single();
 };
 
 export const deleteUserFeed = ({
@@ -95,7 +98,7 @@ export const getUserSyncsCount = ({ id }: { id: string }) => {
 
 export const getUserArticles = ({ id, limit }: LimitInput & { id: string }) => {
   return supabase()
-    .from("Article")
+    .from("SyncArticle")
     .select("*, sync:Sync(userId)")
     .eq("sync.userId", id)
     .order("syncedAt", { ascending: false })
@@ -104,7 +107,7 @@ export const getUserArticles = ({ id, limit }: LimitInput & { id: string }) => {
 
 export const getUserArticlesCount = ({ id }: { id: string }) => {
   return supabase()
-    .from("Article")
+    .from("SyncArticle")
     .select("*, sync:Sync(userId)", { count: "exact" })
     .eq("sync.userId", id);
 };
@@ -119,7 +122,7 @@ export const registerUserDevice = ({
   type: DeviceType;
 }) => {
   return supabase()
-    .from("Device")
+    .from("UserDevice")
     .insert({ userId: id, token, type })
     .single()
     .throwOnError();
@@ -127,7 +130,7 @@ export const registerUserDevice = ({
 
 export const unregisterUserDevice = ({ id }: { id: string }) => {
   return supabase()
-    .from("Device")
+    .from("UserDevice")
     .delete()
     .eq("userId", id)
     .single()

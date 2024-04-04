@@ -1,9 +1,9 @@
+import { APP_NAME } from "@syncreads/shared";
 import Link from "next/link";
 import { memo } from "react";
 
 import AppLogo from "public/svg/logo.svg";
 
-import { SITE_TITLE } from "../../config";
 import { cn } from "../../utils";
 
 type Size = "sm" | "md" | "lg";
@@ -33,7 +33,7 @@ export const Logo = memo<LogoProps>(({ withText = true, size = "md" }) => {
     <Link className="flex flex-shrink-0 items-center gap-5" href="/#hero">
       <AppLogo className={cn(logoSize)} />
       {withText && (
-        <span className={cn("font-bold", textSize)}>{SITE_TITLE}</span>
+        <span className={cn("font-bold", textSize)}>{APP_NAME}</span>
       )}
     </Link>
   );

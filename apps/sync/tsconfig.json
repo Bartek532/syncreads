@@ -1,11 +1,12 @@
 {
-  "extends": "@rssmarkable/tsconfig/base.json",
+  "extends": "@syncreads/config/tsconfig/base.json",
   "compilerOptions": {
     "lib": ["dom", "es2022"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "outDir": "./dist",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": "."
   },
   "include": ["src/**/*.ts", "test/**/*.ts"]
 }

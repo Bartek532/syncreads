@@ -13,7 +13,7 @@ import { Empty } from "../../../ui/empty";
 
 import { groupSyncsByDay } from "./utils/group";
 
-import type { Sync } from "@rssmarkable/database";
+import type { Sync } from "@syncreads/database";
 
 type SyncsPerDayProps = {
   readonly range: Range;

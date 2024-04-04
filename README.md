@@ -1,18 +1,18 @@
-<a href="https://rssmarkable.vercel.app"><img src="https://github.com/Bartek532/rssmarkable/blob/main/apps/web/public/images/banner/light.png?raw=true" width="100%"></a>
+<a href="https://syncreads.vercel.app"><img src="https://github.com/Bartek532/syncreads/blob/main/apps/web/public/images/banner/light.png?raw=true" width="100%"></a>
 
 ## Project Overview 🎨
 
-RSSmarkable is a fully open source app which can be used to sync the newest articles and feeds into [reMarkable](https://remarkable.com) tablet. The focus is primarily on producing the best workflow to consume web content on your offline devices. Feel free to open an [issue](https://github.com/Bartek532/rssmarkable/issues) or directly make a [pull request](https://github.com/Bartek532/rssmarkable/pulls). Enjoy!
+SyncReads is a fully open source app which can be used to sync the newest articles and feeds into [reMarkable](https://remarkable.com) tablet. The focus is primarily on producing the best workflow to consume web content on your offline devices. Feel free to open an [issue](https://github.com/Bartek532/syncreads/issues) or directly make a [pull request](https://github.com/Bartek532/syncreads/pulls). Enjoy!
 
 ## Contributing 🤝
 
-Please read [CONTRIBUTING.md](https://github.com/Bartek532/rssmarkable/blob/main/CONTRIBUTING.md)
+Please read [CONTRIBUTING.md](https://github.com/Bartek532/syncreads/blob/main/CONTRIBUTING.md)
 
 ## Architecture 📐
 
-<img src="https://github.com/Bartek532/rssmarkable/blob/main/docs/images/architecture-overview.png?raw=true" alt="RSSmarkable architecture overview" width="100%">
+<img src="https://github.com/Bartek532/syncreads/blob/main/docs/images/architecture-overview.png?raw=true" alt="SyncReads architecture overview" width="100%">
 
-For more details look at [Architecture details](https://github.com/Bartek532/rssmarkable/blob/main/CONTRIBUTING.md/#Architecture)
+For more details look at [Architecture details](https://github.com/Bartek532/syncreads/blob/main/CONTRIBUTING.md/#Architecture)
 
 ## Tech/framework used 🧰
 
@@ -37,7 +37,7 @@ For more details look at [Architecture details](https://github.com/Bartek532/rss
 
 ## Performance 💨
 
-<img src="https://github.com/Bartek532/rssmarkable/blob/main/docs/images/performance.png?raw=true" alt="RSSmarkable performance">
+<img src="https://github.com/Bartek532/syncreads/blob/main/docs/images/performance.png?raw=true" alt="SyncReads performance">
 
 ## Local development 💿
 
@@ -48,7 +48,7 @@ For more details look at [Architecture details](https://github.com/Bartek532/rss
 
 ```bash
 
-git clone https://github.com/Bartek532/rssmarkable.git
+git clone https://github.com/Bartek532/syncreads.git
 
 pnpm install
 
@@ -63,4 +63,4 @@ pnpm run dev
 
 ## Live 🎆
 
-https://rssmarkable.vercel.app
+https://syncreads.vercel.app

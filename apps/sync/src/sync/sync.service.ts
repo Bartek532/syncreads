@@ -7,10 +7,10 @@ import { SYNC_QUEUED_LOG } from "./logger/logger.constants";
 import { LoggerService } from "./logger/logger.service";
 
 import type {
-  InsertArticle,
+  InsertSyncArticle,
   InsertSync,
   UpdateSync,
-} from "@rssmarkable/database";
+} from "@syncreads/database";
 
 @Injectable()
 export class SyncService {
@@ -36,9 +36,9 @@ export class SyncService {
     return data;
   }
 
-  async createSyncArticle(payload: InsertArticle) {
+  async createSyncArticle(payload: InsertSyncArticle) {
     const { data, error, status } = await this.supabaseProvider()
-      .from("Article")
+      .from("SyncArticle")
       .insert(payload)
       .select()
       .single();

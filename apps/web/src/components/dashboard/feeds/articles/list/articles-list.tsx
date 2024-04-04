@@ -1,5 +1,7 @@
 import { memo } from "react";
 
+import { supabase } from "@/lib/supabase/server";
+
 import EmptyFeedsIcon from "public/svg/empty-feeds.svg";
 
 import { Empty } from "../../../../ui/empty";
@@ -7,16 +9,18 @@ import { SyncArticleDialog } from "../dialog/sync-article-dialog";
 
 import { ArticleTile } from "./tile/article-tile";
 
-import type { Article } from "@rssmarkable/database";
+import type { SyncArticle } from "@syncreads/database";
 
 type ArticlesListProps = {
-  readonly articles: Article[];
+  readonly articles: SyncArticle[];
 };
 
-export const ArticlesList = memo<ArticlesListProps>(({ articles }) => {
+export const ArticlesList = memo<ArticlesListProps>(async ({ articles }) => {
   if (!articles.length) {
+    const { data } = await supabase().auth.getUser();
+
     return (
-      <SyncArticleDialog>
+      <SyncArticleDialog user={data.user}>
         <Empty
           isTrigger
           icon={<EmptyFeedsIcon />}

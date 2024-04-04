@@ -10,7 +10,7 @@ import { Empty } from "../../ui/empty";
 import { columns } from "./table/columns";
 import { SyncsTable } from "./table/table";
 
-import type { Sync } from "@rssmarkable/database";
+import type { Sync } from "@syncreads/database";
 
 type SyncsProps = {
   readonly syncs: Sync[];

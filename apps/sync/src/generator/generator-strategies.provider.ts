@@ -1,4 +1,4 @@
-import { OUTPUT_FORMAT } from "@rssmarkable/shared";
+import { OUTPUT_FORMAT } from "@syncreads/shared";
 
 import { EpubStrategy } from "./epub/epub.strategy";
 import { GENERATOR_STRATEGIES_TOKEN } from "./generator.constants";

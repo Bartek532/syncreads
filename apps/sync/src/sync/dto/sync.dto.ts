@@ -1,7 +1,7 @@
 import {
   syncArticlePayloadSchema,
   syncFeedPayloadSchema,
-} from "@rssmarkable/shared";
+} from "@syncreads/shared";
 import { createZodDto } from "nestjs-zod";
 
 export class SyncArticlePayloadDto extends createZodDto(

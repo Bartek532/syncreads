@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { render } from "teapub";
 import xmlserializer from "xmlserializer";
 
-import { css } from "./constants/css";
+import { css, IMAGE_SUPPORTED_FORMATS } from "./epub.constants";
 import { fetchImage } from "./utils/images";
 import { getReadibility } from "./utils/readability";
 import { Walker } from "./utils/walker";
@@ -40,6 +40,10 @@ export class EpubStrategy implements GeneratorStrategy {
       }),
     );
 
+    const filteredUnsupportedImages = imageBuffers.filter(
+      ([, { mime }]) => mime && IMAGE_SUPPORTED_FORMATS.includes(mime),
+    );
+
     const buffer = await render({
       title: readability.title,
       author: readability.byline,
@@ -50,7 +54,7 @@ export class EpubStrategy implements GeneratorStrategy {
         },
       ],
       missingImage: "remove",
-      images: new Map(imageBuffers),
+      images: new Map(filteredUnsupportedImages),
       css,
     });
 

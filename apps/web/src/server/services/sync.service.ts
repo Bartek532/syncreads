@@ -1,16 +1,15 @@
 import {
   HTTP_STATUS_CODE,
+  ApiError,
+  isSyncApiErrorResponse,
+  syncApiResponseSchema,
   type SyncArticleInput,
   type SyncFeedInput,
-} from "@rssmarkable/shared";
+} from "@syncreads/shared";
 
 import { env } from "@/lib/env/server";
 import { supabase } from "@/lib/supabase/server";
 import type { GetSyncInput, GetSyncLogInput } from "@/utils";
-
-import { ApiError, isSyncApiErrorResponse } from "../utils/exceptions";
-
-import { syncApiResponseSchema } from "./validation/schema";
 
 export const queueArticleSync = async ({
   key,
@@ -70,7 +69,7 @@ export const getSyncById = async ({ id }: GetSyncInput) => {
 
 export const getSyncLog = async ({ syncId }: GetSyncLogInput) => {
   return supabase()
-    .from("Log")
+    .from("SyncLog")
     .select("*")
     .eq("syncId", syncId)
     .order("createdAt", { ascending: false });

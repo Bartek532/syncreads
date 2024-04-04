@@ -1,4 +1,4 @@
-import type { OUTPUT_FORMAT } from "@rssmarkable/shared";
+import type { OUTPUT_FORMAT } from "@syncreads/shared";
 import type { CollectionMetadataEntry, MetadataEntry } from "rmapi-js";
 
 export interface DeviceStrategy {

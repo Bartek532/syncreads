@@ -22,7 +22,7 @@ import {
   unlockScroll,
 } from "@/utils";
 
-import type { User } from "@rssmarkable/database";
+import type { User } from "@syncreads/database";
 
 type MobileNavigationProps = {
   readonly user: User;

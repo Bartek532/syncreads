@@ -8,13 +8,13 @@ import {
   DEFAULT_USER_METADATA,
   HTTP_STATUS_CODE,
   isUserMetadata,
-} from "@rssmarkable/shared";
+} from "@syncreads/shared";
 import dayjs from "dayjs";
 
 import { SUPABASE_CLIENT_FACTORY_TOKEN } from "../../supabase/supabase.constants";
 import { SupabaseProviderFactory } from "../../supabase/supabase.provider";
 
-import type { UpdateUserFeed } from "@rssmarkable/database";
+import type { UpdateUserFeed } from "@syncreads/database";
 
 export class UserService {
   constructor(
@@ -40,7 +40,7 @@ export class UserService {
 
   async getUserByApiKey(apiKey: string) {
     const { data, error, status } = await this.supabaseProvider()
-      .from("ApiKey")
+      .from("UserApiKey")
       .select("*")
       .eq("key", apiKey)
       .single();
@@ -60,13 +60,13 @@ export class UserService {
 
   async getUserDevice(userId: string) {
     const { data, error, status } = await this.supabaseProvider()
-      .from("Device")
+      .from("UserDevice")
       .select()
       .eq("userId", userId)
       .single();
 
     if (status === HTTP_STATUS_CODE.NOT_ACCEPTABLE) {
-      throw new NotFoundException("Device not found!");
+      throw new NotFoundException("Register your device first!");
     }
 
     if (error) {

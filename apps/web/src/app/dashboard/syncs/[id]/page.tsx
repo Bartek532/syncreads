@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 
 import { SyncLog } from "@/components/dashboard/syncs/log/Log";
-import { RealtimeSyncDuration } from "@/components/dashboard/syncs/table/duration/RealtimeSyncDuration";
-import { RealtimeSyncStatus } from "@/components/dashboard/syncs/table/status/RealtimeSyncStatus";
+import { RealtimeSyncDuration } from "@/components/dashboard/syncs/table/duration/realtime-sync-duration";
+import { RealtimeSyncStatus } from "@/components/dashboard/syncs/table/status/realtime-sync-status";
 import { api } from "@/trpc/server";
 
 const Sync = async ({ params }: { params: { id: string } }) => {

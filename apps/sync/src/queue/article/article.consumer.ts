@@ -6,7 +6,7 @@ import {
   OnQueueCompleted,
 } from "@nestjs/bull";
 import { Inject } from "@nestjs/common";
-import { SyncStatus } from "@rssmarkable/database";
+import { SyncStatus } from "@syncreads/database";
 import { Job } from "bull";
 import dayjs from "dayjs";
 

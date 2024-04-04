@@ -1,3 +1,3 @@
-import { createBrowserClient } from "@rssmarkable/database";
+import { createBrowserClient } from "@syncreads/database";
 
 export const supabase = () => createBrowserClient();

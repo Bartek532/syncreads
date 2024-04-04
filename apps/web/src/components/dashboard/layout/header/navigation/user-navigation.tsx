@@ -15,10 +15,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { DASHBOARD_SECONDARY_NAVIGATION } from "@/config/dashboard";
 import { supabase } from "@/lib/supabase/client";
 import { getAvatar, getName, onPromise } from "@/utils";
 
-import type { User } from "@rssmarkable/database";
+import type { User } from "@syncreads/database";
 
 type UserNavigationProps = {
   readonly user: User;
@@ -57,12 +58,15 @@ export const UserNavigation = memo<UserNavigationProps>(({ user }) => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem asChild className="cursor-pointer">
-            <Link href="/dashboard/settings/profile">Profile</Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild className="cursor-pointer">
-            <Link href="/dashboard/settings/appearance">Appearance</Link>
-          </DropdownMenuItem>
+          {DASHBOARD_SECONDARY_NAVIGATION.map((link) => (
+            <DropdownMenuItem
+              key={link.href}
+              asChild
+              className="cursor-pointer"
+            >
+              <Link href={link.href}>{link.name}</Link>
+            </DropdownMenuItem>
+          ))}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild className="cursor-pointer">

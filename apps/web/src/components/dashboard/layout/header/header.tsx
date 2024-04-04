@@ -6,7 +6,7 @@ import { MobileNavigation } from "./navigation/mobile-navigation";
 import { Navigation } from "./navigation/navigation";
 import { UserNavigation } from "./navigation/user-navigation";
 
-import type { User } from "@rssmarkable/database";
+import type { User } from "@syncreads/database";
 
 type HeaderProps = {
   readonly user: User;

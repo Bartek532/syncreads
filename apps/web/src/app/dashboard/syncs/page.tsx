@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { api } from "@/trpc/server";
 
 import { getMetadata } from "../../../lib/metadata";
+import { supabase } from "../../../lib/supabase/server";
 
 export const metadata = getMetadata({
   title: "Syncs",
@@ -11,6 +12,7 @@ export const metadata = getMetadata({
 
 const DashboardSyncs = async () => {
   const { syncs, total } = await api.user.getUserSyncs.query({});
+  const { data } = await supabase().auth.getUser();
 
   return (
     <div className="flex flex-col gap-14">
@@ -23,7 +25,7 @@ const DashboardSyncs = async () => {
             Get a quick look at how much time you saved ⌛
           </p>
         </div>
-        <SyncArticleDialog>
+        <SyncArticleDialog user={data.user}>
           <Button>Sync article</Button>
         </SyncArticleDialog>
       </div>

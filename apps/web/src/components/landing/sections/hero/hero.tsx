@@ -1,18 +1,13 @@
 "use client";
 
+import { APP_DESCRIPTION, APP_NAME_APPENDIX } from "@syncreads/shared";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
+import { buttonVariants } from "@/components/ui/button";
 import { ThemedImage } from "@/components/ui/themed-image";
-
-import {
-  REPOSITORY_URL,
-  SITE_DESCRIPTION,
-  SITE_IMAGE,
-  SITE_TITLE_APPENDIX,
-} from "../../../../config";
-import { buttonVariants } from "../../../ui/button";
+import { APP_IMAGE } from "@/config";
 
 export const Hero = () => {
   return (
@@ -29,7 +24,7 @@ export const Hero = () => {
           transition: { duration: 0.5, ease: "easeInOut" },
         }}
         viewport={{ once: true }}
-        href={REPOSITORY_URL}
+        href="/auth/login"
         target="_blank"
         rel="noreferrer"
       >
@@ -37,7 +32,7 @@ export const Hero = () => {
         <ArrowRight className="w-4 transition-transform group-hover:translate-x-1" />
       </motion.a>
       <motion.h1
-        className="lg:leading-tighter max-w-4xl animate-gradient bg-gradient-to-r from-primary via-muted-foreground via-20% to-primary bg-[length:200%_auto] bg-clip-text text-center text-4xl font-bold tracking-tighter text-transparent md:text-5xl xl:text-6xl 2xl:text-7xl"
+        className="lg:leading-tighter max-w-4xl animate-gradient bg-gradient-to-r from-primary via-muted-foreground via-20% to-primary bg-[length:200%_auto] bg-clip-text text-center text-5xl font-bold tracking-tighter text-transparent md:text-6xl xl:text-7xl 2xl:text-8xl"
         initial={{ opacity: 0, y: -55 }}
         whileInView={{
           opacity: 1,
@@ -46,7 +41,7 @@ export const Hero = () => {
         }}
         viewport={{ once: true }}
       >
-        {SITE_TITLE_APPENDIX}
+        {APP_NAME_APPENDIX}
       </motion.h1>
       <motion.p
         className="max-w-2xl text-center text-muted-foreground md:text-xl"
@@ -58,7 +53,7 @@ export const Hero = () => {
         }}
         viewport={{ once: true }}
       >
-        {SITE_DESCRIPTION}
+        {APP_DESCRIPTION}
       </motion.p>
       <motion.div
         className="mt-2 flex gap-4 sm:mt-4"
@@ -79,7 +74,7 @@ export const Hero = () => {
       </motion.div>
 
       <motion.div
-        className="mt-6 flex justify-center"
+        className="mt-8 flex justify-center sm:mt-10 lg:mt-12"
         initial={{ opacity: 0, rotateX: 35, y: -20 }}
         whileInView={{
           opacity: 1,
@@ -91,7 +86,7 @@ export const Hero = () => {
       >
         <ThemedImage
           className="relative w-full rounded-lg sm:mt-10"
-          src={SITE_IMAGE}
+          src={APP_IMAGE}
           defaultVariant="light"
           alt=""
           sizes="(max-width: 1023px) 100vw, 80rem"

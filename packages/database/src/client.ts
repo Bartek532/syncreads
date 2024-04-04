@@ -1,9 +1,4 @@
 import {
-  anonDatabaseSchema,
-  serviceDatabaseSchema,
-  validateConfig,
-} from "@rssmarkable/shared";
-import {
   createBrowserClient as createBrowserSupabaseClient,
   createServerClient as createServerSupabaseClient,
 } from "@supabase/ssr";
@@ -12,6 +7,12 @@ import {
   type SupabaseClientOptions as SupabaseClientOptionsType,
   type SupabaseClient as SupabaseClientType,
 } from "@supabase/supabase-js";
+import {
+  anonDatabaseSchema,
+  clientDatabaseSchema,
+  serviceDatabaseSchema,
+  validateConfig,
+} from "@syncreads/shared";
 
 import { anonEnv, serviceEnv } from "./env";
 
@@ -56,6 +57,19 @@ export const createServiceClient = (
   const env = validateConfig(serviceDatabaseSchema, serviceEnv);
 
   return createClient(env.SUPABASE_URL, env.SUPABASE_SERVICE_KEY, options);
+};
+
+export const createExtensionClient = (
+  extensionEnv: Record<string, string>, // need to pass it as an argument because Vite reads env variables from import.meta.env
+  options?: SupabaseClientOptions,
+): SupabaseClient => {
+  const env = validateConfig(clientDatabaseSchema, extensionEnv);
+
+  return createClient(
+    env.VITE_SUPABASE_URL,
+    env.VITE_SUPABASE_ANON_KEY,
+    options,
+  );
 };
 
 export type { CookieOptions } from "@supabase/ssr";

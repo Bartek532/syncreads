@@ -1,5 +1,6 @@
+import { ApiError } from "@syncreads/shared";
+
 import { supabase } from "../../../lib/supabase/server";
-import { ApiError } from "../../utils/exceptions";
 
 export const createUserFeed = async ({
   userId,

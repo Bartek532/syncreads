@@ -1,6 +1,6 @@
-import { HTTP_STATUS_CODE, syncLogMessageSchema } from "@rssmarkable/shared";
+import { HTTP_STATUS_CODE, syncLogMessageSchema } from "@syncreads/shared";
 
-import type { LogMessage } from "@rssmarkable/shared";
+import type { LogMessage } from "@syncreads/shared";
 
 export const isFeedUrl = async (url: string) => {
   const response = await fetch(url);

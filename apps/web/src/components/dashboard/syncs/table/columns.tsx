@@ -1,6 +1,6 @@
 "use client";
 
-import { type Sync } from "@rssmarkable/database";
+import { type Sync } from "@syncreads/database";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -10,10 +10,10 @@ import Link from "next/link";
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header";
 import { SYNC_TRIGGER_EMOJIS } from "@/config/sync";
 
-import { RealtimeSyncDuration } from "./duration/RealtimeSyncDuration";
-import { RealtimeSyncStatus } from "./status/RealtimeSyncStatus";
+import { RealtimeSyncDuration } from "./duration/realtime-sync-duration";
+import { RealtimeSyncStatus } from "./status/realtime-sync-status";
 
-import type { SyncTrigger } from "@rssmarkable/database";
+import type { SyncTrigger } from "@syncreads/database";
 import type { ColumnDef } from "@tanstack/react-table";
 
 dayjs.extend(duration);

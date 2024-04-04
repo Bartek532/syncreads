@@ -1,5 +1,5 @@
 {
-  "name": "@rssmarkable/database",
+  "name": "@syncreads/database",
   "version": "1.0.0",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -24,14 +24,13 @@
     "test:ci": "supabase test db"
   },
   "dependencies": {
-    "@rssmarkable/shared": "workspace:*",
+    "@syncreads/shared": "workspace:*",
     "@supabase/ssr": "0.0.10",
     "@supabase/supabase-js": "2.39.0",
     "zod": "^3.22.3"
   },
   "devDependencies": {
-    "@rssmarkable/eslint-preset": "workspace:*",
-    "@rssmarkable/tsconfig": "workspace:*",
+    "@syncreads/config": "workspace:*",
     "@types/node": "^18.0.0",
     "rimraf": "3.0.2",
     "supabase": "1.150.0",

@@ -78,7 +78,7 @@ export const Home = async () => {
           <AddFeedDialog>
             <Button variant="outline">Add feed</Button>
           </AddFeedDialog>
-          <SyncArticleDialog>
+          <SyncArticleDialog user={user}>
             <Button>Sync article</Button>
           </SyncArticleDialog>
         </div>
@@ -94,26 +94,25 @@ export const Home = async () => {
               const value = cardsValues[index];
 
               return value || value === 0 ? (
-                <Card key={card.title}>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">
-                      {card.title}
-                    </CardTitle>
-                    <card.icon />
-                  </CardHeader>
-                  <CardContent>
-                    <span className="text-2xl font-bold">{value}</span>
-                  </CardContent>
-                  <CardFooter className="-mb-2 -mt-5 ml-auto justify-end text-xs">
-                    <Link
-                      href={card.href}
-                      className="group flex items-center justify-center gap-2 underline hover:no-underline"
-                    >
-                      View details
-                      <ArrowRight className="w-4 text-muted-foreground transition-colors group-hover:text-primary" />
-                    </Link>
-                  </CardFooter>
-                </Card>
+                <Link key={card.title} href={card.href} className="group">
+                  <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                      <CardTitle className="text-sm font-medium">
+                        {card.title}
+                      </CardTitle>
+                      <card.icon />
+                    </CardHeader>
+                    <CardContent>
+                      <span className="text-2xl font-bold">{value}</span>
+                    </CardContent>
+                    <CardFooter className="-mb-2 -mt-5 ml-auto justify-end text-xs">
+                      <div className="flex items-center justify-center gap-2 underline group-hover:no-underline">
+                        View details
+                        <ArrowRight className="w-4 text-muted-foreground transition-colors group-hover:text-primary" />
+                      </div>
+                    </CardFooter>
+                  </Card>
+                </Link>
               ) : null;
             })}
           </div>

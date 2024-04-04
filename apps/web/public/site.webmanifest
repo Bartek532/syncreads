@@ -1,7 +1,7 @@
 {
-  "name": "RSSMarkable",
-  "short_name": "RSSMarkable",
-  "description": "Seamlessly sync articles and feeds from the web.",
+  "name": "SyncReads - consume the web easier",
+  "short_name": "SyncReads",
+  "description": "Seamlessly sync articles and feeds for distraction-free reading, customized to your preferences, anytime, anywhere.",
   "start_url": "/?source=pwa",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",

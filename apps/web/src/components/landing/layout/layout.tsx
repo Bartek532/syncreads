@@ -3,7 +3,7 @@ import { memo } from "react";
 import { Footer } from "./footer/footer";
 import { Header } from "./header/header";
 
-import type { User } from "@rssmarkable/database";
+import type { User } from "@syncreads/database";
 
 interface LandingLayoutProps {
   readonly children: React.ReactNode;

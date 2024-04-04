@@ -1,5 +1,5 @@
-import type { DeviceType } from "@rssmarkable/database";
-import type { SyncOptionsPayload } from "@rssmarkable/shared";
+import type { DeviceType } from "@syncreads/database";
+import type { SyncOptionsPayload } from "@syncreads/shared";
 
 export type FeedQueueJobPayload = {
   userId: string;

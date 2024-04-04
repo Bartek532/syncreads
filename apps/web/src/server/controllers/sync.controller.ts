@@ -1,10 +1,10 @@
 import {
   HTTP_STATUS_CODE,
+  ApiError,
   type SyncArticlePayload,
   type SyncFeedPayload,
-} from "@rssmarkable/shared";
+} from "@syncreads/shared";
 
-import { ApiError } from "@/server/utils/exceptions";
 import type { GetSyncInput, GetSyncLogInput } from "@/utils";
 
 import {
@@ -17,14 +17,15 @@ import {
 import { getUserApiKey } from "../services/user.service";
 import { isLogMessage } from "../utils/validation";
 
-import type { LogMessage } from "@rssmarkable/shared";
+import type { LogMessage } from "@syncreads/shared";
 
 export const queueArticleSyncHandler = async ({
   id,
   url,
+  options,
 }: { id: string } & SyncArticlePayload) => {
   const { data, error, status } = await getUserApiKey({ id });
-  const options = await getSyncOptions();
+  const defaultOptions = await getSyncOptions();
 
   if (error) {
     throw new ApiError(status, error.message);
@@ -33,7 +34,10 @@ export const queueArticleSyncHandler = async ({
   const { sync } = await queueArticleSync({
     key: data.key,
     url,
-    options,
+    options: {
+      ...defaultOptions,
+      ...options,
+    },
   });
 
   return {

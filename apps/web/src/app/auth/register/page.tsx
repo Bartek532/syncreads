@@ -1,5 +1,5 @@
 import { Auth } from "@/components/auth/auth";
-import { AUTH_PROVIDER } from "@/types/auth.types";
+import { SOCIAL_PROVIDER } from "@/types/auth.types";
 
 import { getMetadata } from "../../../lib/metadata";
 
@@ -21,7 +21,7 @@ const Register = () => {
           title="Register only once"
           description="and always be up to date! 🔄"
         />
-        <Auth.Providers providers={Object.values(AUTH_PROVIDER)} />
+        <Auth.Providers providers={Object.values(SOCIAL_PROVIDER)} />
         <Auth.Divider />
         <Auth.Register />
       </Auth.Layout>

@@ -51,7 +51,7 @@ export const AppearanceForm = memo(() => {
           render={({ field }) => (
             <FormItem className="space-y-1">
               <FormLabel>Theme</FormLabel>
-              <FormDescription>Select the theme for the app.</FormDescription>
+              <FormDescription>Select theme for the app.</FormDescription>
               <FormMessage />
               <RadioGroup
                 onValueChange={field.onChange}

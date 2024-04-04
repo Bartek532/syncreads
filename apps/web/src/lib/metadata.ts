@@ -1,10 +1,6 @@
-import {
-  HOST,
-  SITE_DESCRIPTION,
-  SITE_IMAGE,
-  SITE_TITLE,
-  SITE_TITLE_TEMPLATE,
-} from "../config";
+import { APP_DESCRIPTION, APP_NAME } from "@syncreads/shared";
+
+import { URL, APP_IMAGE, APP_NAME_TEMPLATE } from "../config";
 
 import type { Metadata, Viewport } from "next";
 
@@ -16,10 +12,10 @@ interface SeoProps {
 
 export const DEFAULT_METADATA: Metadata = {
   title: {
-    template: SITE_TITLE_TEMPLATE,
-    default: SITE_TITLE,
+    template: APP_NAME_TEMPLATE,
+    default: APP_NAME,
   },
-  description: SITE_DESCRIPTION,
+  description: APP_DESCRIPTION,
   robots: {
     "max-snippet": -1,
     "max-image-preview": "large",
@@ -28,16 +24,16 @@ export const DEFAULT_METADATA: Metadata = {
   manifest: "/site.webmanifest",
   openGraph: {
     type: "website",
-    title: SITE_TITLE,
+    title: APP_NAME,
     locale: "en_EN",
-    description: SITE_DESCRIPTION,
+    description: APP_DESCRIPTION,
     images: {
       width: 2717,
       height: 2038,
-      alt: SITE_TITLE,
-      url: `${HOST}${SITE_IMAGE.light}`,
+      alt: APP_NAME,
+      url: `${URL}${APP_IMAGE.light}`,
     },
-    siteName: SITE_TITLE,
+    siteName: APP_NAME,
   },
   icons: {
     icon: [
@@ -76,9 +72,9 @@ export const DEFAULT_VIEWPORT: Viewport = {
 
 export const getMetadata = (
   {
-    title = SITE_TITLE,
-    description = SITE_DESCRIPTION,
-    image = SITE_IMAGE.light,
+    title = APP_NAME,
+    description = APP_DESCRIPTION,
+    image = APP_IMAGE.light,
   } = {} as SeoProps,
 ): Metadata => ({
   title,
@@ -91,8 +87,8 @@ export const getMetadata = (
       width: 2717,
       height: 2038,
       alt: title,
-      url: `${HOST}${image}`,
+      url: `${URL}${image}`,
     },
-    siteName: SITE_TITLE,
+    siteName: APP_NAME,
   },
 });

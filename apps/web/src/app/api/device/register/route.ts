@@ -1,4 +1,4 @@
-import { DeviceType } from "@rssmarkable/database";
+import { DeviceType } from "@syncreads/database";
 import { type NextRequest } from "next/server";
 import { register } from "rmapi-js";
 import { ZodError } from "zod";

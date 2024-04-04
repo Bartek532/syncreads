@@ -1,6 +1,6 @@
 # Contribution Guidelines
 
-RSSmarkable is an open source project, and contributions of any kind are welcome and appreciated. Open issues, bugs, and enhancements are all listed on the [issues](https://github.com/Bartek532/rssmarkable/issues) tab and labeled accordingly. For more detailed and long-term roadmap you can also check [projects](https://github.com/users/Bartek532/projects/2) tab, where all the tasks and plans are located. Feel free to open bug tickets and make feature requests. Easy bugs and features will be tagged with the `good first issue` label.
+SyncReads is an open source project, and contributions of any kind are welcome and appreciated. Open issues, bugs, and enhancements are all listed on the [issues](https://github.com/Bartek532/syncreads/issues) tab and labeled accordingly. For more detailed and long-term roadmap you can also check [projects](https://github.com/users/Bartek532/projects/2) tab, where all the tasks and plans are located. Feel free to open bug tickets and make feature requests. Easy bugs and features will be tagged with the `good first issue` label.
 
 ## Issues
 
@@ -8,11 +8,11 @@ If you encounter a bug, please file a bug report. If you have a feature to reque
 
 ## Pull Requests
 
-In order to create a pull request for RSSmarkable, follow the GitHub instructions for [creating a pull request from a fork](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork). Please link your pull request to an existing issue.
+In order to create a pull request for SyncReads, follow the GitHub instructions for [creating a pull request from a fork](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork). Please link your pull request to an existing issue.
 
 ## Architecture
 
-<img src="https://github.com/Bartek532/rssmarkable/blob/main/docs/images/architecture-details.png?raw=true" alt="RSSmarkable architecture details" width="100%">
+<img src="https://github.com/Bartek532/syncreads/blob/main/docs/images/architecture-details.png?raw=true" alt="SyncReads architecture details" width="100%">
 
 <br />
 
@@ -34,7 +34,7 @@ In order to create a pull request for RSSmarkable, follow the GitHub instruction
 
 9. But where is the data? Short question = short answer. [Supabase](https://supabase.com). It uses [PostgreSQL](https://www.postgresql.org/) under the hood, so we won't bother about strictly db things. With a range of useful services that can be integrated in minutes (e.g., realtime, auth), it allows us to focus on business value rather than low-level implementation details.
 
-10. There are several ways to communicate with the database, but RSSmarkable places its bet on the official [JavaScript SDK](https://supabase.com/docs/reference/javascript/introduction). Simple, handy, and performant, it eliminates the need for writing tons of abstractions over the database to obtain the desired data.
+10. There are several ways to communicate with the database, but SyncReads places its bet on the official [JavaScript SDK](https://supabase.com/docs/reference/javascript/introduction). Simple, handy, and performant, it eliminates the need for writing tons of abstractions over the database to obtain the desired data.
 
 ## File Structure
 

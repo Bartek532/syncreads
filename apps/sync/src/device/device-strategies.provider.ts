@@ -1,4 +1,4 @@
-import { DeviceType } from "@rssmarkable/database";
+import { DeviceType } from "@syncreads/database";
 
 import { DEVICE_STRATEGIES_TOKEN } from "./device.constants";
 import { KindleStrategy } from "./kindle/kindle.strategy";
