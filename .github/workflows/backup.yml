@@ -1,0 +1,38 @@
+name: Backup database
+
+on:
+  push:
+    # branches: [main]
+    branches: [develop]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backup:
+    name: 💾 Backup
+    runs-on: ubuntu-latest
+    environment: Production
+    env:
+      SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+    steps:
+      - name: ✅ Checkout code
+        uses: actions/checkout@v4
+
+      - name: ⚡ Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+
+      - name: 🚀 Backup roles
+        run: supabase db dump --db-url "$SUPABASE_DB_URL" -f roles.sql --role-only
+      - name: 🚀 Backup schema
+        run: supabase db dump --db-url "$SUPABASE_DB_URL" -f schema.sql
+      - name: 🚀 Backup data
+        run: supabase db dump --db-url "$SUPABASE_DB_URL" -f data.sql --data-only --use-copy
+
+      - name: 📦 Upload backup
+        uses: actions/upload-artifact@v2
+        with:
+          name: backup-${{ github.sha }}
+          path: "*.sql"
