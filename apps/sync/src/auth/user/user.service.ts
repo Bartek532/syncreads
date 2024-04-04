@@ -40,7 +40,7 @@ export class UserService {
 
   async getUserByApiKey(apiKey: string) {
     const { data, error, status } = await this.supabaseProvider()
-      .from("ApiKey")
+      .from("UserApiKey")
       .select("*")
       .eq("key", apiKey)
       .single();
@@ -60,7 +60,7 @@ export class UserService {
 
   async getUserDevice(userId: string) {
     const { data, error, status } = await this.supabaseProvider()
-      .from("Device")
+      .from("UserDevice")
       .select()
       .eq("userId", userId)
       .single();

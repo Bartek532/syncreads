@@ -9,10 +9,10 @@ import { SyncArticleDialog } from "../dialog/sync-article-dialog";
 
 import { ArticleTile } from "./tile/article-tile";
 
-import type { Article } from "@syncreads/database";
+import type { SyncArticle } from "@syncreads/database";
 
 type ArticlesListProps = {
-  readonly articles: Article[];
+  readonly articles: SyncArticle[];
 };
 
 export const ArticlesList = memo<ArticlesListProps>(async ({ articles }) => {

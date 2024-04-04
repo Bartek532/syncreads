@@ -9,10 +9,10 @@ import { Empty } from "../../ui/empty";
 import { AddDeviceDialog } from "./dialog/add-device-dialog";
 import { DeviceTile } from "./tile/device-tile";
 
-import type { Device as DeviceType } from "@syncreads/database";
+import type { UserDevice } from "@syncreads/database";
 
 type DeviceProps = {
-  readonly device: DeviceType | null;
+  readonly device: UserDevice | null;
 };
 
 export const Device = memo<DeviceProps>(({ device }) => {

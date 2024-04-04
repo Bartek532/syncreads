@@ -9,7 +9,7 @@ import { env } from "@/lib/env";
 import { supabase } from "@/lib/supabase";
 
 const getUserApiKey = async (id: string) => {
-  return supabase.from("ApiKey").select("key").eq("userId", id).single();
+  return supabase.from("UserApiKey").select("key").eq("userId", id).single();
 };
 
 const queueArticleSync = async ({
