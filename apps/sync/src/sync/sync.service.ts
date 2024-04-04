@@ -7,7 +7,7 @@ import { SYNC_QUEUED_LOG } from "./logger/logger.constants";
 import { LoggerService } from "./logger/logger.service";
 
 import type {
-  InsertArticle,
+  InsertSyncArticle,
   InsertSync,
   UpdateSync,
 } from "@syncreads/database";
@@ -36,7 +36,7 @@ export class SyncService {
     return data;
   }
 
-  async createSyncArticle(payload: InsertArticle) {
+  async createSyncArticle(payload: InsertSyncArticle) {
     const { data, error, status } = await this.supabaseProvider()
       .from("SyncArticle")
       .insert(payload)
