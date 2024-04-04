@@ -1,6 +1,6 @@
 "use client";
 
-import { type Log } from "@syncreads/database";
+import { type SyncLog as SyncLogType } from "@syncreads/database";
 import dayjs from "dayjs";
 import { marked } from "marked";
 import { useParams, useRouter } from "next/navigation";
@@ -15,7 +15,7 @@ import type { Sync } from "@syncreads/database";
 import type { LogMessage } from "@syncreads/shared";
 
 type SyncLogProps = {
-  readonly log: Log & { json: LogMessage[] };
+  readonly log: SyncLogType & { json: LogMessage[] };
   readonly sync: Sync;
 };
 

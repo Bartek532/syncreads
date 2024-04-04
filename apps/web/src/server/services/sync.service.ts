@@ -69,7 +69,7 @@ export const getSyncById = async ({ id }: GetSyncInput) => {
 
 export const getSyncLog = async ({ syncId }: GetSyncLogInput) => {
   return supabase()
-    .from("Log")
+    .from("SyncLog")
     .select("*")
     .eq("syncId", syncId)
     .order("createdAt", { ascending: false });

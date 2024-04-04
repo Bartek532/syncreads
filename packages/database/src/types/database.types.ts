@@ -10,25 +10,25 @@ type Tables<
 type Enums<T extends keyof Database["public"]["Enums"]> =
   Database["public"]["Enums"][T];
 
-export type ApiKey = Tables<"ApiKey">;
-export type InsertApiKey = Tables<"ApiKey", "Insert">;
-export type UpdateApiKey = Tables<"ApiKey", "Update">;
+export type UserApiKey = Tables<"UserApiKey">;
+export type InsertUserApiKey = Tables<"UserApiKey", "Insert">;
+export type UpdateUserApiKey = Tables<"UserApiKey", "Update">;
 
-export type Device = Tables<"Device">;
-export type InsertDevice = Tables<"Device", "Insert">;
-export type UpdateDevice = Tables<"Device", "Update">;
+export type UserDevice = Tables<"UserDevice">;
+export type InsertUserDevice = Tables<"UserDevice", "Insert">;
+export type UpdateUserDevice = Tables<"UserDevice", "Update">;
 
 export type Feed = Tables<"Feed">;
 export type InsertFeed = Tables<"Feed", "Insert">;
 export type UpdateFeed = Tables<"Feed", "Update">;
 
-export type Article = Tables<"Article">;
-export type InsertArticle = Tables<"Article", "Insert">;
-export type UpdateArticle = Tables<"Article", "Update">;
+export type SyncArticle = Tables<"SyncArticle">;
+export type InsertSyncArticle = Tables<"SyncArticle", "Insert">;
+export type UpdateSyncArticle = Tables<"SyncArticle", "Update">;
 
-export type Log = Tables<"Log">;
-export type InsertLog = Tables<"Log", "Insert">;
-export type UpdateLog = Tables<"Log", "Update">;
+export type SyncLog = Tables<"SyncLog">;
+export type InsertSyncLog = Tables<"SyncLog", "Insert">;
+export type UpdateSyncLog = Tables<"SyncLog", "Update">;
 
 export type Sync = Tables<"Sync">;
 export type InsertSync = Tables<"Sync", "Insert">;

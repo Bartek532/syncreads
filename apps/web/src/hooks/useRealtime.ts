@@ -4,9 +4,9 @@ import { create } from "zustand";
 import { supabase } from "@/lib/supabase/client";
 
 import type {
-  Log,
   RealtimePostgresUpdatePayload,
   Sync,
+  SyncLog,
 } from "@syncreads/database";
 import type { LogMessage } from "@syncreads/shared";
 
@@ -16,13 +16,13 @@ export const useRealtimeLog = ({
 }: {
   syncId: string;
   onPayload?: (
-    payload: Log & {
+    payload: SyncLog & {
       json: LogMessage[];
     },
   ) => void;
 }) => {
   const [log, setLog] = useState<
-    | (Log & {
+    | (SyncLog & {
         json: LogMessage[];
       })
     | null
@@ -31,12 +31,12 @@ export const useRealtimeLog = ({
   useEffect(() => {
     const channel = supabase()
       .channel(`log:update`)
-      .on<Log & { json: LogMessage[] }>(
+      .on<SyncLog & { json: LogMessage[] }>(
         "postgres_changes",
         {
           event: "UPDATE",
           schema: "public",
-          table: "Log",
+          table: "SyncLog",
           filter: `syncId=eq.${syncId}`,
         },
         (payload) => {

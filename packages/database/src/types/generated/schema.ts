@@ -9,93 +9,6 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      ApiKey: {
-        Row: {
-          createdAt: string
-          key: string
-          updatedAt: string
-          userId: string
-        }
-        Insert: {
-          createdAt?: string
-          key?: string
-          updatedAt?: string
-          userId?: string
-        }
-        Update: {
-          createdAt?: string
-          key?: string
-          updatedAt?: string
-          userId?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "ApiKey_userId_fkey"
-            columns: ["userId"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      Article: {
-        Row: {
-          syncedAt: string
-          syncId: string
-          url: string
-        }
-        Insert: {
-          syncedAt?: string
-          syncId: string
-          url: string
-        }
-        Update: {
-          syncedAt?: string
-          syncId?: string
-          url?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "Article_syncId_fkey"
-            columns: ["syncId"]
-            isOneToOne: false
-            referencedRelation: "Sync"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      Device: {
-        Row: {
-          id: string
-          registeredAt: string
-          token: string
-          type: Database["public"]["Enums"]["DeviceType"]
-          userId: string
-        }
-        Insert: {
-          id?: string
-          registeredAt?: string
-          token: string
-          type?: Database["public"]["Enums"]["DeviceType"]
-          userId: string
-        }
-        Update: {
-          id?: string
-          registeredAt?: string
-          token?: string
-          type?: Database["public"]["Enums"]["DeviceType"]
-          userId?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "Device_userId_fkey"
-            columns: ["userId"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       Feed: {
         Row: {
           id: string
@@ -110,35 +23,6 @@ export type Database = {
           url?: string
         }
         Relationships: []
-      }
-      Log: {
-        Row: {
-          createdAt: string
-          json: Json
-          syncId: string
-          updatedAt: string
-        }
-        Insert: {
-          createdAt?: string
-          json: Json
-          syncId: string
-          updatedAt?: string
-        }
-        Update: {
-          createdAt?: string
-          json?: Json
-          syncId?: string
-          updatedAt?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "Log_syncId_fkey"
-            columns: ["syncId"]
-            isOneToOne: true
-            referencedRelation: "Sync"
-            referencedColumns: ["id"]
-          },
-        ]
       }
       Sync: {
         Row: {
@@ -168,6 +52,122 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "Sync_userId_fkey"
+            columns: ["userId"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      SyncArticle: {
+        Row: {
+          syncedAt: string
+          syncId: string
+          url: string
+        }
+        Insert: {
+          syncedAt?: string
+          syncId: string
+          url: string
+        }
+        Update: {
+          syncedAt?: string
+          syncId?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "Article_syncId_fkey"
+            columns: ["syncId"]
+            isOneToOne: false
+            referencedRelation: "Sync"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      SyncLog: {
+        Row: {
+          createdAt: string
+          json: Json
+          syncId: string
+          updatedAt: string
+        }
+        Insert: {
+          createdAt?: string
+          json: Json
+          syncId: string
+          updatedAt?: string
+        }
+        Update: {
+          createdAt?: string
+          json?: Json
+          syncId?: string
+          updatedAt?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "Log_syncId_fkey"
+            columns: ["syncId"]
+            isOneToOne: true
+            referencedRelation: "Sync"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      UserApiKey: {
+        Row: {
+          createdAt: string
+          key: string
+          updatedAt: string
+          userId: string
+        }
+        Insert: {
+          createdAt?: string
+          key?: string
+          updatedAt?: string
+          userId?: string
+        }
+        Update: {
+          createdAt?: string
+          key?: string
+          updatedAt?: string
+          userId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ApiKey_userId_fkey"
+            columns: ["userId"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      UserDevice: {
+        Row: {
+          id: string
+          registeredAt: string
+          token: string
+          type: Database["public"]["Enums"]["DeviceType"]
+          userId: string
+        }
+        Insert: {
+          id?: string
+          registeredAt?: string
+          token: string
+          type?: Database["public"]["Enums"]["DeviceType"]
+          userId: string
+        }
+        Update: {
+          id?: string
+          registeredAt?: string
+          token?: string
+          type?: Database["public"]["Enums"]["DeviceType"]
+          userId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "Device_userId_fkey"
             columns: ["userId"]
             isOneToOne: false
             referencedRelation: "users"
