@@ -2,8 +2,8 @@ name: Deployment
 
 on:
   push:
-    # branches: [main]
-    branches: [develop]
+    branches: [main]
+    # branches: [develop]
 
 env:
   NODE_VERSION: 20.x

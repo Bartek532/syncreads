@@ -15,7 +15,7 @@ reloadOnUpdate("pages/background");
 chrome.runtime.onMessage.addListener(
   <T extends OPERATION_TYPE, K extends OperationName<T>>(
     request: Message<T, K>,
-    sender: chrome.runtime.MessageSender,
+    _sender: chrome.runtime.MessageSender,
     sendResponse: (response: Response<T, K> | null) => void,
   ) => {
     void (async () => {
