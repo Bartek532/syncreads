@@ -74,7 +74,7 @@ export const Hero = () => {
       </motion.div>
 
       <motion.div
-        className="mt-6 flex justify-center"
+        className="mt-8 flex justify-center sm:mt-10 lg:mt-12"
         initial={{ opacity: 0, rotateX: 35, y: -20 }}
         whileInView={{
           opacity: 1,
