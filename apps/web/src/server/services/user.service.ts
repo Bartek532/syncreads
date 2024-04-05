@@ -35,7 +35,7 @@ export const getUserFeeds = ({
 }) => {
   return supabase()
     .from("UserFeed")
-    .select("*, Feed (id, url)", { count: "exact" })
+    .select("*, Feed (id, url, site)", { count: "exact" })
     .lt("createdAt", [cursor])
     .order("createdAt", { ascending: false })
     .eq("userId", id)

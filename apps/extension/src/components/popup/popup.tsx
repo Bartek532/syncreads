@@ -70,6 +70,7 @@ const Component = () => {
           <a
             href={`${env.VITE_WEB_APP_URL}/dashboard/syncs/${syncData.id}`}
             target="_blank"
+            rel="noreferrer"
             className={cn(
               buttonVariants(),
               "flex h-9 w-full cursor-pointer items-center justify-center gap-1.5 bg-success text-[0.8rem] hover:bg-success/90",

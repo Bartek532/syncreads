@@ -3,14 +3,14 @@ import { Hourglass, Newspaper, RefreshCw, Tablet } from "lucide-react";
 export const DASHBOARD_NAVIGATION = [
   { name: "Home", href: "/dashboard", segment: null },
   {
-    name: "Feeds",
-    href: "/dashboard/feeds",
-    segment: "feeds",
-  },
-  {
     name: "Device",
     href: "/dashboard/device",
     segment: "device",
+  },
+  {
+    name: "Feeds",
+    href: "/dashboard/feeds",
+    segment: "feeds",
   },
   {
     name: "Syncs",

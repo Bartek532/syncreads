@@ -43,7 +43,8 @@ export const RegisterForm = memo(() => {
     const { error } = await register(data);
 
     if (error) {
-      return toast.error(error.message, { id: loadingToast });
+      setIsSubmitting(false);
+      return toast.error(error, { id: loadingToast });
     }
 
     toast.success("Successfully registered!", { id: loadingToast });

@@ -46,6 +46,15 @@ export interface FeedWithArticles {
   readonly articles: FeedArticle[];
 }
 
+export interface UrlMetadata {
+  readonly url: string;
+  readonly title?: string;
+  readonly description?: string;
+  readonly image?: string;
+  readonly "og:image"?: string;
+  readonly favicons?: { href: string }[];
+}
+
 export enum FILE_TYPE {
   OPML = "opml",
 }

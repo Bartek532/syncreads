@@ -1,9 +1,11 @@
 import { HTTP_STATUS_CODE, ApiError } from "@syncreads/shared";
-import { getLinkPreview, getPreviewFromContent } from "link-preview-js";
+import urlMetadata from "url-metadata";
+
+import type { UrlMetadata } from "@/types/feed.types";
 
 import { createFeed, importStrategies } from "../services/feed/feed.service";
 import { getUserFeedByUrl } from "../services/user.service";
-import { parseFeed } from "../utils/parser";
+import { getFavicon } from "../utils/parser";
 import { isFeedUrl } from "../utils/validation";
 
 import type {
@@ -24,7 +26,7 @@ export const createFeedHandler = async ({
     );
   }
 
-  const { isFeed } = await isFeedUrl(url);
+  const { isFeed, parsed } = await isFeedUrl(url);
 
   if (!isFeed) {
     throw new ApiError(
@@ -33,7 +35,7 @@ export const createFeedHandler = async ({
     );
   }
 
-  const feed = await createFeed({ url, id });
+  const feed = await createFeed({ url, id, site: parsed.link ?? url });
 
   return {
     status: "Success",
@@ -69,45 +71,35 @@ export const importFeedsHandler = async ({
 };
 
 export const getUrlDetailsHandler = async ({ url }: GetUrlDetailsInput) => {
-  const { isFeed, response } = await isFeedUrl(url);
-  const timeout = 2000;
+  const { isFeed, response, parsed } = await isFeedUrl(url);
 
   if (!isFeed) {
-    const preview = await getPreviewFromContent(response, {
-      followRedirects: "follow",
-      timeout,
-    });
+    const preview = (await urlMetadata(null, {
+      parseResponseObject: response,
+    })) as UrlMetadata;
 
     return {
       status: "Success",
       data: {
-        title: "title" in preview ? preview.title : "",
-        description: "description" in preview ? preview.description : "",
-        image: "images" in preview ? preview.images[0] : "",
-        icon: preview.favicons[0],
+        title: preview.title || null,
+        description: preview.description || null,
+        image: preview.image || preview["og:image"] || null,
+        icon: getFavicon(url, preview.favicons),
         url,
       },
     };
   }
 
-  const feed = await parseFeed(url);
-
-  const link = feed.link ?? url;
-  const preview = await getLinkPreview(link, {
-    followRedirects: "follow",
-    timeout,
-  });
+  const link = parsed.link ?? url;
+  const preview = (await urlMetadata(link)) as UrlMetadata;
 
   return {
     status: "Success",
     data: {
-      title: feed.title,
-      description:
-        "description" in preview
-          ? preview.description ?? feed.description
-          : feed.description,
-      image: "images" in preview ? preview.images[0] : feed.image,
-      icon: preview.favicons[0],
+      title: preview.title || parsed.title || null,
+      description: preview.description || parsed.description || null,
+      image: preview.image || preview["og:image"] || parsed.image?.url || null,
+      icon: getFavicon(url, preview.favicons),
       url: link,
     },
   };

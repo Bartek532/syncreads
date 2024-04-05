@@ -44,7 +44,8 @@ export const LoginForm = memo(() => {
     const { error } = await login(data);
 
     if (error) {
-      return toast.error(error.message, { id: loadingToast });
+      setIsSubmitting(false);
+      return toast.error(error, { id: loadingToast });
     }
 
     toast.success("Signed in!", { id: loadingToast });

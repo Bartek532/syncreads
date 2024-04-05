@@ -12,14 +12,17 @@ export type Database = {
       Feed: {
         Row: {
           id: string
+          site: string
           url: string
         }
         Insert: {
           id?: string
+          site: string
           url: string
         }
         Update: {
           id?: string
+          site?: string
           url?: string
         }
         Relationships: []

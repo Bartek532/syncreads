@@ -71,7 +71,7 @@ export const FeedsList = memo<FeedsListProps>(
                 />
 
                 <FeedTile
-                  url={feed.Feed?.url ?? ""}
+                  url={feed.Feed?.site ?? ""}
                   className={cn(
                     checkedFeeds.has(feed.feedId) &&
                       "ring-2 ring-primary ring-offset-2",
