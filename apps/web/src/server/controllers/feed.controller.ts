@@ -1,11 +1,9 @@
 import { HTTP_STATUS_CODE, ApiError } from "@syncreads/shared";
 import { getLinkPreview, getPreviewFromContent } from "link-preview-js";
-import { parse } from "rss-to-json";
-
-import type { FeedApi } from "@/types/feed.types";
 
 import { createFeed, importStrategies } from "../services/feed/feed.service";
 import { getUserFeedByUrl } from "../services/user.service";
+import { parseFeed } from "../utils/parser";
 import { isFeedUrl } from "../utils/validation";
 
 import type {
@@ -72,11 +70,12 @@ export const importFeedsHandler = async ({
 
 export const getUrlDetailsHandler = async ({ url }: GetUrlDetailsInput) => {
   const { isFeed, response } = await isFeedUrl(url);
+  const timeout = 2000;
 
   if (!isFeed) {
     const preview = await getPreviewFromContent(response, {
       followRedirects: "follow",
-      timeout: 1500,
+      timeout,
     });
 
     return {
@@ -91,24 +90,18 @@ export const getUrlDetailsHandler = async ({ url }: GetUrlDetailsInput) => {
     };
   }
 
-  const feed = (await parse(url)) as FeedApi;
-  const link =
-    typeof feed.link === "string"
-      ? feed.link
-      : feed.link
-      ? feed.link.find(({ rel }) => rel === "alternate")?.href
-        ? feed.link.find(({ rel }) => rel === "alternate")?.href
-        : feed.link[0]?.href
-      : url;
-  const preview = await getLinkPreview(link ?? url, {
+  const feed = await parseFeed(url);
+
+  const link = feed.link ?? url;
+  const preview = await getLinkPreview(link, {
     followRedirects: "follow",
-    timeout: 1500,
+    timeout,
   });
 
   return {
     status: "Success",
     data: {
-      title: typeof feed.title === "string" ? feed.title : feed.title.$text,
+      title: feed.title,
       description:
         "description" in preview
           ? preview.description ?? feed.description

@@ -448,6 +448,9 @@ importers:
       rmapi-js:
         specifier: ^3.1.0
         version: 3.1.0
+      rss-parser:
+        specifier: ^3.13.0
+        version: 3.13.0
       rss-to-json:
         specifier: 2.1.1
         version: 2.1.1

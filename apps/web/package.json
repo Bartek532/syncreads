@@ -25,9 +25,9 @@
     "@radix-ui/react-separator": "1.0.3",
     "@radix-ui/react-slot": "1.0.2",
     "@radix-ui/react-switch": "1.0.3",
+    "@sendgrid/mail": "8.1.0",
     "@syncreads/database": "workspace:*",
     "@syncreads/shared": "workspace:*",
-    "@sendgrid/mail": "8.1.0",
     "@tanstack/react-query": "4.29.1",
     "@tanstack/react-table": "8.10.7",
     "@trpc/client": "10.44.0",
@@ -56,6 +56,7 @@
     "react-hot-toast": "2.4.1",
     "recharts": "2.10.3",
     "rmapi-js": "^3.1.0",
+    "rss-parser": "^3.13.0",
     "rss-to-json": "2.1.1",
     "sharp": "0.32.6",
     "superjson": "1.9.1",
@@ -66,8 +67,8 @@
     "zustand": "4.5.2"
   },
   "devDependencies": {
-    "@syncreads/config": "workspace:*",
     "@svgr/webpack": "^6.5.1",
+    "@syncreads/config": "workspace:*",
     "@types/marked": "4.0.8",
     "@types/next-pwa": "^5.6.2",
     "@types/node": "^18.0.0",
