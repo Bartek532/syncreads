@@ -18,6 +18,7 @@ export const Footer = () => {
             href={env.VITE_WEB_APP_URL}
             target="_blank"
             className="underline hover:no-underline"
+            rel="noreferrer"
           >
             {APP_NAME}
           </a>

@@ -2,6 +2,8 @@ import { ApiError } from "@syncreads/shared";
 
 import { supabase } from "../../../lib/supabase/server";
 
+import type { InsertFeed } from "@syncreads/database";
+
 export const createUserFeed = async ({
   userId,
   feedId,
@@ -18,7 +20,11 @@ export const createUserFeed = async ({
   }
 };
 
-export const createFeed = async ({ url, id }: { url: string; id: string }) => {
+export const createFeed = async ({
+  url,
+  site,
+  id,
+}: InsertFeed & { id: string }) => {
   const { data, error, status } = await getFeedByUrl({ url });
 
   if (error) {
@@ -30,7 +36,7 @@ export const createFeed = async ({ url, id }: { url: string; id: string }) => {
       data: feedData,
       error: feedError,
       status: feedStatus,
-    } = await supabase().from("Feed").insert({ url }).select().single();
+    } = await supabase().from("Feed").insert({ url, site }).select().single();
 
     if (feedError) {
       throw new ApiError(feedStatus, feedError.message);

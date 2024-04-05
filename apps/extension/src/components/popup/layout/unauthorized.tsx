@@ -14,6 +14,7 @@ export const Unauthorized = () => {
         className={buttonVariants()}
         href={`${env.VITE_WEB_APP_URL}/auth/login`}
         target="_blank"
+        rel="noreferrer"
       >
         Log in
       </a>

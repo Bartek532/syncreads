@@ -21,13 +21,15 @@ export const ArticleTile = memo<ArticleTileProps>(async ({ url }) => {
       target="_blank"
       rel="noreferrer"
     >
-      <Avatar className="mt-1 h-7 w-7 shrink-0 sm:h-8 sm:w-8">
-        <AvatarImage src={data.icon} alt="" />
-        <AvatarFallback>{data.title[0]}</AvatarFallback>
+      <Avatar className="mt-1 min-h-7 w-7 shrink-0 rounded-none sm:h-8 sm:min-h-8 sm:w-8">
+        <AvatarImage src={data.icon ?? "/favicon.ico"} alt="" />
+        <AvatarFallback className="h-7 rounded-full sm:h-8">
+          {data.title?.[0] ?? "N/A"}
+        </AvatarFallback>
       </Avatar>
       <div className="mr-auto flex flex-col gap-1">
         <span className="text-sm font-bold underline group-hover:no-underline">
-          {data.title}
+          {data.title ?? "N/A"}
         </span>
         <span className="text-xs text-muted-foreground">
           {removeProtocolsFromUrl(url)}

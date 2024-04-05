@@ -1,21 +1,31 @@
 import { HTTP_STATUS_CODE, syncLogMessageSchema } from "@syncreads/shared";
 
+import { parseFeedFromString } from "./parser";
+
 import type { LogMessage } from "@syncreads/shared";
 
 export const isFeedUrl = async (url: string) => {
   const response = await fetch(url);
 
-  const data = await response.text();
+  const isFeed =
+    response.status === HTTP_STATUS_CODE.OK &&
+    response.headers.get("content-type")?.includes("xml");
+
+  if (isFeed) {
+    const data = await response.text();
+    const parsed = await parseFeedFromString(data);
+
+    return {
+      isFeed,
+      response,
+      parsed,
+    };
+  }
 
   return {
-    isFeed:
-      response.status === HTTP_STATUS_CODE.OK &&
-      response.headers.get("content-type")?.includes("xml"),
-    response: {
-      headers: Object.fromEntries(new Headers(response.headers).entries()),
-      url,
-      data,
-    },
+    isFeed,
+    response,
+    parsed: null,
   };
 };
 

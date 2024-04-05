@@ -10,7 +10,7 @@ export const login = async (data: LoginData) => {
     ...data,
   });
 
-  return { error };
+  return { error: error?.message ?? null };
 };
 
 export const register = async (data: RegisterData) => {
@@ -26,5 +26,5 @@ export const register = async (data: RegisterData) => {
     },
   });
 
-  return { error };
+  return { error: error?.message ?? null };
 };

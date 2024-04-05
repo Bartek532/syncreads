@@ -12,20 +12,24 @@ export type Database = {
       Feed: {
         Row: {
           id: string
+          site: string
           url: string
         }
         Insert: {
           id?: string
+          site: string
           url: string
         }
         Update: {
           id?: string
+          site?: string
           url?: string
         }
         Relationships: []
       }
       Sync: {
         Row: {
+          deviceId: string | null
           finishedAt: string | null
           id: string
           startedAt: string
@@ -34,6 +38,7 @@ export type Database = {
           userId: string
         }
         Insert: {
+          deviceId?: string | null
           finishedAt?: string | null
           id?: string
           startedAt?: string
@@ -42,6 +47,7 @@ export type Database = {
           userId: string
         }
         Update: {
+          deviceId?: string | null
           finishedAt?: string | null
           id?: string
           startedAt?: string
@@ -50,6 +56,13 @@ export type Database = {
           userId?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "public_Sync_deviceId_fkey"
+            columns: ["deviceId"]
+            isOneToOne: false
+            referencedRelation: "UserDevice"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "Sync_userId_fkey"
             columns: ["userId"]

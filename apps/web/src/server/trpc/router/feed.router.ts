@@ -1,5 +1,3 @@
-import { clearUrl } from "@syncreads/shared";
-
 import { router, protectedProcedure } from "..";
 import {
   createFeedSchema,
@@ -19,7 +17,7 @@ export const feedRouter = router({
       createFeedHandler({
         ...input,
         id: ctx.session.user.id,
-        url: clearUrl(input.url),
+        url: input.url,
       }),
     ),
   importFeeds: protectedProcedure
@@ -29,7 +27,5 @@ export const feedRouter = router({
     ),
   getUrlDetails: protectedProcedure
     .input(getUrlDetailsSchema)
-    .query(({ input }) =>
-      getUrlDetailsHandler({ ...input, url: clearUrl(input.url) }),
-    ),
+    .query(({ input }) => getUrlDetailsHandler({ ...input, url: input.url })),
 });

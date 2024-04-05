@@ -32,7 +32,11 @@ export const FeedTile = memo<FeedTileProps>(({ url, className }) => {
     >
       <div
         className="hidden shrink-0 grow-0 basis-1/4 rounded-l-lg bg-cover bg-center sm:block sm:basis-1/5 md:basis-1/4"
-        style={{ backgroundImage: `url(${data.data.image ?? ""})` }}
+        style={{
+          backgroundImage: `url(${
+            data.data.image ?? "../../../../../images/fallback.png"
+          })`,
+        }}
       ></div>
       <div className="p-4 pr-14 md:py-8">
         <h2 className="text-base font-medium sm:text-lg">
@@ -42,12 +46,12 @@ export const FeedTile = memo<FeedTileProps>(({ url, className }) => {
             target="_blank"
             rel="noreferrer"
           >
-            {data.data.title}
+            {data.data.title ?? "N/A"}
           </a>
         </h2>
         <p className="mt-2 text-xs text-muted-foreground sm:text-sm">
           {truncateTextByWordsCount(
-            data.data.description || "404 - description not found!",
+            data.data.description ?? "404 - description not found!",
             15,
           )}
         </p>
