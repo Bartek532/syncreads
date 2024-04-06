@@ -3,20 +3,47 @@ import { supabase } from "@/lib/supabase";
 
 import type { Session } from "@syncreads/database";
 
-export const getSession = async () => {
-  try {
+const getCookie = async (url: string, name: string) => {
+  const cookie = await chrome.cookies.get({
+    url,
+    name,
+  });
+
+  if (cookie) {
+    return cookie.value;
+  }
+
+  let temp = "";
+  let i = 0;
+
+  while (true) {
     const cookie = await chrome.cookies.get({
-      url: env.VITE_WEB_APP_URL,
-      name: env.VITE_AUTH_COOKIE_NAME,
+      url,
+      name: `${name}.${i}`,
     });
 
-    if (!cookie?.value) {
+    if (cookie) {
+      temp += cookie.value;
+    } else {
+      return temp;
+    }
+
+    i++;
+  }
+};
+
+export const getSession = async () => {
+  try {
+    const cookie = await getCookie(
+      env.VITE_WEB_APP_URL,
+      env.VITE_AUTH_COOKIE_NAME,
+    );
+
+    if (!cookie) {
       return null;
     }
 
-    const parsedCookie = JSON.parse(
-      decodeURIComponent(cookie.value),
-    ) as Session;
+    const parsedCookie = JSON.parse(decodeURIComponent(cookie)) as Session;
 
     if (!parsedCookie) {
       return null;

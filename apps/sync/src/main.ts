@@ -15,6 +15,7 @@ async function bootstrap() {
   app.useGlobalFilters(new GlobalExceptionFilter());
   app.useGlobalPipes(new ZodValidationPipe());
   app.setGlobalPrefix("api");
+  app.enableCors();
 
   await app.listen(3001);
 
