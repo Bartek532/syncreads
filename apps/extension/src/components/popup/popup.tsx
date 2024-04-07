@@ -88,7 +88,7 @@ const Component = () => {
             disabled={isArticleSyncLoading || !!syncError}
             onClick={() =>
               queueArticleSync({
-                userId: session.user.id,
+                user: session.user,
                 input: {
                   url: activeTab?.url ?? "",
                 },

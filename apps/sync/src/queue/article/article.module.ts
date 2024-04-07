@@ -21,6 +21,6 @@ import { ArticleQueueService } from "./article.service";
     forwardRef(() => SyncModule),
   ],
   providers: [ArticleQueueConsumer, ArticleQueueService],
-  exports: [ArticleQueueService, BullModule],
+  exports: [BullModule],
 })
 export class ArticleQueueModule {}

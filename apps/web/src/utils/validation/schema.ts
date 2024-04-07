@@ -9,10 +9,13 @@ export const updateUserSchema = z.object({
     .string()
     .max(30, "Name must not be longer than 30 characters.")
     .optional(),
-  folder: z
-    .string()
-    .max(30, "Folder name must not be longer than 30 characters.")
-    .optional(),
+  folder: z.object({
+    name: z
+      .string()
+      .max(30, "Folder name must not be longer than 30 characters.")
+      .optional(),
+    root: z.boolean().optional(),
+  }),
   format: z.nativeEnum(OUTPUT_FORMAT),
 });
 

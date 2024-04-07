@@ -17,9 +17,9 @@ import { SYNC_LOGGER_PROVIDER_TOKEN } from "../../sync/logger/logger.constants";
 import { SyncLoggerProviderFactory } from "../../sync/logger/logger.provider";
 import { formatTime } from "../../sync/logger/utils/time";
 import { SyncService } from "../../sync/sync.service";
+import { ArticleQueueService } from "../article/article.service";
 
 import { FEED_QUEUE_TOKEN } from "./feed.constants";
-import { FeedQueueService } from "./feed.service";
 
 import type { FeedQueueJobPayload } from "./types/feed.types";
 
@@ -29,7 +29,7 @@ export class FeedQueueConsumer {
     private readonly parserService: ParserService,
     private readonly syncService: SyncService,
     private readonly userService: UserService,
-    private readonly feedQueueService: FeedQueueService,
+    private readonly articleQueueService: ArticleQueueService,
     @Inject(SYNC_LOGGER_PROVIDER_TOKEN)
     private readonly syncLogger: SyncLoggerProviderFactory,
   ) {}
@@ -37,7 +37,6 @@ export class FeedQueueConsumer {
   @Process()
   async syncFeed({ data }: Job<FeedQueueJobPayload>) {
     const feed = await this.userService.getUserFeed(data.userId, data.feedId);
-    const user = await this.userService.getUserById(data.userId);
 
     const { updatedAt: feedSyncStartDate } = await this.syncLogger(
       data.syncId,
@@ -65,14 +64,11 @@ export class FeedQueueConsumer {
     for (const article of articles) {
       const url = clearUrl(article.link);
 
-      await this.feedQueueService.syncArticle({
+      await this.articleQueueService.syncArticle({
         userId: data.userId,
         syncId: data.syncId,
         url,
-        device: {
-          folder: user.user_metadata.folder,
-          type: data.device,
-        },
+        device: data.device,
         options: data.options,
       });
 

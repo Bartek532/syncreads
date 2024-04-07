@@ -6,10 +6,10 @@ import { DeviceModule } from "../../device/device.module";
 import { GeneratorModule } from "../../generator/generator.module";
 import { ParserModule } from "../../parser/parser.module";
 import { SyncModule } from "../../sync/sync.module";
+import { ArticleQueueService } from "../article/article.service";
 
 import { FEED_QUEUE_TOKEN } from "./feed.constants";
 import { FeedQueueConsumer } from "./feed.consumer";
-import { FeedQueueService } from "./feed.service";
 
 @Module({
   imports: [
@@ -22,7 +22,7 @@ import { FeedQueueService } from "./feed.service";
     forwardRef(() => SyncModule),
     UserModule,
   ],
-  providers: [FeedQueueService, FeedQueueConsumer],
-  exports: [FeedQueueService, BullModule],
+  providers: [ArticleQueueService, FeedQueueConsumer],
+  exports: [BullModule],
 })
 export class FeedQueueModule {}

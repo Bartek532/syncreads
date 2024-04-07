@@ -23,6 +23,46 @@ export class ArticleQueueService {
     private readonly syncLogger: SyncLoggerProviderFactory,
   ) {}
 
+  private async upsertFolder(
+    userId: string,
+    syncId: string,
+    device: DeviceType,
+    name: string,
+  ) {
+    const strategy = this.deviceStrategies[device];
+
+    if (!strategy.getFolder || !strategy.createFolder) {
+      await this.syncLogger(syncId).warn(
+        `Folders are not supported for ${DEVICE_CLOUD_LABEL[device]} cloud yet, syncing to the root folder...`,
+      );
+      return;
+    }
+
+    await this.syncLogger(syncId).log(
+      `Searching for folder with name *${name}*...`,
+    );
+
+    const folder = await strategy.getFolder(userId, name);
+
+    if (folder) {
+      await this.syncLogger(syncId).log(
+        `Folder with name *${name}* found on the device.`,
+      );
+
+      return folder.id;
+    }
+
+    await this.syncLogger(syncId).log(`Folder not found, creating new one...`);
+
+    const newFolder = await strategy.createFolder(userId, name);
+
+    await this.syncLogger(syncId).log(
+      `Folder named *${name}* created on the device.`,
+    );
+
+    return newFolder.id;
+  }
+
   async syncArticle({
     userId,
     syncId,
@@ -62,10 +102,21 @@ export class ArticleQueueService {
       `Trying to push output to the ${DEVICE_CLOUD_LABEL[device]} cloud...`,
     );
 
+    const folder = options.folder;
+
+    if (!folder) {
+      await this.syncLogger(syncId).log(`Syncing to the root folder...`);
+    }
+
+    const folderId = folder
+      ? await this.upsertFolder(userId, syncId, device, folder)
+      : null;
+
     await this.deviceStrategies[device].upload({
       title,
       file: { content: file, type: options.format },
       userId,
+      ...(folderId ? { folderId } : {}),
     });
 
     await this.syncLogger(syncId).log(

@@ -4,11 +4,12 @@ import { OPERATION_TYPE } from "../api";
 import { MUTATIONS } from "../api/mutations";
 
 import type { Message, Response } from "../api";
+import type { User } from "@syncreads/database";
 import type { SyncArticleInput } from "@syncreads/shared";
 
 export const useSync = () =>
   useMutation({
-    mutationFn: async (input: { userId: string; input: SyncArticleInput }) => {
+    mutationFn: async (input: { user: User; input: SyncArticleInput }) => {
       const response = await chrome.runtime.sendMessage<
         Message<OPERATION_TYPE.MUTATION, MUTATIONS.SYNC_ARTICLE>,
         Response<OPERATION_TYPE.MUTATION, MUTATIONS.SYNC_ARTICLE>

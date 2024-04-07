@@ -1,9 +1,12 @@
 import { DEFAULT_OPTIONS } from "./options";
 
-export const SYNC_DEFAULT_FOLDER = "RSS";
+export const SYNC_DEFAULT_FOLDER = "SyncReads";
 
 export const DEFAULT_USER_METADATA = {
   name: "",
-  folder: SYNC_DEFAULT_FOLDER,
+  folder: {
+    name: SYNC_DEFAULT_FOLDER,
+    root: true,
+  },
   format: DEFAULT_OPTIONS.format,
 };

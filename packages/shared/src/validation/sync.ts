@@ -7,6 +7,7 @@ export const syncOptionsPayloadSchema = z.object({
     .nativeEnum(OUTPUT_FORMAT)
     .optional()
     .default(DEFAULT_OPTIONS.format),
+  folder: z.string().optional(),
 });
 
 export const syncFeedPayloadSchema = z.object({

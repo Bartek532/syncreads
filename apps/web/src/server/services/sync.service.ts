@@ -5,11 +5,19 @@ import {
   syncApiResponseSchema,
   type SyncArticleInput,
   type SyncFeedInput,
+  DEFAULT_OPTIONS,
+  isUserMetadata,
+  DEFAULT_USER_METADATA,
+  getSyncDefaultOptions,
 } from "@syncreads/shared";
 
 import { env } from "@/lib/env/server";
+import { DEFAULT_METADATA } from "@/lib/metadata";
 import { supabase } from "@/lib/supabase/server";
 import type { GetSyncInput, GetSyncLogInput } from "@/utils";
+
+import type { User } from "@syncreads/database";
+import type { SyncOptionsInput, SyncOptionsPayload } from "@syncreads/shared";
 
 export const queueArticleSync = async ({
   key,
@@ -75,7 +83,9 @@ export const getSyncLog = async ({ syncId }: GetSyncLogInput) => {
     .order("createdAt", { ascending: false });
 };
 
-export const getSyncOptions = async () => {
+export const getSyncOptions = async (
+  passedOptions: SyncOptionsPayload,
+): Promise<SyncOptionsInput> => {
   const { data, error } = await supabase().auth.getUser();
 
   if (error) {
@@ -85,5 +95,14 @@ export const getSyncOptions = async () => {
     );
   }
 
-  return data.user.user_metadata;
+  const metadata = isUserMetadata(data.user.user_metadata)
+    ? data.user.user_metadata
+    : DEFAULT_USER_METADATA;
+
+  const defaultOptions = getSyncDefaultOptions(metadata);
+
+  return {
+    ...defaultOptions,
+    ...passedOptions,
+  };
 };

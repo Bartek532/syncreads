@@ -1,5 +1,6 @@
 import {
   ApiError,
+  getSyncDefaultOptions,
   isSyncApiErrorResponse,
   syncApiResponseSchema,
   type SyncArticleInput,
@@ -7,6 +8,8 @@ import {
 
 import { env } from "@/lib/env";
 import { supabase } from "@/lib/supabase";
+
+import type { User } from "@syncreads/database";
 
 const getUserApiKey = async (id: string) => {
   return supabase.from("UserApiKey").select("key").eq("userId", id).single();
@@ -39,13 +42,14 @@ const queueArticleSync = async ({
 };
 
 export const syncArticle = async ({
-  userId,
+  user,
   input,
 }: {
-  userId: string;
+  user: User;
   input: SyncArticleInput;
 }) => {
-  const { data, error, status } = await getUserApiKey(userId);
+  const { data, error, status } = await getUserApiKey(user.id);
+  const options = getSyncDefaultOptions(user.user_metadata);
 
   if (error) {
     throw new ApiError(status, error.message);
@@ -54,6 +58,10 @@ export const syncArticle = async ({
   const { sync } = await queueArticleSync({
     key: data.key,
     ...input,
+    options: {
+      ...options,
+      ...input.options,
+    },
   });
 
   return sync;

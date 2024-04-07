@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -83,19 +84,40 @@ export const ProfileForm = memo<ProfileForm>(({ user }) => {
 
         <FormField
           control={form.control}
-          name="folder"
+          name="folder.name"
           render={({ field }) => (
             <FormItem>
               <div className="space-y-1">
                 <FormLabel>Folder</FormLabel>
                 <FormDescription>
-                  Your place on the device where content will be synced
-                  (available only on reMarkable)
+                  Specific place where content will be synced (available only on
+                  reMarkable)
                 </FormDescription>
               </div>
+
               <FormControl>
-                <Input placeholder="Your sync folder" {...field} />
+                <Input
+                  placeholder="Your sync folder"
+                  disabled={form.watch("folder.root")}
+                  {...field}
+                />
               </FormControl>
+
+              <FormField
+                control={form.control}
+                name="folder.root"
+                render={({ field }) => (
+                  <FormItem className="flex items-center gap-2 space-y-0 pt-2">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormLabel>Sync to root folder</FormLabel>
+                  </FormItem>
+                )}
+              />
 
               <FormMessage />
             </FormItem>
@@ -110,7 +132,7 @@ export const ProfileForm = memo<ProfileForm>(({ user }) => {
               <div className="space-y-1">
                 <FormLabel>Default format</FormLabel>
                 <FormDescription>
-                  Select default output format for your synced content.
+                  Your default output format for synced content.
                 </FormDescription>
               </div>
               <FormMessage />
