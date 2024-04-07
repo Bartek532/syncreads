@@ -19,9 +19,8 @@ export const register = async (data: RegisterData) => {
     password: data.password,
     options: {
       data: {
+        ...DEFAULT_USER_METADATA,
         name: data.name,
-        folder: DEFAULT_USER_METADATA.folder,
-        format: DEFAULT_USER_METADATA.format,
       },
     },
   });

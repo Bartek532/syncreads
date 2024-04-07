@@ -18,9 +18,13 @@ type RealtimeSyncDurationProps = {
 };
 
 const getDifference = (startedAt: string, finishedAt: string | null) => {
+  console.log("startedAt", startedAt, "finishedAt", finishedAt);
   const start = startedAt;
-  const end = finishedAt ?? dayjs();
-  return dayjs.duration(dayjs(end).diff(dayjs(start)));
+  const end = finishedAt ?? dayjs().toISOString();
+  console.log("start", start, "end", end);
+  const duration = dayjs.duration(dayjs(end).diff(dayjs(start)));
+  console.log("duration", duration.asSeconds());
+  return duration;
 };
 
 export const RealtimeSyncDuration = memo<RealtimeSyncDurationProps>(
@@ -36,10 +40,12 @@ export const RealtimeSyncDuration = memo<RealtimeSyncDurationProps>(
 
     useEffect(() => {
       const interval = setInterval(() => {
+        console.log("interval", sync.startedAt, sync.finishedAt);
         setDifference(getDifference(sync.startedAt, sync.finishedAt));
       }, 1000);
 
       if (sync.finishedAt) {
+        console.log("clearing interval", sync.startedAt, sync.finishedAt);
         setDifference(getDifference(sync.startedAt, sync.finishedAt));
         clearInterval(interval);
       }
@@ -51,6 +57,8 @@ export const RealtimeSyncDuration = memo<RealtimeSyncDurationProps>(
 
     const format =
       difference && difference.asSeconds() < 1 ? "SSS[ms]" : "H[h] m[m] s[s]";
+
+    console.log("dffi", difference, difference?.asSeconds(), format);
 
     return (
       <span

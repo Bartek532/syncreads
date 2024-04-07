@@ -19,7 +19,7 @@ const DashboardSyncs = async () => {
       <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
         <div className="flex flex-col justify-start space-y-2">
           <h1 className="text-3xl font-bold tracking-tight">
-            You synced articles <span className="text-4xl">{total}</span> times!
+            You synced content <span className="text-4xl">{total}</span> times!
           </h1>
           <p className="ml-1 text-sm text-muted-foreground">
             Get a quick look at how much time you saved ⌛
