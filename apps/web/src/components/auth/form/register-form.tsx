@@ -51,7 +51,7 @@ export const RegisterForm = memo(() => {
       id: loadingToast,
     });
     setIsSubmitting(false);
-    return router.replace("/dashboard");
+    return router.push("/auth/login");
   };
 
   return (

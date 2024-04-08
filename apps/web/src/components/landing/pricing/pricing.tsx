@@ -8,8 +8,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
-import { PRICING_PLANS } from "@/config";
 import { cn } from "@/utils";
+
+import { PRICING_PLANS } from "./constants/plans";
 
 export const Pricing = () => {
   const [billing, setBilling] =
@@ -43,7 +44,7 @@ export const Pricing = () => {
               className={cn(
                 "grow-0 basis-[28rem] rounded-lg bg-gradient-to-br from-primary via-muted-foreground/50 to-primary/10 md:shrink-0",
                 plan.popular
-                  ? "p-1 shadow-xl shadow-muted-foreground/60"
+                  ? "p-1 shadow-lg shadow-muted-foreground/60"
                   : "shadow",
               )}
             >
@@ -76,7 +77,7 @@ export const Pricing = () => {
                   {plan.features.map((feature) => (
                     <div
                       key={feature.title}
-                      className="flex items-center gap-3 py-1"
+                      className="flex items-center gap-2 py-1"
                     >
                       <div
                         className={cn(
@@ -93,7 +94,7 @@ export const Pricing = () => {
                         )}
                       </div>
                       <span className="text-md">{feature.title}</span>
-                      {feature.new && <Badge variant="outline">New</Badge>}
+                      {"addon" in feature && feature.addon}
                     </div>
                   ))}
                 </div>
