@@ -78,7 +78,7 @@ export const LANDING_REVIEWS = {
   },
 };
 
-export const LANDING_OPEN_SOURCE = {
+export const LANDING_FEEDBACK = {
   title: "Create the future together!",
   description: `We believe in transparency and the power of the community, so if you have any ideas or suggestions, feel free to give us a signal. We're open to any feedback!`,
   cta: {

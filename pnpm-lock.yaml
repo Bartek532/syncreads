@@ -217,8 +217,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       rmapi-js:
-        specifier: ^4.0.0
-        version: 4.0.0
+        specifier: ^4.0.1
+        version: 4.0.1
       rss-parser:
         specifier: ^3.13.0
         version: 3.13.0
@@ -13569,8 +13569,8 @@ packages:
       uuid: 9.0.1
     dev: false
 
-  /rmapi-js@4.0.0:
-    resolution: {integrity: sha512-K7AM7fasqPZf1wZeYz5WYqigmamXO6A8FekeO+ZshSIhTkXa7ZBa6DKmtBjnJQ89MqdPTNZVVQLffJ+r1Uhrjg==}
+  /rmapi-js@4.0.1:
+    resolution: {integrity: sha512-sfgr9zpjWptyMWg/5udR0Zybs1HyXOpFuOMlpxsOA0X2r0dM4gAoNc6CECbz44FHBPq23n8kdUNPHFVWoY2/6Q==}
     dependencies:
       ajv: 8.12.0
       base64-js: 1.5.1

@@ -1,7 +1,7 @@
-import { Explore } from "../../../components/landing/explore/explore";
+import { redirect } from "next/navigation";
 
 const ExplorePage = () => {
-  return <Explore />;
+  return redirect("/explore/kindle");
 };
 
 export default ExplorePage;
