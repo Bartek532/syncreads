@@ -18,7 +18,6 @@ const OpenSource = () => {
         <a
           className={buttonVariants({ size: "lg" })}
           href={LANDING_OPEN_SOURCE.cta.href}
-          target="_blank"
           rel="noreferrer"
         >
           {LANDING_OPEN_SOURCE.cta.text}
