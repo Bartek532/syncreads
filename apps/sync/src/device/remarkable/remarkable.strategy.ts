@@ -29,7 +29,6 @@ export class RemarkableStrategy implements DeviceStrategy {
   private async getFiles(userId: string) {
     const api = await this.remarkableProvider(userId);
 
-    //@ts-expect-error - rmapi-js types are incomplete
     return api.getEntriesMetadata({ verify: false });
   }
 
