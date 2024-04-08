@@ -64,4 +64,7 @@ export const DeviceType: { [K in DeviceType]: K } = {
 export type User = UserType & { user_metadata: Partial<UserMetadata> };
 export type Session = AuthSession & { user: User };
 
-export type { RealtimePostgresUpdatePayload } from "@supabase/supabase-js";
+export type {
+  RealtimePostgresUpdatePayload,
+  EmailOtpType,
+} from "@supabase/supabase-js";

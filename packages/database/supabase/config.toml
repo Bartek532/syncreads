@@ -28,7 +28,11 @@ enable_signup = true
 [auth.email]
 enable_signup = true
 double_confirm_changes = true
-enable_confirmations = false
+enable_confirmations = true
+
+[auth.email.template.confirmation]
+subject = "Confirm your email address"
+content_path = "./supabase/templates/confirmation.html"
 
 [auth.external.github]
 enabled = true
@@ -46,7 +50,7 @@ redirect_uri = "http://localhost:3000/auth/callback"
 enabled = true
 
 [inbucket]
-enabled = false
+enabled = true
 
 [storage]
 enabled = false

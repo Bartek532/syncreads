@@ -44,10 +44,12 @@ export const RegisterForm = memo(() => {
 
     if (error) {
       setIsSubmitting(false);
-      return toast.error(error, { id: loadingToast });
+      return toast.error(`${error}!`, { id: loadingToast });
     }
 
-    toast.success("Successfully registered!", { id: loadingToast });
+    toast.success("Success! Now verify your email!", {
+      id: loadingToast,
+    });
     setIsSubmitting(false);
     return router.replace("/dashboard");
   };
