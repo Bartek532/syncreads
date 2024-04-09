@@ -13,24 +13,24 @@ export const Navigation = () => {
   return (
     <nav>
       <ul className="lg:text-md flex gap-1 rounded-full bg-muted-foreground/15 px-1.5 py-1 text-sm font-bold">
-        {INTEGRATIONS.map((integration) => (
+        {Object.keys(INTEGRATIONS).map((integration) => (
           <li
-            key={integration.id}
+            key={integration}
             className="relative rounded-full py-1 pl-3 pr-4"
           >
             <Link
-              href={`/explore/${integration.id}`}
+              href={`/explore/${integration}`}
               className="relative z-10 flex items-center gap-2.5"
             >
               <Image
-                src={`/images/landing/explore/${integration.id}.png`}
+                src={INTEGRATIONS[integration].icon}
                 alt="Kindle"
                 width="17"
                 height="17"
               />
-              {integration.name}
+              {INTEGRATIONS[integration].name}
             </Link>
-            {pathname.includes(integration.id) ? (
+            {pathname.includes(integration) ? (
               <motion.div
                 className="absolute inset-0 h-full rounded-full bg-primary-foreground"
                 layoutId="active"
