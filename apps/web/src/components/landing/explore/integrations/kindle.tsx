@@ -4,11 +4,12 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 
 import { INTEGRATIONS } from "../constants/integrations";
+import { Reviews } from "../layout/reviews/reviews";
 
 export const ExploreIntegrationKindle = () => {
   return (
     <div className="flex w-full flex-col items-center justify-center gap-10">
-      <section className="flex w-full items-center justify-between gap-10">
+      <section className="flex w-full flex-wrap items-center justify-center gap-14 md:flex-nowrap md:justify-between">
         <div className="flex max-w-2xl flex-col gap-4">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
             Connect your Kindle to SyncReads
@@ -28,23 +29,14 @@ export const ExploreIntegrationKindle = () => {
               How to setup?
             </Link>
           </div>
-          <div>
-            <div className="flex items-center justify-start gap-2">
-              {INTEGRATIONS.kindle.reviews.users.map((user) => (
-                <Image
-                  key={user.avatar}
-                  src={user.avatar}
-                  width={48}
-                  height={48}
-                  className="rounded-full"
-                  alt="User Avatar"
-                />
-              ))}
-            </div>
-          </div>
+          <Reviews
+            rating={INTEGRATIONS.kindle.reviews.rating}
+            description={`from ${INTEGRATIONS.kindle.reviews.total} reviews`}
+            users={INTEGRATIONS.kindle.reviews.users}
+          />
         </div>
 
-        <div className="max-w-xl">
+        <div className="max-w-md shrink lg:max-w-lg">
           <Image
             src="/images/landing/explore/kindle/hero.png"
             width={1092}
@@ -54,12 +46,26 @@ export const ExploreIntegrationKindle = () => {
           />
         </div>
       </section>
-      <section className="mt-16 w-full">
+      <section className="my-12 w-full md:my-20 lg:my-32">
         <blockquote className="mt-4 w-full text-center">
-          <p className="text-3xl italic text-muted-foreground">
-            &quot;I will never come back to Send to Kindle.&quot;
+          <p className="text-2xl italic text-muted-foreground before:content-['“'] after:content-['“'] md:text-3xl">
+            I will never come back to Send to Kindle.
           </p>
         </blockquote>
+      </section>
+
+      <section>
+        <div className="flex flex-col items-center justify-center gap-1">
+          <h3
+            className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
+            id="features"
+          >
+            Features
+          </h3>
+          <p className="text-center text-muted-foreground">
+            See overview of what we can do together.
+          </p>
+        </div>
       </section>
     </div>
   );
