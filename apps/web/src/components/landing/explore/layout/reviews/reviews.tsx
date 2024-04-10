@@ -48,7 +48,7 @@ export const Reviews = memo<ReviewsProps>(({ rating, description, users }) => {
               className={cn(
                 index < rating
                   ? "fill-warning stroke-warning"
-                  : "fill-warning-foreground stroke-warning-foreground",
+                  : "fill-warning/50 stroke-warning/30",
               )}
             />
           ))}
