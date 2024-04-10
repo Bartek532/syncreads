@@ -32,6 +32,10 @@ import {
 import { Input } from "../../../ui/input";
 
 import { registerDevice } from "./actions";
+import {
+  isRegisterRouteFailedResponse,
+  isRegisterRouteSuccessResponse,
+} from "./validation";
 
 import type { RegisterDeviceInput } from "../../../../utils/validation/types";
 
@@ -42,7 +46,21 @@ type AddDeviceDialog = {
 const register = async (data: RegisterDeviceInput) => {
   if (data.type === DeviceType.REMARKABLE) {
     const response = await fetch(`/api/device/register?code=${data.code}`);
-    const token = await response.text();
+    const result: unknown = await response.json();
+
+    if (!response.ok) {
+      if (isRegisterRouteFailedResponse(result)) {
+        return { message: result.message, success: false };
+      }
+
+      return { message: GENERIC_ERROR_MESSAGE, success: false };
+    }
+
+    if (!isRegisterRouteSuccessResponse(result)) {
+      return { message: GENERIC_ERROR_MESSAGE, success: false };
+    }
+
+    const token = result.token;
     return registerDevice({ token, type: data.type });
   }
 

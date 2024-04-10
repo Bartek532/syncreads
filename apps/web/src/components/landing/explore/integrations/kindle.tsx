@@ -1,10 +1,15 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import { buttonVariants } from "@/components/ui/button";
 
+import { ThemedImage } from "../../../ui/themed-image";
 import { INTEGRATIONS } from "../constants/integrations";
 import { Reviews } from "../layout/reviews/reviews";
+
+const HERO_IMAGE = {
+  light: "/images/landing/integrations/kindle/hero/light.png",
+  dark: "/images/landing/integrations/kindle/hero/dark.png",
+};
 
 export const ExploreIntegrationKindle = () => {
   return (
@@ -37,8 +42,9 @@ export const ExploreIntegrationKindle = () => {
         </div>
 
         <div className="max-w-md shrink lg:max-w-lg">
-          <Image
-            src="/images/landing/explore/kindle/hero.png"
+          <ThemedImage
+            src={HERO_IMAGE}
+            defaultVariant="light"
             width={1092}
             height={1143}
             className="max-w-full -translate-x-6 -translate-y-6"
