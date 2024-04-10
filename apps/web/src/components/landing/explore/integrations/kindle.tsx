@@ -6,6 +6,7 @@ import { ThemedImage } from "../../../ui/themed-image";
 import { INTEGRATIONS } from "../constants/integrations";
 import { Features } from "../layout/features/features";
 import { Reviews } from "../layout/reviews/reviews";
+import { Setup } from "../layout/setup/setup";
 
 const HERO_IMAGE = {
   light: "/images/landing/integrations/kindle/hero/light.png",
@@ -53,7 +54,7 @@ export const ExploreIntegrationKindle = () => {
           />
         </div>
       </section>
-      <section className="my-16 w-full md:my-24 lg:my-44">
+      <section className="my-16 w-full md:my-32 lg:my-52">
         <blockquote className="mt-4 w-full text-center">
           <p className="text-2xl italic text-muted-foreground before:content-['“'] after:content-['“'] md:text-3xl lg:text-4xl">
             I will never come back to Send to Kindle.
@@ -71,6 +72,8 @@ export const ExploreIntegrationKindle = () => {
           Kindle devices sold worldwide
         </p>
       </section>
+
+      <Setup />
     </div>
   );
 };

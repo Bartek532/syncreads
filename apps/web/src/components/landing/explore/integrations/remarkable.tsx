@@ -7,6 +7,7 @@ import { ThemedImage } from "../../../ui/themed-image";
 import { INTEGRATIONS } from "../constants/integrations";
 import { Features } from "../layout/features/features";
 import { Reviews } from "../layout/reviews/reviews";
+import { Setup } from "../layout/setup/setup";
 
 const HERO_IMAGE = {
   light: "/images/landing/integrations/remarkable/hero/light.png",
@@ -66,9 +67,32 @@ export const ExploreIntegrationRemarkable = () => {
         <div className="absolute -bottom-6 left-0 right-0 h-1/4 rounded-lg bg-background shadow-fading"></div>
       </div>
 
-      <div className="my-4 lg:my-6">
+      <div className="mt-4 lg:mt-6">
         <Features />
       </div>
+
+      <section className="my-16 flex w-full flex-col items-center gap-8 md:my-32 md:gap-12 lg:my-52">
+        <blockquote className="mt-4 flex w-full justify-center text-center">
+          <p className="max-w-3xl text-2xl italic text-muted-foreground before:content-['“'] after:content-['“'] md:text-3xl lg:text-4xl">
+            Very easy to set up and use. Click click and it&apos;s on your rM.
+          </p>
+        </blockquote>
+        <div className="flex gap-3  md:gap-5">
+          <Image
+            src="/images/landing/integrations/remarkable/reviews/quote.png"
+            alt="Evan Smith avatar"
+            width={50}
+            height={50}
+            className="rounded-full"
+          />
+          <div className="flex flex-col">
+            <span className="font-bold md:text-lg">Evan Smith</span>
+            <span className="text-muted-foreground">reMarkable 2 user</span>
+          </div>
+        </div>
+      </section>
+
+      <Setup />
     </div>
   );
 };
