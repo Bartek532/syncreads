@@ -5,6 +5,7 @@ import { buttonVariants } from "@/components/ui/button";
 
 import { ThemedImage } from "../../../ui/themed-image";
 import { INTEGRATIONS } from "../constants/integrations";
+import { Features } from "../layout/features/features";
 import { Reviews } from "../layout/reviews/reviews";
 
 const HERO_IMAGE = {
@@ -62,22 +63,12 @@ export const ExploreIntegrationRemarkable = () => {
           height={1100}
           className="pointer-events-none select-none drop-shadow-md md:max-w-5xl"
         />
-        <div className="absolute -bottom-6 left-0 right-0 h-1/4 rounded-lg bg-background shadow-[0px_-30px_66px_55px_rgba(255,255,255,1)]"></div>
+        <div className="absolute -bottom-6 left-0 right-0 h-1/4 rounded-lg bg-background shadow-fading"></div>
       </div>
 
-      <section>
-        <div className="flex flex-col items-center justify-center gap-1">
-          <h3
-            className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
-            id="features"
-          >
-            Features
-          </h3>
-          <p className="text-center text-muted-foreground">
-            See overview of what we can do together.
-          </p>
-        </div>
-      </section>
+      <div className="my-4 lg:my-6">
+        <Features />
+      </div>
     </div>
   );
 };
