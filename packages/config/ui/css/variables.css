@@ -40,6 +40,8 @@
 
   --picked: 27 96% 61%;
   --picked-foreground: 15 79% 34%;
+
+  --fading-shadow: 255, 255, 255;
 }
 
 .dark {
@@ -82,4 +84,6 @@
 
   --picked: 27 96% 61%;
   --picked-foreground: 15 79% 34%;
+
+  --fading-shadow: 3, 7, 17;
 }

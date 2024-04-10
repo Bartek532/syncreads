@@ -94,7 +94,7 @@ module.exports = {
         gradient: "gradient 6s linear infinite",
       },
       boxShadow: {
-        fading: "0px -63px 66px 26px rgba(255, 255, 255, 1);",
+        fading: "0px -30px 66px 55px rgba(var(--fading-shadow), 1);",
       },
     },
   },

@@ -4,6 +4,7 @@ import { buttonVariants } from "@/components/ui/button";
 
 import { ThemedImage } from "../../../ui/themed-image";
 import { INTEGRATIONS } from "../constants/integrations";
+import { Features } from "../layout/features/features";
 import { Reviews } from "../layout/reviews/reviews";
 
 const HERO_IMAGE = {
@@ -52,26 +53,23 @@ export const ExploreIntegrationKindle = () => {
           />
         </div>
       </section>
-      <section className="my-12 w-full md:my-20 lg:my-32">
+      <section className="my-16 w-full md:my-24 lg:my-44">
         <blockquote className="mt-4 w-full text-center">
-          <p className="text-2xl italic text-muted-foreground before:content-['“'] after:content-['“'] md:text-3xl">
+          <p className="text-2xl italic text-muted-foreground before:content-['“'] after:content-['“'] md:text-3xl lg:text-4xl">
             I will never come back to Send to Kindle.
           </p>
         </blockquote>
       </section>
 
-      <section>
-        <div className="flex flex-col items-center justify-center gap-1">
-          <h3
-            className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
-            id="features"
-          >
-            Features
-          </h3>
-          <p className="text-center text-muted-foreground">
-            See overview of what we can do together.
-          </p>
-        </div>
+      <Features />
+
+      <section className="my-20 flex flex-col items-center justify-center gap-2 md:my-32 md:gap-3 lg:my-44">
+        <span className="animate-gradient bg-gradient-to-r from-primary via-muted-foreground via-20% to-primary bg-[length:200%_auto] bg-clip-text text-5xl font-bold text-transparent sm:text-6xl md:text-7xl lg:text-8xl">
+          50,000,000
+        </span>
+        <p className="text-muted-foreground sm:text-lg md:text-2xl">
+          Kindle devices sold worldwide
+        </p>
       </section>
     </div>
   );
