@@ -93,6 +93,9 @@ module.exports = {
         "half-spin": "half-spin 1s linear",
         gradient: "gradient 6s linear infinite",
       },
+      boxShadow: {
+        fading: "0px -63px 66px 26px rgba(255, 255, 255, 1);",
+      },
     },
   },
 };
