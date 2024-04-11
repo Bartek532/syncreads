@@ -68,7 +68,10 @@ export const Hero = () => {
         <Link href="/auth/login" className={buttonVariants()}>
           Get started
         </Link>
-        <Link href="#about" className={buttonVariants({ variant: "outline" })}>
+        <Link
+          href="/explore"
+          className={buttonVariants({ variant: "outline" })}
+        >
           Learn more
         </Link>
       </motion.div>

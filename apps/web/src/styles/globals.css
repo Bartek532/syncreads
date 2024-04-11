@@ -5,3 +5,72 @@
 .markdown code {
   font-family: var(--font-poppins);
 }
+
+.steps .step {
+  border: 0 none;
+  border-top: 3px solid;
+  border-image: linear-gradient(
+      to right,
+      hsl(var(--muted)) 0%,
+      hsl(var(--foreground)) 100%
+    )
+    1;
+  counter-increment: step;
+  position: relative;
+}
+
+.steps .step::before {
+  content: counter(step);
+  position: absolute;
+  border-radius: 50%;
+  padding: 10px;
+  aspect-ratio: 1 /1;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: hsl(var(--foreground));
+  text-align: center;
+  line-height: 1.25em;
+  color: hsl(var(--primary-foreground));
+  font-size: 1em;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.steps .step:nth-child(odd) {
+  border-right: 3px solid;
+  padding-left: 0;
+  padding-right: 2.5rem;
+  flex-direction: row-reverse;
+}
+
+.steps .step:nth-child(odd)::before {
+  left: 100%;
+  margin-left: -1.25rem;
+}
+
+.steps .step:nth-child(even) {
+  border-left: 3px solid;
+  padding-right: 0;
+  padding-left: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .steps .step:nth-child(odd) {
+    padding-right: 3.5rem;
+  }
+
+  .steps .step:nth-child(even) {
+    padding-left: 3.5rem;
+  }
+}
+
+.steps .step:nth-child(even)::before {
+  right: 100%;
+  margin-right: -1.25rem;
+  background-color: hsl(var(--muted));
+  color: hsl(var(--primary));
+}
+
+.steps .step:first-child {
+  border-top: 0;
+}

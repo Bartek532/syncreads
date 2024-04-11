@@ -1,5 +1,8 @@
 import { LockIcon, RadioIcon, RssIcon } from "lucide-react";
 
+import { KINDLE_SETUP_STEPS } from "./setup/kindle";
+import { REMARKABLE_SETUP_STEPS } from "./setup/remarkable";
+
 export const INTEGRATIONS = {
   kindle: {
     id: "kindle",
@@ -24,6 +27,7 @@ export const INTEGRATIONS = {
         },
       ],
     },
+    setup: KINDLE_SETUP_STEPS,
   },
   remarkable: {
     id: "remarkable",
@@ -52,6 +56,7 @@ export const INTEGRATIONS = {
         },
       ],
     },
+    setup: REMARKABLE_SETUP_STEPS,
   },
   extension: {
     id: "extension",
