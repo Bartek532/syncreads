@@ -2,7 +2,7 @@
 
 import { APP_DESCRIPTION, APP_NAME_APPENDIX } from "@syncreads/shared";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChromeIcon } from "lucide-react";
 import Link from "next/link";
 
 import { buttonVariants } from "@/components/ui/button";
@@ -24,11 +24,12 @@ export const Hero = () => {
           transition: { duration: 0.5, ease: "easeInOut" },
         }}
         viewport={{ once: true }}
-        href="/auth/login"
+        href="/explore/extension"
         target="_blank"
         rel="noreferrer"
       >
-        AI coming soon!
+        <ChromeIcon className="w-4" />
+        Extension available!
         <ArrowRight className="w-4 transition-transform group-hover:translate-x-1" />
       </motion.a>
       <motion.h1

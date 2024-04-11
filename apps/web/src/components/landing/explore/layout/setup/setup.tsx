@@ -35,7 +35,7 @@ export const Setup = memo<SetupProps>(({ steps }) => {
         </p>
       </div>
 
-      <div className="steps my-16">
+      <div className="steps mt-16">
         {steps.map((step) => (
           <div
             key={step.name}
