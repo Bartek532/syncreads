@@ -5,7 +5,8 @@ import { buttonVariants } from "../../../../ui/button";
 export const REMARKABLE_SETUP_STEPS = [
   {
     name: "Create account",
-    description: "Sign up for an account on our website. It's free!",
+    description:
+      "It's the simplest step as it's totally free and shouldn't take more than few seconds to complete!",
     actions: [
       <Link href="/auth/register" className={buttonVariants()} key="start-now">
         Start now!
