@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { memo } from "react";
 
 import { useVisibleSection } from "@/hooks/useVisibleSection";
@@ -17,6 +18,7 @@ type NavigationProps = {
 
 export const Navigation = memo<NavigationProps>(({ user }) => {
   const visibleSection = useVisibleSection();
+  const pathname = usePathname();
 
   return (
     <nav className="ml-auto hidden items-center space-x-6 md:flex lg:space-x-8">
@@ -26,7 +28,8 @@ export const Navigation = memo<NavigationProps>(({ user }) => {
           href={link.href}
           className={cn(
             "text-sm font-medium transition-colors hover:text-primary",
-            `#${visibleSection}` === link.href
+            `/#${visibleSection}` === link.href ||
+              pathname.startsWith(link.href)
               ? "text-primary"
               : "text-muted-foreground",
           )}

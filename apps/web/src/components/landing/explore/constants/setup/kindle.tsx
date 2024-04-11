@@ -5,7 +5,8 @@ import { buttonVariants } from "../../../../ui/button";
 export const KINDLE_SETUP_STEPS = [
   {
     name: "Create account",
-    description: "Sign up for an account on our website. It's free!",
+    description:
+      "It's the simplest step as it's totally free and shouldn't take more than few seconds to complete!",
     actions: [
       <Link href="/auth/register" className={buttonVariants()} key="start-now">
         Start now!
@@ -14,47 +15,110 @@ export const KINDLE_SETUP_STEPS = [
     image: {
       src: {
         light:
-          "/images/landing/integrations/remarkable/setup/create-account/light.png",
-        dark: "/images/landing/integrations/remarkable/setup/create-account/dark.png",
+          "/images/landing/integrations/kindle/setup/create-account/light.png",
+        dark: "/images/landing/integrations/kindle/setup/create-account/dark.png",
       },
       width: 1200,
       height: 830,
     },
   },
   {
-    name: "Obtain one-time code",
-    description:
-      "Get a one-time code from your reMarkable account. It will be used to link your device with SyncReads.",
+    name: "Obtain Kindle email",
+    description: (
+      <>
+        Every Kindle has a dedicated email address, that can be used to send
+        files to it. You can find it in your Amazon profile - it ends with{" "}
+        <i>@kindle.com</i>. <br /> <br /> Go to{" "}
+        <a
+          href="https://www.amazon.com/hz/mycd/digital-console/contentlist/pdocs/dateDsc"
+          className="underline hover:no-underline"
+          rel="noopener noreferrer"
+        >
+          Manage Your Content & Devices
+        </a>{" "}
+        &gt; Preferences &gt; Personal Document Settings.
+      </>
+    ),
     actions: [
       <Link
-        href="https://my.remarkable.com/device/browser/connect"
+        href="https://www.amazon.com/hz/mycd/digital-console/alldevices?pageType=devices&ref_=ya_d_l_manage_devices"
         className={buttonVariants()}
-        key="get-code"
+        key="get-email"
       >
-        Get code
+        Get email
       </Link>,
       <Link
-        href="/dashboard/device"
+        href="https://www.amazon.com/sendtokindle/email"
         className={buttonVariants({ variant: "outline" })}
-        key="already-have-code"
+        key="cannot-find-email"
       >
-        I have code!
+        I can&apos;t find it
       </Link>,
     ],
     image: {
       src: {
         light:
-          "/images/landing/integrations/remarkable/setup/one-time-code/light.png",
-        dark: "/images/landing/integrations/remarkable/setup/one-time-code/dark.png",
+          "/images/landing/integrations/kindle/setup/obtain-email/light.png",
+        dark: "/images/landing/integrations/kindle/setup/obtain-email/dark.png",
       },
-      width: 1200,
-      height: 830,
+      width: 1564,
+      height: 1200,
+    },
+  },
+  {
+    name: "Add approved email",
+    description: (
+      <>
+        Only approved emails can send files to your Kindle. You need to add
+        SyncReads email to the list. <br /> <br />
+        It&apos;s safe, we won&apos;t use it for anything else than syncing.
+        <br /> <br /> Go to{" "}
+        <a
+          href="https://www.amazon.com/hz/mycd/digital-console/contentlist/pdocs/dateDsc"
+          className="underline hover:no-underline"
+          rel="noopener noreferrer"
+        >
+          Manage Your Content & Devices
+        </a>{" "}
+        &gt; Preferences &gt; Personal Document Settings &gt; Approved Personal
+        Document E-mail List
+      </>
+    ),
+    actions: [
+      <Link
+        href="https://www.amazon.com/hz/mycd/myx#/home/settings/payment"
+        className={buttonVariants()}
+        key="register"
+      >
+        Add email
+      </Link>,
+      <a
+        key="need-help"
+        href="https://www.amazon.com/gp/help/customer/display.html?nodeId=GX9XLEVV8G4DB28H"
+        className={buttonVariants({ variant: "outline" })}
+        rel="noopener noreferrer"
+      >
+        I need help
+      </a>,
+    ],
+    image: {
+      src: {
+        light:
+          "/images/landing/integrations/kindle/setup/approved-email/light.png",
+        dark: "/images/landing/integrations/kindle/setup/approved-email/dark.png",
+      },
+      width: 1590,
+      height: 1200,
     },
   },
   {
     name: "Register device",
-    description:
-      "Login to dashboard and register your device using the one-time code. That's really simple!",
+    description: (
+      <>
+        Login to dashboard and register your device using your Kindle email
+        (ends with <i>@kindle.com</i>). That&apos;s really simple!
+      </>
+    ),
     actions: [
       <Link href="/dashboar/device" className={buttonVariants()} key="register">
         Go to dashboard
@@ -73,12 +137,12 @@ export const KINDLE_SETUP_STEPS = [
   {
     name: "Sync!",
     description:
-      "That's it! Your reMarkable is now connected to SyncReads. Enjoy full power of the internet, happy syncing!",
+      "That's it! Your Kindle is now connected to SyncReads. Enjoy full power of the internet, happy syncing!",
     actions: [],
     image: {
       src: {
-        light: "/images/landing/integrations/remarkable/setup/sync/light.png",
-        dark: "/images/landing/integrations/remarkable/setup/sync/dark.png",
+        light: "/images/landing/integrations/kindle/setup/sync/light.png",
+        dark: "/images/landing/integrations/kindle/setup/sync/dark.png",
       },
       width: 1000,
       height: 700,
