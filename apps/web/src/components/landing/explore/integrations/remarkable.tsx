@@ -5,6 +5,7 @@ import { buttonVariants } from "@/components/ui/button";
 
 import { ThemedImage } from "../../../ui/themed-image";
 import { INTEGRATIONS } from "../constants/integrations";
+import { Banner } from "../layout/banner/banner";
 import { Features } from "../layout/features/features";
 import { Reviews } from "../layout/reviews/reviews";
 import { Setup } from "../layout/setup/setup";
@@ -93,6 +94,7 @@ export const ExploreIntegrationRemarkable = () => {
       </section>
 
       <Setup steps={INTEGRATIONS.remarkable.setup} />
+      <Banner />
     </div>
   );
 };

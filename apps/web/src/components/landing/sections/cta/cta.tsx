@@ -15,7 +15,7 @@ export const Cta = () => {
           {LANDING_CTA.title}
         </h2>
 
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/auth/register"
             className={cn(buttonVariants({ size: "lg" }), "text-md py-6")}
