@@ -15,12 +15,23 @@ export const Cta = () => {
           {LANDING_CTA.title}
         </h2>
 
-        <Link
-          href="/auth/register"
-          className={cn(buttonVariants({ size: "lg" }), "text-md py-6")}
-        >
-          {LANDING_CTA.button}
-        </Link>
+        <div className="flex flex-wrap gap-4">
+          <Link
+            href="/auth/register"
+            className={cn(buttonVariants({ size: "lg" }), "text-md py-6")}
+          >
+            {LANDING_CTA.button}
+          </Link>
+          <Link
+            href="/pricing"
+            className={cn(
+              buttonVariants({ size: "lg", variant: "outline" }),
+              "text-md py-6",
+            )}
+          >
+            {LANDING_CTA.pricing}
+          </Link>
+        </div>
       </div>
     </section>
   );

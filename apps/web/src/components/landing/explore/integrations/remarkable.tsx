@@ -62,7 +62,7 @@ export const ExploreIntegrationRemarkable = () => {
           alt="reMarkable with feeds"
           width={1700}
           height={1100}
-          className="pointer-events-none select-none drop-shadow-md md:max-w-5xl"
+          className="pointer-events-none select-none drop-shadow-md md:max-w-full lg:max-w-5xl"
         />
         <div className="absolute -bottom-6 left-0 right-0 h-1/4 rounded-lg bg-background shadow-fading"></div>
       </div>
@@ -79,20 +79,20 @@ export const ExploreIntegrationRemarkable = () => {
         </blockquote>
         <div className="flex gap-3  md:gap-5">
           <Image
-            src="/images/landing/integrations/remarkable/reviews/quote.png"
+            src="/images/landing/integrations/remarkable/reviews/evon-smith.jpg"
             alt="Evan Smith avatar"
-            width={50}
-            height={50}
+            width={55}
+            height={55}
             className="rounded-full"
           />
           <div className="flex flex-col">
-            <span className="font-bold md:text-lg">Evan Smith</span>
+            <span className="font-bold md:text-lg">Evon Smith</span>
             <span className="text-muted-foreground">reMarkable 2 user</span>
           </div>
         </div>
       </section>
 
-      <Setup />
+      <Setup steps={INTEGRATIONS.remarkable.setup} />
     </div>
   );
 };

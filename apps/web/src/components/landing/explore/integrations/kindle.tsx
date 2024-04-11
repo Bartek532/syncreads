@@ -3,6 +3,8 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 
 import { ThemedImage } from "../../../ui/themed-image";
+import { Feedback } from "../../layout/feedback/feedback";
+import { Cta } from "../../sections/cta/cta";
 import { INTEGRATIONS } from "../constants/integrations";
 import { Features } from "../layout/features/features";
 import { Reviews } from "../layout/reviews/reviews";
@@ -73,7 +75,9 @@ export const ExploreIntegrationKindle = () => {
         </p>
       </section>
 
-      <Setup />
+      <Setup steps={INTEGRATIONS.kindle.setup} />
+      <Cta />
+      <Feedback />
     </div>
   );
 };

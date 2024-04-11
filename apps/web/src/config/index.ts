@@ -116,6 +116,7 @@ export const LANDING_FAQ = {
 export const LANDING_CTA = {
   title: "Experience the workflow the users love.",
   button: "Register for free",
+  pricing: "Discover plans",
 };
 
 export const LANDING_CONTACT = {
