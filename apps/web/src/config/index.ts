@@ -25,7 +25,7 @@ export const REPOSITORY_URL = "https://github.com/Bartek532/syncreads";
 export const TWITTER_URL = "https://twitter.com/bzagrodzki";
 
 export const LANDING_HEADER_NAVIGATION = [
-  { name: "Explore", href: "/explore" },
+  { name: "Explore", href: "/explore/kindle" },
   { name: "Pricing", href: "/pricing" },
   { name: "FAQ", href: "/#faq" },
   { name: "Contact", href: "/#contact" },

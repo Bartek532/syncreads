@@ -103,6 +103,8 @@ export const ProfileForm = memo<ProfileForm>(({ user }) => {
                 />
               </FormControl>
 
+              <FormMessage />
+
               <FormField
                 control={form.control}
                 name="folder.root"
@@ -111,15 +113,16 @@ export const ProfileForm = memo<ProfileForm>(({ user }) => {
                     <FormControl>
                       <Checkbox
                         checked={field.value}
-                        onCheckedChange={field.onChange}
+                        onCheckedChange={(e) => {
+                          field.onChange(e);
+                          void form.trigger("folder.name");
+                        }}
                       />
                     </FormControl>
                     <FormLabel>Sync to root folder</FormLabel>
                   </FormItem>
                 )}
               />
-
-              <FormMessage />
             </FormItem>
           )}
         />

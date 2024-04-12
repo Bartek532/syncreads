@@ -30,9 +30,12 @@ export class PdfStrategy implements GeneratorStrategy {
 
   async generate(page: Page) {
     const main = await page.$("main");
-    await page.evaluate((el) => {
-      document.body.innerHTML = el?.outerHTML || "";
-    }, main);
+
+    if (main) {
+      await page.evaluate((el) => {
+        document.body.innerHTML = el.outerHTML;
+      }, main);
+    }
 
     const buffer = await page.pdf(PDF_OPTIONS);
 

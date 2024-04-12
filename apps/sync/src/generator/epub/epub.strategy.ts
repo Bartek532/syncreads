@@ -19,7 +19,9 @@ export class EpubStrategy implements GeneratorStrategy {
     const readability = getReadibility(url, html);
 
     if (!readability) {
-      throw new Error("No content found!");
+      throw new Error(
+        "Sorry, we don't provide support for this page yet with EPUB, maybe try a PDF?",
+      );
     }
 
     return {

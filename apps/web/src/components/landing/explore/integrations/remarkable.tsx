@@ -51,6 +51,7 @@ export const ExploreIntegrationRemarkable = () => {
             defaultVariant="light"
             width={1092}
             height={1143}
+            priority
             className="max-w-full -translate-x-6 -translate-y-6"
             alt="reMarkable Integration"
           />
@@ -63,6 +64,7 @@ export const ExploreIntegrationRemarkable = () => {
           alt="reMarkable with feeds"
           width={1700}
           height={1100}
+          priority
           className="pointer-events-none select-none drop-shadow-md md:max-w-full lg:max-w-5xl"
         />
         <div className="absolute -bottom-6 left-0 right-0 h-1/4 rounded-lg bg-background shadow-fading"></div>
@@ -78,7 +80,7 @@ export const ExploreIntegrationRemarkable = () => {
             Very easy to set up and use. Click click and it&apos;s on your rM.
           </p>
         </blockquote>
-        <div className="flex gap-3  md:gap-5">
+        <div className="flex items-center justify-center gap-3 md:gap-5">
           <Image
             src="/images/landing/integrations/remarkable/reviews/evon-smith.jpg"
             alt="Evan Smith avatar"

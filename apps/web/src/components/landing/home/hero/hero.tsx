@@ -70,7 +70,7 @@ export const Hero = () => {
           Get started
         </Link>
         <Link
-          href="/explore"
+          href="/explore/kindle"
           className={buttonVariants({ variant: "outline" })}
         >
           Learn more

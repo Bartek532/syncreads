@@ -52,7 +52,7 @@ export const MobileNavigation = memo<MobileNavigationProps>(({ user }) => {
                 buttonVariants({ variant: "outline" }),
                 "mt-2 w-full",
               )}
-              href="#contact"
+              href="/#contact"
               onClick={handleToggleNavigation}
             >
               Contact

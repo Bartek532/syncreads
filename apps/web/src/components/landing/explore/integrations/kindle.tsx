@@ -52,6 +52,7 @@ export const ExploreIntegrationKindle = () => {
             height={1143}
             className="max-w-full -translate-x-6 -translate-y-6"
             alt="Kindle Integration"
+            priority
           />
         </div>
       </section>
