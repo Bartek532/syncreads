@@ -27,7 +27,7 @@ export const Navigation = () => {
               <div className="relative z-10 flex items-start gap-3 md:gap-4">
                 <Image
                   src={INTEGRATIONS[integration].icon}
-                  alt="Kindle"
+                  alt=""
                   width="36"
                   height="36"
                   className="h-7 w-7 sm:h-8 sm:w-8 md:h-10 md:w-10"

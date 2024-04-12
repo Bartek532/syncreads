@@ -56,7 +56,7 @@ export const Setup = memo<SetupProps>(({ steps }) => {
                 width={step.image.width}
                 height={step.image.height}
                 className="max-w-full rounded-lg shadow"
-                alt={`Screenshot of ${step.name} step`}
+                alt=""
               />
             </div>
           </div>
