@@ -4,11 +4,17 @@ import { buttonVariants } from "../../../../ui/button";
 
 export const KINDLE_SETUP_STEPS = [
   {
+    id: "create-account",
     name: "Create account",
     description:
       "It's the simplest step as it's totally free and shouldn't take more than few seconds to complete!",
     actions: [
-      <Link href="/auth/register" className={buttonVariants()} key="start-now">
+      <Link
+        href="/auth/register"
+        className={buttonVariants()}
+        key="start-now"
+        target="blank"
+      >
         Start now!
       </Link>,
     ],
@@ -23,6 +29,7 @@ export const KINDLE_SETUP_STEPS = [
     },
   },
   {
+    id: "obtain-email",
     name: "Obtain Kindle email",
     description: (
       <>
@@ -32,6 +39,7 @@ export const KINDLE_SETUP_STEPS = [
         <a
           href="https://www.amazon.com/hz/mycd/digital-console/contentlist/pdocs/dateDsc"
           className="underline hover:no-underline"
+          target="blank"
           rel="noopener noreferrer"
         >
           Manage Your Content & Devices
@@ -40,20 +48,24 @@ export const KINDLE_SETUP_STEPS = [
       </>
     ),
     actions: [
-      <Link
+      <a
         href="https://www.amazon.com/hz/mycd/digital-console/alldevices?pageType=devices&ref_=ya_d_l_manage_devices"
         className={buttonVariants()}
         key="get-email"
+        rel="noopener noreferrer"
+        target="blank"
       >
         Get email
-      </Link>,
-      <Link
+      </a>,
+      <a
         href="https://www.amazon.com/sendtokindle/email"
         className={buttonVariants({ variant: "outline" })}
         key="cannot-find-email"
+        target="blank"
+        rel="noopener noreferrer"
       >
         I can&apos;t find it
-      </Link>,
+      </a>,
     ],
     image: {
       src: {
@@ -66,6 +78,7 @@ export const KINDLE_SETUP_STEPS = [
     },
   },
   {
+    id: "add-approved-email",
     name: "Add approved email",
     description: (
       <>
@@ -77,6 +90,7 @@ export const KINDLE_SETUP_STEPS = [
           href="https://www.amazon.com/hz/mycd/digital-console/contentlist/pdocs/dateDsc"
           className="underline hover:no-underline"
           rel="noopener noreferrer"
+          target="blank"
         >
           Manage Your Content & Devices
         </a>{" "}
@@ -85,18 +99,21 @@ export const KINDLE_SETUP_STEPS = [
       </>
     ),
     actions: [
-      <Link
+      <a
         href="https://www.amazon.com/hz/mycd/myx#/home/settings/payment"
         className={buttonVariants()}
         key="register"
+        rel="noopener noreferrer"
+        target="blank"
       >
         Add email
-      </Link>,
+      </a>,
       <a
         key="need-help"
         href="https://www.amazon.com/gp/help/customer/display.html?nodeId=GX9XLEVV8G4DB28H"
         className={buttonVariants({ variant: "outline" })}
         rel="noopener noreferrer"
+        target="blank"
       >
         I need help
       </a>,
@@ -120,7 +137,11 @@ export const KINDLE_SETUP_STEPS = [
       </>
     ),
     actions: [
-      <Link href="/dashboar/device" className={buttonVariants()} key="register">
+      <Link
+        href="/dashboard/device"
+        className={buttonVariants()}
+        key="register"
+      >
         Go to dashboard
       </Link>,
     ],
@@ -135,10 +156,10 @@ export const KINDLE_SETUP_STEPS = [
     },
   },
   {
+    id: "sync",
     name: "Sync!",
     description:
       "That's it! Your Kindle is now connected to SyncReads. Enjoy full power of the internet, happy syncing!",
-    actions: [],
     image: {
       src: {
         light: "/images/landing/integrations/kindle/setup/sync/light.png",

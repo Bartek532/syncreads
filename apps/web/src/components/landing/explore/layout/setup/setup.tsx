@@ -5,7 +5,7 @@ import { ThemedImage } from "../../../../ui/themed-image";
 type Step = {
   readonly name: string;
   readonly description: React.ReactNode;
-  readonly actions: React.ReactNode[];
+  readonly actions?: React.ReactNode[];
   readonly image: {
     readonly src: {
       readonly light: string;
@@ -47,7 +47,7 @@ export const Setup = memo<SetupProps>(({ steps }) => {
                 <p>{step.description}</p>
               </div>
 
-              <div className="flex gap-4">{step.actions}</div>
+              {step.actions && <div className="flex gap-4">{step.actions}</div>}
             </div>
             <div className="basis-full rounded-lg border-2 border-primary-foreground lg:basis-1/2">
               <ThemedImage
@@ -56,7 +56,7 @@ export const Setup = memo<SetupProps>(({ steps }) => {
                 width={step.image.width}
                 height={step.image.height}
                 className="max-w-full rounded-lg shadow"
-                alt=""
+                alt={`Screenshot of ${step.name} step`}
               />
             </div>
           </div>
