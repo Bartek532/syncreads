@@ -7,7 +7,7 @@ export const metadata = getMetadata({
 const ExploreExtensionPage = () => {
   return (
     <div>
-      <h1>Explore Extension</h1>
+      <h1>Implementation in progress...</h1>
     </div>
   );
 };

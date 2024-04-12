@@ -3,6 +3,7 @@ import { memo } from "react";
 import { ThemedImage } from "../../../../ui/themed-image";
 
 type Step = {
+  readonly id: string;
   readonly name: string;
   readonly description: React.ReactNode;
   readonly actions?: React.ReactNode[];
@@ -39,6 +40,7 @@ export const Setup = memo<SetupProps>(({ steps }) => {
         {steps.map((step) => (
           <div
             key={step.name}
+            id={step.id}
             className="step flex flex-wrap items-center justify-evenly gap-10 py-12 pt-14 lg:gap-20 lg:py-20 lg:pt-24"
           >
             <div className="flex grow basis-full flex-col gap-5 lg:basis-1/3">

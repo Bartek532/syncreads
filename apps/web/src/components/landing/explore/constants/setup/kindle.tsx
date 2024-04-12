@@ -139,6 +139,7 @@ export const KINDLE_SETUP_STEPS = [
     },
   },
   {
+    id: "register-device",
     name: "Register device",
     description: (
       <>
@@ -157,12 +158,11 @@ export const KINDLE_SETUP_STEPS = [
     ],
     image: {
       src: {
-        light:
-          "/images/landing/integrations/remarkable/setup/register/light.png",
-        dark: "/images/landing/integrations/remarkable/setup/register/dark.png",
+        light: "/images/landing/integrations/kindle/setup/register/light.png",
+        dark: "/images/landing/integrations/kindle/setup/register/dark.png",
       },
-      width: 800,
-      height: 600,
+      width: 1600,
+      height: 1200,
     },
   },
   {

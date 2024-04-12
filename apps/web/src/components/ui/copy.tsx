@@ -3,7 +3,6 @@
 import { CheckIcon, Copy as CopyIcon } from "lucide-react";
 import { memo, useEffect, useState } from "react";
 
-
 import { cn, copyToClipboard, onPromise } from "../../utils";
 
 import { Button } from "./button";

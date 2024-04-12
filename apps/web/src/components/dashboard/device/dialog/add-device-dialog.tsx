@@ -1,7 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DeviceType } from "@syncreads/database";
 import { GENERIC_ERROR_MESSAGE } from "@syncreads/shared";
-import { Loader2 } from "lucide-react";
+import { AlertTriangle, Loader2 } from "lucide-react";
+import Link from "next/link";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -194,15 +195,15 @@ export const AddDeviceDialog = memo<AddDeviceDialog>(({ children }) => {
                   )}
                 />
                 <p className="text-xs text-muted-foreground">
-                  You can find Kindle email on{" "}
-                  <a
-                    href="https://www.amazon.com/hz/mycd/digital-console/devicedetails"
+                  <AlertTriangle className="mr-1 inline-block w-3 text-warning-foreground" />
+                  Make sure to{" "}
+                  <Link
+                    href="/explore/kindle#add-approved-email"
                     className="font-medium underline underline-offset-4 hover:text-primary"
-                    target="_blank"
-                    rel="noreferrer"
                   >
-                    your Amazon account.
-                  </a>
+                    add approved email
+                  </Link>{" "}
+                  before.
                 </p>
               </>
             )}
