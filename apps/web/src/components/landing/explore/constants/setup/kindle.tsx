@@ -1,6 +1,9 @@
 import Link from "next/link";
 
 import { buttonVariants } from "../../../../ui/button";
+import { Copy } from "../../../../ui/copy";
+
+const KINDLE_APPROVED_EMAIL = "hello@syncreads.com";
 
 export const KINDLE_SETUP_STEPS = [
   {
@@ -83,7 +86,14 @@ export const KINDLE_SETUP_STEPS = [
     description: (
       <>
         Only approved emails can send files to your Kindle. You need to add
-        SyncReads email to the list. <br /> <br />
+        SyncReads email to the list.
+        <div
+          key="copy-email"
+          className="my-4 flex w-fit items-center gap-4 rounded-md border border-dashed border-input py-1.5 pl-4 pr-2 text-sm"
+        >
+          <span>{KINDLE_APPROVED_EMAIL}</span>
+          <Copy text={KINDLE_APPROVED_EMAIL} />
+        </div>
         It&apos;s safe, we won&apos;t use it for anything else than syncing.
         <br /> <br /> Go to{" "}
         <a
