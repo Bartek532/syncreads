@@ -73,4 +73,3 @@ export const copyToClipboard = async (text: string) => {
     body?.removeChild(textarea);
   }
 };
-

@@ -1,7 +1,7 @@
 import { memo } from "react";
 
-import { Feedback } from "../../layout/feedback/feedback";
 import { Cta } from "../../home/cta/cta";
+import { Feedback } from "../../layout/feedback/feedback";
 
 import { Header } from "./header/header";
 
