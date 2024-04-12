@@ -7,7 +7,7 @@ import { buttonVariants } from "../../../ui/button";
 export const Cta = () => {
   return (
     <section
-      className="flex flex-col gap-6 py-20 md:gap-10 md:py-32 lg:gap-16 lg:py-44"
+      className="flex flex-col gap-6 py-20 md:gap-10 md:py-32 lg:gap-16 lg:py-52"
       id="cta"
     >
       <div className="lg:gap-18 flex flex-col items-center gap-10 md:gap-16">

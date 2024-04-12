@@ -1,4 +1,4 @@
-import { LockIcon, RadioIcon, RssIcon } from "lucide-react";
+import { LockIcon, RefreshCcw, RssIcon, TvIcon } from "lucide-react";
 
 import { KINDLE_SETUP_STEPS } from "./setup/kindle";
 import { REMARKABLE_SETUP_STEPS } from "./setup/remarkable";
@@ -71,7 +71,7 @@ export const FEATURES = [
     title: "Seamless sync",
     description:
       "SyncReads enables you to sync ANYTHING from the web just by passing an url.",
-    icon: RadioIcon,
+    icon: RefreshCcw,
     image: {
       light: "/images/landing/integrations/features/sync/light.png",
       dark: "/images/landing/integrations/features/sync/dark.png",
@@ -91,7 +91,7 @@ export const FEATURES = [
     title: "Realtime tracking",
     description:
       "Keep an eye on your syncs to see what's happening in real-time.",
-    icon: RadioIcon,
+    icon: TvIcon,
     image: {
       light: "/images/landing/integrations/features/realtime/light.png",
       dark: "/images/landing/integrations/features/realtime/dark.png",

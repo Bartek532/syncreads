@@ -1,3 +1,5 @@
+import { MessageCircle } from "lucide-react";
+
 import { buttonVariants } from "@/components/ui/button";
 import { LANDING_FEEDBACK } from "@/config";
 
@@ -19,6 +21,7 @@ export const Feedback = () => {
           rel="noreferrer"
         >
           {LANDING_FEEDBACK.cta.text}
+          <MessageCircle className="ml-2 h-4 w-4" />
         </a>
       </div>
     </div>
