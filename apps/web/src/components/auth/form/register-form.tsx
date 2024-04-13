@@ -63,7 +63,7 @@ export const RegisterForm = memo(() => {
 
   return (
     <AnimatePresence mode="wait">
-      {status === "idle" ? (
+      {status === "success" ? (
         <motion.div
           className="mt-6 flex flex-col items-center justify-center gap-4"
           initial={{ opacity: 0 }}

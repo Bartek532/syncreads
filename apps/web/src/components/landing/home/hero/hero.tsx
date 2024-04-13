@@ -15,8 +15,7 @@ export const Hero = () => {
       className="flex w-full !scroll-mt-36 flex-col items-center justify-center gap-4 pb-10 md:gap-6 md:pb-16 lg:pb-32"
       id="hero"
     >
-      <motion.a
-        className="group mb-3 flex items-center gap-2 rounded-full border-2 border-muted-foreground/10 px-5 py-1 text-xs text-muted-foreground sm:mb-4 sm:text-sm"
+      <motion.div
         initial={{ opacity: 0, y: -35 }}
         whileInView={{
           opacity: 1,
@@ -24,14 +23,16 @@ export const Hero = () => {
           transition: { duration: 0.5, ease: "easeInOut" },
         }}
         viewport={{ once: true }}
-        href="/explore/extension"
-        target="_blank"
-        rel="noreferrer"
       >
-        <ChromeIcon className="w-4" />
-        Extension available!
-        <ArrowRight className="w-4 transition-transform group-hover:translate-x-1" />
-      </motion.a>
+        <Link
+          href="/explore/extension"
+          className="group mb-3 flex items-center gap-2 rounded-full border-2 border-muted-foreground/10 px-5 py-1 text-xs text-muted-foreground sm:mb-4 sm:text-sm"
+        >
+          <ChromeIcon className="w-4" />
+          Extension available!
+          <ArrowRight className="w-4 transition-transform group-hover:translate-x-1" />
+        </Link>
+      </motion.div>
       <motion.h1
         className="lg:leading-tighter max-w-4xl animate-gradient text-balance bg-gradient-to-r from-primary via-muted-foreground via-20% to-primary bg-[length:200%_auto] bg-clip-text text-center text-5xl font-bold tracking-tighter text-transparent md:text-6xl xl:text-7xl 2xl:text-8xl"
         initial={{ opacity: 0, y: -55 }}
