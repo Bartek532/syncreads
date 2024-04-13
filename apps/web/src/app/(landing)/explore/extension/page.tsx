@@ -1,3 +1,5 @@
+import { ExploreIntegrationExtension } from "@/components/landing/explore/integrations/extension";
+
 import { getMetadata } from "../../../../lib/metadata";
 
 export const metadata = getMetadata({
@@ -5,11 +7,7 @@ export const metadata = getMetadata({
 });
 
 const ExploreExtensionPage = () => {
-  return (
-    <div>
-      <h1>Implementation in progress...</h1>
-    </div>
-  );
+  return <ExploreIntegrationExtension />;
 };
 
 export default ExploreExtensionPage;

@@ -23,7 +23,7 @@ export const Features = () => {
         </p>
       </div>
 
-      <div className="mt-4 flex w-full flex-col gap-4 md:mt-6 md:gap-6 lg:my-10">
+      <div className="mt-8 flex w-full flex-col gap-4 md:mt-10 md:gap-6 lg:mt-16">
         <div className="flex w-full flex-col gap-10 rounded-lg bg-muted px-6 pt-6 sm:px-8 sm:pt-8 md:px-10 md:pt-10">
           <div className="flex flex-col items-start justify-center gap-2">
             <featured.icon className="mb-2 h-8 w-8" />
