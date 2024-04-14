@@ -1,3 +1,4 @@
+import { APP_NAME } from "@syncreads/shared";
 import Link from "next/link";
 
 import { buttonVariants } from "@/components/ui/button";
@@ -20,7 +21,7 @@ export const ExploreIntegrationKindle = () => {
       <section className="flex w-full flex-wrap items-center justify-center gap-14 md:flex-nowrap md:justify-between">
         <div className="flex max-w-2xl flex-col gap-4">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-            Connect your Kindle to SyncReads
+            Connect your Kindle to {APP_NAME}
           </h2>
           <p className="text-muted-foreground">
             Stop losing your highlights and focus. Organize everything in one

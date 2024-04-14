@@ -1,3 +1,4 @@
+import { APP_NAME } from "@syncreads/shared";
 import Link from "next/link";
 
 import { buttonVariants } from "../../../../ui/button";
@@ -31,8 +32,7 @@ export const REMARKABLE_SETUP_STEPS = [
   {
     id: "obtain-one-time-code",
     name: "Obtain one-time code",
-    description:
-      "Get a one-time code from your reMarkable account. It will be used to link your device with SyncReads.",
+    description: `Get a one-time code from your reMarkable account. It will be used to link your device with ${APP_NAME}.`,
     actions: [
       <a
         href="https://my.remarkable.com/device/browser/connect"
@@ -90,8 +90,7 @@ export const REMARKABLE_SETUP_STEPS = [
   {
     id: "sync",
     name: "Sync!",
-    description:
-      "That's it! Your reMarkable is now connected to SyncReads. Enjoy full power of the internet, happy syncing!",
+    description: `That's it! Your reMarkable is now connected to ${APP_NAME}. Enjoy full power of the internet, happy syncing!`,
     image: {
       src: {
         light: "/images/landing/integrations/remarkable/setup/sync/light.png",

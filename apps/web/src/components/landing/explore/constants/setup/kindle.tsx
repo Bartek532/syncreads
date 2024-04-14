@@ -1,3 +1,4 @@
+import { APP_NAME } from "@syncreads/shared";
 import Link from "next/link";
 
 import { buttonVariants } from "../../../../ui/button";
@@ -86,7 +87,7 @@ export const KINDLE_SETUP_STEPS = [
     description: (
       <>
         Only approved emails can send files to your Kindle. You need to add
-        SyncReads email to the list.
+        {APP_NAME} email to the list.
         <div
           key="copy-email"
           className="my-4 flex w-fit items-center gap-4 rounded-md border border-dashed border-input py-1.5 pl-4 pr-2 text-sm"
@@ -168,8 +169,7 @@ export const KINDLE_SETUP_STEPS = [
   {
     id: "sync",
     name: "Sync!",
-    description:
-      "That's it! Your Kindle is now connected to SyncReads. Enjoy full power of the internet, happy syncing!",
+    description: `That's it! Your Kindle is now connected to ${APP_NAME}. Enjoy full power of the internet, happy syncing!`,
     image: {
       src: {
         light: "/images/landing/integrations/kindle/setup/sync/light.png",

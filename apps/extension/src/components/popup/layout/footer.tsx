@@ -9,7 +9,7 @@ export const Footer = () => {
       <div className="flex items-center justify-center gap-2">
         <img
           src={logo}
-          alt="SyncReads logo"
+          alt={`${APP_NAME} logo`}
           className="w-3.5 select-none opacity-70"
         />
         <span className="text-[0.65rem] text-muted-foreground">

@@ -1,6 +1,7 @@
+import { APP_NAME } from "./config";
 import { DEFAULT_OPTIONS } from "./options";
 
-export const SYNC_DEFAULT_FOLDER = "SyncReads";
+export const SYNC_DEFAULT_FOLDER = APP_NAME;
 
 export const DEFAULT_USER_METADATA = {
   name: "",

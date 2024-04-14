@@ -36,7 +36,7 @@ export const LANDING_FEATURES = {
     base: "See the",
     sparkling: "magic",
   },
-  description: `Enjoy the features which make SyncReads great.`,
+  description: `Enjoy the features which make ${APP_NAME} great.`,
   list: [
     {
       title: "Simple",
@@ -69,7 +69,7 @@ export const LANDING_REVIEWS = {
   title: "What our users say",
   description: `We are proud to have such a great community.`,
   quote: {
-    content: `I love SyncReads. It's so easy to use and it works flawlessly. I can finally read my favorite articles without any fluff.`,
+    content: `I love ${APP_NAME}. It's so easy to use and it works flawlessly. I can finally read my favorite articles without any fluff.`,
     author: {
       name: "Philipp",
       position: "Software Engineer",
@@ -91,8 +91,8 @@ export const LANDING_FAQ = {
   title: "Frequently asked questions",
   questions: [
     {
-      question: "What is SyncReads?",
-      answer: `SyncReads is a service that allows you to sync content from the web to your favorite device.`,
+      question: `What is ${APP_NAME}?`,
+      answer: `${APP_NAME} is a service that allows you to sync content from the web to your favorite device.`,
     },
     {
       question: "How much does it cost?",
