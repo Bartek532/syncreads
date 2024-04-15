@@ -3,11 +3,9 @@ import { Analytics } from "@vercel/analytics/react";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import { cookies } from "next/headers";
-import { Toaster } from "react-hot-toast";
 
-import { ThemeProvider } from "@/components/ui/theme";
+import { Providers } from "@/providers/providers";
 
-import { TOASTER_CONFIG } from "../config";
 import { DEFAULT_METADATA, DEFAULT_VIEWPORT } from "../lib/metadata";
 import "../styles/globals.css";
 import { TRPCReactProvider } from "../trpc/react";
@@ -24,20 +22,7 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth focus:scroll-auto">
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         <TRPCReactProvider cookies={cookies().toString()}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Toaster
-              position="bottom-right"
-              containerStyle={{ padding: "20px" }}
-              gutter={13}
-              toastOptions={TOASTER_CONFIG}
-            />
-            {children}
-          </ThemeProvider>
+          <Providers>{children}</Providers>
         </TRPCReactProvider>
         <Analytics />
       </body>

@@ -2,6 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { render } from "teapub";
 import xmlserializer from "xmlserializer";
 
+import { fetcher } from "../../utils/fetcher";
+
 import { css, IMAGE_SUPPORTED_FORMATS } from "./epub.constants";
 import { fetchImage } from "./utils/images";
 import { getReadibility } from "./utils/readability";
@@ -13,7 +15,17 @@ import type { GeneratorStrategy } from "../generator.interface";
 @Injectable()
 export class EpubStrategy implements GeneratorStrategy {
   async prepare(url: string) {
-    const response = await fetch(url);
+    const response = await fetcher(url, {
+      credentials: "include",
+    });
+
+    // read cookies
+    const cookies = response.headers.get("set-cookie");
+    console.log("Cookies", cookies);
+
+    const xd = response.headers.keys();
+    console.log("Headers", xd);
+
     const html = await response.text();
 
     const readability = getReadibility(url, html);

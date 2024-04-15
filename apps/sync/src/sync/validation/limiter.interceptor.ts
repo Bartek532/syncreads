@@ -11,7 +11,7 @@ import type {
 } from "@nestjs/common";
 import type { Request } from "express";
 
-const MAX_SYNCS_PER_HOUR = 35;
+const MAX_SYNCS_PER_HOUR = 5;
 
 @Injectable()
 export class LimiterInterceptor implements NestInterceptor {
