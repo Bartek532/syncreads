@@ -1,5 +1,5 @@
-import { APP_NAME } from "@syncreads/shared";
-import { CheckIcon, XIcon } from "lucide-react";
+import { BlocksIcon, CheckIcon, XIcon } from "lucide-react";
+import Image from "next/image";
 
 import { buttonVariants } from "@/components/ui/button";
 import { Sparkles } from "@/components/ui/sparkles";
@@ -14,11 +14,10 @@ export const ExploreIntegrationExtension = () => {
       <section className="flex w-full flex-col items-center justify-center gap-14">
         <div className="flex max-w-xl flex-col items-center gap-4">
           <h2 className="text-center text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-            <Sparkles>Click & Sync</Sparkles>
+            <Sparkles>{INTEGRATIONS.extension.hero.title}</Sparkles>
           </h2>
           <p className="text-center">
-            The browser extension allows you to sync articles from your favorite
-            websites with a single click.
+            {INTEGRATIONS.extension.hero.description}
           </p>
           {INTEGRATIONS.extension.stores.map((store) => (
             <a
@@ -83,15 +82,51 @@ export const ExploreIntegrationExtension = () => {
         ))}
       </section>
 
-      <section>
+      <section className="flex w-full flex-col items-center justify-center gap-8 md:gap-12 lg:gap-16">
         <div className="flex flex-col items-center justify-center gap-1">
           <h3 className="text-center text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-            Put the whole web into your pocket
+            {INTEGRATIONS.extension.web.title}
           </h3>
           <p className="text-center text-muted-foreground">
-            {APP_NAME} supports the internet&apos; top sites.
+            {INTEGRATIONS.extension.web.description}
           </p>
         </div>
+
+        <div className="flex w-full flex-wrap items-center justify-center gap-6 md:gap-8 lg:gap-12">
+          {INTEGRATIONS.extension.web.sites.map((site) => (
+            <div
+              key={site.name}
+              className="flex basis-12 flex-col items-center justify-center gap-2 drop-shadow-[0_0_30px_rgba(255,255,255,0.8)]"
+            >
+              <Image
+                src={site.icon}
+                alt=""
+                width={40}
+                height={40}
+                className="h-9 w-9 md:h-10 md:w-10 lg:h-12 lg:w-12"
+              />
+              <span className="text-sm text-muted-foreground">{site.name}</span>
+            </div>
+          ))}
+
+          <div className="basis-18 -ml-4 flex flex-col items-center justify-center gap-2 drop-shadow-[0_0_30px_rgba(255,255,255,0.8)]">
+            <BlocksIcon
+              className="h-9 w-9 text-muted-foreground md:h-10 md:w-10 lg:h-12 lg:w-12"
+              strokeWidth={1}
+            />
+            <span className="text-sm text-muted-foreground">
+              {INTEGRATIONS.extension.web.more}
+            </span>
+          </div>
+        </div>
+
+        <Image
+          src={INTEGRATIONS.extension.web.image}
+          width={1640}
+          height={1103}
+          className="mb-6 mt-2 w-full max-w-5xl md:mb-10 md:mt-6 lg:mb-14 lg:mt-10"
+          alt=""
+        />
       </section>
     </div>
   );

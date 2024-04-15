@@ -31,7 +31,7 @@ double_confirm_changes = true
 enable_confirmations = true
 
 [auth.email.template.confirmation]
-subject = "Confirm your email address"
+subject = "Confirm email"
 content_path = "./supabase/templates/confirmation.html"
 
 [auth.external.github]

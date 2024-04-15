@@ -10,22 +10,16 @@ import { Features } from "../layout/features/features";
 import { Reviews } from "../layout/reviews/reviews";
 import { Setup } from "../layout/setup/setup";
 
-const HERO_IMAGE = {
-  light: "/images/landing/integrations/remarkable/hero/light.png",
-  dark: "/images/landing/integrations/remarkable/hero/dark.png",
-};
-
 export const ExploreIntegrationRemarkable = () => {
   return (
     <div className="flex w-full flex-col items-center justify-center gap-10">
       <section className="flex w-full flex-wrap items-center justify-center gap-14 md:flex-nowrap md:justify-between">
         <div className="flex max-w-2xl flex-col gap-4">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-            Make reMarkable truly remarkable
+            {INTEGRATIONS.remarkable.hero.title}
           </h2>
           <p className="text-muted-foreground">
-            No more manual work - everything synced automatically. Focus on
-            consuming and leave the rest to us.
+            {INTEGRATIONS.remarkable.hero.description}
           </p>
           <div className="flex items-center gap-3">
             <Link href="/auth/login" className={buttonVariants()}>
@@ -47,7 +41,7 @@ export const ExploreIntegrationRemarkable = () => {
 
         <div className="max-w-md shrink lg:max-w-lg">
           <ThemedImage
-            src={HERO_IMAGE}
+            src={INTEGRATIONS.remarkable.hero.image}
             defaultVariant="light"
             width={1092}
             height={1143}
@@ -60,7 +54,7 @@ export const ExploreIntegrationRemarkable = () => {
 
       <div className="relative mt-12 md:mt-20 lg:mt-32">
         <Image
-          src="/images/landing/integrations/remarkable/banner.png"
+          src={INTEGRATIONS.remarkable.spacer}
           alt="reMarkable with feeds"
           width={1700}
           height={1100}
@@ -77,7 +71,7 @@ export const ExploreIntegrationRemarkable = () => {
       <section className="my-16 flex w-full flex-col items-center gap-8 md:my-32 md:gap-12 lg:my-52">
         <blockquote className="mt-4 flex w-full justify-center text-center">
           <p className="max-w-3xl text-2xl italic text-muted-foreground before:content-['“'] after:content-['“'] md:text-3xl lg:text-4xl">
-            Very easy to set up and use. Click click and it&apos;s on your rM.
+            {INTEGRATIONS.remarkable.quote.content}
           </p>
         </blockquote>
         <div className="flex items-center justify-center gap-3 md:gap-5">
@@ -89,8 +83,12 @@ export const ExploreIntegrationRemarkable = () => {
             className="rounded-full"
           />
           <div className="flex flex-col">
-            <span className="font-bold md:text-lg">Evon Smith</span>
-            <span className="text-muted-foreground">reMarkable 2 user</span>
+            <span className="font-bold md:text-lg">
+              {INTEGRATIONS.remarkable.quote.author.name}
+            </span>
+            <span className="text-muted-foreground">
+              {INTEGRATIONS.remarkable.quote.author.role}
+            </span>
           </div>
         </div>
       </section>

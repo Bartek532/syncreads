@@ -16,6 +16,15 @@ export const INTEGRATIONS = {
     name: "Kindle",
     icon: "/images/landing/integrations/kindle/icon.png",
     description: "Best selling e-book reader in the world.",
+    hero: {
+      title: `Connect your Kindle to ${APP_NAME}`,
+      description:
+        "Stop losing your highlights and focus. Organize everything in one place, without any distractions.",
+      image: {
+        light: "/images/landing/integrations/kindle/hero/light.png",
+        dark: "/images/landing/integrations/kindle/hero/dark.png",
+      },
+    },
     reviews: {
       rating: 4,
       total: 23,
@@ -34,6 +43,11 @@ export const INTEGRATIONS = {
         },
       ],
     },
+    quote: "I will never come back to Send to Kindle.",
+    spacer: {
+      title: "50,000,000",
+      description: "Kindle devices sold worldwide",
+    },
     setup: KINDLE_SETUP_STEPS,
   },
   remarkable: {
@@ -41,6 +55,16 @@ export const INTEGRATIONS = {
     name: "reMarkable",
     icon: "/images/landing/integrations/remarkable/icon.png",
     description: "The most advanced paper tablet.",
+    hero: {
+      title: `Make reMarkable truly remarkable`,
+      description:
+        "No more manual work - everything synced automatically. Focus on consuming and leave the rest to us.",
+      image: {
+        light: "/images/landing/integrations/remarkable/hero/light.png",
+        dark: "/images/landing/integrations/remarkable/hero/dark.png",
+      },
+    },
+    spacer: "/images/landing/integrations/remarkable/banner.png",
     reviews: {
       rating: 5,
       total: 56,
@@ -63,6 +87,13 @@ export const INTEGRATIONS = {
         },
       ],
     },
+    quote: {
+      content: "Very easy to set up and use. Click click and it's on your rM.",
+      author: {
+        name: "Evon Smith",
+        role: "reMarkable 2 user",
+      },
+    },
     setup: REMARKABLE_SETUP_STEPS,
   },
   extension: {
@@ -70,6 +101,11 @@ export const INTEGRATIONS = {
     name: "Extension",
     icon: "/images/landing/integrations/extension/icon.png",
     description: "Just click and sync - directly from your browser.",
+    hero: {
+      title: "Click & Sync",
+      description:
+        "The browser extension allows you to sync articles from your favorite websites with a single click.",
+    },
     stores: [
       {
         id: "chrome",
@@ -115,9 +151,9 @@ export const INTEGRATIONS = {
         description:
           "Extension is linked only to your account - no data is stored locally.",
         image: {
-          dark: "/images/landing/integrations/extension/features/click-sync/dark.png",
+          dark: "/images/landing/integrations/extension/features/privacy/dark.png",
           light:
-            "/images/landing/integrations/extension/features/click-sync/light.png",
+            "/images/landing/integrations/extension/features/privacy/light.png",
         },
       },
     ],
@@ -138,6 +174,30 @@ export const INTEGRATIONS = {
         success: false,
       },
     ],
+    web: {
+      title: "Put the whole web into your pocket",
+      description: `${APP_NAME} supports the internet's top sites.`,
+      image: "/images/landing/integrations/extension/web/image.png",
+      more: "And more...",
+      sites: [
+        {
+          name: "Wikipedia",
+          icon: "/images/landing/integrations/extension/web/sites/wikipedia.png",
+        },
+        {
+          name: "NYT",
+          icon: "/images/landing/integrations/extension/web/sites/nyt.png",
+        },
+        {
+          name: "Google",
+          icon: "/images/landing/integrations/extension/web/sites/google.png",
+        },
+        {
+          name: "X",
+          icon: "/images/landing/integrations/extension/web/sites/x.png",
+        },
+      ],
+    },
   },
 };
 
