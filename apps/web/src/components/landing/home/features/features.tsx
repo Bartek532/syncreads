@@ -1,7 +1,11 @@
+import Link from "next/link";
+
 import { Sparkles } from "@/components/ui/sparkles";
 import { ThemedImage } from "@/components/ui/themed-image";
 import { LANDING_FEATURES } from "@/config";
 import { cn } from "@/utils";
+
+import { buttonVariants } from "../../../ui/button";
 
 export const Features = () => {
   return (
@@ -47,6 +51,17 @@ export const Features = () => {
               <p className="max-w-md text-muted-foreground">
                 {feature.description}
               </p>
+              <div className="mt-2 flex flex-wrap items-center justify-start gap-3">
+                {feature.links?.map((link) => (
+                  <Link
+                    key={link.text}
+                    href={link.link}
+                    className={buttonVariants({ variant: link.variant })}
+                  >
+                    {link.text}
+                  </Link>
+                ))}
+              </div>
             </div>
           </li>
         ))}

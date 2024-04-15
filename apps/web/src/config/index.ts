@@ -45,6 +45,13 @@ export const LANDING_FEATURES = {
         light: "/images/landing/features/light/simple.png",
         dark: "/images/landing/features/dark/simple.png",
       },
+      links: [
+        {
+          link: "/auth/login",
+          text: "Setup now",
+          variant: "outline" as const,
+        },
+      ],
     },
     {
       title: "Fast",
@@ -53,6 +60,28 @@ export const LANDING_FEATURES = {
         light: "/images/landing/features/light/fast.png",
         dark: "/images/landing/features/dark/fast.png",
       },
+      links: [
+        {
+          link: "/explore/extension",
+          text: "Explore Click & Sync",
+          variant: "default" as const,
+        },
+      ],
+    },
+    {
+      title: "Safe",
+      description: `We take security seriously. ${APP_NAME} WON'T read or modify any data on your behalf. It's just consuming, right?`,
+      image: {
+        light: "/images/landing/features/light/safe.png",
+        dark: "/images/landing/features/dark/safe.png",
+      },
+      links: [
+        {
+          link: "/explore/kindle",
+          text: "Learn more",
+          variant: "outline" as const,
+        },
+      ],
     },
     {
       title: "Reliable",
@@ -61,6 +90,13 @@ export const LANDING_FEATURES = {
         light: "/images/landing/features/light/reliable.png",
         dark: "/images/landing/features/dark/reliable.png",
       },
+      links: [
+        {
+          link: TWITTER_URL,
+          text: "Check status",
+          variant: "default" as const,
+        },
+      ],
     },
   ],
 };
