@@ -33,7 +33,7 @@ export const Hero = () => {
         <ArrowRight className="w-4 transition-transform group-hover:translate-x-1" />
       </motion.a>
       <motion.h1
-        className="lg:leading-tighter max-w-4xl animate-gradient bg-gradient-to-r from-primary via-muted-foreground via-20% to-primary bg-[length:200%_auto] bg-clip-text text-center text-5xl font-bold tracking-tighter text-transparent md:text-6xl xl:text-7xl 2xl:text-8xl"
+        className="lg:leading-tighter max-w-4xl animate-gradient text-balance bg-gradient-to-r from-primary via-muted-foreground via-20% to-primary bg-[length:200%_auto] bg-clip-text text-center text-5xl font-bold tracking-tighter text-transparent md:text-6xl xl:text-7xl 2xl:text-8xl"
         initial={{ opacity: 0, y: -55 }}
         whileInView={{
           opacity: 1,
@@ -45,7 +45,7 @@ export const Hero = () => {
         {APP_NAME_APPENDIX}
       </motion.h1>
       <motion.p
-        className="max-w-2xl text-center text-muted-foreground md:text-xl"
+        className="max-w-2xl text-pretty text-center text-muted-foreground md:text-xl"
         initial={{ opacity: 0, y: -45 }}
         whileInView={{
           opacity: 1,

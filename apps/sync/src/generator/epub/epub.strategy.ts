@@ -19,13 +19,6 @@ export class EpubStrategy implements GeneratorStrategy {
       credentials: "include",
     });
 
-    // read cookies
-    const cookies = response.headers.get("set-cookie");
-    console.log("Cookies", cookies);
-
-    const xd = response.headers.keys();
-    console.log("Headers", xd);
-
     const html = await response.text();
 
     const readability = getReadibility(url, html);

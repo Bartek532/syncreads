@@ -2,6 +2,14 @@ export const PUPPETEER_PROVIDER_FACTORY_TOKEN = Symbol(
   "PUPPETEER_PROVIDER_FACTORY_TOKEN",
 );
 
+export const USER_AGENT =
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3";
+
+export const LISTS_TO_BLOCK_FROM = [
+  "https://secure.fanboy.co.nz/fanboy-cookiemonster.txt",
+  "https://easylist.to/easylist/easylist.txt",
+];
+
 export const BROWSER_CONFIG = [
   // Required for Docker version of Puppeteer
   "--no-sandbox",

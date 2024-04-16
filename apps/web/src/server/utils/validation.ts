@@ -1,11 +1,12 @@
 import { HTTP_STATUS_CODE, syncLogMessageSchema } from "@syncreads/shared";
 
+import { fetcher } from "./fetcher";
 import { parseFeedFromString } from "./parser";
 
 import type { LogMessage } from "@syncreads/shared";
 
 export const isFeedUrl = async (url: string) => {
-  const response = await fetch(url);
+  const response = await fetcher(url);
 
   const isFeed =
     response.status === HTTP_STATUS_CODE.OK &&
