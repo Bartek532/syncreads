@@ -7,7 +7,7 @@ import {
 import { PuppeteerProviderFactory } from "./puppeteer/puppeteer.provider";
 
 import type { GeneratorStrategy } from "../generator.interface";
-import type { Page } from "puppeteer-core";
+import type { Page } from "puppeteer";
 
 @Injectable()
 export class PdfStrategy implements GeneratorStrategy {
