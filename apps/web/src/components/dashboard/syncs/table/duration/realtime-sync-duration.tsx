@@ -19,7 +19,7 @@ type RealtimeSyncDurationProps = {
 
 const getDifference = (startedAt: string, finishedAt: string | null) => {
   const start = startedAt;
-  const end = finishedAt ?? dayjs().isAfter(start) ? dayjs() : start;
+  const end = finishedAt ?? (dayjs().isAfter(start) ? dayjs() : start);
   return dayjs.duration(dayjs(end).diff(dayjs(start)));
 };
 
