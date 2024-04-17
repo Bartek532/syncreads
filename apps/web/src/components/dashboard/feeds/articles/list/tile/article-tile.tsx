@@ -3,6 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { memo } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/trpc/server";
 
 type ArticleTileProps = {
@@ -39,5 +40,9 @@ export const ArticleTile = memo<ArticleTileProps>(async ({ url }) => {
     </a>
   );
 });
+
+export const ArticleTileSkeleton = () => {
+  return <Skeleton className="h-16 w-full" />;
+};
 
 ArticleTile.displayName = "ArticleTile";

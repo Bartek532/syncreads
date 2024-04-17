@@ -96,6 +96,11 @@ module.exports = {
       boxShadow: {
         fading: "0px -30px 66px 55px rgba(var(--fading-shadow), 1);",
       },
+      aspectRatio: {
+        "4/3": "4 / 3",
+        "4/6": "4 / 6",
+        "8/3": "8 / 3",
+      },
     },
   },
 };

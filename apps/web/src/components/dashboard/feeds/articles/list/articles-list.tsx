@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { Suspense, memo } from "react";
 
 import { supabase } from "@/lib/supabase/server";
 
@@ -7,7 +7,7 @@ import EmptyFeedsIcon from "public/svg/empty-feeds.svg";
 import { Empty } from "../../../../ui/empty";
 import { SyncArticleDialog } from "../dialog/sync-article-dialog";
 
-import { ArticleTile } from "./tile/article-tile";
+import { ArticleTile, ArticleTileSkeleton } from "./tile/article-tile";
 
 import type { SyncArticle } from "@syncreads/database";
 
@@ -35,7 +35,9 @@ export const ArticlesList = memo<ArticlesListProps>(async ({ articles }) => {
       <ol className="flex flex-col gap-4 sm:gap-6">
         {articles.map((article) => (
           <li key={article.syncId}>
-            <ArticleTile url={article.url} />
+            <Suspense fallback={<ArticleTileSkeleton />}>
+              <ArticleTile url={article.url} />
+            </Suspense>
           </li>
         ))}
       </ol>

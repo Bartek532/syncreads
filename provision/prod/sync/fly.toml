@@ -4,7 +4,7 @@
 #
 
 app = "syncreads"
-primary_region = "iad"
+primary_region = "lax"
 
 [build]
   dockerfile = "./Dockerfile"
@@ -14,7 +14,7 @@ primary_region = "iad"
   force_https = true
   auto_stop_machines = true
   auto_start_machines = true
-  min_machines_running = 0
+  min_machines_running = 1
   processes = ["app"]
 
 [[vm]]
