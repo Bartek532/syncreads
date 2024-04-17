@@ -3,7 +3,7 @@
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import { Loader } from "lucide-react";
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 import { useRealtimeSyncs } from "@/hooks/useRealtime";
 import { cn } from "@/utils";
@@ -17,13 +17,9 @@ type RealtimeSyncDurationProps = {
   readonly className?: string;
 };
 
-const getDifference = (
-  startedAt: string,
-  finishedAt: string | null,
-  delay: number,
-) => {
+const getDifference = (startedAt: string, finishedAt: string | null) => {
   const start = startedAt;
-  const end = finishedAt ?? dayjs(start).add(delay, "s");
+  const end = finishedAt ?? dayjs().isAfter(start) ? dayjs() : start;
   return dayjs.duration(dayjs(end).diff(dayjs(start)));
 };
 
@@ -34,21 +30,17 @@ export const RealtimeSyncDuration = memo<RealtimeSyncDurationProps>(
       ...initialSync,
       ...realtimeSyncs.find((s) => s.id === initialSync.id),
     };
-    const delay = useRef(1);
     const [difference, setDifference] = useState<duration.Duration | null>(
-      getDifference(sync.startedAt, sync.finishedAt, 1),
+      getDifference(sync.startedAt, sync.finishedAt),
     );
 
     useEffect(() => {
       const interval = setInterval(() => {
-        delay.current += 1;
-        setDifference(
-          getDifference(sync.startedAt, sync.finishedAt, delay.current),
-        );
+        setDifference(getDifference(sync.startedAt, sync.finishedAt));
       }, 1000);
 
       if (sync.finishedAt) {
-        setDifference(getDifference(sync.startedAt, sync.finishedAt, 0));
+        setDifference(getDifference(sync.startedAt, sync.finishedAt));
         clearInterval(interval);
       }
 

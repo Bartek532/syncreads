@@ -146,16 +146,20 @@ export const ProfileForm = memo<ProfileForm>(({ user }) => {
               >
                 {formats.map((f) => (
                   <FormItem key={f.value}>
-                    <FormLabel className="[&:has([data-state=checked])>div]:border-primary">
+                    <FormLabel className="flex flex-col items-center justify-center [&:has([data-state=checked])>div]:border-primary">
                       <FormControl>
                         <RadioGroupItem value={f.value} className="sr-only" />
                       </FormControl>
                       <div className="w-36 cursor-pointer items-center rounded-lg border-2 border-muted p-1 hover:border-accent sm:w-48 md:w-64">
                         <f.icon />
                       </div>
-                      <span className="block  p-2 text-center font-normal">
+                      <span className="block p-2 text-center font-normal">
                         {f.label}
                       </span>
+
+                      <FormDescription className="max-w-36 text-center text-xs sm:max-w-48 md:max-w-64 md:text-sm">
+                        {f.description}
+                      </FormDescription>
                     </FormLabel>
                   </FormItem>
                 ))}
