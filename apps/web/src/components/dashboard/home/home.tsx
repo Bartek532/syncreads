@@ -123,7 +123,7 @@ export const Home = async () => {
             <h2 className="text-lg font-medium sm:px-0">Syncs by day</h2>
             <SyncsPerDay range={range} syncs={syncs} />
           </section>
-          <section className="mt-6 flex h-fit basis-full flex-col gap-4 md:mt-0 md:basis-2/5">
+          <section className="mt-6 flex h-fit w-full basis-full flex-col gap-4 md:mt-0 md:basis-2/5">
             <h2 className="text-lg font-medium sm:px-0">Recently synced</h2>
             <ArticlesList articles={articles} />
           </section>

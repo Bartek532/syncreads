@@ -22,21 +22,21 @@ export const ArticleTile = memo<ArticleTileProps>(async ({ url }) => {
       target="_blank"
       rel="noreferrer"
     >
-      <Avatar className="mt-1 min-h-7 w-7 shrink-0 rounded-none sm:h-8 sm:min-h-8 sm:w-8">
+      <Avatar className="mt-1 h-full min-h-7 w-7 shrink-0 rounded-none sm:h-8 sm:min-h-8 sm:w-8">
         <AvatarImage src={data.icon ?? "/favicon.ico"} alt="" />
         <AvatarFallback className="h-7 rounded-full sm:h-8">
           {data.title?.[0] ?? "N/A"}
         </AvatarFallback>
       </Avatar>
-      <div className="mr-auto flex flex-col gap-1">
+      <div className="mr-auto flex shrink flex-col gap-1">
         <span className="text-sm font-bold underline group-hover:no-underline">
           {data.title ?? "N/A"}
         </span>
-        <span className="text-xs text-muted-foreground">
+        <span className="break-all text-xs text-muted-foreground">
           {removeProtocolsFromUrl(url)}
         </span>
       </div>
-      <ArrowUpRight className="h-5 w-5 shrink-0 text-muted-foreground transition-colors group-hover:text-primary sm:h-6 sm:w-6" />
+      <ArrowUpRight className="hidden h-6 w-6 shrink-0 text-muted-foreground transition-colors group-hover:text-primary sm:block" />
     </a>
   );
 });

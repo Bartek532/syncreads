@@ -31,7 +31,7 @@ export const ArticlesList = memo<ArticlesListProps>(async ({ articles }) => {
   }
 
   return (
-    <div className="w-full flex-1 rounded-lg bg-background p-6 shadow-sm">
+    <div className="max-w-full flex-1 rounded-lg bg-background p-6 shadow-sm">
       <ol className="flex flex-col gap-4 sm:gap-6">
         {articles.map((article) => (
           <li key={article.syncId}>

@@ -19,4 +19,13 @@ module.exports = withPWA({
 
     return config;
   },
+  async redirects() {
+    return Promise.resolve([
+      {
+        source: "/explore",
+        destination: "/explore/kindle",
+        permanent: true,
+      },
+    ]);
+  },
 });
