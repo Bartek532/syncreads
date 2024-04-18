@@ -21,3 +21,14 @@ primary_region = "lax"
   memory = '512mb'
   cpu_kind = 'shared'
   cpus = 1
+
+[checks]
+  [checks.connectivity]
+    grace_period = "15s"
+    interval = "10s"
+    timeout = "7s"
+    type = "http"
+    method = "GET"
+    path = "/api/health"
+    [checks.connectivity.headers]
+      Content-Type = "application/json"
