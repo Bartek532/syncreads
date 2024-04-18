@@ -11,11 +11,21 @@ import type { AppRouter } from "../server/trpc/router";
 
 export const api = createTRPCReact<AppRouter>();
 
+const createQueryClient = () => new QueryClient();
+
+let clientQueryClientSingleton: QueryClient | undefined = undefined;
+const getQueryClient = () => {
+  if (typeof window === "undefined") {
+    return createQueryClient();
+  }
+  return (clientQueryClientSingleton ??= createQueryClient());
+};
+
 export function TRPCReactProvider(props: {
   children: React.ReactNode;
   cookies: string;
 }) {
-  const [queryClient] = useState(() => new QueryClient());
+  const queryClient = getQueryClient();
 
   const [trpcClient] = useState(() =>
     api.createClient({

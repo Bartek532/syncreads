@@ -6,7 +6,7 @@ import {
 
 import { getSyncLogSchema, getSyncSchema } from "@/utils";
 
-import { protectedProcedure, router } from "..";
+import { protectedProcedure, createTRPCRouter } from "..";
 import {
   getSyncHandler,
   getSyncLogHandler,
@@ -14,7 +14,7 @@ import {
   queueFeedSyncHandler,
 } from "../../controllers/sync.controller";
 
-export const syncRouter = router({
+export const syncRouter = createTRPCRouter({
   queueArticleSync: protectedProcedure
     .input(syncArticlePayloadSchema)
     .mutation(({ ctx, input }) =>

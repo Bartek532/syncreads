@@ -1,4 +1,4 @@
-import { router, protectedProcedure } from "..";
+import { createTRPCRouter, protectedProcedure } from "..";
 import {
   createFeedSchema,
   getUrlDetailsSchema,
@@ -10,7 +10,7 @@ import {
   importFeedsHandler,
 } from "../../controllers/feed.controller";
 
-export const feedRouter = router({
+export const feedRouter = createTRPCRouter({
   createFeed: protectedProcedure
     .input(createFeedSchema)
     .mutation(({ input, ctx }) =>

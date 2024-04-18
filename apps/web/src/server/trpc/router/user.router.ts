@@ -1,4 +1,4 @@
-import { router, protectedProcedure } from "..";
+import { createTRPCRouter, protectedProcedure } from "..";
 import {
   cursorPaginationSchema,
   deleteFeedsSchema,
@@ -18,7 +18,7 @@ import {
   updateUserHandler,
 } from "../../controllers/user.controller";
 
-export const userRouter = router({
+export const userRouter = createTRPCRouter({
   updateUser: protectedProcedure
     .input(updateUserSchema)
     .mutation(({ input }) => updateUserHandler(input)),
