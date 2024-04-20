@@ -50,6 +50,8 @@ export const webServerSchema = sharedSchema.merge(authDatabaseSchema).merge(
   z.object({
     SYNC_API_URL: z.string().url(),
     SENDGRID_API_KEY: z.string(),
+    STRIPE_SECRET_KEY: z.string(),
+    STRIPE_WEBHOOK_SECRET: z.string(),
     CONTACT_EMAIL: z.string().email(),
   }),
 );
@@ -58,6 +60,7 @@ export const webClientSchema = sharedSchema.merge(
   z.object({
     NEXT_PUBLIC_HOST: z.string().optional(),
     NEXT_PUBLIC_VERCEL_URL: z.string().optional(),
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string(),
   }),
 );
 

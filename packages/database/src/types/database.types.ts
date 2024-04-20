@@ -38,9 +38,24 @@ export type UserFeed = Tables<"UserFeed">;
 export type InsertUserFeed = Tables<"UserFeed", "Insert">;
 export type UpdateUserFeed = Tables<"UserFeed", "Update">;
 
+export type Customer = Tables<"Customer">;
+export type InsertCustomer = Tables<"Customer", "Insert">;
+export type UpdateCustomer = Tables<"Customer", "Update">;
+
+export type CustomerSubscription = Tables<"CustomerSubscription">;
+export type InsertCustomerSubscription = Tables<
+  "CustomerSubscription",
+  "Insert"
+>;
+export type UpdateCustomerSubscription = Tables<
+  "CustomerSubscription",
+  "Update"
+>;
+
 export type SyncStatus = Enums<"SyncStatus">;
 export type SyncTrigger = Enums<"SyncTrigger">;
 export type DeviceType = Enums<"DeviceType">;
+export type SubscriptionStatus = Enums<"SubscriptionStatus">;
 
 export const SyncStatus: { [K in SyncStatus]: K } = {
   SUCCESS: "SUCCESS",
@@ -58,6 +73,17 @@ export const SyncTrigger: { [K in SyncTrigger]: K } = {
 export const DeviceType: { [K in DeviceType]: K } = {
   REMARKABLE: "REMARKABLE",
   KINDLE: "KINDLE",
+} as const;
+
+export const SubscriptionStatus: { [K in SubscriptionStatus]: K } = {
+  ACTIVE: "ACTIVE",
+  TRIALING: "TRIALING",
+  PAST_DUE: "PAST_DUE",
+  INCOMPLETE: "INCOMPLETE",
+  INCOMPLETE_EXPIRED: "INCOMPLETE_EXPIRED",
+  CANCELED: "CANCELED",
+  UNPAID: "UNPAID",
+  PAUSED: "PAUSED",
 } as const;
 
 // Auth

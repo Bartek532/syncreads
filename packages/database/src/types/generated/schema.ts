@@ -9,6 +9,55 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      Customer: {
+        Row: {
+          id: string
+          stripeId: string
+        }
+        Insert: {
+          id?: string
+          stripeId: string
+        }
+        Update: {
+          id?: string
+          stripeId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_Customer_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      CustomerSubscription: {
+        Row: {
+          customerId: string | null
+          id: string
+          status: Database["public"]["Enums"]["SubscriptionStatus"]
+        }
+        Insert: {
+          customerId?: string | null
+          id: string
+          status: Database["public"]["Enums"]["SubscriptionStatus"]
+        }
+        Update: {
+          customerId?: string | null
+          id?: string
+          status?: Database["public"]["Enums"]["SubscriptionStatus"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_CustomerSubscription_customerId_fkey"
+            columns: ["customerId"]
+            isOneToOne: false
+            referencedRelation: "Customer"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       Feed: {
         Row: {
           id: string
@@ -241,6 +290,15 @@ export type Database = {
     }
     Enums: {
       DeviceType: "KINDLE" | "REMARKABLE"
+      SubscriptionStatus:
+        | "ACTIVE"
+        | "CANCELED"
+        | "INCOMPLETE"
+        | "INCOMPLETE_EXPIRED"
+        | "PAST_DUE"
+        | "PAUSED"
+        | "TRIALING"
+        | "UNPAID"
       SyncStatus: "SUCCESS" | "FAILED" | "QUEUED" | "IN_PROGRESS" | "UNKNOWN"
       SyncTrigger: "MANUAL" | "SCHEDULE"
     }
