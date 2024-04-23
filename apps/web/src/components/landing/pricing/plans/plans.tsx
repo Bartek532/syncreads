@@ -8,17 +8,22 @@ import type {
 
 import { Plan } from "./plan/plan";
 
+import type { User } from "@syncreads/database";
+
 type PlansProps = {
   readonly plans: PricingPlanWithPrices[];
+  readonly user: User | null;
   readonly interval?: RecurringPriceInterval;
 };
 
 export const Plans = memo<PlansProps>(
-  ({ plans, interval = DEFAULT_SUBSCRIPTION_INTERVAL }) => {
+  ({ plans, interval = DEFAULT_SUBSCRIPTION_INTERVAL, user }) => {
     return (
       <div className="flex w-full flex-wrap items-center justify-center gap-12 md:gap-6 lg:gap-4">
         {plans.map((plan) => {
-          return <Plan key={plan.id} plan={plan} interval={interval} />;
+          return (
+            <Plan key={plan.id} plan={plan} interval={interval} user={user} />
+          );
         })}
       </div>
     );

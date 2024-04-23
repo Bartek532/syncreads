@@ -1,13 +1,15 @@
 import { ApiError } from "@syncreads/shared";
 
-import { supabase } from "../../lib/supabase/client";
+import type { PricingPlanPrice } from "@/types/payment.types";
+
+import { supabase } from "../../lib/supabase/server";
 import { createCheckoutSession } from "../services/payment/checkout.service";
 import {
   createOrRetrieveCustomer,
   getCustomerByStripeId,
 } from "../services/payment/customer.service";
 import { getStripeSubscription } from "../services/payment/subscription.service";
-import { toCustomerSubscription } from "../utils/mappers/subscription/toSubscription";
+import { calculateTrialEndUnixTimestamp } from "../utils/date";
 
 export const subscriptionStatusChangeHandler = async (
   subscriptionId: string,
@@ -36,7 +38,7 @@ export const subscriptionStatusChangeHandler = async (
   console.log(subscriptionData);
 };
 
-const checkout = async () => {
+export const checkout = async (price: PricingPlanPrice) => {
   try {
     const {
       data: { user },
@@ -54,14 +56,29 @@ const checkout = async () => {
 
     const session = await createCheckoutSession({
       mode: "subscription",
-      payment_method_types: ["card"],
+      billing_address_collection: "required",
+      customer,
+      customer_update: {
+        address: "auto",
+      },
       line_items: [
         {
-          price: "price_1JZ5ZzJZ5ZzJZ5ZzJZ5ZzJZ5",
+          price: price.id,
           quantity: 1,
         },
       ],
-      customer,
+      ...(price.type === "recurring"
+        ? {
+            subscription_data: {
+              trial_end:
+                calculateTrialEndUnixTimestamp(
+                  price.recurring?.trialPeriodDays ?? 0,
+                ) ?? 0,
+            },
+          }
+        : {
+            mode: "payment",
+          }),
     });
 
     return session.id;

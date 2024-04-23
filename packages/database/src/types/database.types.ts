@@ -1,6 +1,5 @@
 import type { Database } from "./generated/schema";
-import type { AuthSession, User as UserType } from "@supabase/supabase-js";
-import type { UserMetadata } from "@syncreads/shared";
+import type { AuthSession, User } from "@supabase/supabase-js";
 
 // Generics
 type Tables<
@@ -84,7 +83,7 @@ export const PricingPlanType: { [K in PricingPlanType]: K } = {
 } as const;
 
 // Auth
-export type User = UserType & { user_metadata: Partial<UserMetadata> };
+export { User };
 export type Session = AuthSession & { user: User };
 
 export type {

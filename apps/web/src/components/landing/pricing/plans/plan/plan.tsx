@@ -1,5 +1,6 @@
 import { CheckIcon, X } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { memo } from "react";
 
 import {
@@ -15,19 +16,26 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { getStripe } from "@/lib/stripe/client";
 import type {
   PricingPlanWithPrices,
   RecurringPriceInterval,
 } from "@/types/payment.types";
-import { cn } from "@/utils";
+import { cn, onPromise } from "@/utils";
+
+import { checkoutUser } from "./actions";
+
+import type { User } from "@syncreads/database";
 
 type PlanProps = {
   readonly plan: PricingPlanWithPrices;
+  readonly user: User | null;
   readonly interval?: RecurringPriceInterval;
 };
 
 export const Plan = memo<PlanProps>(
-  ({ plan, interval = DEFAULT_SUBSCRIPTION_INTERVAL }) => {
+  ({ plan, interval = DEFAULT_SUBSCRIPTION_INTERVAL, user }) => {
+    const router = useRouter();
     const price = getProductPrice(plan, PRICING_MODEL, interval);
 
     const features =
@@ -38,6 +46,16 @@ export const Plan = memo<PlanProps>(
     }
 
     const discount = interval === "year" ? calculateYearlyDiscount(plan) : null;
+
+    const handleCheckout = async () => {
+      if (!user) {
+        router.push("/auth/login");
+      }
+
+      const sessionId = await checkoutUser(price);
+      const stripe = await getStripe();
+      await stripe?.redirectToCheckout({ sessionId });
+    };
 
     return (
       <div
@@ -100,7 +118,9 @@ export const Plan = memo<PlanProps>(
                 Get started
               </Link>
             ) : (
-              <Button>Upgrade now</Button>
+              <Button onClick={onPromise(() => handleCheckout())}>
+                Upgrade now
+              </Button>
             )}
           </div>
         </Card>
