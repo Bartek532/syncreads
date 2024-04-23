@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { NODE_ENV, nodeEnvs } from "../constants/config";
+import { NODE_ENV, nodeEnvs } from "./constants";
 
 const sharedSchema = z.object({
   NODE_ENV: nodeEnvs.default(NODE_ENV.DEVELOPMENT).optional(),

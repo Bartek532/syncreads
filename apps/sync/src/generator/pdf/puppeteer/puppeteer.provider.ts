@@ -11,7 +11,7 @@ import {
   USER_AGENT,
 } from "./puppeteer.constants";
 
-import type { ServerConfig } from "@syncreads/shared";
+import type { ServerConfig } from "@syncreads/env";
 import type { Page } from "puppeteer";
 
 export type PuppeteerProviderFactory = Promise<Page>;

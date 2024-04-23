@@ -5,6 +5,7 @@ module.exports = {
       "../../../apps/sync/tsconfig.json",
       "../../../packages/database/tsconfig.json",
       "../../../packages/shared/tsconfig.json",
+      "../../../packages/env/tsconfig.json",
     ],
     tsconfigRootDir: __dirname,
     sourceType: "module",

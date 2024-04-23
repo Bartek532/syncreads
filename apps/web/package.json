@@ -27,6 +27,7 @@
     "@radix-ui/react-switch": "1.0.3",
     "@sendgrid/mail": "8.1.0",
     "@stripe/stripe-js": "3.3.0",
+    "@syncreads/env": "workspace:*",
     "@syncreads/database": "workspace:*",
     "@syncreads/shared": "workspace:*",
     "@tanstack/react-query": "4.29.1",

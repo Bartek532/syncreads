@@ -1,4 +1,4 @@
-import { NODE_ENV } from "@syncreads/shared";
+import { NODE_ENV } from "@syncreads/env";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
 import { env } from "@/lib/env/server";

@@ -1,5 +1,5 @@
 {
-  "name": "@syncreads/shared",
+  "name": "@syncreads/env",
   "version": "1.0.0",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -11,20 +11,15 @@
     "build": "tsup",
     "clean": "rimraf .turbo dist",
     "dev": "tsup --watch",
-    "lint": "eslint \"src/**/*.ts\" --max-warnings 0",
-    "test": "vitest",
-    "test:ci": "vitest --run"
+    "lint": "eslint \"src/**/*.ts\" --max-warnings 0"
   },
   "dependencies": {
-    "@syncreads/database": "workspace:*",
     "zod": "^3.22.3"
   },
   "devDependencies": {
     "@syncreads/config": "workspace:*",
     "@types/node": "^18.0.0",
     "rimraf": "3.0.2",
-    "tsup": "8.0.1",
-    "tsx": "4.5.0",
-    "vitest": "1.4.0"
+    "tsup": "8.0.1"
   }
 }

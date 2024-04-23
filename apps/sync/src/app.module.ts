@@ -1,7 +1,7 @@
 import { BullModule } from "@nestjs/bull";
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import { serverSchema, validateConfig } from "@syncreads/shared";
+import { serverSchema, validateConfig } from "@syncreads/env";
 
 import { DeviceModule } from "./device/device.module";
 import { EmailModule } from "./email/email.module";
@@ -11,7 +11,7 @@ import { ParserModule } from "./parser/parser.module";
 import { SupabaseModule } from "./supabase/supabase.module";
 import { SyncModule } from "./sync/sync.module";
 
-import type { ServerConfig } from "@syncreads/shared";
+import type { ServerConfig } from "@syncreads/env";
 
 @Module({
   imports: [

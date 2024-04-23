@@ -21,6 +21,7 @@
     "@radix-ui/react-slot": "1.0.2",
     "@syncreads/database": "workspace:*",
     "@syncreads/shared": "workspace:*",
+    "@syncreads/env": "workspace:*",
     "@tanstack/react-query": "4.29.1",
     "class-variance-authority": "0.7.0",
     "clsx": "^1.2.1",

@@ -1,0 +1,4 @@
+{
+  "extends": "@syncreads/config/tsconfig/base.json",
+  "include": ["**/*.ts", "**/*.tsx", "config/*.js", "tsup.config.ts"]
+}

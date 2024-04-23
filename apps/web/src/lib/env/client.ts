@@ -1,4 +1,4 @@
-import { validateConfig, webClientSchema } from "@syncreads/shared";
+import { validateConfig, webClientSchema } from "@syncreads/env";
 
 const localEnv = {
   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:

@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import Sendgrid from "@sendgrid/mail";
 
 import type { MailDataRequired } from "@sendgrid/mail";
-import type { ServerConfig } from "@syncreads/shared";
+import type { ServerConfig } from "@syncreads/env";
 
 @Injectable()
 export class SendgridClient {

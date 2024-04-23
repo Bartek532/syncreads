@@ -31,7 +31,8 @@ export const Pricing = memo<PricingProps>(({ plans }) => {
         </h1>
         {PRICING_MODEL === "one_time" && (
           <p className="max-w-2xl text-center text-muted-foreground">
-            Pay once. Use forever. No recurring fees. No hidden charges.
+            Pay once. Use forever. <br />
+            No recurring fees. No hidden charges.
           </p>
         )}
 

@@ -12,7 +12,7 @@ import {
   clientDatabaseSchema,
   serviceDatabaseSchema,
   validateConfig,
-} from "@syncreads/shared";
+} from "@syncreads/env";
 
 import { anonEnv, serviceEnv } from "./env";
 

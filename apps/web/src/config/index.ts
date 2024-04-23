@@ -1,10 +1,6 @@
 import { DeviceType } from "@syncreads/database";
-import {
-  APP_NAME,
-  APP_NAME_SEPARATOR,
-  APP_ORIGIN,
-  NODE_ENV,
-} from "@syncreads/shared";
+import { NODE_ENV } from "@syncreads/env";
+import { APP_NAME, APP_NAME_SEPARATOR, APP_ORIGIN } from "@syncreads/shared";
 
 import { env } from "../lib/env/client";
 

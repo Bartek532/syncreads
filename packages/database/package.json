@@ -24,7 +24,7 @@
     "test:ci": "supabase test db"
   },
   "dependencies": {
-    "@syncreads/shared": "workspace:*",
+    "@syncreads/env": "workspace:*",
     "@supabase/ssr": "0.0.10",
     "@supabase/supabase-js": "2.39.0",
     "zod": "^3.22.3"

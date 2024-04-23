@@ -31,5 +31,3 @@ export const validateConfig = <T>(
 
   return _validatedEnv.data;
 };
-
-export * from "./schema";

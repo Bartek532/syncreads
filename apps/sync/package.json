@@ -21,6 +21,7 @@
     "@nestjs/config": "3.1.1",
     "@nestjs/platform-express": "10.2.10",
     "@sendgrid/mail": "8.1.0",
+    "@syncreads/env": "workspace:*",
     "@syncreads/database": "workspace:*",
     "@syncreads/shared": "workspace:*",
     "bull": "4.11.5",
