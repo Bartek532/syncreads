@@ -1,5 +1,5 @@
 import { stripe } from "@/lib/stripe/config";
-import { subscriptionStatusChangeHandler } from "@/server/controllers/subscription.controller";
+import { subscriptionStatusChangeHandler } from "@/server/controllers/payment.controller";
 
 import type Stripe from "stripe";
 

@@ -1,18 +1,20 @@
+create type "public"."SubscriptionStatus" as enum ('ACTIVE', 'CANCELED', 'INCOMPLETE', 'INCOMPLETE_EXPIRED', 'PAST_DUE', 'PAUSED', 'TRIALING', 'UNPAID');
+
 create table "public"."Customer" (
-    "id" uuid not null default auth.uid(),
-    "stripeId" text not null
+    "userId" uuid not null default auth.uid(),
+    "customerId" text not null
 );
 
 
 alter table "public"."Customer" enable row level security;
 
-CREATE UNIQUE INDEX "Customer_pkey" ON public."Customer" USING btree (id);
+CREATE UNIQUE INDEX "Customer_pkey" ON public."Customer" USING btree ("userId");
 
 alter table "public"."Customer" add constraint "Customer_pkey" PRIMARY KEY using index "Customer_pkey";
 
-alter table "public"."Customer" add constraint "public_Customer_id_fkey" FOREIGN KEY (id) REFERENCES auth.users(id) ON UPDATE CASCADE ON DELETE CASCADE not valid;
+alter table "public"."Customer" add constraint "public_Customer_userId_fkey" FOREIGN KEY ("userId") REFERENCES auth.users(id) ON UPDATE CASCADE ON DELETE CASCADE not valid;
 
-alter table "public"."Customer" validate constraint "public_Customer_id_fkey";
+alter table "public"."Customer" validate constraint "public_Customer_userId_fkey";
 
 grant delete on table "public"."Customer" to "anon";
 

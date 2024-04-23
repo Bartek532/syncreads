@@ -42,20 +42,11 @@ export type Customer = Tables<"Customer">;
 export type InsertCustomer = Tables<"Customer", "Insert">;
 export type UpdateCustomer = Tables<"Customer", "Update">;
 
-export type CustomerSubscription = Tables<"CustomerSubscription">;
-export type InsertCustomerSubscription = Tables<
-  "CustomerSubscription",
-  "Insert"
->;
-export type UpdateCustomerSubscription = Tables<
-  "CustomerSubscription",
-  "Update"
->;
-
 export type SyncStatus = Enums<"SyncStatus">;
 export type SyncTrigger = Enums<"SyncTrigger">;
 export type DeviceType = Enums<"DeviceType">;
 export type SubscriptionStatus = Enums<"SubscriptionStatus">;
+export type PricingPlanType = Enums<"PricingPlanType">;
 
 export const SyncStatus: { [K in SyncStatus]: K } = {
   SUCCESS: "SUCCESS",
@@ -84,6 +75,12 @@ export const SubscriptionStatus: { [K in SubscriptionStatus]: K } = {
   CANCELED: "CANCELED",
   UNPAID: "UNPAID",
   PAUSED: "PAUSED",
+} as const;
+
+export const PricingPlanType: { [K in PricingPlanType]: K } = {
+  STARTER: "STARTER",
+  PREMIUM: "PREMIUM",
+  UNLIMITED: "UNLIMITED",
 } as const;
 
 // Auth

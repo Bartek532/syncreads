@@ -1,7 +1,14 @@
 import { stripe } from "@/lib/stripe/config";
-import { supabase } from "@/lib/supabase/server";
+import {
+  toPricingPlan,
+  toPricingPlanPrice,
+} from "@/server/services/payment/mappers/toPricingPlan";
+import type {
+  PricingPlanPrice,
+  PricingPlanWithPrices,
+} from "@/types/payment.types";
 
-import type { InsertCustomerSubscription } from "@syncreads/database";
+import type Stripe from "stripe";
 
 export const getStripeSubscription = async (subscriptionId: string) => {
   return stripe.subscriptions.retrieve(subscriptionId, {
@@ -9,8 +16,34 @@ export const getStripeSubscription = async (subscriptionId: string) => {
   });
 };
 
-export const upsertCustomerSubscription = async (
-  data: InsertCustomerSubscription,
-) => {
-  return supabase().from("CustomerSubscription").upsert(data).throwOnError();
+export const getPricingPlans = async (params?: Stripe.PriceListParams) => {
+  const prices = await stripe.prices.list({
+    active: true,
+    expand: ["data.product"],
+    ...params,
+  });
+
+  const products = prices.data.reduce((acc, price) => {
+    const product = price.product as Stripe.Product;
+
+    if (!acc[product.id]) {
+      acc[product.id] = {
+        ...product,
+        prices: [],
+      };
+    }
+
+    acc[product.id]?.prices.push(toPricingPlanPrice(price));
+
+    return acc;
+  }, {} as Record<string, Stripe.Product & { prices: PricingPlanPrice[] }>);
+
+  const filteredProducts = Object.values(products)
+    .map((product) => ({
+      ...toPricingPlan(product),
+      prices: product.prices,
+    }))
+    .filter((x): x is PricingPlanWithPrices => !!x);
+
+  return filteredProducts;
 };

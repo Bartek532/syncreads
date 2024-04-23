@@ -11,49 +11,29 @@ export type Database = {
     Tables: {
       Customer: {
         Row: {
-          id: string
-          stripeId: string
+          customerId: string
+          plan: Database["public"]["Enums"]["PricingPlanType"] | null
+          status: Database["public"]["Enums"]["SubscriptionStatus"] | null
+          userId: string
         }
         Insert: {
-          id?: string
-          stripeId: string
+          customerId: string
+          plan?: Database["public"]["Enums"]["PricingPlanType"] | null
+          status?: Database["public"]["Enums"]["SubscriptionStatus"] | null
+          userId?: string
         }
         Update: {
-          id?: string
-          stripeId?: string
+          customerId?: string
+          plan?: Database["public"]["Enums"]["PricingPlanType"] | null
+          status?: Database["public"]["Enums"]["SubscriptionStatus"] | null
+          userId?: string
         }
         Relationships: [
           {
-            foreignKeyName: "public_Customer_id_fkey"
-            columns: ["id"]
+            foreignKeyName: "public_Customer_userId_fkey"
+            columns: ["userId"]
             isOneToOne: true
             referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      CustomerSubscription: {
-        Row: {
-          customerId: string | null
-          id: string
-          status: Database["public"]["Enums"]["SubscriptionStatus"]
-        }
-        Insert: {
-          customerId?: string | null
-          id: string
-          status: Database["public"]["Enums"]["SubscriptionStatus"]
-        }
-        Update: {
-          customerId?: string | null
-          id?: string
-          status?: Database["public"]["Enums"]["SubscriptionStatus"]
-        }
-        Relationships: [
-          {
-            foreignKeyName: "public_CustomerSubscription_customerId_fkey"
-            columns: ["customerId"]
-            isOneToOne: false
-            referencedRelation: "Customer"
             referencedColumns: ["id"]
           },
         ]
@@ -290,6 +270,7 @@ export type Database = {
     }
     Enums: {
       DeviceType: "KINDLE" | "REMARKABLE"
+      PricingPlanType: "STARTER" | "PREMIUM" | "UNLIMITED"
       SubscriptionStatus:
         | "ACTIVE"
         | "CANCELED"
