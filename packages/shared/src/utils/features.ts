@@ -5,7 +5,7 @@ import { FEATURES } from "../constants/features";
 import type { Feature } from "../constants/features";
 import type { Customer } from "@syncreads/database";
 
-const ACTIVE_SUBSCRIPTION_STATUSES = [
+const ACTIVE_SUBSCRIPTION_STATUSES: SubscriptionStatus[] = [
   SubscriptionStatus.ACTIVE,
   SubscriptionStatus.TRIALING,
 ];

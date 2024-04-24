@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -29,12 +29,15 @@ import { login } from "./actions";
 import { useAuthFormStore } from "./store";
 
 export const LoginForm = memo(() => {
+  const searchParams = useSearchParams();
   const { provider, setProvider, isSubmitting, setIsSubmitting } =
     useAuthFormStore();
   const router = useRouter();
   const form = useForm<LoginData>({
     resolver: zodResolver(loginUserSchema),
   });
+
+  const redirectTo = searchParams.get("redirectTo") ?? "/dashboard";
 
   const onSubmit = async (data: LoginData) => {
     setProvider(AUTH_PROVIDER.PASSWORD);
@@ -50,7 +53,8 @@ export const LoginForm = memo(() => {
 
     toast.success("Signed in!", { id: loadingToast });
     setIsSubmitting(false);
-    return router.replace("/dashboard");
+    router.replace(redirectTo);
+    return router.refresh();
   };
 
   return (

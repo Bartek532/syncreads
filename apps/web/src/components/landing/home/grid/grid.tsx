@@ -39,15 +39,15 @@ export const Grid = () => {
         />
       ) : (
         <div className="mt-16 grid w-full max-w-xl grid-cols-2 gap-3 rounded-xl bg-muted p-3 md:max-w-7xl md:grid-cols-4 md:gap-4 md:p-4 lg:gap-5 lg:p-5 [&>*]:rounded-xl [&>*]:bg-background">
-          <div className="aspect-4/3 order-1 md:order-2"></div>
-          <div className="aspect-4/6 order-2 row-span-2 md:order-1 md:aspect-auto"></div>
-          <div className="aspect-4/6 order-3 row-span-2 md:order-4 md:aspect-auto"></div>
-          <div className="aspect-4/3 order-4 md:order-3"></div>
-          <div className="aspect-4/3 order-5 col-span-2 row-span-2 hidden md:block"></div>
-          <div className="aspect-8/3 order-6 col-span-2 md:order-8"></div>
-          <div className="aspect-4/3 order-7 md:order-6"></div>
+          <div className="order-1 aspect-4/3 md:order-2"></div>
+          <div className="order-2 row-span-2 aspect-4/6 md:order-1 md:aspect-auto"></div>
+          <div className="order-3 row-span-2 aspect-4/6 md:order-4 md:aspect-auto"></div>
+          <div className="order-4 aspect-4/3 md:order-3"></div>
+          <div className="order-5 col-span-2 row-span-2 hidden aspect-4/3 md:block"></div>
+          <div className="order-6 col-span-2 aspect-8/3 md:order-8"></div>
+          <div className="order-7 aspect-4/3 md:order-6"></div>
           <div className="order-8 row-span-2 md:order-7"></div>
-          <div className="aspect-4/3 order-9 md:aspect-auto"></div>
+          <div className="order-9 aspect-4/3 md:aspect-auto"></div>
         </div>
       )}
     </div>

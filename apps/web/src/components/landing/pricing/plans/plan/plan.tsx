@@ -4,6 +4,7 @@ import { memo } from "react";
 
 import {
   DEFAULT_SUBSCRIPTION_INTERVAL,
+  MOST_POPULAR_PLANS,
   PRICING_MODEL,
 } from "@/components/landing/pricing/constants";
 import { usePlan } from "@/components/landing/pricing/plans/plan/hooks/usePlan";
@@ -47,12 +48,14 @@ export const Plan = memo<PlanProps>(
       <div
         key={plan.name}
         className={cn(
-          "grow-0 basis-[26rem] rounded-lg bg-gradient-to-br from-primary via-muted-foreground/50 to-primary/10 md:shrink-0",
-          plan.popular ? "p-1 shadow-lg shadow-muted-foreground/60" : "shadow",
+          "grow-0 basis-[24rem] rounded-lg bg-gradient-to-br from-primary via-muted-foreground/50 to-primary/10 md:shrink-0",
+          plan.popular || MOST_POPULAR_PLANS.includes(plan.type)
+            ? "basis-[25rem] p-1 shadow-lg shadow-muted-foreground/60"
+            : "shadow",
         )}
       >
         <Card className="relative flex flex-col gap-8 px-7 py-6 md:px-10 md:py-8">
-          {plan.popular && (
+          {(plan.popular || MOST_POPULAR_PLANS.includes(plan.type)) && (
             <Badge className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 px-6 py-2.5 hover:bg-primary">
               Most Popular
             </Badge>
@@ -110,7 +113,10 @@ export const Plan = memo<PlanProps>(
               </Button>
             )}
             {price.amount === 0 ? (
-              <Link href="/auth/login" className={buttonVariants()}>
+              <Link
+                href="/auth/login?redirectTo=/pricing"
+                className={buttonVariants()}
+              >
                 {user ? "Go to dashboard" : "Get started"}
               </Link>
             ) : (

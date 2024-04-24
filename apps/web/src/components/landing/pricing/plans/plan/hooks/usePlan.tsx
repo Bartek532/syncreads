@@ -49,7 +49,7 @@ export const usePlan = (
     setLoading(trial ? "trial" : "checkout");
     if (!user) {
       setLoading(null);
-      return router.push("/auth/login");
+      return router.push("/auth/login?redirectTo=/pricing");
     }
 
     if (!price) {
@@ -75,7 +75,7 @@ export const usePlan = (
     setLoading("portal");
     if (!user) {
       setLoading(null);
-      return router.push("/auth/login");
+      return router.push("/auth/login?redirectTo=/pricing");
     }
 
     const { url, error } = await goToCustomerPortal(pathname);

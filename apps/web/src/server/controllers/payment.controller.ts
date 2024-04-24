@@ -142,6 +142,7 @@ export const checkout = async (
 
     return session.id;
   } catch (e) {
+    console.error(e);
     if (e instanceof ApiError) {
       throw e;
     }
@@ -177,6 +178,7 @@ export const goToBillingPortal = async (currentPath: string) => {
 
     return url;
   } catch (e) {
+    console.error(e);
     if (e instanceof ApiError) {
       throw e;
     }

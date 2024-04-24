@@ -1,13 +1,14 @@
 import { ApiError } from "@syncreads/shared";
 
 import { stripe } from "@/lib/stripe/config";
-import { supabase } from "@/lib/supabase/server";
+import { supabase as serverSupabase } from "@/lib/supabase/server";
+import { supabase as serviceSupabase } from "@/lib/supabase/service";
 
 import type { InsertCustomer, UpdateCustomer } from "@syncreads/database";
 import type Stripe from "stripe";
 
 export const getCustomerById = async (userId: string) => {
-  return supabase()
+  return serverSupabase()
     .from("Customer")
     .select("*")
     .eq("userId", userId)
@@ -15,7 +16,7 @@ export const getCustomerById = async (userId: string) => {
 };
 
 export const getCustomerByStripeId = async (stripeId: string) => {
-  return supabase()
+  return serviceSupabase()
     .from("Customer")
     .select("*")
     .eq("customerId", stripeId)
@@ -23,11 +24,11 @@ export const getCustomerByStripeId = async (stripeId: string) => {
 };
 
 export const upsertCustomer = async (data: InsertCustomer) => {
-  return supabase().from("Customer").upsert(data).throwOnError();
+  return serviceSupabase().from("Customer").upsert(data).throwOnError();
 };
 
 export const updateCustomer = async (id: string, data: UpdateCustomer) => {
-  return supabase()
+  return serviceSupabase()
     .from("Customer")
     .update(data)
     .eq("userId", id)
