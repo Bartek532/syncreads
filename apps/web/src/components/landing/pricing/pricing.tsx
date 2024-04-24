@@ -6,13 +6,14 @@ import {
   DEFAULT_SUBSCRIPTION_INTERVAL,
   PRICING_MODEL,
 } from "@/components/landing/pricing/constants";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Switch } from "@/components/ui/switch";
 import type {
   PricingPlanWithPrices,
   RecurringPriceInterval,
 } from "@/types/payment.types";
 
-import { Plans } from "./plans/plans";
+import { Plans, PlansSkeleton } from "./plans/plans";
 
 import type { Customer } from "@syncreads/database";
 import type { User } from "@syncreads/shared";
@@ -58,5 +59,17 @@ export const Pricing = memo<PricingProps>(({ plans, user, customer }) => {
     </div>
   );
 });
+
+export const PricingSkeleton = () => {
+  return (
+    <div className="flex w-full flex-col items-center justify-start gap-14 pb-16 lg:gap-24 lg:pb-28">
+      <div className="flex flex-col items-center justify-center gap-3">
+        <Skeleton className="h-12 w-72" />
+        <Skeleton className="h-8 w-96" />
+      </div>
+      <PlansSkeleton />
+    </div>
+  );
+};
 
 Pricing.displayName = "Pricing";
