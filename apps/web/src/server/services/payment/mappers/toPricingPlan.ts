@@ -4,10 +4,20 @@ import type { PricingPlan, PricingPlanPrice } from "@/types/payment.types";
 
 import type Stripe from "stripe";
 
+export const toPricingPlanType = (
+  input: string | undefined,
+): PricingPlanType | null => {
+  const type = Object.values(PricingPlanType).find((type) => type === input);
+
+  if (!type) {
+    return null;
+  }
+
+  return type;
+};
+
 export const toPricingPlan = (product: Stripe.Product): PricingPlan | null => {
-  const type = Object.values(PricingPlanType).find(
-    (type) => type === product.metadata.type,
-  );
+  const type = toPricingPlanType(product.metadata.type);
 
   if (!type) {
     return null;

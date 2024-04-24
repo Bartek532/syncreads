@@ -35,7 +35,7 @@ import { Input } from "../../../../ui/input";
 import { RadioGroup, RadioGroupItem } from "../../../../ui/radio-group";
 import { queueArticleSync } from "../actions";
 
-import type { User } from "@syncreads/database";
+import type { User } from "@syncreads/shared";
 import type { SyncArticleInput } from "@syncreads/shared";
 
 type SyncArticleDialogProps = {

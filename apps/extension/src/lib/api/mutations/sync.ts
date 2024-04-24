@@ -9,7 +9,7 @@ import {
 import { env } from "@/lib/env";
 import { supabase } from "@/lib/supabase";
 
-import type { User } from "@syncreads/database";
+import type { User } from "@syncreads/shared";
 
 const getUserApiKey = async (id: string) => {
   return supabase.from("UserApiKey").select("key").eq("userId", id).single();

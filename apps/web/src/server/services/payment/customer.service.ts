@@ -9,18 +9,16 @@ export const getCustomerById = async (userId: string) => {
   return supabase()
     .from("Customer")
     .select("*")
-    .eq("id", userId)
-    .single()
-    .throwOnError();
+    .eq("userId", userId)
+    .maybeSingle();
 };
 
 export const getCustomerByStripeId = async (stripeId: string) => {
   return supabase()
     .from("Customer")
     .select("*")
-    .eq("stripeId", stripeId)
-    .single()
-    .throwOnError();
+    .eq("customerId", stripeId)
+    .maybeSingle();
 };
 
 export const upsertCustomer = async (data: InsertCustomer) => {
@@ -28,7 +26,11 @@ export const upsertCustomer = async (data: InsertCustomer) => {
 };
 
 export const updateCustomer = async (id: string, data: UpdateCustomer) => {
-  return supabase().from("Customer").update(data).eq("id", id).throwOnError();
+  return supabase()
+    .from("Customer")
+    .update(data)
+    .eq("userId", id)
+    .throwOnError();
 };
 
 export const createStripeCustomer = async (uuid: string, email: string) => {
@@ -69,7 +71,7 @@ export const createOrRetrieveCustomer = async ({
     throw new ApiError(existingCustomerStatus, existingCustomerError.message);
   }
 
-  const stripeCustomerId = existingCustomer.customerId
+  const stripeCustomerId = existingCustomer?.customerId
     ? (await getStripeCustomerById(existingCustomer.customerId)).id
     : (await getStripeCustomerByEmail(email))?.id;
 

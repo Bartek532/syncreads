@@ -28,7 +28,7 @@ import { RadioGroup, RadioGroupItem } from "../../../ui/radio-group";
 import { updateUser } from "./actions";
 import { formats } from "./constants";
 
-import type { User } from "@syncreads/database";
+import type { User } from "@syncreads/shared";
 
 type ProfileForm = {
   readonly user: User;

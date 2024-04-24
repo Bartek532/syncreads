@@ -83,8 +83,7 @@ export const PricingPlanType: { [K in PricingPlanType]: K } = {
 } as const;
 
 // Auth
-export { User };
-export type Session = AuthSession & { user: User };
+export { User, AuthSession as Session };
 
 export type {
   RealtimePostgresUpdatePayload,

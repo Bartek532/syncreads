@@ -1,5 +1,8 @@
 import { stripe } from "@/lib/stripe/config";
-import { subscriptionStatusChangeHandler } from "@/server/controllers/payment.controller";
+import {
+  checkoutStatusChangeHandler,
+  subscriptionStatusChangeHandler,
+} from "@/server/controllers/payment.controller";
 
 import type Stripe from "stripe";
 
@@ -42,19 +45,15 @@ export async function POST(req: Request) {
           await subscriptionStatusChangeHandler(
             subscription.id,
             subscription.customer as string,
-            event.type === "customer.subscription.created",
           );
           break;
         case "checkout.session.completed":
-          const checkoutSession = event.data.object;
-          if (checkoutSession.mode === "subscription") {
-            const subscriptionId = checkoutSession.subscription;
-            await subscriptionStatusChangeHandler(
-              subscriptionId as string,
-              checkoutSession.customer as string,
-              true,
-            );
-          }
+          // console.log(
+          //   "session",
+          //   session.line_items?.data[0]?.price?.product,
+          //   session.line_items?.data.find((item) => item.price?.product),
+          // );
+          await checkoutStatusChangeHandler(event.data.object);
           break;
         default:
           throw new Error("Unhandled relevant event!");

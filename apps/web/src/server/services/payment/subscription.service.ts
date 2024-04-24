@@ -12,8 +12,8 @@ import type Stripe from "stripe";
 
 export const getStripeSubscription = async (subscriptionId: string) => {
   return stripe.subscriptions.retrieve(subscriptionId, {
-    expand: ["default_payment_method"],
-  });
+    expand: ["default_payment_method", "plan.product"],
+  }) as Promise<Stripe.Response<Stripe.Subscription & { plan: Stripe.Plan }>>;
 };
 
 export const getPricingPlans = async (params?: Stripe.PriceListParams) => {

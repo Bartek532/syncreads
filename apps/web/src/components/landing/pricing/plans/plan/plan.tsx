@@ -1,7 +1,8 @@
-import { CheckIcon, X } from "lucide-react";
+import { CheckIcon, Loader2, X } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { memo } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { memo, useState } from "react";
+import toast from "react-hot-toast";
 
 import {
   DEFAULT_SUBSCRIPTION_INTERVAL,
@@ -35,7 +36,9 @@ type PlanProps = {
 
 export const Plan = memo<PlanProps>(
   ({ plan, interval = DEFAULT_SUBSCRIPTION_INTERVAL, user }) => {
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
+    const pathname = usePathname();
     const price = getProductPrice(plan, PRICING_MODEL, interval);
 
     const features =
@@ -48,13 +51,23 @@ export const Plan = memo<PlanProps>(
     const discount = interval === "year" ? calculateYearlyDiscount(plan) : null;
 
     const handleCheckout = async () => {
+      setLoading(true);
       if (!user) {
+        setLoading(false);
         router.push("/auth/login");
       }
 
-      const sessionId = await checkoutUser(price);
+      const { sessionId, error } = await checkoutUser(price, pathname);
+
+      if (!sessionId) {
+        setLoading(false);
+        toast.error(error);
+        return;
+      }
+
       const stripe = await getStripe();
       await stripe?.redirectToCheckout({ sessionId });
+      setLoading(false);
     };
 
     return (
@@ -118,8 +131,11 @@ export const Plan = memo<PlanProps>(
                 Get started
               </Link>
             ) : (
-              <Button onClick={onPromise(() => handleCheckout())}>
-                Upgrade now
+              <Button
+                onClick={onPromise(() => handleCheckout())}
+                disabled={loading}
+              >
+                {loading ? <Loader2 className="animate-spin" /> : "Upgrade now"}
               </Button>
             )}
           </div>
