@@ -48,11 +48,6 @@ export async function POST(req: Request) {
           );
           break;
         case "checkout.session.completed":
-          // console.log(
-          //   "session",
-          //   session.line_items?.data[0]?.price?.product,
-          //   session.line_items?.data.find((item) => item.price?.product),
-          // );
           await checkoutStatusChangeHandler(event.data.object);
           break;
         default:

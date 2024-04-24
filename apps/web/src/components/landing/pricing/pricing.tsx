@@ -14,14 +14,16 @@ import type {
 
 import { Plans } from "./plans/plans";
 
+import type { Customer } from "@syncreads/database";
 import type { User } from "@syncreads/shared";
 
 type PricingProps = {
   readonly user: User | null;
+  readonly customer: Customer | null;
   readonly plans: PricingPlanWithPrices[];
 };
 
-export const Pricing = memo<PricingProps>(({ plans, user }) => {
+export const Pricing = memo<PricingProps>(({ plans, user, customer }) => {
   const [billing, setBilling] = useState<RecurringPriceInterval>(
     DEFAULT_SUBSCRIPTION_INTERVAL,
   );
@@ -52,7 +54,7 @@ export const Pricing = memo<PricingProps>(({ plans, user }) => {
           </div>
         )}
       </header>
-      <Plans plans={plans} interval={billing} user={user} />
+      <Plans plans={plans} interval={billing} user={user} customer={customer} />
     </div>
   );
 });

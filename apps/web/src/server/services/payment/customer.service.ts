@@ -4,6 +4,7 @@ import { stripe } from "@/lib/stripe/config";
 import { supabase } from "@/lib/supabase/server";
 
 import type { InsertCustomer, UpdateCustomer } from "@syncreads/database";
+import type Stripe from "stripe";
 
 export const getCustomerById = async (userId: string) => {
   return supabase()
@@ -104,4 +105,15 @@ export const createOrRetrieveCustomer = async ({
   }
 
   return stripeIdToInsert;
+};
+
+export const createBillingPortalSession = async (
+  params: Stripe.BillingPortal.SessionCreateParams,
+) => {
+  try {
+    return await stripe.billingPortal.sessions.create(params);
+  } catch (e) {
+    console.error(e);
+    throw new ApiError(500, "Could not create billing portal session.");
+  }
 };

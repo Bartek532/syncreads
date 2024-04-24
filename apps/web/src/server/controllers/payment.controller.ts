@@ -15,12 +15,12 @@ import {
   getCheckoutSession,
 } from "../services/payment/checkout.service";
 import {
+  createBillingPortalSession,
   createOrRetrieveCustomer,
   getCustomerByStripeId,
   updateCustomer,
 } from "../services/payment/customer.service";
 import { getStripeSubscription } from "../services/payment/subscription.service";
-import { calculateTrialEndUnixTimestamp } from "../utils/date";
 
 import type Stripe from "stripe";
 
@@ -93,6 +93,7 @@ export const checkoutStatusChangeHandler = async (
 export const checkout = async (
   price: PricingPlanPrice,
   redirectPath: string,
+  trial?: number,
 ) => {
   try {
     const {
@@ -108,10 +109,6 @@ export const checkout = async (
       email: user.email ?? "",
       uuid: user.id,
     });
-
-    const trialEnd = calculateTrialEndUnixTimestamp(
-      price.recurring?.trialPeriodDays ?? 0,
-    );
 
     const session = await createCheckoutSession({
       mode: "subscription",
@@ -130,11 +127,10 @@ export const checkout = async (
       cancel_url: `${URL}/${redirectPath}`,
       ...(price.type === "recurring"
         ? {
-            ...(trialEnd
+            ...(trial
               ? {
                   subscription_data: {
-                    trial_end: trialEnd,
-                    trial_period_days: price.recurring?.trialPeriodDays ?? 0,
+                    trial_period_days: trial,
                   },
                 }
               : {}),
@@ -145,6 +141,41 @@ export const checkout = async (
     });
 
     return session.id;
+  } catch (e) {
+    if (e instanceof ApiError) {
+      throw e;
+    }
+
+    if (e instanceof Error) {
+      throw new ApiError(500, e.message);
+    }
+
+    throw new ApiError(500, "An unknown error occurred.");
+  }
+};
+
+export const goToBillingPortal = async (currentPath: string) => {
+  try {
+    const {
+      data: { user },
+      error,
+    } = await supabase().auth.getUser();
+
+    if (error || !user) {
+      throw new ApiError(500, "Could not get user session.");
+    }
+
+    const customer = await createOrRetrieveCustomer({
+      email: user.email ?? "",
+      uuid: user.id,
+    });
+
+    const { url } = await createBillingPortalSession({
+      customer,
+      return_url: `${URL}/${currentPath}`,
+    });
+
+    return url;
   } catch (e) {
     if (e instanceof ApiError) {
       throw e;

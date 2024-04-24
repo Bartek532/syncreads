@@ -1,80 +1,53 @@
 import { CheckIcon, Loader2, X } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { memo, useState } from "react";
-import toast from "react-hot-toast";
+import { memo } from "react";
 
 import {
   DEFAULT_SUBSCRIPTION_INTERVAL,
-  PLAN_FEATURES,
   PRICING_MODEL,
 } from "@/components/landing/pricing/constants";
-import {
-  calculateYearlyDiscount,
-  formatPrice,
-  getProductPrice,
-} from "@/components/landing/pricing/utils/price";
+import { usePlan } from "@/components/landing/pricing/plans/plan/hooks/usePlan";
+import { formatPrice } from "@/components/landing/pricing/utils/price";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { getStripe } from "@/lib/stripe/client";
 import type {
   PricingPlanWithPrices,
   RecurringPriceInterval,
 } from "@/types/payment.types";
 import { cn, onPromise } from "@/utils";
 
-import { checkoutUser } from "./actions";
-
-import type { User } from "@syncreads/database";
+import type { Customer, User } from "@syncreads/database";
 
 type PlanProps = {
   readonly plan: PricingPlanWithPrices;
   readonly user: User | null;
+  readonly customer: Customer | null;
   readonly interval?: RecurringPriceInterval;
 };
 
 export const Plan = memo<PlanProps>(
-  ({ plan, interval = DEFAULT_SUBSCRIPTION_INTERVAL, user }) => {
-    const [loading, setLoading] = useState(false);
-    const router = useRouter();
-    const pathname = usePathname();
-    const price = getProductPrice(plan, PRICING_MODEL, interval);
-
-    const features =
-      plan.type in PLAN_FEATURES ? PLAN_FEATURES[plan.type] : null;
+  ({ plan, interval = DEFAULT_SUBSCRIPTION_INTERVAL, user, customer }) => {
+    const {
+      features,
+      price,
+      discount,
+      trial,
+      loading,
+      handleCheckout,
+      handleOpenPortal,
+      hasPlan,
+    } = usePlan(plan, interval);
 
     if (!price || !features) {
       return null;
     }
 
-    const discount = interval === "year" ? calculateYearlyDiscount(plan) : null;
-
-    const handleCheckout = async () => {
-      setLoading(true);
-      if (!user) {
-        setLoading(false);
-        router.push("/auth/login");
-      }
-
-      const { sessionId, error } = await checkoutUser(price, pathname);
-
-      if (!sessionId) {
-        setLoading(false);
-        toast.error(error);
-        return;
-      }
-
-      const stripe = await getStripe();
-      await stripe?.redirectToCheckout({ sessionId });
-      setLoading(false);
-    };
-
     return (
       <div
         key={plan.name}
         className={cn(
-          "grow-0 basis-[28rem] rounded-lg bg-gradient-to-br from-primary via-muted-foreground/50 to-primary/10 md:shrink-0",
+          "grow-0 basis-[26rem] rounded-lg bg-gradient-to-br from-primary via-muted-foreground/50 to-primary/10 md:shrink-0",
           plan.popular ? "p-1 shadow-lg shadow-muted-foreground/60" : "shadow",
         )}
       >
@@ -123,19 +96,41 @@ export const Plan = memo<PlanProps>(
           </div>
 
           <div className="flex flex-col gap-3">
-            {price.recurring?.trialPeriodDays && (
-              <Button variant="outline">Start free trial</Button>
+            {trial && !hasPlan(customer) && (
+              <Button
+                variant="outline"
+                onClick={onPromise(() => handleCheckout(user, trial))}
+                disabled={loading === "trial"}
+              >
+                {loading === "trial" ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  `Try with ${trial}-days trial`
+                )}
+              </Button>
             )}
             {price.amount === 0 ? (
               <Link href="/auth/login" className={buttonVariants()}>
-                Get started
+                {user ? "Go to dashboard" : "Get started"}
               </Link>
             ) : (
               <Button
-                onClick={onPromise(() => handleCheckout())}
-                disabled={loading}
+                onClick={onPromise(() =>
+                  PRICING_MODEL === "recurring" && hasPlan(customer)
+                    ? handleOpenPortal(user)
+                    : handleCheckout(user),
+                )}
+                disabled={loading === "checkout" || loading === "portal"}
               >
-                {loading ? <Loader2 className="animate-spin" /> : "Upgrade now"}
+                {loading === "checkout" || loading === "portal" ? (
+                  <Loader2 className="animate-spin" />
+                ) : PRICING_MODEL === "recurring" && hasPlan(customer) ? (
+                  "Manage plan"
+                ) : PRICING_MODEL === "recurring" ? (
+                  "Subscribe now"
+                ) : (
+                  "Get lifetime access"
+                )}
               </Button>
             )}
           </div>
